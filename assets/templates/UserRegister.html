@@ -1,0 +1,928 @@
+{% load static %}
+<!DOCTYPE html>
+<html class="scroll-smooth" lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>Create Your Account | Careerlytics</title>
+
+  <link href="https://fonts.googleapis.com" rel="preconnect"/>
+  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=Lexend:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+
+  <script src="https://cdn.tailwindcss.com?plugins=forms,typography,container-queries"></script>
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            primary: "#2563EB",
+            secondary: "#6366F1",
+          },
+          fontFamily: {
+            display: ["Lexend", "sans-serif"],
+            sans: ["Inter", "sans-serif"],
+          },
+          borderRadius: {
+            DEFAULT: "0.75rem",
+            xl: "1rem",
+            "2xl": "1.5rem",
+          },
+        },
+      },
+    };
+
+    // Theme Toggle Functionality
+    function toggleTheme() {
+      const html = document.documentElement;
+      const themeToggle = document.getElementById('theme-toggle');
+      const knob = document.getElementById('knob');
+      const stars = document.getElementById('stars');
+      
+      if (html.classList.contains('dark')) {
+        html.classList.remove('dark');
+        localStorage.setItem('theme', 'light');
+        themeToggle.classList.remove('active');
+        knob.classList.remove('moon');
+        knob.innerHTML = "";
+        document.querySelectorAll(".star").forEach(s=>s.style.opacity=0);
+        document.querySelectorAll(".cloud").forEach(c=>c.style.opacity=1);
+      } else {
+        html.classList.add('dark');
+        localStorage.setItem('theme', 'dark');
+        themeToggle.classList.add('active');
+        knob.classList.add('moon');
+        knob.innerHTML="<div class='moon-shadow'></div>";
+        document.querySelectorAll(".star").forEach(s=>s.style.opacity=1);
+        document.querySelectorAll(".cloud").forEach(c=>c.style.opacity=0);
+      }
+    }
+
+    // Initialize theme on page load
+    document.addEventListener('DOMContentLoaded', function() {
+      const savedTheme = localStorage.getItem('theme') || 'light';
+      const html = document.documentElement;
+      const themeToggle = document.getElementById('theme-toggle');
+      const knob = document.getElementById('knob');
+      const stars = document.getElementById('stars');
+      
+      // Create stars
+      for(let i=0;i<40;i++){
+        let s=document.createElement("div");
+        s.className="star";
+        s.style.left=Math.random()*100+"%";
+        s.style.top=Math.random()*100+"%";
+        s.style.animationDelay=Math.random()*2+"s";
+        stars.appendChild(s);
+      }
+      
+      // Set initial theme state
+      let night = savedTheme === 'dark';
+      if (night) {
+        html.classList.add('dark');
+        themeToggle.classList.add('active');
+        knob.classList.add('moon');
+        knob.innerHTML="<div class='moon-shadow'></div>";
+        document.querySelectorAll(".star").forEach(s=>s.style.opacity=1);
+        document.querySelectorAll(".cloud").forEach(c=>c.style.opacity=0);
+      } else {
+        document.querySelectorAll(".star").forEach(s=>s.style.opacity=0);
+        document.querySelectorAll(".cloud").forEach(c=>c.style.opacity=1);
+      }
+      
+      // Add click event listener
+      themeToggle.addEventListener('click', () => {
+        night = !night;
+        themeToggle.classList.toggle('active');
+        
+        if(night){
+          html.classList.add('dark');
+          localStorage.setItem('theme', 'dark');
+          knob.classList.add('moon');
+          knob.innerHTML="<div class='moon-shadow'></div>";
+          document.querySelectorAll(".star").forEach(s=>s.style.opacity=1);
+          document.querySelectorAll(".cloud").forEach(c=>c.style.opacity=0);
+        }else{
+          html.classList.remove('dark');
+          localStorage.setItem('theme', 'light');
+          knob.classList.remove('moon');
+          knob.innerHTML="";
+          document.querySelectorAll(".star").forEach(s=>s.style.opacity=0);
+          document.querySelectorAll(".cloud").forEach(c=>c.style.opacity=1);
+        }
+      });
+    });
+  </script>
+  <style type="text/tailwindcss">
+    .glass {
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
+    .dark .glass {
+      background: rgba(17, 24, 39, 0.7);
+    }
+    .material-symbols-outlined {
+      display: inline-block;
+      vertical-align: middle;
+      line-height: 1;
+      font-size: inherit;
+    }
+    
+    /* Glass Day Night Toggle */
+    .toggle-wrapper{
+      width:90px;
+      height:38px;
+      border-radius:21px;
+      background:rgba(255,255,255,0.25);
+      backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
+      border:1px solid rgba(255,255,255,0.4);
+      box-shadow:0 6px 15px rgba(0,0,0,0.05);
+      position:relative;
+      overflow:hidden;
+      cursor:pointer;
+      flex-shrink:0;
+    }
+
+    /* Inner sky */
+    .sky{
+      position:absolute;
+      inset:0;
+      border-radius:21px;
+      transition:1s;
+      background:linear-gradient(135deg,#7fc8ff,#cceeff);
+    }
+
+    /* Clouds */
+    .cloud{
+      position:absolute;
+      width:38px;
+      height:14px;
+      background:rgba(255,255,255,0.95);
+      border-radius:14px;
+      top:11px;
+      animation:cloudMove 18s linear infinite;
+      box-shadow:0 1px 4px rgba(0,0,0,0.03);
+    }
+    .cloud::before,
+    .cloud::after{
+      content:'';
+      position:absolute;
+      background:rgba(255,255,255,0.95);
+      width:15px;
+      height:15px;
+      border-radius:50%;
+      top:-8px;
+    }
+    .cloud::before{left:5px;}
+    .cloud::after{left:19px;}
+
+    @keyframes cloudMove{
+      from{left:-45px;}
+      to{left:95px;}
+    }
+
+    /* Stars */
+    .star{
+      position:absolute;
+      width:0.8px;
+      height:0.8px;
+      background:white;
+      border-radius:50%;
+      opacity:0;
+      animation:twinkle 2s infinite alternate;
+    }
+    @keyframes twinkle{
+      from{opacity:.3;}
+      to{opacity:1;}
+    }
+
+    /* Knob */
+    .knob{
+      position:absolute;
+      top:3px;
+      left:3px;
+      width:32px;
+      height:32px;
+      border-radius:50%;
+      background:linear-gradient(135deg,#FFD700,#FF8C00);
+      box-shadow:0 0 8px #FFD700, 0 3px 8px rgba(0,0,0,0.12);
+      transition:0.9s cubic-bezier(0.4,0,0.2,1);
+      z-index:5;
+    }
+
+    /* Moon */
+    .moon{
+      background:linear-gradient(135deg,#eee,#aaa);
+      box-shadow:inset -3px -3px 0 rgba(0,0,0,0.2),
+                 0 0 6px #aaa;
+    }
+
+    /* Moon shadow */
+    .moon-shadow{
+      position:absolute;
+      width:8px;
+      height:8px;
+      background:rgba(0,0,0,0.25);
+      border-radius:50%;
+      top:7px;
+      left:7px;
+    }
+
+    /* Night Mode */
+    .toggle-wrapper.active .knob{
+      transform:translateX(52px) rotate(360deg);
+    }
+    .toggle-wrapper.active .sky{
+      background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+    }
+    .dot-pattern {
+      background-image: radial-gradient(circle, #e5e7eb 1px, transparent 1px);
+      background-size: 20px 20px;
+    }
+  </style>
+<script language="javascript" type="text/javascript">     
+    function valid() {
+      var na3 = document.s.userid.value;
+      if(na3 == "") {
+alert("Please Enter User Name");
+document.s.userid.focus();
+return false;
+}
+      
+      var na4 = document.s.pass.value;
+      if(na4 == "") {
+alert("Please Enter Password");
+document.s.pass.focus();
+return false;
+}
+      // Password validation: at least one capital letter, one special character, one number
+      var hasCapital = /[A-Z]/.test(na4);
+      var hasSpecial = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(na4);
+      var hasNumber = /[0-9]/.test(na4);
+      if(!hasCapital || !hasSpecial || !hasNumber) {
+        alert("Password must contain:\n- At least one capital letter\n- At least one special character\n- At least one number");
+        document.s.pass.focus();
+return false;
+}
+
+      var na6 = document.s.email.value;
+      if(na6 == "") {
+        alert("Please Enter the Email");
+document.s.email.focus();
+return false;
+}
+      // Enhanced email validation
+      var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(na6)) {
+        alert("Please enter a valid email address (format: name@domain.com)");
+document.s.email.focus();
+return false;
+}	
+
+      var countryCode = document.s.country_code.value;
+      var mobileNumber = document.s.mobile.value.replace(/\D/g, ''); // Remove all non-digits
+      if(mobileNumber == "") {
+        alert("Please Enter Mobile number");
+document.s.mobile.focus();
+return false;
+}
+      if(mobileNumber.length != 10) {
+        alert("Mobile number must be exactly 10 digits");
+document.s.mobile.focus();
+return false;
+}
+      var fullMobile = countryCode + mobileNumber;
+      // Store the full mobile number with country code
+      document.s.mobile.value = fullMobile;
+
+      var dob = document.s.dob.value;
+      if(dob == "") {
+        alert("Please Enter Your Date Of Birth");
+document.s.dob.focus();
+return false;
+}
+
+      var na9 = document.s.gender.value;
+      if(na9 == "" || na9 == "--Select--") {
+        alert("Please Select Your Gender");
+document.s.gender.focus();
+return false;
+}
+
+      // Profile Image is now optional - no validation needed
+
+    }
+
+    function togglePassword() {
+      const passwordInput = document.getElementById('password');
+      const eyeIcon = document.getElementById('eye-icon');
+      if (passwordInput.type === 'password') {
+        passwordInput.type = 'text';
+        eyeIcon.textContent = 'visibility_off';
+      } else {
+        passwordInput.type = 'password';
+        eyeIcon.textContent = 'visibility';
+      }
+    }
+
+    // Restrict mobile number to max 10 digits (numbers only)
+    function restrictMobileNumber(input) {
+      let value = input.value.replace(/\D/g, ''); // Remove all non-digits
+      if (value.length > 10) {
+        value = value.substring(0, 10); // Limit to 10 digits
+      }
+      input.value = value;
+    }
+
+    // Google Sign-Up Function
+    function signUpWithGoogle() {
+      // This will be implemented with Google OAuth 2.0
+      window.location.href = '{% url "user_register" %}';
+    }
+
+    // Toggle student and non-student fields based on user type selection
+    function toggleStudentFields() {
+      const userType = document.getElementById('user_type').value;
+      const studentFields = document.getElementById('student_fields');
+      const nonStudentFields = document.getElementById('non_student_fields');
+      
+      if (userType === 'student') {
+        studentFields.classList.remove('hidden');
+        nonStudentFields.classList.add('hidden');
+        // Make student fields required
+        document.getElementById('student_id').required = true;
+        document.getElementById('college_name').required = true;
+        document.getElementById('year').required = true;
+        document.getElementById('branch').required = true;
+        document.getElementById('academic_marks').required = true;
+        document.getElementById('backlog').required = true;
+        // Make non-student fields optional
+        document.getElementById('profession').required = false;
+        document.getElementById('company').required = false;
+        document.getElementById('experience_years').required = false;
+      } else if (userType === 'non_student') {
+        studentFields.classList.add('hidden');
+        nonStudentFields.classList.remove('hidden');
+        // Make student fields optional
+        document.getElementById('student_id').required = false;
+        document.getElementById('college_name').required = false;
+        document.getElementById('year').required = false;
+        document.getElementById('branch').required = false;
+        document.getElementById('academic_marks').required = false;
+        document.getElementById('backlog').required = false;
+        // Make non-student fields optional (they're already optional by default)
+        document.getElementById('profession').required = false;
+        document.getElementById('company').required = false;
+        document.getElementById('experience_years').required = false;
+      } else {
+        // Hide both if no selection
+        studentFields.classList.add('hidden');
+        nonStudentFields.classList.add('hidden');
+      }
+    }
+</script> 
+</head>
+<body class="bg-slate-50 dark:bg-gray-900 dot-pattern text-slate-900 dark:text-slate-100 font-sans min-h-screen">
+  <!-- Header Navigation -->
+  <nav class="sticky top-0 z-50 glass border-b border-slate-200/60">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between h-20 items-center">
+        <div class="flex items-center gap-3">
+          <div class="bg-primary p-2 rounded-lg flex items-center justify-center">
+            <svg fill="none" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 22C12 22 20 18 20 12V5L12 2L4 5V12C4 18 12 22 12 22Z" stroke="white" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+              <circle cx="12" cy="12" fill="white" r="2.5"></circle>
+              <path d="M12 9.5V7M12 14.5V17M14.5 12H17M9.5 12H7" stroke="white" stroke-linecap="round" stroke-width="1.5"></path>
+            </svg>
+          </div>
+          <span class="text-2xl font-display font-bold text-slate-900 dark:text-white tracking-tight">Careerlytics</span>
+        </div>
+
+        <div class="hidden md:flex items-center space-x-10">
+        </div>
+   
+        <div class="flex items-center gap-4">
+          <div class="toggle-wrapper" id="theme-toggle">
+            <div class="sky">
+              <div class="cloud" style="animation-delay:0s"></div>
+              <div class="cloud" style="top:60px;animation-delay:7s"></div>
+              <div id="stars"></div>
+            </div>
+            <div class="knob" id="knob"></div>
+          </div>
+          <a href="{% url 'home' %}" class="bg-primary hover:bg-opacity-90 text-white px-8 py-2.5 rounded-full font-bold transition-all shadow-lg shadow-primary/20">Home</a>
+          <a class="bg-primary hover:bg-opacity-90 text-white px-8 py-2.5 rounded-full font-bold transition-all shadow-lg shadow-primary/20" href="{% url 'user_login' %}">Login</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="py-12 px-4">
+    <div class="max-w-3xl mx-auto">
+      <!-- Header Section -->
+      <div class="text-center mb-8">
+        <div class="flex justify-center mb-6">
+          <div class="w-24 h-24 bg-primary rounded-full flex items-center justify-center shadow-lg">
+            <svg fill="none" height="48" viewBox="0 0 24 24" width="48" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 22C12 22 20 18 20 12V5L12 2L4 5V12C4 18 12 22 12 22Z" stroke="white" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+              <circle cx="12" cy="12" fill="white" r="2.5"></circle>
+            </svg>
+          </div>
+        </div>
+        <h1 class="text-4xl font-display font-extrabold text-slate-900 dark:text-white mb-2">Create Your Account</h1>
+        <p class="text-slate-600 dark:text-slate-300 text-lg">Welcome to User Registration</p>
+      </div>
+
+      <!-- Success Messages -->
+     {% if messages %}
+        <div class="mb-6 p-4 bg-green-50 dark:bg-green-900/30 border border-green-200 dark:border-green-800 rounded-lg">
+                               {% for message in messages %}
+            <p class="text-green-600 dark:text-green-400 text-sm">{{ message }}</p>
+                               {% endfor %}
+        </div>
+                           {% endif %}
+ 
+      <!-- Registration Form Card -->
+      <div class="glass rounded-2xl shadow-2xl p-8 md:p-10">
+        <form name="s" method="POST" action="{% url 'users:UserRegisterAction' %}" enctype="multipart/form-data" onSubmit="return valid()">
+          {% csrf_token %}
+
+          <!-- Google Sign-Up Button -->
+          <div class="mb-8">
+            <button 
+              type="button"
+              onclick="signUpWithGoogle()"
+              class="w-full flex items-center justify-center gap-3 px-6 py-3.5 border border-slate-200 rounded-xl bg-white hover:bg-slate-50 transition-all group"
+            >
+              <svg class="w-5 h-5" viewBox="0 0 24 24">
+                <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+                <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+              </svg>
+              <span class="text-slate-700 font-medium group-hover:text-blue-600 transition-colors">Sign up with Google</span>
+            </button>
+          </div>
+
+          <!-- Divider -->
+          <div class="relative mb-8">
+            <div class="absolute inset-0 flex items-center">
+              <div class="w-full border-t border-slate-200 dark:border-gray-600"></div>
+            </div>
+            <div class="relative flex justify-center text-sm">
+              <span class="px-2 bg-white dark:bg-gray-800 text-slate-500 dark:text-slate-400">or register manually</span>
+            </div>
+          </div>
+
+          <!-- User Name Field -->
+          <div class="mb-6">
+            <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">
+              User Name <span class="text-primary">*</span>
+            </label>
+            <div class="relative">
+              <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                <span class="material-symbols-outlined text-slate-400 dark:text-slate-300">person</span>
+              </div>
+              <input 
+                type="text" 
+                id="userid" 
+                name="userid" 
+                placeholder="Enter your unique username"
+                class="w-full pl-12 pr-4 py-3.5 border border-slate-200 dark:border-gray-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 bg-white dark:bg-gray-700"
+                required
+              />
+            </div>
+          </div>
+
+          <!-- Email Address Field -->
+          <div class="mb-6">
+            <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">
+              Email Address <span class="text-primary">*</span>
+            </label>
+            <div class="relative">
+              <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                <span class="material-symbols-outlined text-slate-400 dark:text-slate-300">mail</span>
+              </div>
+              <input 
+                type="email" 
+                id="email" 
+                name="email" 
+                placeholder="name@domain.com"
+                pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"
+                class="w-full pl-12 pr-4 py-3.5 border border-slate-200 dark:border-gray-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 bg-white dark:bg-gray-700"
+                required
+              />
+            </div>
+          </div>
+
+          <!-- Mobile Number Field with Country Code -->
+          <div class="mb-6">
+            <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">
+              Mobile Number <span class="text-primary">*</span>
+            </label>
+            <div class="flex gap-3">
+              <div class="relative w-32">
+                <select 
+                  name="country_code" 
+                  id="country_code"
+                  class="w-full pl-10 pr-8 py-3.5 border border-slate-200 dark:border-gray-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-slate-900 dark:text-slate-100 bg-white dark:bg-gray-700 appearance-none"
+                  required
+                >
+                  <option value="+1">🇺🇸 +1</option>
+                  <option value="+44">🇬🇧 +44</option>
+                  <option value="+91">🇮🇳 +91</option>
+                  <option value="+86">🇨🇳 +86</option>
+                  <option value="+81">🇯🇵 +81</option>
+                  <option value="+49">🇩🇪 +49</option>
+                  <option value="+33">🇫🇷 +33</option>
+                  <option value="+39">🇮🇹 +39</option>
+                  <option value="+34">🇪🇸 +34</option>
+                  <option value="+7">🇷🇺 +7</option>
+                  <option value="+82">🇰🇷 +82</option>
+                  <option value="+61">🇦🇺 +61</option>
+                  <option value="+55">🇧🇷 +55</option>
+                  <option value="+52">🇲🇽 +52</option>
+                  <option value="+971">🇦🇪 +971</option>
+                  <option value="+966">🇸🇦 +966</option>
+                  <option value="+65">🇸🇬 +65</option>
+                  <option value="+60">🇲🇾 +60</option>
+                  <option value="+62">🇮🇩 +62</option>
+                  <option value="+66">🇹🇭 +66</option>
+                  <option value="+84">🇻🇳 +84</option>
+                  <option value="+27">🇿🇦 +27</option>
+                  <option value="+20">🇪🇬 +20</option>
+                  <option value="+90">🇹🇷 +90</option>
+                  <option value="+31">🇳🇱 +31</option>
+                  <option value="+32">🇧🇪 +32</option>
+                  <option value="+41">🇨🇭 +41</option>
+                  <option value="+46">🇸🇪 +46</option>
+                  <option value="+47">🇳🇴 +47</option>
+                  <option value="+45">🇩🇰 +45</option>
+                  <option value="+358">🇫🇮 +358</option>
+                  <option value="+64">🇳🇿 +64</option>
+                  <option value="+353">🇮🇪 +353</option>
+                  <option value="+351">🇵🇹 +351</option>
+                  <option value="+30">🇬🇷 +30</option>
+                  <option value="+48">🇵🇱 +48</option>
+                  <option value="+420">🇨🇿 +420</option>
+                  <option value="+36">🇭🇺 +36</option>
+                  <option value="+40">🇷🇴 +40</option>
+                  <option value="+385">🇭🇷 +385</option>
+                </select>
+                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                  <span class="material-symbols-outlined text-slate-400 dark:text-slate-300">public</span>
+                </div>
+                <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                  <span class="material-symbols-outlined text-slate-400 dark:text-slate-300 text-sm">expand_more</span>
+                </div>
+              </div>
+              <div class="relative flex-1">
+                <input 
+                  type="text" 
+                  id="mobile" 
+                  name="mobile" 
+                  placeholder="Enter 10 digit mobile number"
+                  oninput="restrictMobileNumber(this)"
+                  maxlength="10"
+                  pattern="[0-9]{10}"
+                  class="w-full px-4 py-3.5 border border-slate-200 dark:border-gray-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 bg-white dark:bg-gray-700"
+                  required
+                />
+              </div>
+            </div>
+          </div>
+
+          
+          <!-- Gender Field -->
+          <div class="mb-6">
+            <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">
+              Gender <span class="text-primary">*</span>
+            </label>
+            <div class="relative">
+              <select 
+                id="gender" 
+                name="gender" 
+                class="w-full px-4 py-3.5 border border-slate-200 dark:border-gray-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-slate-900 dark:text-slate-100 bg-white dark:bg-gray-700 appearance-none"
+                required
+              >
+                <option value="">--Select--</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+                <option value="Other">Other</option>
+              </select>
+              <div class="absolute inset-y-0 right-0 pr-4 flex items-center pointer-events-none">
+                <span class="material-symbols-outlined text-slate-400 dark:text-slate-300">expand_more</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Password Field -->
+          <div class="mb-6">
+            <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">
+              Password <span class="text-primary">*</span>
+            </label>
+            <div class="relative">
+              <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                <span class="material-symbols-outlined text-slate-400 dark:text-slate-300">lock</span>
+              </div>
+              <input 
+                type="password" 
+                id="password" 
+                name="pass" 
+                placeholder="Enter your password"
+                class="w-full pl-12 pr-12 py-3.5 border border-slate-200 dark:border-gray-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 bg-white dark:bg-gray-700"
+                required
+              />
+              <button 
+                type="button" 
+                onclick="togglePassword()"
+                class="absolute inset-y-0 right-0 pr-4 flex items-center cursor-pointer"
+              >
+                <span id="eye-icon" class="material-symbols-outlined text-slate-400 dark:text-slate-300">visibility</span>
+              </button>
+            </div>
+            <p class="mt-2 text-xs text-slate-500 dark:text-slate-400">
+              Password must contain: at least one capital letter, one special character, and one number
+            </p>
+          </div>
+
+          <!-- User Type Selection -->
+          <div class="mb-6">
+            <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">
+              Register as <span class="text-primary">*</span>
+            </label>
+            <div class="relative">
+              <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                <span class="material-symbols-outlined text-slate-400 dark:text-slate-300">group</span>
+              </div>
+              <select 
+                id="user_type" 
+                name="user_type" 
+                onchange="toggleStudentFields()"
+                class="w-full pl-12 pr-4 py-3.5 border border-slate-200 dark:border-gray-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 bg-white dark:bg-gray-700"
+                required
+              >
+                <option value="">Select User Type</option>
+                <option value="student">Student</option>
+                <option value="non_student">Non Student</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Student Fields (Initially Hidden) -->
+          <div id="student_fields" class="hidden space-y-6">
+            <!-- Student ID Field -->
+            <div class="mb-6">
+              <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">
+                Student ID <span class="text-primary">*</span>
+              </label>
+              <div class="relative">
+                <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                  <span class="material-symbols-outlined text-slate-400 dark:text-slate-300">school</span>
+                </div>
+                <input 
+                  type="text" 
+                  id="student_id" 
+                  name="student_id" 
+                  placeholder="Enter your Student ID"
+                  class="w-full pl-12 pr-4 py-3.5 border border-slate-200 dark:border-gray-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 bg-white dark:bg-gray-700"
+                />
+              </div>
+            </div>
+
+            <!-- College Name Field -->
+            <div class="mb-6">
+              <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">
+                College Name <span class="text-primary">*</span>
+              </label>
+              <div class="relative">
+                <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                  <span class="material-symbols-outlined text-slate-400 dark:text-slate-300">account_balance</span>
+                </div>
+                <select 
+                  id="college_name" 
+                  name="college_name" 
+                  class="w-full pl-12 pr-4 py-3.5 border border-slate-200 dark:border-gray-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-slate-900 dark:text-slate-100 bg-white dark:bg-gray-700 appearance-none"
+                >
+                  <option value="">Select College</option>
+                  <option value="SCCE">SCCE - SREE CHAITANYA COLLEGE OF ENGINEERING</option>
+                  <option value="SCIT">SCIT - SREE CHAITANYA INSTITUTE OF TECHNOLOGICAL SCIENCES</option>
+                </select>
+                <div class="absolute inset-y-0 right-0 pr-4 flex items-center pointer-events-none">
+                  <span class="material-symbols-outlined text-slate-400 dark:text-slate-300">expand_more</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Year and Branch Fields -->
+            <div class="mb-6">
+              <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">
+                Year and Branch <span class="text-primary">*</span>
+              </label>
+              <div class="flex gap-3">
+                <!-- Year Field -->
+                <div class="relative flex-1">
+                  <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                    <span class="material-symbols-outlined text-slate-400 dark:text-slate-300">calendar_month</span>
+                  </div>
+                  <select 
+                    id="year" 
+                    name="year" 
+                    class="w-full pl-12 pr-4 py-3.5 border border-slate-200 dark:border-gray-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-slate-900 dark:text-slate-100 bg-white dark:bg-gray-700 appearance-none"
+                  >
+                    <option value="">Select Year</option>
+                    <option value="1st Year">1st Year</option>
+                    <option value="2nd Year">2nd Year</option>
+                    <option value="3rd Year">3rd Year</option>
+                    <option value="4th Year">4th Year</option>
+                  </select>
+                  <div class="absolute inset-y-0 right-0 pr-4 flex items-center pointer-events-none">
+                    <span class="material-symbols-outlined text-slate-400 dark:text-slate-300">expand_more</span>
+                  </div>
+                </div>
+                
+                <!-- Branch Field -->
+                <div class="relative flex-1">
+                  <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                    <span class="material-symbols-outlined text-slate-400 dark:text-slate-300">school</span>
+                  </div>
+                  <select 
+                    id="branch" 
+                    name="branch" 
+                    class="w-full pl-12 pr-4 py-3.5 border border-slate-200 dark:border-gray-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-slate-900 dark:text-slate-100 bg-white dark:bg-gray-700 appearance-none"
+                    required
+                  >
+                    <option value="">Select Branch</option>
+                    <option value="B.Tech CSE">B.Tech CSE</option>
+                    <option value="B.Tech ECE">B.Tech ECE</option>
+                    <option value="B.Tech EEE">B.Tech EEE</option>
+                    <option value="B.Tech MECH">B.Tech MECH</option>
+                    <option value="B.Tech CIVIL">B.Tech CIVIL</option>
+                    <option value="B.Tech IT">B.Tech IT</option>
+                    <option value="BCA">BCA</option>
+                    <option value="MCA">MCA</option>
+                    <option value="M.Sc Computer Science">M.Sc Computer Science</option>
+                    <option value="Other">Other</option>
+                  </select>
+                  <div class="absolute inset-y-0 right-0 pr-4 flex items-center pointer-events-none">
+                    <span class="material-symbols-outlined text-slate-400 dark:text-slate-300">expand_more</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Academic Marks Field -->
+            <div class="mb-6">
+              <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">
+                Academic Marks (%) <span class="text-primary">*</span>
+              </label>
+              <div class="relative">
+                <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                  <span class="material-symbols-outlined text-slate-400 dark:text-slate-300">analytics</span>
+                </div>
+                <input 
+                  type="number" 
+                  id="academic_marks" 
+                  name="academic_marks" 
+                  placeholder="Enter your academic marks percentage"
+                  min="0" 
+                  max="100" 
+                  step="0.1"
+                  class="w-full pl-12 pr-4 py-3.5 border border-slate-200 dark:border-gray-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 bg-white dark:bg-gray-700"
+                />
+              </div>
+            </div>
+
+            <!-- Backlog Field -->
+            <div class="mb-6">
+              <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">
+                Backlogs <span class="text-primary">*</span>
+              </label>
+              <div class="relative">
+                <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                  <span class="material-symbols-outlined text-slate-400 dark:text-slate-300">history</span>
+                </div>
+                <input 
+                  type="number" 
+                  id="backlog" 
+                  name="backlog" 
+                  placeholder="Number of active backlogs"
+                  min="0"
+                  value="0"
+                  class="w-full pl-12 pr-4 py-3.5 border border-slate-200 dark:border-gray-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 bg-white dark:bg-gray-700"
+                />
+              </div>
+            </div>
+          </div>
+
+          <!-- Non-Student Fields (Initially Hidden) -->
+          <div id="non_student_fields" class="hidden space-y-6">
+            <!-- Profession Field -->
+            <div class="mb-6">
+              <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">
+                Profession <span class="text-slate-400 text-sm">(Optional)</span>
+              </label>
+              <div class="relative">
+                <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                  <span class="material-symbols-outlined text-slate-400 dark:text-slate-300">work</span>
+                </div>
+                <input 
+                  type="text" 
+                  id="profession" 
+                  name="profession" 
+                  placeholder="Enter your profession/job title"
+                  class="w-full pl-12 pr-4 py-3.5 border border-slate-200 dark:border-gray-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 bg-white dark:bg-gray-700"
+                />
+              </div>
+            </div>
+
+            <!-- Company Field -->
+            <div class="mb-6">
+              <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">
+                Company/Organization <span class="text-slate-400 text-sm">(Optional)</span>
+              </label>
+              <div class="relative">
+                <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                  <span class="material-symbols-outlined text-slate-400 dark:text-slate-300">business</span>
+                </div>
+                <input 
+                  type="text" 
+                  id="company" 
+                  name="company" 
+                  placeholder="Enter your company/organization name"
+                  class="w-full pl-12 pr-4 py-3.5 border border-slate-200 dark:border-gray-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 bg-white dark:bg-gray-700"
+                />
+              </div>
+            </div>
+
+            <!-- Experience Field -->
+            <div class="mb-6">
+              <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">
+                Years of Experience <span class="text-slate-400 text-sm">(Optional)</span>
+              </label>
+              <div class="relative">
+                <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                  <span class="material-symbols-outlined text-slate-400 dark:text-slate-300">history</span>
+                </div>
+                <input 
+                  type="number" 
+                  id="experience_years" 
+                  name="experience_years" 
+                  placeholder="Enter years of experience"
+                  min="0" 
+                  step="0.5"
+                  class="w-full pl-12 pr-4 py-3.5 border border-slate-200 dark:border-gray-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 bg-white dark:bg-gray-700"
+                />
+              </div>
+            </div>
+          </div>
+
+          <!-- Profile Image Field (Optional) -->
+          <div class="mb-8">
+            <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">
+              Profile Image <span class="text-slate-400 text-sm">(Optional)</span>
+            </label>
+            <div class="relative">
+              <input 
+                type="file" 
+                id="pic" 
+                name="pic" 
+                accept="image/png,image/jpeg,image/jpg,image/gif"
+                class="hidden"
+                onchange="document.getElementById('file-name').textContent = this.files[0]?.name || 'Upload a file or drag and drop'"
+              />
+              <label 
+                for="pic" 
+                class="flex flex-col items-center justify-center w-full h-40 border-2 border-dashed border-slate-300 dark:border-gray-600 rounded-xl cursor-pointer hover:border-primary hover:bg-blue-50/30 dark:hover:bg-blue-900/20 transition-colors"
+              >
+                <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                  <span class="material-symbols-outlined !text-4xl text-slate-400 dark:text-slate-300 mb-2">cloud_upload</span>
+                  <p class="mb-2 text-sm text-slate-500 dark:text-slate-400" id="file-name">Upload a file or drag and drop</p>
+                  <p class="text-xs text-slate-400 dark:text-slate-500">PNG, JPG, GIF up to 10MB</p>
+                </div>
+              </label>
+            </div>
+          </div>
+
+          <!-- Submit Button -->
+          <button 
+            type="submit"
+            class="w-full bg-primary hover:bg-opacity-90 text-white px-6 py-4 rounded-xl font-bold text-lg transition-all shadow-lg shadow-primary/20 flex items-center justify-center gap-2"
+          >
+            Complete Registration
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M14 5l7 7m0 0l-7 7m7-7H3" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+            </svg>
+          </button>
+        </form>
+      </div>
+    </div>
+  </main>
+</body>
+</html>
+ 

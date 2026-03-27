@@ -1,0 +1,96 @@
+{%load static%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Bittu Games - Home</title>
+	<link rel="icon" href="{%static 'img/Fevicon.png'%}" type="image/png">
+
+  <link rel="stylesheet" href="{%static 'vendors/bootstrap/bootstrap.min.css'%}">
+  <link rel="stylesheet" href="{%static 'vendors/fontawesome/css/all.min.css'%}">
+  <link rel="stylesheet" href="{%static 'vendors/themify-icons/themify-icons.css'%}">
+  <link rel="stylesheet" href="{%static 'vendors/linericon/style.css'%}">
+  <link rel="stylesheet" href="{%static 'vendors/owl-carousel/owl.theme.default.min.css'%}">
+  <link rel="stylesheet" href="{%static 'vendors/owl-carousel/owl.carousel.min.css'%}">
+  <link rel="stylesheet" href="{%static 'vendors/flat-icon/font/flaticon.css'%}">
+  <link rel="stylesheet" href="{%static 'vendors/nice-select/nice-select.css'%}">
+
+  <link rel="stylesheet" href="{%static 'css/style-sudoko.css'%}">
+
+  <link rel="stylesheet" href="{%static 'css/style.css'%}">
+  <script src="{% static 'js/script.js' %}"></script>
+</head>
+<body class="bg-shape">
+
+
+  <header class="header_area">
+    <div class="main_menu">
+      <nav class="navbar navbar-expand-lg navbar-light">
+        <div class="container box_1620">
+            <a class="navbar-brand logo_h" href="#"><h2>Bittu Games</h2></a>
+
+
+          <div class="collapse navbar-collapse offset" id="navbarSupportedContent">
+            <ul class="nav navbar-nav menu_nav justify-content-end">
+              <li class="nav-item"><a class="nav-link" href="">{{request.session.loggeduser}}</a></li> 
+              <li class="nav-item"><a class="nav-link" href="{%url 'sudoko'%}">Sudoku</a></li>
+              <li class="nav-item"><a class="nav-link" href="{%url 'games'%}">Games</a></li> 
+
+              <li class="nav-item"><a class="nav-link" href="{%url 'Logout'%}">Logout</a></li>
+              <!--
+
+              <li class="nav-item"><a class="nav-link" href="{%url 'sudoko'%}">Sudoku</a></li>
+              <li class="nav-item"><a class="nav-link" href="{%url 'games'%}">Games</a></li> 
+
+              -->
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </div>
+  </header>
+   {%block contents%}
+
+  {%endblock%}
+<br><br><br><br><br><br><br><br>
+  <section class="section-margin generic-margin">
+    <div class="container">
+      
+
+      <div class="row">
+          
+         
+      </div>
+    </div>
+  </section>
+
+
+
+  <footer class="footer-area">
+    <div class="container">
+      <div class="row">
+
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+         
+      </div>
+    </div>
+  </footer>
+
+
+
+
+  <script src="{%static 'vendors/jquery/jquery-3.2.1.min.js'%}"></script>
+  <script src="{%static 'vendors/bootstrap/bootstrap.bundle.min.js'%}"></script>
+  <script src="{%static 'vendors/owl-carousel/owl.carousel.min.js'%}"></script>
+  <script src="{%static 'vendors/nice-select/jquery.nice-select.min.js'%}"></script>
+  <script src="{%static 'js/jquery.ajaxchimp.min.js'%}"></script>
+  <script src="{%static 'js/mail-script.js'%}"></script>
+  <script src="{%static 'js/skrollr.min.js'%}"></script>
+  <script src="{%static 'js/main.js'%}"></script>
+</body>
+</html>

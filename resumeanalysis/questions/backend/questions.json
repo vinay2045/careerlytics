@@ -1,0 +1,640 @@
+[
+  {
+    "id": "be_001",
+    "category": "backend",
+    "difficulty": "easy",
+    "question_text": "What is the primary purpose of REST APIs?",
+    "options": [
+      "Database management",
+      "Enabling communication between different software systems",
+      "User authentication",
+      "File storage"
+    ],
+    "correct_answer": 1,
+    "explanation": "REST APIs enable different software systems to communicate with each other over HTTP using standard methods.",
+    "tags": [
+      "api",
+      "rest",
+      "architecture"
+    ]
+  },
+  {
+    "id": "be_002",
+    "category": "backend",
+    "difficulty": "medium",
+    "question_text": "Which database type is best suited for storing hierarchical data?",
+    "options": [
+      "Relational Database",
+      "NoSQL Database",
+      "In-memory Database",
+      "Graph Database"
+    ],
+    "correct_answer": 3,
+    "explanation": "Graph databases are specifically designed to store and query hierarchical or networked data efficiently.",
+    "tags": [
+      "database",
+      "graph-db",
+      "data-modeling"
+    ]
+  },
+  {
+    "id": "be_003",
+    "category": "backend",
+    "difficulty": "medium",
+    "question_text": "What is database indexing primarily used for?",
+    "options": [
+      "Data security",
+      "Improving query performance",
+      "Data backup",
+      "Data compression"
+    ],
+    "correct_answer": 1,
+    "explanation": "Database indexing improves query performance by allowing faster data retrieval without scanning entire tables.",
+    "tags": [
+      "database",
+      "indexing",
+      "performance"
+    ]
+  },
+  {
+    "id": "be_004",
+    "category": "backend",
+    "difficulty": "hard",
+    "question_text": "In microservices architecture, what pattern helps manage distributed transactions?",
+    "options": [
+      "Circuit Breaker",
+      "Saga Pattern",
+      "API Gateway",
+      "Service Discovery"
+    ],
+    "correct_answer": 1,
+    "explanation": "The Saga pattern manages distributed transactions across multiple microservices by breaking them into smaller, manageable transactions.",
+    "tags": [
+      "microservices",
+      "distributed-systems",
+      "patterns"
+    ]
+  },
+  {
+    "id": "be_005",
+    "category": "backend",
+    "difficulty": "medium",
+    "question_text": "What is the main advantage of using ORM (Object-Relational Mapping)?",
+    "options": [
+      "Faster database queries",
+      "Automatic database schema generation",
+      "Object-oriented database interaction",
+      "Built-in security features"
+    ],
+    "correct_answer": 2,
+    "explanation": "ORM allows developers to interact with databases using object-oriented programming concepts instead of raw SQL.",
+    "tags": [
+      "orm",
+      "database",
+      "programming"
+    ]
+  },
+  {
+    "id": "be_006",
+    "category": "backend",
+    "difficulty": "easy",
+    "question_text": "What does CRUD stand for?",
+    "options": [
+      "Create, Read, Update, Delete",
+      "Create, Retrieve, Upload, Download",
+      "Connect, Read, Update, Display",
+      "Create, Run, Update, Delete"
+    ],
+    "correct_answer": 0,
+    "explanation": "CRUD represents the four basic operations of persistent storage: Create, Read, Update, and Delete.",
+    "tags": [
+      "database",
+      "operations",
+      "terminology"
+    ]
+  },
+  {
+    "id": "be_007",
+    "category": "backend",
+    "difficulty": "medium",
+    "question_text": "What is the purpose of JWT (JSON Web Token) in authentication?",
+    "options": [
+      "Password encryption",
+      "Secure stateless authentication",
+      "Database session management",
+      "API rate limiting"
+    ],
+    "correct_answer": 1,
+    "explanation": "JWT provides secure stateless authentication by encoding user information in a token that can be verified without database lookup.",
+    "tags": [
+      "authentication",
+      "jwt",
+      "security"
+    ]
+  },
+  {
+    "id": "be_008",
+    "category": "backend",
+    "difficulty": "hard",
+    "question_text": "What is the CAP theorem in distributed systems?",
+    "options": [
+      "Consistency, Availability, Partition tolerance",
+      "Concurrency, Availability, Performance",
+      "Consistency, Authentication, Partition tolerance",
+      "Caching, Availability, Performance"
+    ],
+    "correct_answer": 0,
+    "explanation": "The CAP theorem states that a distributed system can only simultaneously provide two out of three guarantees: Consistency, Availability, and Partition tolerance.",
+    "tags": [
+      "distributed-systems",
+      "cap-theorem",
+      "architecture"
+    ]
+  },
+  {
+    "id": "be_009",
+    "category": "backend",
+    "difficulty": "medium",
+    "question_text": "What is the primary purpose of database connection pooling?",
+    "options": [
+      "Data encryption",
+      "Improving performance by reusing connections",
+      "Load balancing",
+      "Data backup"
+    ],
+    "correct_answer": 1,
+    "explanation": "Database connection pooling improves performance by maintaining a pool of database connections that can be reused, reducing connection overhead.",
+    "tags": [
+      "database",
+      "performance",
+      "connection-pooling"
+    ]
+  },
+  {
+    "id": "be_010",
+    "category": "backend",
+    "difficulty": "medium",
+    "question_text": "What is the main difference between SQL and NoSQL databases?",
+    "options": [
+      "Performance",
+      "Data model (structured vs unstructured)",
+      "Security features",
+      "Cost"
+    ],
+    "correct_answer": 1,
+    "explanation": "SQL databases use structured data with predefined schemas, while NoSQL databases can handle unstructured or semi-structured data.",
+    "tags": [
+      "database",
+      "sql",
+      "nosql"
+    ]
+  },
+  {
+    "id": "be_011",
+    "category": "backend",
+    "difficulty": "hard",
+    "question_text": "What is the purpose of message queues in distributed systems?",
+    "options": [
+      "Data storage",
+      "Asynchronous communication and decoupling",
+      "Load balancing",
+      "Security"
+    ],
+    "correct_answer": 1,
+    "explanation": "Message queues enable asynchronous communication between services, providing decoupling and reliability in distributed systems.",
+    "tags": [
+      "message-queues",
+      "distributed-systems",
+      "architecture"
+    ]
+  },
+  {
+    "id": "be_012",
+    "category": "backend",
+    "difficulty": "medium",
+    "question_text": "What is the primary benefit of using containerization like Docker?",
+    "options": [
+      "Better security",
+      "Environment consistency and portability",
+      "Faster performance",
+      "Automatic scaling"
+    ],
+    "correct_answer": 1,
+    "explanation": "Containerization provides environment consistency and portability, ensuring applications run the same way across different environments.",
+    "tags": [
+      "docker",
+      "containers",
+      "devops"
+    ]
+  },
+  {
+    "id": "django_001",
+    "category": "backend",
+    "difficulty": "easy",
+    "question_text": "What is Django's default database backend?",
+    "options": [
+      "SQLite",
+      "PostgreSQL",
+      "MySQL",
+      "Oracle"
+    ],
+    "correct_answer": 0,
+    "explanation": "Django uses SQLite as the default database backend for development and small projects due to its simplicity and zero-configuration setup.",
+    "tags": [
+      "django",
+      "database",
+      "sqlite",
+      "backend"
+    ]
+  },
+  {
+    "id": "django_002",
+    "category": "backend",
+    "difficulty": "easy",
+    "question_text": "Which command starts Django's development server?",
+    "options": [
+      "python runserver",
+      "python manage.py runserver",
+      "django runserver",
+      "manage.py runserver"
+    ],
+    "correct_answer": 1,
+    "explanation": "The command 'python manage.py runserver' starts Django's built-in development server for testing and development purposes.",
+    "tags": [
+      "django",
+      "development-server",
+      "manage.py",
+      "backend"
+    ]
+  },
+  {
+    "id": "django_003",
+    "category": "backend",
+    "difficulty": "easy",
+    "question_text": "What is the purpose of Django's settings.py file?",
+    "options": [
+      "Define URL patterns",
+      "Configure project settings",
+      "Define models",
+      "Handle HTTP requests"
+    ],
+    "correct_answer": 1,
+    "explanation": "The settings.py file contains all configuration settings for a Django project, including database, middleware, and application settings.",
+    "tags": [
+      "django",
+      "settings",
+      "configuration",
+      "backend"
+    ]
+  },
+  {
+    "id": "django_004",
+    "category": "backend",
+    "difficulty": "easy",
+    "question_text": "Which Django component handles URL routing?",
+    "options": [
+      "Views",
+      "Models",
+      "URLs",
+      "Templates"
+    ],
+    "correct_answer": 2,
+    "explanation": "The URLs component (urls.py) handles URL routing in Django, mapping URL patterns to view functions.",
+    "tags": [
+      "django",
+      "urls",
+      "routing",
+      "backend"
+    ]
+  },
+  {
+    "id": "django_005",
+    "category": "backend",
+    "difficulty": "easy",
+    "question_text": "What is a Django model?",
+    "options": [
+      "A database table representation",
+      "A view function",
+      "A URL pattern",
+      "A template file"
+    ],
+    "correct_answer": 0,
+    "explanation": "A Django model is a Python class that maps to a database table, representing the structure and behavior of your data.",
+    "tags": [
+      "django",
+      "models",
+      "database",
+      "orm",
+      "backend"
+    ]
+  },
+  {
+    "id": "django_006",
+    "category": "backend",
+    "difficulty": "medium",
+    "question_text": "Which ORM method retrieves all objects from a model?",
+    "options": [
+      "get_all()",
+      "all()",
+      "fetch_all()",
+      "select_all()"
+    ],
+    "correct_answer": 1,
+    "explanation": "The all() method returns a QuerySet containing all objects in the database table for the given model.",
+    "tags": [
+      "django",
+      "orm",
+      "queryset",
+      "all",
+      "backend"
+    ]
+  },
+  {
+    "id": "django_007",
+    "category": "backend",
+    "difficulty": "medium",
+    "question_text": "What is Django's template engine used for?",
+    "options": [
+      "Database queries",
+      "HTML generation",
+      "URL routing",
+      "Form handling"
+    ],
+    "correct_answer": 1,
+    "explanation": "Django's template engine is used for generating HTML output by combining templates with context data from views.",
+    "tags": [
+      "django",
+      "templates",
+      "html",
+      "backend"
+    ]
+  },
+  {
+    "id": "django_008",
+    "category": "backend",
+    "difficulty": "medium",
+    "question_text": "What is the purpose of Django middleware?",
+    "options": [
+      "Database optimization",
+      "Process requests/responses globally",
+      "Template rendering",
+      "URL routing"
+    ],
+    "correct_answer": 1,
+    "explanation": "Middleware in Django are hooks that process requests and responses globally before they reach views or after they leave views.",
+    "tags": [
+      "django",
+      "middleware",
+      "requests",
+      "responses",
+      "backend"
+    ]
+  },
+  {
+    "id": "django_009",
+    "category": "backend",
+    "difficulty": "medium",
+    "question_text": "Which command creates database migrations in Django?",
+    "options": [
+      "python manage.py migrate",
+      "python manage.py makemigrations",
+      "python manage.py syncdb",
+      "python manage.py createdb"
+    ],
+    "correct_answer": 1,
+    "explanation": "The 'python manage.py makemigrations' command creates migration files based on changes detected in your models.",
+    "tags": [
+      "django",
+      "migrations",
+      "database",
+      "makemigrations",
+      "backend"
+    ]
+  },
+  {
+    "id": "django_010",
+    "category": "backend",
+    "difficulty": "hard",
+    "question_text": "What is Django's QuerySet?",
+    "options": [
+      "A collection of database queries",
+      "A lazy-loaded collection of objects",
+      "A database connection pool",
+      "A cache system"
+    ],
+    "correct_answer": 1,
+    "explanation": "A QuerySet is a lazy-loaded collection of objects from the database that doesn't hit the database until evaluated.",
+    "tags": [
+      "django",
+      "queryset",
+      "orm",
+      "lazy-loading",
+      "backend"
+    ]
+  },
+  {
+    "id": "nodejs_001",
+    "category": "backend",
+    "difficulty": "easy",
+    "question_text": "What is Node.js built on?",
+    "options": [
+      "Java Virtual Machine",
+      "V8 JavaScript Engine",
+      "Python Interpreter",
+      ".NET Framework"
+    ],
+    "correct_answer": 1,
+    "explanation": "Node.js is built on Google's V8 JavaScript Engine, which compiles JavaScript to native machine code for high performance.",
+    "tags": [
+      "nodejs",
+      "v8",
+      "javascript-engine",
+      "backend"
+    ]
+  },
+  {
+    "id": "nodejs_002",
+    "category": "backend",
+    "difficulty": "easy",
+    "question_text": "Which module is used to create HTTP servers in Node.js?",
+    "options": [
+      "http",
+      "server",
+      "createServer",
+      "net"
+    ],
+    "correct_answer": 0,
+    "explanation": "The built-in 'http' module provides the functionality to create HTTP servers and handle HTTP requests/responses in Node.js.",
+    "tags": [
+      "nodejs",
+      "http",
+      "server",
+      "backend"
+    ]
+  },
+  {
+    "id": "nodejs_003",
+    "category": "backend",
+    "difficulty": "easy",
+    "question_text": "What is npm?",
+    "options": [
+      "Node Package Manager",
+      "Node Process Manager",
+      "Node Programming Module",
+      "Node Performance Monitor"
+    ],
+    "correct_answer": 0,
+    "explanation": "npm (Node Package Manager) is the default package manager for Node.js, used to install and manage dependencies.",
+    "tags": [
+      "nodejs",
+      "npm",
+      "package-manager",
+      "backend"
+    ]
+  },
+  {
+    "id": "nodejs_004",
+    "category": "backend",
+    "difficulty": "easy",
+    "question_text": "Which method reads a file asynchronously in Node.js?",
+    "options": [
+      "fs.readSync()",
+      "fs.readFile()",
+      "fs.read()",
+      "fs.open()"
+    ],
+    "correct_answer": 1,
+    "explanation": "fs.readFile() is the asynchronous method in Node.js's File System module for reading files without blocking the event loop.",
+    "tags": [
+      "nodejs",
+      "filesystem",
+      "async",
+      "fs",
+      "backend"
+    ]
+  },
+  {
+    "id": "nodejs_005",
+    "category": "backend",
+    "difficulty": "easy",
+    "question_text": "What is Express.js?",
+    "options": [
+      "Database ORM",
+      "Web framework for Node.js",
+      "Template engine",
+      "Testing framework"
+    ],
+    "correct_answer": 1,
+    "explanation": "Express.js is a minimal and flexible Node.js web application framework that provides robust features for web and mobile applications.",
+    "tags": [
+      "nodejs",
+      "express",
+      "web-framework",
+      "backend"
+    ]
+  },
+  {
+    "id": "nodejs_006",
+    "category": "backend",
+    "difficulty": "medium",
+    "question_text": "Which object handles incoming HTTP requests in Express?",
+    "options": [
+      "req",
+      "request",
+      "httpRequest",
+      "incoming"
+    ],
+    "correct_answer": 0,
+    "explanation": "The 'req' object in Express represents the HTTP request and has properties for the request query string, parameters, body, and HTTP headers.",
+    "tags": [
+      "nodejs",
+      "express",
+      "request",
+      "http",
+      "backend"
+    ]
+  },
+  {
+    "id": "nodejs_007",
+    "category": "backend",
+    "difficulty": "medium",
+    "question_text": "What is the event loop in Node.js?",
+    "options": [
+      "A programming loop construct",
+      "A mechanism for handling I/O operations",
+      "A database connection pool",
+      "A caching system"
+    ],
+    "correct_answer": 1,
+    "explanation": "The event loop is a mechanism that allows Node.js to perform non-blocking I/O operations by offloading operations to the system kernel whenever possible.",
+    "tags": [
+      "nodejs",
+      "event-loop",
+      "async",
+      "non-blocking",
+      "backend"
+    ]
+  },
+  {
+    "id": "nodejs_008",
+    "category": "backend",
+    "difficulty": "medium",
+    "question_text": "Which method sends a response in Express?",
+    "options": [
+      "res.send()",
+      "res.response()",
+      "res.output()",
+      "res.write()"
+    ],
+    "correct_answer": 0,
+    "explanation": "The res.send() method in Express sends the HTTP response and can send various types of data like strings, objects, or buffers.",
+    "tags": [
+      "nodejs",
+      "express",
+      "response",
+      "http",
+      "backend"
+    ]
+  },
+  {
+    "id": "nodejs_009",
+    "category": "backend",
+    "difficulty": "medium",
+    "question_text": "What is middleware in Express?",
+    "options": [
+      "Database connector",
+      "Functions that process requests",
+      "Template engine",
+      "Authentication system"
+    ],
+    "correct_answer": 1,
+    "explanation": "Middleware in Express are functions that have access to the request object, response object, and the next function in the application's request-response cycle.",
+    "tags": [
+      "nodejs",
+      "express",
+      "middleware",
+      "backend"
+    ]
+  },
+  {
+    "id": "nodejs_010",
+    "category": "backend",
+    "difficulty": "hard",
+    "question_text": "What is the purpose of package.json in Node.js?",
+    "options": [
+      "Configuration file for the project",
+      "JavaScript source file",
+      "Database schema file",
+      "HTML template file"
+    ],
+    "correct_answer": 0,
+    "explanation": "package.json is the manifest file for Node.js projects that contains project metadata, dependencies, scripts, and configuration.",
+    "tags": [
+      "nodejs",
+      "package.json",
+      "configuration",
+      "metadata",
+      "backend"
+    ]
+  }
+]

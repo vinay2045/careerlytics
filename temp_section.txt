@@ -1,0 +1,25 @@
+{% if recommended_roles %}
+<div class="bg-primary/5 border border-primary/10 rounded-2xl p-8 mt-10">
+<div class="space-y-6">
+<h3 class="font-display text-xl font-bold">Roles Recommended by Careerlytics for You</h3>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+{% for role in recommended_roles %}
+<div class="bg-white dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-xl p-4 hover:border-primary/50 hover:shadow-md transition-all">
+<div class="flex items-center justify-between mb-3">
+<h4 class="font-semibold text-slate-900 dark:text-slate-100">{{ role.role_name }}</h4>
+<span class="text-sm font-medium text-primary">{{ role.match_percentage }}% Match</span>
+</div>
+{% if role.match_reasons %}
+<div class="text-sm text-slate-600 dark:text-slate-400">
+<div class="font-medium mb-1">Why this role fits:</div>
+<ul class="list-disc list-inside space-y-1">
+{% for reason in role.match_reasons %}
+<li>{{ reason }}</li>
+{% endfor %}
+</ul>
+</div>
+{% endif %}
+</div>
+{% endfor %}
+</div>
+</div>

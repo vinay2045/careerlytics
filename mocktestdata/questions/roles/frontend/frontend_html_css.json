@@ -1,0 +1,452 @@
+[
+    {
+        "id": "frontend_001",
+        "category": "frontend",
+        "difficulty": "easy",
+        "question_text": "What does the HTML5 doctype declaration specify?",
+        "options": [
+            "The character encoding of the document",
+            "The document type and HTML version",
+            "The scripting language used",
+            "The CSS version to be used"
+        ],
+        "correct_answer": 1,
+        "explanation": "The doctype declaration <!DOCTYPE html> specifies that the document is an HTML5 document, which helps browsers render the page correctly.",
+        "tags": ["frontend", "html", "doctype", "html5"]
+    },
+    {
+        "id": "frontend_002",
+        "category": "frontend",
+        "difficulty": "easy",
+        "question_text": "Which HTML5 element is used to define navigation links?",
+        "options": [
+            "<navigation>",
+            "<nav>",
+            "<menu>",
+            "<links>"
+        ],
+        "correct_answer": 1,
+        "explanation": "The <nav> element in HTML5 is specifically designed to contain navigation links for the website or application.",
+        "tags": ["frontend", "html", "nav", "navigation", "html5"]
+    },
+    {
+        "id": "frontend_003",
+        "category": "frontend",
+        "difficulty": "easy",
+        "question_text": "What is the purpose of the <header> element in HTML5?",
+        "options": [
+            "To display the website header image",
+            "To define a container for introductory content",
+            "To create a table header",
+            "To define the main heading of the page"
+        ],
+        "correct_answer": 1,
+        "explanation": "The <header> element represents a container for introductory content or navigational links, typically containing headings, logos, or search forms.",
+        "tags": ["frontend", "html", "header", "semantic", "html5"]
+    },
+    {
+        "id": "frontend_004",
+        "category": "frontend",
+        "difficulty": "easy",
+        "question_text": "Which CSS property is used to change the text color of an element?",
+        "options": [
+            "text-color",
+            "font-color",
+            "color",
+            "text-style"
+        ],
+        "correct_answer": 2,
+        "explanation": "The 'color' property in CSS is used to set the text color of an element.",
+        "tags": ["frontend", "css", "color", "text-styling"]
+    },
+    {
+        "id": "frontend_005",
+        "category": "frontend",
+        "difficulty": "easy",
+        "question_text": "What does the CSS box model consist of?",
+        "options": [
+            "Margin, Border, Padding, Content",
+            "Width, Height, Display, Position",
+            "Top, Right, Bottom, Left",
+            "Flex, Grid, Block, Inline"
+        ],
+        "correct_answer": 0,
+        "explanation": "The CSS box model consists of content, padding, border, and margin, which determine the space an element occupies.",
+        "tags": ["frontend", "css", "box-model", "layout"]
+    },
+    {
+        "id": "frontend_006",
+        "category": "frontend",
+        "difficulty": "medium",
+        "question_text": "Which HTML5 element is best suited for marking up a single piece of content that can stand alone?",
+        "options": [
+            "<section>",
+            "<article>",
+            "<div>",
+            "<span>"
+        ],
+        "correct_answer": 1,
+        "explanation": "The <article> element represents a self-contained composition that could be distributed and reused independently.",
+        "tags": ["frontend", "html", "article", "semantic", "html5"]
+    },
+    {
+        "id": "frontend_007",
+        "category": "frontend",
+        "difficulty": "medium",
+        "question_text": "Which CSS property is used to create space around elements?",
+        "options": [
+            "spacing",
+            "gap",
+            "margin",
+            "padding"
+        ],
+        "correct_answer": 2,
+        "explanation": "The 'margin' property creates space around elements, outside of any defined borders.",
+        "tags": ["frontend", "css", "margin", "spacing", "layout"]
+    },
+    {
+        "id": "frontend_008",
+        "category": "frontend",
+        "difficulty": "medium",
+        "question_text": "What is the purpose of the <main> element in HTML5?",
+        "options": [
+            "To define the main content area",
+            "To create navigation menu",
+            "To add footer content",
+            "To display sidebar content"
+        ],
+        "correct_answer": 0,
+        "explanation": "The <main> element specifies the main content of a document, and there should only be one <main> element per page.",
+        "tags": ["frontend", "html", "main", "semantic", "html5"]
+    },
+    {
+        "id": "frontend_009",
+        "category": "frontend",
+        "difficulty": "medium",
+        "question_text": "Which CSS property controls the transparency of an element?",
+        "options": [
+            "transparency",
+            "visible",
+            "opacity",
+            "alpha"
+        ],
+        "correct_answer": 2,
+        "explanation": "The 'opacity' property sets the transparency level of an element, with values from 0 (fully transparent) to 1 (fully opaque).",
+        "tags": ["frontend", "css", "opacity", "transparency"]
+    },
+    {
+        "id": "frontend_010",
+        "category": "frontend",
+        "difficulty": "hard",
+        "question_text": "What is the difference between <div> and <span>?",
+        "options": [
+            "No difference",
+            "<div> is inline, <span> is block",
+            "<div> is block, <span> is inline",
+            "<span> can contain block elements"
+        ],
+        "correct_answer": 2,
+        "explanation": "<div> is a block-level element that takes up the full width available, while <span> is an inline element that only takes up as much width as necessary.",
+        "tags": ["frontend", "html", "div", "span", "block", "inline"]
+    },
+    {
+        "id": "frontend_011",
+        "category": "frontend",
+        "difficulty": "easy",
+        "question_text": "Which HTML5 element is used for self-contained content?",
+        "options": [
+            "<section>",
+            "<div>",
+            "<span>",
+            "<p>"
+        ],
+        "correct_answer": 0,
+        "explanation": "The <section> element represents a standalone section of content, typically with a heading.",
+        "tags": ["frontend", "html", "section", "semantic", "html5"]
+    },
+    {
+        "id": "frontend_012",
+        "category": "frontend",
+        "difficulty": "easy",
+        "question_text": "What is the purpose of the <aside> element?",
+        "options": [
+            "Content tangentially related",
+            "Main content area",
+            "Navigation links",
+            "Footer content"
+        ],
+        "correct_answer": 0,
+        "explanation": "The <aside> element represents content that is tangentially related to the content around it, like sidebars.",
+        "tags": ["frontend", "html", "aside", "semantic", "html5"]
+    },
+    {
+        "id": "frontend_013",
+        "category": "frontend",
+        "difficulty": "easy",
+        "question_text": "Which CSS property controls text alignment?",
+        "options": [
+            "text-align",
+            "align-text",
+            "text-position",
+            "horizontal-align"
+        ],
+        "correct_answer": 0,
+        "explanation": "The text-align property sets the horizontal alignment of inline-level or table-cell boxes.",
+        "tags": ["frontend", "css", "text-align", "typography"]
+    },
+    {
+        "id": "frontend_014",
+        "category": "frontend",
+        "difficulty": "easy",
+        "question_text": "What is the purpose of the <footer> element?",
+        "options": [
+            "Define footer content",
+            "Create navigation",
+            "Add sidebar",
+            "Display header"
+        ],
+        "correct_answer": 0,
+        "explanation": "The <footer> element represents the footer of a document or section, typically containing copyright or contact information.",
+        "tags": ["frontend", "html", "footer", "semantic", "html5"]
+    },
+    {
+        "id": "frontend_015",
+        "category": "frontend",
+        "difficulty": "medium",
+        "question_text": "Which CSS property creates rounded corners?",
+        "options": [
+            "border-radius",
+            "corner-radius",
+            "round-corners",
+            "border-curve"
+        ],
+        "correct_answer": 0,
+        "explanation": "The border-radius property rounds the corners of an element's outer border edge.",
+        "tags": ["frontend", "css", "border-radius", "styling"]
+    },
+    {
+        "id": "frontend_016",
+        "category": "frontend",
+        "difficulty": "medium",
+        "question_text": "What is the purpose of the <figure> element?",
+        "options": [
+            "Encapsulate figures and captions",
+            "Create tables",
+            "Define sections",
+            "Add navigation"
+        ],
+        "correct_answer": 0,
+        "explanation": "The <figure> element represents self-contained content, optionally with a caption, like images or diagrams.",
+        "tags": ["frontend", "html", "figure", "semantic", "html5"]
+    },
+    {
+        "id": "frontend_017",
+        "category": "frontend",
+        "difficulty": "medium",
+        "question_text": "Which CSS property controls element positioning?",
+        "options": [
+            "position",
+            "placement",
+            "location",
+            "arrange"
+        ],
+        "correct_answer": 0,
+        "explanation": "The position property specifies how an element is positioned in a document: static, relative, absolute, fixed, or sticky.",
+        "tags": ["frontend", "css", "position", "layout"]
+    },
+    {
+        "id": "frontend_018",
+        "category": "frontend",
+        "difficulty": "medium",
+        "question_text": "What is the purpose of the <figcaption> element?",
+        "options": [
+            "Caption for figures",
+            "Image description",
+            "Table header",
+            "Section heading"
+        ],
+        "correct_answer": 0,
+        "explanation": "The <figcaption> element represents a caption or legend for a <figure> element.",
+        "tags": ["frontend", "html", "figcaption", "semantic", "html5"]
+    },
+    {
+        "id": "frontend_019",
+        "category": "frontend",
+        "difficulty": "medium",
+        "question_text": "Which CSS property creates shadows?",
+        "options": [
+            "box-shadow",
+            "text-shadow",
+            "element-shadow",
+            "drop-shadow"
+        ],
+        "correct_answer": 0,
+        "explanation": "The box-shadow property adds shadow effects around an element's frame.",
+        "tags": ["frontend", "css", "box-shadow", "visual-effects"]
+    },
+    {
+        "id": "frontend_020",
+        "category": "frontend",
+        "difficulty": "hard",
+        "question_text": "What is the purpose of CSS Grid?",
+        "options": [
+            "Two-dimensional layout system",
+            "Image gallery",
+            "Navigation menu",
+            "Table replacement"
+        ],
+        "correct_answer": 0,
+        "explanation": "CSS Grid is a two-dimensional layout system for creating complex responsive layouts with rows and columns.",
+        "tags": ["frontend", "css", "grid", "layout"]
+    },
+    {
+        "id": "frontend_021",
+        "category": "frontend",
+        "difficulty": "hard",
+        "question_text": "What is the purpose of the <details> element?",
+        "options": [
+            "Disclosure widget",
+            "Definition list",
+            "Navigation menu",
+            "Form section"
+        ],
+        "correct_answer": 0,
+        "explanation": "The <details> element creates a disclosure widget in which information is only visible when the widget is toggled into an open state.",
+        "tags": ["frontend", "html", "details", "interactive", "html5"]
+    },
+    {
+        "id": "frontend_022",
+        "category": "frontend",
+        "difficulty": "hard",
+        "question_text": "What is the purpose of CSS Flexbox?",
+        "options": [
+            "One-dimensional layout system",
+            "3D transformations",
+            "Animation framework",
+            "Typography system"
+        ],
+        "correct_answer": 0,
+        "explanation": "CSS Flexbox is a one-dimensional layout method for arranging items in rows or columns.",
+        "tags": ["frontend", "css", "flexbox", "layout"]
+    },
+    {
+        "id": "frontend_023",
+        "category": "frontend",
+        "difficulty": "hard",
+        "question_text": "What is the purpose of the <time> element?",
+        "options": [
+            "Display time/date",
+            "Create timer",
+            "Schedule events",
+            "Show duration"
+        ],
+        "correct_answer": 0,
+        "explanation": "The <time> element represents a specific period in time, which can be machine-readable.",
+        "tags": ["frontend", "html", "time", "semantic", "html5"]
+    },
+    {
+        "id": "frontend_024",
+        "category": "frontend",
+        "difficulty": "hard",
+        "question_text": "What is the purpose of CSS transitions?",
+        "options": [
+            "Animate property changes",
+            "Page navigation",
+            "Layout changes",
+            "Color effects"
+        ],
+        "correct_answer": 0,
+        "explanation": "CSS transitions allow property changes to occur smoothly over a specified duration.",
+        "tags": ["frontend", "css", "transitions", "animations"]
+    },
+    {
+        "id": "frontend_025",
+        "category": "frontend",
+        "difficulty": "medium",
+        "question_text": "Which HTML5 element defines navigation links?",
+        "options": [
+            "<nav>",
+            "<navigation>",
+            "<menu>",
+            "<links>"
+        ],
+        "correct_answer": 0,
+        "explanation": "The <nav> element represents a section of a page that links to other pages or parts within the page.",
+        "tags": ["frontend", "html", "nav", "semantic", "html5"]
+    },
+    {
+        "id": "frontend_026",
+        "category": "frontend",
+        "difficulty": "medium",
+        "question_text": "Which CSS property controls element display?",
+        "options": [
+            "display",
+            "show",
+            "visibility",
+            "appearance"
+        ],
+        "correct_answer": 0,
+        "explanation": "The display property specifies how an element is displayed: block, inline, inline-block, flex, grid, or none.",
+        "tags": ["frontend", "css", "display", "layout"]
+    },
+    {
+        "id": "frontend_027",
+        "category": "frontend",
+        "difficulty": "medium",
+        "question_text": "What is the purpose of the <mark> element?",
+        "options": [
+            "Highlight text",
+            "Create bookmarks",
+            "Add emphasis",
+            "Define sections"
+        ],
+        "correct_answer": 0,
+        "explanation": "The <mark> element represents text that should be highlighted or marked for reference purposes.",
+        "tags": ["frontend", "html", "mark", "semantic", "html5"]
+    },
+    {
+        "id": "frontend_028",
+        "category": "frontend",
+        "difficulty": "medium",
+        "question_text": "Which CSS property controls z-index stacking?",
+        "options": [
+            "z-index",
+            "stack-order",
+            "layer-level",
+            "depth"
+        ],
+        "correct_answer": 0,
+        "explanation": "The z-index property specifies the stack order of positioned elements along the z-axis.",
+        "tags": ["frontend", "css", "z-index", "stacking"]
+    },
+    {
+        "id": "frontend_029",
+        "category": "frontend",
+        "difficulty": "easy",
+        "question_text": "What is the purpose of the <meta> tag?",
+        "options": [
+            "Metadata about document",
+            "Style definitions",
+            "Script inclusion",
+            "Link references"
+        ],
+        "correct_answer": 0,
+        "explanation": "The <meta> tag provides metadata about the HTML document, such as charset, description, and keywords.",
+        "tags": ["frontend", "html", "meta", "metadata"]
+    },
+    {
+        "id": "frontend_030",
+        "category": "frontend",
+        "difficulty": "medium",
+        "question_text": "What is the purpose of CSS media queries?",
+        "options": [
+            "Responsive design",
+            "Print styles",
+            "Animation triggers",
+            "Font loading"
+        ],
+        "correct_answer": 0,
+        "explanation": "CSS media queries apply different styles based on device characteristics like screen size, orientation, or resolution.",
+        "tags": ["frontend", "css", "media-queries", "responsive-design"]
+    }
+]

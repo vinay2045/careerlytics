@@ -1,0 +1,11 @@
+{
+  "category": "english",
+  "questions": [
+    {"text": "English Q1: Choose correct form: He ____ to school.", "options": ["go","goes","gone","going"], "correct_index": 1},
+    {"text": "English Q2: Antonym of 'rapid'", "options": ["fast","quick","slow","swift"], "correct_index": 2},
+    {"text": "English Q3: Fill in: I have ____ apple.", "options": ["a","an","the","no"], "correct_index": 1},
+    {"text": "English Q4: Choose correct: They're going __ park.", "options": ["to","too","two","at"], "correct_index": 0},
+    {"text": "English Q5: Plural of 'child'", "options": ["childs","children","childes","child"], "correct_index": 1},
+    {"text": "English Q6: Identify verb: The sun shines.", "options": ["sun","shines","the","."], "correct_index": 1}
+  ]
+}

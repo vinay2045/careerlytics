@@ -1,0 +1,452 @@
+[
+    {
+        "id": "js_001",
+        "category": "javascript",
+        "difficulty": "easy",
+        "question_text": "Which keyword declares a block-scoped variable in ES6?",
+        "options": [
+            "var",
+            "let",
+            "const",
+            "block"
+        ],
+        "correct_answer": 1,
+        "explanation": "The 'let' keyword declares block-scoped variables in ES6, unlike 'var' which is function-scoped.",
+        "tags": ["javascript", "es6", "let", "block-scope"]
+    },
+    {
+        "id": "js_002",
+        "category": "javascript",
+        "difficulty": "easy",
+        "question_text": "What is the purpose of arrow functions in ES6?",
+        "options": [
+            "Shorter syntax for function expressions",
+            "Create classes",
+            "Define modules",
+            "Handle events"
+        ],
+        "correct_answer": 0,
+        "explanation": "Arrow functions provide a shorter syntax for writing function expressions and lexically bind the 'this' value.",
+        "tags": ["javascript", "es6", "arrow-functions", "syntax"]
+    },
+    {
+        "id": "js_003",
+        "category": "javascript",
+        "difficulty": "easy",
+        "question_text": "Which method creates a new array from an iterable object?",
+        "options": [
+            "Array.from()",
+            "Array.create()",
+            "Array.new()",
+            "Array.make()"
+        ],
+        "correct_answer": 0,
+        "explanation": "Array.from() creates a new array instance from an array-like or iterable object.",
+        "tags": ["javascript", "array", "es6", "array-from"]
+    },
+    {
+        "id": "js_004",
+        "category": "javascript",
+        "difficulty": "easy",
+        "question_text": "What is template literal in ES6?",
+        "options": [
+            "String with backticks",
+            "String with quotes",
+            "String with double quotes",
+            "String with single quotes"
+        ],
+        "correct_answer": 0,
+        "explanation": "Template literals are string literals allowing embedded expressions, denoted by backticks (`) instead of quotes.",
+        "tags": ["javascript", "es6", "template-literals", "strings"]
+    },
+    {
+        "id": "js_005",
+        "category": "javascript",
+        "difficulty": "easy",
+        "question_text": "Which keyword declares a constant in ES6?",
+        "options": [
+            "var",
+            "let",
+            "const",
+            "final"
+        ],
+        "correct_answer": 2,
+        "explanation": "The 'const' keyword declares a constant reference to a value that cannot be reassigned in ES6.",
+        "tags": ["javascript", "es6", "const", "constant"]
+    },
+    {
+        "id": "js_006",
+        "category": "javascript",
+        "difficulty": "medium",
+        "question_text": "What is destructuring assignment?",
+        "options": [
+            "Extract values from arrays/objects",
+            "Create new objects",
+            "Delete object properties",
+            "Merge objects"
+        ],
+        "correct_answer": 0,
+        "explanation": "Destructuring assignment extracts values from arrays or objects into distinct variables using a concise syntax.",
+        "tags": ["javascript", "es6", "destructuring", "assignment"]
+    },
+    {
+        "id": "js_007",
+        "category": "javascript",
+        "difficulty": "medium",
+        "question_text": "Which feature allows default parameter values in ES6?",
+        "options": [
+            "Default parameters",
+            "Optional parameters",
+            "Null parameters",
+            "Undefined parameters"
+        ],
+        "correct_answer": 0,
+        "explanation": "ES6 allows default parameter values, which are used when arguments are not provided or are undefined.",
+        "tags": ["javascript", "es6", "default-parameters", "functions"]
+    },
+    {
+        "id": "js_008",
+        "category": "javascript",
+        "difficulty": "medium",
+        "question_text": "What is the spread operator in ES6?",
+        "options": [
+            "Expands iterable into elements",
+            "Compresses array elements",
+            "Creates new array",
+            "Removes duplicates"
+        ],
+        "correct_answer": 0,
+        "explanation": "The spread operator (...) expands an iterable (like an array) into individual elements where zero or more arguments are expected.",
+        "tags": ["javascript", "es6", "spread-operator", "syntax"]
+    },
+    {
+        "id": "js_009",
+        "category": "javascript",
+        "difficulty": "medium",
+        "question_text": "Which keyword defines a class in ES6?",
+        "options": [
+            "class",
+            "Class",
+            "object",
+            "constructor"
+        ],
+        "correct_answer": 0,
+        "explanation": "The 'class' keyword in ES6 provides a more convenient and clearer syntax for creating objects and dealing with inheritance.",
+        "tags": ["javascript", "es6", "class", "object-oriented"]
+    },
+    {
+        "id": "js_010",
+        "category": "javascript",
+        "difficulty": "hard",
+        "question_text": "What is the purpose of Promise in ES6?",
+        "options": [
+            "Handle asynchronous operations",
+            "Create synchronous functions",
+            "Define constants",
+            "Handle errors"
+        ],
+        "correct_answer": 0,
+        "explanation": "Promise represents the eventual completion (or failure) of an asynchronous operation and its resulting value.",
+        "tags": ["javascript", "es6", "promise", "asynchronous"]
+    },
+    {
+        "id": "js_011",
+        "category": "javascript",
+        "difficulty": "easy",
+        "question_text": "What is the result of typeof null?",
+        "options": [
+            "null",
+            "undefined",
+            "object",
+            "error"
+        ],
+        "correct_answer": 2,
+        "explanation": "In JavaScript, typeof null returns 'object', which is a known bug in the language since its early days.",
+        "tags": ["javascript", "typeof", "null", "type-coercion"]
+    },
+    {
+        "id": "js_012",
+        "category": "javascript",
+        "difficulty": "easy",
+        "question_text": "Which method adds an element to the end of an array?",
+        "options": [
+            "push()",
+            "pop()",
+            "shift()",
+            "unshift()"
+        ],
+        "correct_answer": 0,
+        "explanation": "The push() method adds one or more elements to the end of an array and returns the new length.",
+        "tags": ["javascript", "array", "push", "methods"]
+    },
+    {
+        "id": "js_013",
+        "category": "javascript",
+        "difficulty": "easy",
+        "question_text": "What is the result of 2 + '2'?",
+        "options": [
+            "4",
+            "'22'",
+            "error",
+            "undefined"
+        ],
+        "correct_answer": 1,
+        "explanation": "When a number is added to a string, JavaScript converts the number to a string and concatenates them.",
+        "tags": ["javascript", "type-coercion", "concatenation", "operators"]
+    },
+    {
+        "id": "js_014",
+        "category": "javascript",
+        "difficulty": "easy",
+        "question_text": "Which keyword declares a function in JavaScript?",
+        "options": [
+            "function",
+            "func",
+            "def",
+            "method"
+        ],
+        "correct_answer": 0,
+        "explanation": "The 'function' keyword is used to declare a function in JavaScript.",
+        "tags": ["javascript", "function", "declaration", "keywords"]
+    },
+    {
+        "id": "js_015",
+        "category": "javascript",
+        "difficulty": "medium",
+        "question_text": "What is a closure in JavaScript?",
+        "options": [
+            "Function with access to outer scope",
+            "Private method",
+            "Loop construct",
+            "Class constructor"
+        ],
+        "correct_answer": 0,
+        "explanation": "A closure is a function that has access to variables in its outer (enclosing) lexical scope even when the outer function has returned.",
+        "tags": ["javascript", "closure", "scope", "functions"]
+    },
+    {
+        "id": "js_016",
+        "category": "javascript",
+        "difficulty": "medium",
+        "question_text": "Which method removes the last element from an array?",
+        "options": [
+            "pop()",
+            "push()",
+            "shift()",
+            "splice()"
+        ],
+        "correct_answer": 0,
+        "explanation": "The pop() method removes the last element from an array and returns that element.",
+        "tags": ["javascript", "array", "pop", "methods"]
+    },
+    {
+        "id": "js_017",
+        "category": "javascript",
+        "difficulty": "medium",
+        "question_text": "What is the purpose of the 'this' keyword?",
+        "options": [
+            "Reference to current object",
+            "Reference to function",
+            "Reference to variable",
+            "Reference to class"
+        ],
+        "correct_answer": 0,
+        "explanation": "The 'this' keyword refers to the object it belongs to, depending on how a function is called.",
+        "tags": ["javascript", "this", "context", "object-reference"]
+    },
+    {
+        "id": "js_018",
+        "category": "javascript",
+        "difficulty": "medium",
+        "question_text": "Which operator checks for strict equality?",
+        "options": [
+            "==",
+            "===",
+            "!=",
+            "!=="
+        ],
+        "correct_answer": 1,
+        "explanation": "The === operator checks for strict equality without type coercion, comparing both value and type.",
+        "tags": ["javascript", "strict-equality", "=== ", "comparison"]
+    },
+    {
+        "id": "js_019",
+        "category": "javascript",
+        "difficulty": "medium",
+        "question_text": "What is the result of [] == []?",
+        "options": [
+            "true",
+            "false",
+            "error",
+            "undefined"
+        ],
+        "correct_answer": 1,
+        "explanation": "Arrays are objects, and two different objects are never equal even if they have the same contents.",
+        "tags": ["javascript", "array-comparison", "object-comparison", "equality"]
+    },
+    {
+        "id": "js_020",
+        "category": "javascript",
+        "difficulty": "hard",
+        "question_text": "What is hoisting in JavaScript?",
+        "options": [
+            "Moving declarations to top",
+            "Type conversion",
+            "Memory allocation",
+            "Function calling"
+        ],
+        "correct_answer": 0,
+        "explanation": "Hoisting is JavaScript's behavior of moving variable and function declarations to the top of their containing scope.",
+        "tags": ["javascript", "hoisting", "scope", "declarations"]
+    },
+    {
+        "id": "js_021",
+        "category": "javascript",
+        "difficulty": "hard",
+        "question_text": "What is the difference between let and const?",
+        "options": [
+            "let can be reassigned, const cannot",
+            "const is faster than let",
+            "let is block-scoped, const is function-scoped",
+            "No difference"
+        ],
+        "correct_answer": 0,
+        "explanation": "Variables declared with let can be reassigned, while const variables cannot be reassigned after declaration.",
+        "tags": ["javascript", "let", "const", "variables"]
+    },
+    {
+        "id": "js_022",
+        "category": "javascript",
+        "difficulty": "hard",
+        "question_text": "What is the purpose of async/await?",
+        "options": [
+            "Handle asynchronous operations",
+            "Create synchronous functions",
+            "Define constants",
+            "Handle errors"
+        ],
+        "correct_answer": 0,
+        "explanation": "async/await is syntactic sugar built on promises that makes asynchronous code look and behave more like synchronous code.",
+        "tags": ["javascript", "async", "await", "asynchronous", "promises"]
+    },
+    {
+        "id": "js_023",
+        "category": "javascript",
+        "difficulty": "hard",
+        "question_text": "What is the result of '5' - 2?",
+        "options": [
+            "3",
+            "'3'",
+            "error",
+            "undefined"
+        ],
+        "correct_answer": 0,
+        "explanation": "When subtracting, JavaScript converts the string to a number, so '5' - 2 results in 3.",
+        "tags": ["javascript", "type-coercion", "subtraction", "operators"]
+    },
+    {
+        "id": "js_024",
+        "category": "javascript",
+        "difficulty": "hard",
+        "question_text": "What is the event loop in JavaScript?",
+        "options": [
+            "Mechanism for handling async operations",
+            "Loop construct",
+            "Event handler",
+            "Callback function"
+        ],
+        "correct_answer": 0,
+        "explanation": "The event loop is a mechanism that handles the execution of multiple chunks of your program over time, including callbacks and promises.",
+        "tags": ["javascript", "event-loop", "asynchronous", "concurrency"]
+    },
+    {
+        "id": "js_025",
+        "category": "javascript",
+        "difficulty": "medium",
+        "question_text": "Which method joins array elements into a string?",
+        "options": [
+            "join()",
+            "concat()",
+            "toString()",
+            "split()"
+        ],
+        "correct_answer": 0,
+        "explanation": "The join() method creates and returns a new string by concatenating all elements in an array, separated by commas or a specified separator.",
+        "tags": ["javascript", "array", "join", "methods"]
+    },
+    {
+        "id": "js_026",
+        "category": "javascript",
+        "difficulty": "medium",
+        "question_text": "What is the result of typeof undefined?",
+        "options": [
+            "undefined",
+            "null",
+            "object",
+            "error"
+        ],
+        "correct_answer": 0,
+        "explanation": "typeof undefined correctly returns 'undefined' in JavaScript.",
+        "tags": ["javascript", "typeof", "undefined", "type-checking"]
+    },
+    {
+        "id": "js_027",
+        "category": "javascript",
+        "difficulty": "medium",
+        "question_text": "Which method creates a new array?",
+        "options": [
+            "Array.from()",
+            "Array.create()",
+            "new Array()",
+            "Array.make()"
+        ],
+        "correct_answer": 0,
+        "explanation": "Array.from() creates a new array instance from an array-like or iterable object.",
+        "tags": ["javascript", "array", "array-from", "creation"]
+    },
+    {
+        "id": "js_028",
+        "category": "javascript",
+        "difficulty": "easy",
+        "question_text": "What is the result of 3 * '3'?",
+        "options": [
+            "9",
+            "'33'",
+            "error",
+            "undefined"
+        ],
+        "correct_answer": 0,
+        "explanation": "When multiplying, JavaScript converts the string to a number, so 3 * '3' results in 9.",
+        "tags": ["javascript", "type-coercion", "multiplication", "operators"]
+    },
+    {
+        "id": "js_029",
+        "category": "javascript",
+        "difficulty": "easy",
+        "question_text": "Which keyword declares a variable with function scope?",
+        "options": [
+            "var",
+            "let",
+            "const",
+            "function"
+        ],
+        "correct_answer": 0,
+        "explanation": "The 'var' keyword declares a variable with function scope (or global scope if declared outside a function).",
+        "tags": ["javascript", "var", "scope", "variables"]
+    },
+    {
+        "id": "js_030",
+        "category": "javascript",
+        "difficulty": "medium",
+        "question_text": "What is the purpose of the map() method?",
+        "options": [
+            "Transform array elements",
+            "Filter array elements",
+            "Reduce array to single value",
+            "Check array condition"
+        ],
+        "correct_answer": 0,
+        "explanation": "The map() method creates a new array by applying a function to each element of the original array.",
+        "tags": ["javascript", "map", "array-methods", "transformation"]
+    }
+]

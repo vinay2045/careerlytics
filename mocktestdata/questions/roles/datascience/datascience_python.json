@@ -1,0 +1,452 @@
+[
+    {
+        "id": "ds_001",
+        "category": "datascience",
+        "difficulty": "easy",
+        "question_text": "Which library is primarily used for data manipulation in Python?",
+        "options": [
+            "NumPy",
+            "Pandas",
+            "Matplotlib",
+            "Scikit-learn"
+        ],
+        "correct_answer": 1,
+        "explanation": "Pandas is the primary library for data manipulation in Python, providing powerful data structures like DataFrame for handling structured data.",
+        "tags": ["datascience", "pandas", "data-manipulation", "python"]
+    },
+    {
+        "id": "ds_002",
+        "category": "datascience",
+        "difficulty": "easy",
+        "question_text": "What is NumPy?",
+        "options": [
+            "Data visualization library",
+            "Numerical computing library",
+            "Machine learning library",
+            "Web framework"
+        ],
+        "correct_answer": 1,
+        "explanation": "NumPy is a fundamental package for scientific computing in Python, providing support for large multi-dimensional arrays and matrices.",
+        "tags": ["datascience", "numpy", "numerical-computing", "python"]
+    },
+    {
+        "id": "ds_003",
+        "category": "datascience",
+        "difficulty": "easy",
+        "question_text": "Which library is used for data visualization?",
+        "options": [
+            "Pandas",
+            "NumPy",
+            "Matplotlib",
+            "TensorFlow"
+        ],
+        "correct_answer": 2,
+        "explanation": "Matplotlib is the most widely used data visualization library in Python for creating static, animated, and interactive visualizations.",
+        "tags": ["datascience", "matplotlib", "visualization", "python"]
+    },
+    {
+        "id": "ds_004",
+        "category": "datascience",
+        "difficulty": "easy",
+        "question_text": "What is a DataFrame in Pandas?",
+        "options": [
+            "2D labeled data structure",
+            "1D array",
+            "3D tensor",
+            "Database connection"
+        ],
+        "correct_answer": 0,
+        "explanation": "A DataFrame is a 2D labeled data structure in Pandas, similar to a spreadsheet or SQL table with rows and columns.",
+        "tags": ["datascience", "pandas", "dataframe", "data-structure"]
+    },
+    {
+        "id": "ds_005",
+        "category": "datascience",
+        "difficulty": "easy",
+        "question_text": "Which method reads a CSV file in Pandas?",
+        "options": [
+            "read_csv()",
+            "load_csv()",
+            "open_csv()",
+            "import_csv()"
+        ],
+        "correct_answer": 0,
+        "explanation": "The read_csv() function in Pandas is used to read comma-separated values (CSV) files into a DataFrame.",
+        "tags": ["datascience", "pandas", "csv", "file-io", "python"]
+    },
+    {
+        "id": "ds_006",
+        "category": "datascience",
+        "difficulty": "medium",
+        "question_text": "What is Scikit-learn used for?",
+        "options": [
+            "Web development",
+            "Machine learning",
+            "Database management",
+            "Text editing"
+        ],
+        "correct_answer": 1,
+        "explanation": "Scikit-learn is a machine learning library for Python that provides simple and efficient tools for data mining and data analysis.",
+        "tags": ["datascience", "scikit-learn", "machine-learning", "python"]
+    },
+    {
+        "id": "ds_007",
+        "category": "datascience",
+        "difficulty": "medium",
+        "question_text": "What is the purpose of train_test_split?",
+        "options": [
+            "Split data into training and testing sets",
+            "Combine multiple datasets",
+            "Clean missing data",
+            "Normalize data"
+        ],
+        "correct_answer": 0,
+        "explanation": "train_test_split is a function in Scikit-learn that splits arrays or matrices into random train and test subsets.",
+        "tags": ["datascience", "scikit-learn", "train-test-split", "machine-learning"]
+    },
+    {
+        "id": "ds_008",
+        "category": "datascience",
+        "difficulty": "medium",
+        "question_text": "What is a Series in Pandas?",
+        "options": [
+            "1D labeled array",
+            "2D array",
+            "3D tensor",
+            "Dictionary"
+        ],
+        "correct_answer": 0,
+        "explanation": "A Series is a one-dimensional labeled array in Pandas, capable of holding any data type.",
+        "tags": ["datascience", "pandas", "series", "data-structure"]
+    },
+    {
+        "id": "ds_009",
+        "category": "datascience",
+        "difficulty": "medium",
+        "question_text": "Which library is used for deep learning?",
+        "options": [
+            "Pandas",
+            "NumPy",
+            "TensorFlow",
+            "Matplotlib"
+        ],
+        "correct_answer": 2,
+        "explanation": "TensorFlow is an open-source library for deep learning and machine learning developed by Google.",
+        "tags": ["datascience", "tensorflow", "deep-learning", "machine-learning"]
+    },
+    {
+        "id": "ds_010",
+        "category": "datascience",
+        "difficulty": "hard",
+        "question_text": "What is overfitting in machine learning?",
+        "options": [
+            "Model performs well on training data but poorly on new data",
+            "Model performs poorly on both training and test data",
+            "Model is too simple",
+            "Model requires too much data"
+        ],
+        "correct_answer": 0,
+        "explanation": "Overfitting occurs when a machine learning model learns the training data too well, including noise, and fails to generalize to new data.",
+        "tags": ["datascience", "overfitting", "machine-learning", "model-evaluation"]
+    },
+    {
+        "id": "ds_011",
+        "category": "datascience",
+        "difficulty": "easy",
+        "question_text": "Which library is used for statistical computing in Python?",
+        "options": [
+            "SciPy",
+            "Pandas",
+            "Matplotlib",
+            "TensorFlow"
+        ],
+        "correct_answer": 0,
+        "explanation": "SciPy is a library for scientific and technical computing that provides modules for optimization, linear algebra, and statistics.",
+        "tags": ["datascience", "scipy", "statistics", "python"]
+    },
+    {
+        "id": "ds_012",
+        "category": "datascience",
+        "difficulty": "easy",
+        "question_text": "What is the purpose of seaborn library?",
+        "options": [
+            "Statistical data visualization",
+            "Data manipulation",
+            "Machine learning",
+            "Web scraping"
+        ],
+        "correct_answer": 0,
+        "explanation": "Seaborn is a Python data visualization library based on matplotlib that provides a high-level interface for drawing attractive statistical graphics.",
+        "tags": ["datascience", "seaborn", "visualization", "python"]
+    },
+    {
+        "id": "ds_013",
+        "category": "datascience",
+        "difficulty": "easy",
+        "question_text": "Which method creates a histogram in Matplotlib?",
+        "options": [
+            "plt.hist()",
+            "plt.bar()",
+            "plt.plot()",
+            "plt.scatter()"
+        ],
+        "correct_answer": 0,
+        "explanation": "plt.hist() creates a histogram plot in Matplotlib, showing the distribution of a dataset.",
+        "tags": ["datascience", "matplotlib", "histogram", "visualization"]
+    },
+    {
+        "id": "ds_014",
+        "category": "datascience",
+        "difficulty": "easy",
+        "question_text": "What is the purpose of Jupyter Notebook?",
+        "options": [
+            "Interactive computing environment",
+            "Database management",
+            "Code compiler",
+            "Text editor"
+        ],
+        "correct_answer": 0,
+        "explanation": "Jupyter Notebook is an interactive web-based environment for creating and sharing documents with live code, equations, and visualizations.",
+        "tags": ["datascience", "jupyter", "notebook", "interactive"]
+    },
+    {
+        "id": "ds_015",
+        "category": "datascience",
+        "difficulty": "medium",
+        "question_text": "What is the purpose of Keras?",
+        "options": [
+            "Deep learning API",
+            "Data manipulation",
+            "Statistical analysis",
+            "Visualization"
+        ],
+        "correct_answer": 0,
+        "explanation": "Keras is a high-level neural networks API that can run on top of TensorFlow, CNTK, or Theano.",
+        "tags": ["datascience", "keras", "deep-learning", "neural-networks"]
+    },
+    {
+        "id": "ds_016",
+        "category": "datascience",
+        "difficulty": "medium",
+        "question_text": "Which method handles missing values in Pandas?",
+        "options": [
+            "dropna()",
+            "removena()",
+            "clean()",
+            "fixna()"
+        ],
+        "correct_answer": 0,
+        "explanation": "dropna() removes missing values from a Pandas DataFrame or Series.",
+        "tags": ["datascience", "pandas", "missing-values", "data-cleaning"]
+    },
+    {
+        "id": "ds_017",
+        "category": "datascience",
+        "difficulty": "medium",
+        "question_text": "What is the purpose of feature scaling?",
+        "options": [
+            "Normalize feature ranges",
+            "Select features",
+            "Create features",
+            "Reduce features"
+        ],
+        "correct_answer": 0,
+        "explanation": "Feature scaling normalizes the range of independent variables or features so that they have similar scales.",
+        "tags": ["datascience", "feature-scaling", "normalization", "preprocessing"]
+    },
+    {
+        "id": "ds_018",
+        "category": "datascience",
+        "difficulty": "medium",
+        "question_text": "Which algorithm is used for classification?",
+        "options": [
+            "Random Forest",
+            "K-Means",
+            "Linear Regression",
+            "PCA"
+        ],
+        "correct_answer": 0,
+        "explanation": "Random Forest is an ensemble learning method used for classification and regression tasks.",
+        "tags": ["datascience", "random-forest", "classification", "machine-learning"]
+    },
+    {
+        "id": "ds_019",
+        "category": "datascience",
+        "difficulty": "medium",
+        "question_text": "What is the purpose of cross-validation?",
+        "options": [
+            "Evaluate model performance",
+            "Train model",
+            "Test model",
+            "Deploy model"
+        ],
+        "correct_answer": 0,
+        "explanation": "Cross-validation is a technique to evaluate how a machine learning model will generalize to an independent dataset.",
+        "tags": ["datascience", "cross-validation", "model-evaluation", "machine-learning"]
+    },
+    {
+        "id": "ds_020",
+        "category": "datascience",
+        "difficulty": "hard",
+        "question_text": "What is the curse of dimensionality?",
+        "options": [
+            "Problems with high-dimensional data",
+            "Data quality issues",
+            "Missing data problems",
+            "Overfitting issues"
+        ],
+        "correct_answer": 0,
+        "explanation": "The curse of dimensionality refers to various phenomena that arise when analyzing and organizing data in high-dimensional spaces.",
+        "tags": ["datascience", "dimensionality", "high-dimensional-data", "machine-learning"]
+    },
+    {
+        "id": "ds_021",
+        "category": "datascience",
+        "difficulty": "hard",
+        "question_text": "What is the purpose of PCA?",
+        "options": [
+            "Dimensionality reduction",
+            "Classification",
+            "Regression",
+            "Clustering"
+        ],
+        "correct_answer": 0,
+        "explanation": "PCA (Principal Component Analysis) is a technique for reducing the dimensionality of datasets while preserving most of the variance.",
+        "tags": ["datascience", "pca", "dimensionality-reduction", "feature-engineering"]
+    },
+    {
+        "id": "ds_022",
+        "category": "datascience",
+        "difficulty": "hard",
+        "question_text": "What is the purpose of gradient descent?",
+        "options": [
+            "Optimization algorithm",
+            "Classification method",
+            "Clustering algorithm",
+            "Data preprocessing"
+        ],
+        "correct_answer": 0,
+        "explanation": "Gradient descent is an optimization algorithm used to minimize the cost function in machine learning models.",
+        "tags": ["datascience", "gradient-descent", "optimization", "machine-learning"]
+    },
+    {
+        "id": "ds_023",
+        "category": "datascience",
+        "difficulty": "hard",
+        "question_text": "What is the difference between supervised and unsupervised learning?",
+        "options": [
+            "Labeled vs unlabeled data",
+            "Training vs testing",
+            "Classification vs regression",
+            "Online vs offline learning"
+        ],
+        "correct_answer": 0,
+        "explanation": "Supervised learning uses labeled data for training, while unsupervised learning works with unlabeled data to find patterns.",
+        "tags": ["datascience", "supervised-learning", "unsupervised-learning", "machine-learning"]
+    },
+    {
+        "id": "ds_024",
+        "category": "datascience",
+        "difficulty": "hard",
+        "question_text": "What is the purpose of regularization?",
+        "options": [
+            "Prevent overfitting",
+            "Increase accuracy",
+            "Speed up training",
+            "Reduce data size"
+        ],
+        "correct_answer": 0,
+        "explanation": "Regularization is a technique used to prevent overfitting by adding a penalty term to the loss function.",
+        "tags": ["datascience", "regularization", "overfitting", "machine-learning"]
+    },
+    {
+        "id": "ds_025",
+        "category": "datascience",
+        "difficulty": "medium",
+        "question_text": "Which method creates a scatter plot in Matplotlib?",
+        "options": [
+            "plt.scatter()",
+            "plt.plot()",
+            "plt.bar()",
+            "plt.hist()"
+        ],
+        "correct_answer": 0,
+        "explanation": "plt.scatter() creates a scatter plot in Matplotlib, showing the relationship between two variables.",
+        "tags": ["datascience", "matplotlib", "scatter-plot", "visualization"]
+    },
+    {
+        "id": "ds_026",
+        "category": "datascience",
+        "difficulty": "medium",
+        "question_text": "What is the purpose of groupby() in Pandas?",
+        "options": [
+            "Group data for aggregation",
+            "Sort data",
+            "Filter data",
+            "Merge data"
+        ],
+        "correct_answer": 0,
+        "explanation": "groupby() is used to group data by categories and apply functions to each group independently.",
+        "tags": ["datascience", "pandas", "groupby", "aggregation"]
+    },
+    {
+        "id": "ds_027",
+        "category": "datascience",
+        "difficulty": "medium",
+        "question_text": "Which library is used for natural language processing?",
+        "options": [
+            "NLTK",
+            "OpenCV",
+            "Pillow",
+            "BeautifulSoup"
+        ],
+        "correct_answer": 0,
+        "explanation": "NLTK (Natural Language Toolkit) is a library for working with human language data in Python.",
+        "tags": ["datascience", "nltk", "nlp", "text-processing"]
+    },
+    {
+        "id": "ds_028",
+        "category": "datascience",
+        "difficulty": "easy",
+        "question_text": "What is the purpose of describe() in Pandas?",
+        "options": [
+            "Generate descriptive statistics",
+            "Show data types",
+            "Count missing values",
+            "Sort data"
+        ],
+        "correct_answer": 0,
+        "explanation": "describe() generates descriptive statistics that summarize the central tendency, dispersion, and shape of a dataset's distribution.",
+        "tags": ["datascience", "pandas", "describe", "statistics"]
+    },
+    {
+        "id": "ds_029",
+        "category": "datascience",
+        "difficulty": "easy",
+        "question_text": "Which method creates a line plot in Matplotlib?",
+        "options": [
+            "plt.plot()",
+            "plt.line()",
+            "plt.draw()",
+            "plt.show()"
+        ],
+        "correct_answer": 0,
+        "explanation": "plt.plot() creates a line plot in Matplotlib, commonly used to show trends over time or continuous variables.",
+        "tags": ["datascience", "matplotlib", "line-plot", "visualization"]
+    },
+    {
+        "id": "ds_030",
+        "category": "datascience",
+        "difficulty": "medium",
+        "question_text": "What is the purpose of confusion matrix?",
+        "options": [
+            "Evaluate classification performance",
+            "Train classifiers",
+            "Normalize data",
+            "Cluster data"
+        ],
+        "correct_answer": 0,
+        "explanation": "A confusion matrix is a table used to evaluate the performance of a classification algorithm by comparing predicted and actual values.",
+        "tags": ["datascience", "confusion-matrix", "classification", "evaluation"]
+    }
+]

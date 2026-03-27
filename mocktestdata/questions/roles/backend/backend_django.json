@@ -1,0 +1,452 @@
+[
+    {
+        "id": "django_001",
+        "category": "backend",
+        "difficulty": "easy",
+        "question_text": "What is Django's default database backend?",
+        "options": [
+            "SQLite",
+            "PostgreSQL",
+            "MySQL",
+            "Oracle"
+        ],
+        "correct_answer": 0,
+        "explanation": "Django uses SQLite as the default database backend for development and small projects due to its simplicity and zero-configuration setup.",
+        "tags": ["django", "database", "sqlite", "backend"]
+    },
+    {
+        "id": "django_002",
+        "category": "backend",
+        "difficulty": "easy",
+        "question_text": "Which command starts Django's development server?",
+        "options": [
+            "python runserver",
+            "python manage.py runserver",
+            "django runserver",
+            "manage.py runserver"
+        ],
+        "correct_answer": 1,
+        "explanation": "The command 'python manage.py runserver' starts Django's built-in development server for testing and development purposes.",
+        "tags": ["django", "development-server", "manage.py", "backend"]
+    },
+    {
+        "id": "django_003",
+        "category": "backend",
+        "difficulty": "easy",
+        "question_text": "What is the purpose of Django's settings.py file?",
+        "options": [
+            "Define URL patterns",
+            "Configure project settings",
+            "Define models",
+            "Handle HTTP requests"
+        ],
+        "correct_answer": 1,
+        "explanation": "The settings.py file contains all configuration settings for a Django project, including database, middleware, and application settings.",
+        "tags": ["django", "settings", "configuration", "backend"]
+    },
+    {
+        "id": "django_004",
+        "category": "backend",
+        "difficulty": "easy",
+        "question_text": "Which Django component handles URL routing?",
+        "options": [
+            "Views",
+            "Models",
+            "URLs",
+            "Templates"
+        ],
+        "correct_answer": 2,
+        "explanation": "The URLs component (urls.py) handles URL routing in Django, mapping URL patterns to view functions.",
+        "tags": ["django", "urls", "routing", "backend"]
+    },
+    {
+        "id": "django_005",
+        "category": "backend",
+        "difficulty": "easy",
+        "question_text": "What is a Django model?",
+        "options": [
+            "A database table representation",
+            "A view function",
+            "A URL pattern",
+            "A template file"
+        ],
+        "correct_answer": 0,
+        "explanation": "A Django model is a Python class that maps to a database table, representing the structure and behavior of your data.",
+        "tags": ["django", "models", "database", "orm", "backend"]
+    },
+    {
+        "id": "django_006",
+        "category": "backend",
+        "difficulty": "medium",
+        "question_text": "Which ORM method retrieves all objects from a model?",
+        "options": [
+            "get_all()",
+            "all()",
+            "fetch_all()",
+            "select_all()"
+        ],
+        "correct_answer": 1,
+        "explanation": "The all() method returns a QuerySet containing all objects in the database table for the given model.",
+        "tags": ["django", "orm", "queryset", "all", "backend"]
+    },
+    {
+        "id": "django_007",
+        "category": "backend",
+        "difficulty": "medium",
+        "question_text": "What is Django's template engine used for?",
+        "options": [
+            "Database queries",
+            "HTML generation",
+            "URL routing",
+            "Form handling"
+        ],
+        "correct_answer": 1,
+        "explanation": "Django's template engine is used for generating HTML output by combining templates with context data from views.",
+        "tags": ["django", "templates", "html", "backend"]
+    },
+    {
+        "id": "django_008",
+        "category": "backend",
+        "difficulty": "medium",
+        "question_text": "What is the purpose of Django middleware?",
+        "options": [
+            "Database optimization",
+            "Process requests/responses globally",
+            "Template rendering",
+            "URL routing"
+        ],
+        "correct_answer": 1,
+        "explanation": "Middleware in Django are hooks that process requests and responses globally before they reach views or after they leave views.",
+        "tags": ["django", "middleware", "requests", "responses", "backend"]
+    },
+    {
+        "id": "django_009",
+        "category": "backend",
+        "difficulty": "medium",
+        "question_text": "Which command creates database migrations in Django?",
+        "options": [
+            "python manage.py migrate",
+            "python manage.py makemigrations",
+            "python manage.py syncdb",
+            "python manage.py createdb"
+        ],
+        "correct_answer": 1,
+        "explanation": "The 'python manage.py makemigrations' command creates migration files based on changes detected in your models.",
+        "tags": ["django", "migrations", "database", "makemigrations", "backend"]
+    },
+    {
+        "id": "django_010",
+        "category": "backend",
+        "difficulty": "hard",
+        "question_text": "What is Django's QuerySet?",
+        "options": [
+            "A collection of database queries",
+            "A lazy-loaded collection of objects",
+            "A database connection pool",
+            "A cache system"
+        ],
+        "correct_answer": 1,
+        "explanation": "A QuerySet is a lazy-loaded collection of objects from the database that doesn't hit the database until evaluated.",
+        "tags": ["django", "queryset", "orm", "lazy-loading", "backend"]
+    },
+    {
+        "id": "django_011",
+        "category": "backend",
+        "difficulty": "easy",
+        "question_text": "Which command creates a new Django app?",
+        "options": [
+            "python manage.py startapp",
+            "python manage.py createapp",
+            "django create app",
+            "manage.py newapp"
+        ],
+        "correct_answer": 0,
+        "explanation": "The command 'python manage.py startapp appname' creates a new Django application with the basic directory structure.",
+        "tags": ["django", "manage.py", "startapp", "backend"]
+    },
+    {
+        "id": "django_012",
+        "category": "backend",
+        "difficulty": "easy",
+        "question_text": "What is Django's ORM?",
+        "options": [
+            "Object-Relational Mapping",
+            "Object-Request Mapping",
+            "Object-Response Mapping",
+            "Object-Route Mapping"
+        ],
+        "correct_answer": 0,
+        "explanation": "Django's ORM (Object-Relational Mapping) allows you to interact with your database using Python objects instead of SQL queries.",
+        "tags": ["django", "orm", "database", "backend"]
+    },
+    {
+        "id": "django_013",
+        "category": "backend",
+        "difficulty": "easy",
+        "question_text": "Which file defines URL patterns in a Django app?",
+        "options": [
+            "urls.py",
+            "routes.py",
+            "paths.py",
+            "links.py"
+        ],
+        "correct_answer": 0,
+        "explanation": "The urls.py file in each Django app defines the URL patterns specific to that application.",
+        "tags": ["django", "urls", "routing", "backend"]
+    },
+    {
+        "id": "django_014",
+        "category": "backend",
+        "difficulty": "easy",
+        "question_text": "What is a Django view?",
+        "options": [
+            "Python function that handles web requests",
+            "HTML template",
+            "Database model",
+            "URL pattern"
+        ],
+        "correct_answer": 0,
+        "explanation": "A Django view is a Python function that takes a web request and returns a web response.",
+        "tags": ["django", "views", "request-response", "backend"]
+    },
+    {
+        "id": "django_015",
+        "category": "backend",
+        "difficulty": "medium",
+        "question_text": "Which field type is used for foreign keys in Django models?",
+        "options": [
+            "ForeignKey",
+            "ManyToManyField",
+            "OneToOneField",
+            "CharField"
+        ],
+        "correct_answer": 0,
+        "explanation": "ForeignKey is used to create many-to-one relationships between models in Django.",
+        "tags": ["django", "models", "foreign-key", "relationships"]
+    },
+    {
+        "id": "django_016",
+        "category": "backend",
+        "difficulty": "medium",
+        "question_text": "What is Django's admin interface?",
+        "options": [
+            "Automatic admin backend",
+            "Frontend framework",
+            "Database tool",
+            "Testing framework"
+        ],
+        "correct_answer": 0,
+        "explanation": "Django's admin interface is an automatic administrative backend that provides a ready-to-use interface for managing application data.",
+        "tags": ["django", "admin", "backend", "interface"]
+    },
+    {
+        "id": "django_017",
+        "category": "backend",
+        "difficulty": "medium",
+        "question_text": "Which method applies database migrations?",
+        "options": [
+            "python manage.py migrate",
+            "python manage.py apply",
+            "python manage.py update",
+            "python manage.py sync"
+        ],
+        "correct_answer": 0,
+        "explanation": "The 'python manage.py migrate' command applies pending migrations to the database, updating its schema.",
+        "tags": ["django", "migrations", "database", "migrate"]
+    },
+    {
+        "id": "django_018",
+        "category": "backend",
+        "difficulty": "medium",
+        "question_text": "What is the purpose of Django forms?",
+        "options": [
+            "Handle user input validation",
+            "Create HTML templates",
+            "Define database models",
+            "Manage URL routing"
+        ],
+        "correct_answer": 0,
+        "explanation": "Django forms provide a way to handle user input, validation, and conversion of data to Python objects.",
+        "tags": ["django", "forms", "validation", "user-input"]
+    },
+    {
+        "id": "django_019",
+        "category": "backend",
+        "difficulty": "medium",
+        "question_text": "Which template tag is used for URL routing?",
+        "options": [
+            "{% url %}",
+            "{% link %}",
+            "{% route %}",
+            "{% path %}"
+        ],
+        "correct_answer": 0,
+        "explanation": "The {% url %} template tag generates URLs for configured URL patterns, avoiding hard-coded URLs in templates.",
+        "tags": ["django", "templates", "url-tag", "routing"]
+    },
+    {
+        "id": "django_020",
+        "category": "backend",
+        "difficulty": "hard",
+        "question_text": "What is Django's CSRF protection?",
+        "options": [
+            "Cross-Site Request Forgery protection",
+            "Cross-Site Scripting protection",
+            "SQL Injection protection",
+            "XSS protection"
+        ],
+        "correct_answer": 0,
+        "explanation": "CSRF (Cross-Site Request Forgery) protection in Django prevents malicious websites from submitting forms on behalf of users.",
+        "tags": ["django", "csrf", "security", "protection"]
+    },
+    {
+        "id": "django_021",
+        "category": "backend",
+        "difficulty": "hard",
+        "question_text": "What is the purpose of Django's select_related()?",
+        "options": [
+            "Optimize database queries",
+            "Create relationships",
+            "Filter results",
+            "Sort results"
+        ],
+        "correct_answer": 0,
+        "explanation": "select_related() optimizes database queries by following foreign-key relationships and including related objects in a single query.",
+        "tags": ["django", "orm", "select_related", "optimization"]
+    },
+    {
+        "id": "django_022",
+        "category": "backend",
+        "difficulty": "hard",
+        "question_text": "What is Django's signals framework?",
+        "options": [
+            "Event notification system",
+            "Database backup system",
+            "Logging system",
+            "Caching system"
+        ],
+        "correct_answer": 0,
+        "explanation": "Django signals allow decoupled applications to get notified when certain actions occur elsewhere in the framework.",
+        "tags": ["django", "signals", "events", "notification"]
+    },
+    {
+        "id": "django_023",
+        "category": "backend",
+        "difficulty": "hard",
+        "question_text": "What is the purpose of Django's prefetch_related()?",
+        "options": [
+            "Optimize many-to-many queries",
+            "Create foreign keys",
+            "Filter querysets",
+            "Order results"
+        ],
+        "correct_answer": 0,
+        "explanation": "prefetch_related() optimizes database queries by fetching related many-to-many and foreign-key objects in additional queries.",
+        "tags": ["django", "orm", "prefetch_related", "optimization"]
+    },
+    {
+        "id": "django_024",
+        "category": "backend",
+        "difficulty": "hard",
+        "question_text": "What is Django's context processor?",
+        "options": [
+            "Global template variables",
+            "Database connection",
+            "URL resolver",
+            "Form processor"
+        ],
+        "correct_answer": 0,
+        "explanation": "Context processors make variables available in all templates, providing global context data across the application.",
+        "tags": ["django", "templates", "context-processor", "variables"]
+    },
+    {
+        "id": "django_025",
+        "category": "backend",
+        "difficulty": "medium",
+        "question_text": "Which command creates a Django superuser?",
+        "options": [
+            "python manage.py createsuperuser",
+            "python manage.py superuser",
+            "django createsuperuser",
+            "manage.py admin"
+        ],
+        "correct_answer": 0,
+        "explanation": "The 'python manage.py createsuperuser' command creates an administrative user with access to the Django admin interface.",
+        "tags": ["django", "admin", "superuser", "manage.py"]
+    },
+    {
+        "id": "django_026",
+        "category": "backend",
+        "difficulty": "medium",
+        "question_text": "What is Django's static files handling?",
+        "options": [
+            "CSS, JavaScript, and images management",
+            "Database files",
+            "Template files",
+            "Configuration files"
+        ],
+        "correct_answer": 0,
+        "explanation": "Django's static files system manages CSS, JavaScript, images, and other static assets for web applications.",
+        "tags": ["django", "static-files", "assets", "management"]
+    },
+    {
+        "id": "django_027",
+        "category": "backend",
+        "difficulty": "medium",
+        "question_text": "Which field type is used for many-to-many relationships?",
+        "options": [
+            "ManyToManyField",
+            "ForeignKey",
+            "OneToOneField",
+            "CharField"
+        ],
+        "correct_answer": 0,
+        "explanation": "ManyToManyField creates many-to-many relationships between models in Django.",
+        "tags": ["django", "models", "many-to-many", "relationships"]
+    },
+    {
+        "id": "django_028",
+        "category": "backend",
+        "difficulty": "easy",
+        "question_text": "What is Django's shell command?",
+        "options": [
+            "python manage.py shell",
+            "django shell",
+            "python manage.py console",
+            "manage.py interactive"
+        ],
+        "correct_answer": 0,
+        "explanation": "The 'python manage.py shell' command opens an interactive Python shell with Django's environment loaded.",
+        "tags": ["django", "shell", "manage.py", "interactive"]
+    },
+    {
+        "id": "django_029",
+        "category": "backend",
+        "difficulty": "easy",
+        "question_text": "Which template filter is used for date formatting?",
+        "options": [
+            "date",
+            "format",
+            "datetime",
+            "time"
+        ],
+        "correct_answer": 0,
+        "explanation": "The 'date' template filter formats date objects according to specified format strings in Django templates.",
+        "tags": ["django", "templates", "date-filter", "formatting"]
+    },
+    {
+        "id": "django_030",
+        "category": "backend",
+        "difficulty": "medium",
+        "question_text": "What is Django's cache framework?",
+        "options": [
+            "Data caching system",
+            "Database backup",
+            "File storage",
+            "Session management"
+        ],
+        "correct_answer": 0,
+        "explanation": "Django's cache framework provides a way to store frequently accessed data to improve application performance.",
+        "tags": ["django", "cache", "performance", "optimization"]
+    }
+]

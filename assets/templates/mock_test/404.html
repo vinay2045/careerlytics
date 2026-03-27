@@ -1,0 +1,41 @@
+{% extends 'users/user_tailwind_base.html' %}
+{% load static %}
+
+{% block title %}Page Not Found - Mock Test Center{% endblock %}
+
+{% block page_title %}Page Not Found{% endblock %}
+
+{% block contents %}
+<div class="space-y-8">
+    <!-- Breadcrumb Navigation -->
+    <div class="flex items-center gap-2 text-sm text-slate-500">
+        <a href="/mock-test/" class="hover:text-slate-700">Mock Test Center</a>
+        <span class="material-symbols-outlined text-base">chevron_right</span>
+        <span class="text-slate-800">Page Not Found</span>
+    </div>
+
+    <!-- 404 Content -->
+    <div class="enterprise-card rounded-xl p-12 text-center">
+        <div class="w-24 h-24 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-6">
+            <span class="material-symbols-outlined text-red-600 text-4xl">error</span>
+        </div>
+        <h1 class="text-4xl font-bold text-gray-900 mb-4">404 - Page Not Found</h1>
+        <p class="text-lg text-gray-600 mb-8">The page you're looking for doesn't exist or has been moved.</p>
+        
+        <div class="space-y-4">
+            <a href="/mock-test/" class="inline-flex items-center gap-2 px-6 py-3 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 transition-colors">
+                <span class="material-symbols-outlined">home</span>
+                Back to Mock Test Center
+            </a>
+            <div class="text-sm text-gray-500">
+                <p>You might want to try:</p>
+                <ul class="mt-2 space-y-1">
+                    <li><a href="/mock-test/roles/" class="text-blue-600 hover:text-blue-700">Role-Based Tests</a></li>
+                    <li><a href="/mock-test/languages/" class="text-blue-600 hover:text-blue-700">Language-Based Tests</a></li>
+                    <li><a href="/UserHome/" class="text-blue-600 hover:text-blue-700">User Dashboard</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

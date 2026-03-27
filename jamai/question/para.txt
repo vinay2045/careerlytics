@@ -1,0 +1,60 @@
+1. Voice & Speech Quality (30%)
+| Parameter            | What AI Measures             
+| -------------------- | ---------------------------- 
+| **Clarity**          | Noise, sharpness, distortion 
+| **Volume stability** | Loudness variation           
+| **Speech rate**      | Words per minute            
+| **Pauses**           | Silence duration              
+| **Pronunciation**    | Phoneme accuracy                                
+| **Pitch control**    | Monotone vs expressive                          
+
+2. Fluency & Language Control (25%)
+
+| Parameter           | AI Detects                 |
+| ------------------- | -------------------------- |
+| Filler words        | um, uh, you know, actually |
+| Grammar mistakes    | Tense, sentence breaks     |
+| Repetition          | Same words again & again   |
+| Sentence length     | Broken vs structured       |
+| Vocabulary richness | Simple vs advanced words   |
+
+3. Content Quality (20%)
+
+| Parameter       | AI Evaluates              |
+| --------------- | ------------------------- |
+| Topic relevance | Are they on topic         |
+| Logical flow    | Intro → Body → Conclusion |
+| Idea clarity    | Clear meaning             |
+| Depth           | Surface vs thoughtful     |
+| Example usage   | Real-world or not         |
+
+4. Confidence & Personality (15%)
+| Parameter         | AI Detects          |
+| ----------------- | ------------------- |
+| Voice steadiness  | Shaking vs stable   |
+| Hesitation        | Long gaps           |
+| Self-assurance    | Strong vs weak tone |
+| Emotional control | Nervousness         |
+| Energy level      | Dead vs lively      |
+
+5. Soft Skill Signals (10%)
+| Parameter              | AI Looks For                  |
+| ---------------------- | ----------------------------- |
+| Positivity             | Negative vs positive language |
+| Professional tone      | Respectful                    |
+| Emotional intelligence | Calmness                      |
+| Persuasion             | Convincing power              |
+| Social awareness       | Audience awareness            |
+
+
+
+Calculates the JAM Score using specified weights:
+- Voice (30%) , Fluency (25%) , Content (20%) , Confidence (15%) , and Soft Skills (10%) .
+
+
+
+ Categorizes performance based on the score:
+- 90–100 : Excellent Speaker
+- 75–89 : Job-ready
+- 60–74 : Needs practice
+- Below 60 : Weak communication

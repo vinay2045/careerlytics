@@ -1,0 +1,29 @@
+{
+  "student_id": "optic",
+  "test_id": 1,
+  "score_percentage": 0.0,
+  "classification": "at_risk",
+  "categories": {
+    "aptitude": {
+      "total": 9,
+      "correct": 0,
+      "percentage": 0.0
+    },
+    "reasoning": {
+      "total": 9,
+      "correct": 0,
+      "percentage": 0.0
+    },
+    "english": {
+      "total": 6,
+      "correct": 0,
+      "percentage": 0.0
+    },
+    "core": {
+      "total": 36,
+      "correct": 0,
+      "percentage": 0.0
+    }
+  },
+  "completed_at": "2026-02-14T00:56:37.225213+00:00"
+}

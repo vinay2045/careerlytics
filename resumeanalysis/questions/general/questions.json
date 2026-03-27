@@ -1,0 +1,169 @@
+[
+  {
+    "id": "gen_001",
+    "category": "general",
+    "difficulty": "medium",
+    "question_text": "If a train travels 300 km in 3 hours, what is its average speed?",
+    "options": [
+      "50 km/h",
+      "75 km/h",
+      "100 km/h",
+      "150 km/h"
+    ],
+    "correct_answer": 2,
+    "explanation": "Speed = Distance / Time = 300 km / 3 hours = 100 km/h",
+    "tags": [
+      "math",
+      "logic",
+      "problem-solving"
+    ]
+  },
+  {
+    "id": "gen_002",
+    "category": "general",
+    "difficulty": "easy",
+    "question_text": "Which number comes next in the sequence: 2, 4, 8, 16, ?",
+    "options": [
+      "20",
+      "24",
+      "32",
+      "64"
+    ],
+    "correct_answer": 3,
+    "explanation": "Each number is doubled: 2×2=4, 4×2=8, 8×2=16, 16×2=32",
+    "tags": [
+      "pattern-recognition",
+      "logic"
+    ]
+  },
+  {
+    "id": "gen_003",
+    "category": "general",
+    "difficulty": "medium",
+    "question_text": "If all roses are flowers and some flowers fade quickly, which statement must be true?",
+    "options": [
+      "All roses fade quickly",
+      "Some roses fade quickly",
+      "No roses fade quickly",
+      "Some flowers that fade are roses"
+    ],
+    "correct_answer": 1,
+    "explanation": "Since all roses are flowers and some flowers fade quickly, it follows that some roses fade quickly.",
+    "tags": [
+      "logical-reasoning",
+      "deduction"
+    ]
+  },
+  {
+    "id": "gen_004",
+    "category": "general",
+    "difficulty": "hard",
+    "question_text": "A company has 8 departments. Each department sends 3 representatives to a meeting. If each representative shakes hands with every other representative exactly once, how many handshakes occur?",
+    "options": [
+      "168",
+      "336",
+      "504",
+      "672"
+    ],
+    "correct_answer": 1,
+    "explanation": "Total representatives = 8 × 3 = 24. Handshakes = n(n-1)/2 = 24×23/2 = 276. But since they only shake hands with reps from other departments: 8 departments choose 2 = 28 pairs, each with 3×3 = 9 handshakes. Total = 28×9 = 252. Or simpler: 24 people, each shakes with 24-3=21 others (not their own dept). Total = 24×21/2 = 252.",
+    "tags": [
+      "math",
+      "combinatorics",
+      "problem-solving"
+    ]
+  },
+  {
+    "id": "gen_005",
+    "category": "general",
+    "difficulty": "medium",
+    "question_text": "Which pattern completes the series: A1, C2, E3, G4, ?",
+    "options": [
+      "I5",
+      "H5",
+      "I4",
+      "H4"
+    ],
+    "correct_answer": 1,
+    "explanation": "Letters follow alphabetical order skipping one letter (A, C, E, G, I) and numbers increase by 1 (1, 2, 3, 4, 5)",
+    "tags": [
+      "pattern-recognition",
+      "logic"
+    ]
+  },
+  {
+    "id": "gen_006",
+    "category": "general",
+    "difficulty": "easy",
+    "question_text": "If a store sells pens at $2 each and notebooks at $5 each, and sells 3 pens and 2 notebooks, what is the total revenue?",
+    "options": [
+      "$16",
+      "$19",
+      "$21",
+      "$23"
+    ],
+    "correct_answer": 1,
+    "explanation": "Revenue = (3 pens × $2) + (2 notebooks × $5) = $6 + $10 = $16",
+    "tags": [
+      "arithmetic",
+      "problem-solving"
+    ]
+  },
+  {
+    "id": "gen_007",
+    "category": "general",
+    "difficulty": "medium",
+    "question_text": "In a coding competition, 100 participants participated. If 60% solved at least one problem and 25% solved exactly two problems, what percentage solved exactly one problem?",
+    "options": [
+      "15%",
+      "25%",
+      "35%",
+      "45%"
+    ],
+    "correct_answer": 2,
+    "explanation": "60% solved at least one problem. 25% solved exactly two problems. Therefore, 60% - 25% = 35% solved exactly one problem.",
+    "tags": [
+      "percentages",
+      "logic",
+      "problem-solving"
+    ]
+  },
+  {
+    "id": "gen_008",
+    "category": "general",
+    "difficulty": "hard",
+    "question_text": "A clock shows 3:15. What is the angle between the hour and minute hands?",
+    "options": [
+      "0°",
+      "7.5°",
+      "15°",
+      "30°"
+    ],
+    "correct_answer": 1,
+    "explanation": "At 3:15, minute hand at 90°, hour hand at 97.5° (3 × 30° + 15 × 0.5°). Angle = 97.5° - 90° = 7.5°",
+    "tags": [
+      "geometry",
+      "time",
+      "problem-solving"
+    ]
+  },
+  {
+    "id": "gen_009",
+    "category": "general",
+    "difficulty": "medium",
+    "question_text": "If 5 machines can produce 100 items in 2 hours, how many items can 8 machines produce in 3 hours?",
+    "options": [
+      "200",
+      "240",
+      "320",
+      "400"
+    ],
+    "correct_answer": 1,
+    "explanation": "One machine produces 100/5 = 20 items in 2 hours, so 10 items per hour. 8 machines produce 8 × 10 = 80 items per hour. In 3 hours: 80 × 3 = 240 items.",
+    "tags": [
+      "ratios",
+      "problem-solving",
+      "logic"
+    ]
+  }
+]

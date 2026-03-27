@@ -1,0 +1,5 @@
+{
+  "placement_ready_threshold": 70.0,
+  "needs_improvement_threshold": 40.0,
+  "at_risk_threshold": 0.0
+}

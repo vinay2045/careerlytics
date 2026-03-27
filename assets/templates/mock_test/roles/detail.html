@@ -1,0 +1,264 @@
+{% extends 'users/user_tailwind_base.html' %}
+{% load static %}
+
+{% block title %}{{ role.name }} Assessment - Careerlytics{% endblock %}
+
+{% block page_title %}{{ role.name }} Assessment{% endblock %}
+
+{% block contents %}
+<div class="max-w-7xl mx-auto px-6 md:px-8 lg:px-10 py-6 md:py-8">
+    <!-- Navigation -->
+    <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 mb-8 md:mb-10">
+        <nav class="flex flex-wrap items-center gap-2 text-xs md:text-sm text-slate-500 dark:text-slate-400 font-medium">
+            <a class="hover:text-primary transition-colors" href="{% url 'mock_test' %}">Mock Test Center</a>
+            <span class="material-symbols-outlined text-[10px] md:text-xs">chevron_right</span>
+            <a class="hover:text-primary transition-colors" href="{% url 'role_selection' %}">Role-Based Tests</a>
+            <span class="material-symbols-outlined text-[10px] md:text-xs">chevron_right</span>
+            <span class="text-slate-900 dark:text-white truncate max-w-[150px] sm:max-w-none">{{ role.name }}</span>
+        </nav>
+        <a href="{% url 'role_selection' %}" class="group flex items-center gap-2 px-5 py-2.5 bg-white dark:bg-gray-800 text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 rounded-xl hover:shadow-lg hover:ring-1 hover:ring-blue-100 dark:hover:ring-blue-900 transition-all duration-300 font-bold text-xs md:text-sm shadow-sm border border-slate-200 dark:border-slate-700">
+            <span class="material-symbols-outlined text-base md:text-lg transition-transform group-hover:-translate-x-1">arrow_back</span>
+            Return
+        </a>
+    </div>
+    
+    <div class="space-y-8 md:space-y-10">
+                <!-- Skills Covered Section - Moved to Top -->
+                <section>
+                    <div class="flex items-center justify-between mb-4 md:mb-6">
+                        <h3 class="font-display text-lg md:text-xl font-bold text-slate-900 dark:text-white">Key Competencies for {{ role.name }}</h3>
+                        <div class="h-1 flex-1 mx-4 md:mx-6 bg-slate-100 dark:bg-slate-700 rounded-full hidden sm:block"></div>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
+                        <div class="glass-card p-3 md:p-4 rounded-xl flex items-center gap-3 md:gap-4 transition-all duration-300 hover:scale-105 hover:shadow-[0_0_15px_rgba(251,146,60,0.5)] cursor-default border border-transparent hover:border-orange-300 dark:hover:border-orange-700 hover:bg-orange-50/50 dark:hover:bg-orange-900/20">
+                            <div class="w-8 h-8 md:w-10 md:h-10 rounded-lg bg-orange-50 dark:bg-orange-900/20 flex items-center justify-center text-orange-500 font-bold">
+                                <span class="material-symbols-outlined text-lg md:text-xl">school</span>
+                            </div>
+                            <span class="text-xs md:text-sm font-semibold">Core Concepts</span>
+                        </div>
+                        <div class="glass-card p-3 md:p-4 rounded-xl flex items-center gap-3 md:gap-4 transition-all duration-300 hover:scale-105 hover:shadow-[0_0_15px_rgba(59,130,246,0.5)] cursor-default border border-transparent hover:border-blue-300 dark:hover:border-blue-700 hover:bg-blue-50/50 dark:hover:bg-blue-900/20">
+                            <div class="w-8 h-8 md:w-10 md:h-10 rounded-lg bg-blue-50 dark:bg-blue-900/20 flex items-center justify-center text-blue-500 font-bold">
+                                <span class="material-symbols-outlined text-lg md:text-xl">code</span>
+                            </div>
+                            <span class="text-xs md:text-sm font-semibold">Practical Coding</span>
+                        </div>
+                        <div class="glass-card p-3 md:p-4 rounded-xl flex items-center gap-3 md:gap-4 transition-all duration-300 hover:scale-105 hover:shadow-[0_0_15px_rgba(234,179,8,0.5)] cursor-default border border-transparent hover:border-yellow-300 dark:hover:border-yellow-700 hover:bg-yellow-50/50 dark:hover:bg-yellow-900/20">
+                            <div class="w-8 h-8 md:w-10 md:h-10 rounded-lg bg-yellow-50 dark:bg-yellow-900/20 flex items-center justify-center text-yellow-600 font-bold">
+                                <span class="material-symbols-outlined text-lg md:text-xl">bug_report</span>
+                            </div>
+                            <span class="text-xs md:text-sm font-semibold">Debugging</span>
+                        </div>
+                        <div class="glass-card p-3 md:p-4 rounded-xl flex items-center gap-3 md:gap-4 transition-all duration-300 hover:scale-105 hover:shadow-[0_0_15px_rgba(6,182,212,0.5)] cursor-default border border-transparent hover:border-cyan-300 dark:hover:border-cyan-700 hover:bg-cyan-50/50 dark:hover:bg-cyan-900/20">
+                            <div class="w-8 h-8 md:w-10 md:h-10 rounded-lg bg-cyan-50 dark:bg-cyan-900/20 flex items-center justify-center text-cyan-500 font-bold">
+                                <span class="material-symbols-outlined text-lg md:text-xl">architecture</span>
+                            </div>
+                            <span class="text-xs md:text-sm font-semibold">System Design</span>
+                        </div>
+                    </div>
+                </section>
+
+                {% for test in tests %}
+                <section>
+                    <div class="bg-white dark:bg-slate-800 rounded-xl p-6 md:p-8 border border-slate-100 dark:border-slate-700 transition-all duration-300 hover:shadow-[0_0_30px_rgba(59,130,246,0.15)] hover:border-primary/50 hover:-translate-y-1">
+                        <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-6 md:gap-8">
+                            <div class="flex-1">
+                                <div class="flex items-center gap-3 mb-2">
+                                    <h2 class="font-display text-xl md:text-2xl font-bold text-slate-900 dark:text-white">{{ test.name }}</h2>
+                                    <span class="px-3 py-1 bg-blue-50 dark:bg-blue-900/30 text-primary text-[10px] md:text-xs font-bold uppercase tracking-wider rounded-full">{{ test.difficulty|title }}</span>
+                                </div>
+                                <p class="text-sm md:text-base text-slate-500 dark:text-slate-400 mb-6">{{ test.description }}</p>
+                                <div class="flex flex-wrap items-center gap-4">
+                                    <div class="flex items-center gap-4 bg-slate-50 dark:bg-slate-700/50 px-4 md:px-6 py-3 md:py-4 rounded-xl border border-slate-100 dark:border-slate-600/50 transition-colors hover:bg-slate-100 dark:hover:bg-slate-700">
+                                        <div class="flex items-center gap-2">
+                                            <span class="material-symbols-outlined text-primary text-xl md:text-2xl">quiz</span>
+                                            <div>
+                                                <p class="text-[8px] md:text-[10px] uppercase font-bold tracking-widest text-slate-400">Questions</p>
+                                                <p class="text-base md:text-lg font-bold text-slate-900 dark:text-white">{{ test.questions_count }}</p>
+                                            </div>
+                                        </div>
+                                        <div class="w-px h-6 md:h-8 bg-slate-200 dark:bg-slate-600"></div>
+                                        <div class="flex items-center gap-2">
+                                            <span class="material-symbols-outlined text-primary text-xl md:text-2xl">timer</span>
+                                            <div>
+                                                <p class="text-[8px] md:text-[10px] uppercase font-bold tracking-widest text-slate-400">Minutes</p>
+                                                <p class="text-base md:text-lg font-bold text-slate-900 dark:text-white">{{ test.time_limit }}</p>
+                                            </div>
+                                        </div>
+                                        <div class="w-px h-6 md:h-8 bg-slate-200 dark:bg-slate-600"></div>
+                                        <div class="flex items-center gap-2">
+                                            <span class="material-symbols-outlined text-primary text-xl md:text-2xl">bar_chart</span>
+                                            <div>
+                                                <p class="text-[8px] md:text-[10px] uppercase font-bold tracking-widest text-slate-400">Level</p>
+                                                <p class="text-base md:text-lg font-bold text-slate-900 dark:text-white">{{ test.difficulty|title }}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex flex-col sm:flex-row items-center gap-4 md:gap-6 lg:border-l lg:border-slate-100 lg:dark:border-slate-700 lg:pl-12">
+                                <div class="flex items-center gap-2">
+                                    <span class="relative flex h-3 w-3">
+                                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                                        <span class="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
+                                    </span>
+                                    <span class="text-xs md:text-sm font-medium text-slate-500">Available Now</span>
+                                </div>
+                                <a href="{% url 'test_variations' 'role' role.key forloop.counter0 %}" class="w-full sm:w-auto px-6 md:px-8 py-3 md:py-4 bg-primary text-white font-bold rounded-xl shadow-lg shadow-primary/25 hover:bg-blue-600 transition-all duration-300 hover:shadow-[0_0_25px_rgba(37,99,235,0.6)] hover:scale-105 flex items-center justify-center gap-2 text-sm md:text-base">
+                                    Select Test
+                                    <span class="material-symbols-outlined text-lg">arrow_forward</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                {% empty %}
+                <div class="bg-white dark:bg-slate-800 rounded-xl p-8 text-center">
+                    <p class="text-sm md:text-base text-slate-500 dark:text-slate-400">No tests available for {{ role.name }} yet.</p>
+                </div>
+                {% endfor %}
+
+                <section class="bg-blue-50/50 dark:bg-slate-800/50 rounded-xl border border-blue-100 dark:border-slate-700 p-6 md:p-8 transition-all duration-300 hover:shadow-[0_0_20px_rgba(59,130,246,0.1)] hover:border-blue-300 dark:hover:border-blue-600">
+                    <h3 class="font-display text-lg md:text-xl font-bold text-slate-900 dark:text-white mb-6 md:mb-8">Test Preparation Tips</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
+                        <div>
+                            <div class="flex items-center gap-3 mb-4 md:mb-6">
+                                <div class="w-8 h-8 md:w-10 md:h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+                                    <span class="material-symbols-outlined text-lg md:text-xl">lightbulb</span>
+                                </div>
+                                <h4 class="font-bold text-slate-900 dark:text-white text-sm md:text-base">Before the Test</h4>
+                            </div>
+                            <ul class="space-y-3 md:space-y-4">
+                                <li class="flex items-start gap-3 text-xs md:text-sm text-slate-600 dark:text-slate-400">
+                                    <span class="material-symbols-outlined text-[10px] md:text-xs mt-1 text-primary">check_circle</span>
+                                    Review {{ role.name }} core concepts
+                                </li>
+                                <li class="flex items-start gap-3 text-xs md:text-sm text-slate-600 dark:text-slate-400">
+                                    <span class="material-symbols-outlined text-[10px] md:text-xs mt-1 text-primary">check_circle</span>
+                                    Practice role-specific scenarios
+                                </li>
+                                <li class="flex items-start gap-3 text-xs md:text-sm text-slate-600 dark:text-slate-400">
+                                    <span class="material-symbols-outlined text-[10px] md:text-xs mt-1 text-primary">check_circle</span>
+                                    Study industry best practices
+                                </li>
+                                <li class="flex items-start gap-3 text-xs md:text-sm text-slate-600 dark:text-slate-400">
+                                    <span class="material-symbols-outlined text-[10px] md:text-xs mt-1 text-primary">check_circle</span>
+                                    Understand common interview questions
+                                </li>
+                            </ul>
+                        </div>
+                        <div>
+                            <div class="flex items-center gap-3 mb-4 md:mb-6">
+                                <div class="w-8 h-8 md:w-10 md:h-10 rounded-full bg-green-100 dark:bg-green-900/20 flex items-center justify-center text-green-600">
+                                    <span class="material-symbols-outlined text-lg md:text-xl">schedule</span>
+                                </div>
+                                <h4 class="font-bold text-slate-900 dark:text-white text-sm md:text-base">During the Test</h4>
+                            </div>
+                            <ul class="space-y-3 md:space-y-4">
+                                <li class="flex items-start gap-3 text-xs md:text-sm text-slate-600 dark:text-slate-400">
+                                    <span class="material-symbols-outlined text-[10px] md:text-xs mt-1 text-green-500">check_circle</span>
+                                    Read each scenario carefully
+                                </li>
+                                <li class="flex items-start gap-3 text-xs md:text-sm text-slate-600 dark:text-slate-400">
+                                    <span class="material-symbols-outlined text-[10px] md:text-xs mt-1 text-green-500">check_circle</span>
+                                    Manage your time effectively
+                                </li>
+                                <li class="flex items-start gap-3 text-xs md:text-sm text-slate-600 dark:text-slate-400">
+                                    <span class="material-symbols-outlined text-[10px] md:text-xs mt-1 text-green-500">check_circle</span>
+                                    Prioritize key requirements
+                                </li>
+                                <li class="flex items-start gap-3 text-xs md:text-sm text-slate-600 dark:text-slate-400">
+                                    <span class="material-symbols-outlined text-[10px] md:text-xs mt-1 text-green-500">check_circle</span>
+                                    Validate your assumptions
+                                </li>
+                            </ul>
+                        </div>
+                        <div>
+                            <div class="flex items-center gap-3 mb-4 md:mb-6">
+                                <div class="w-8 h-8 md:w-10 md:h-10 rounded-full bg-orange-100 dark:bg-orange-900/20 flex items-center justify-center text-orange-600">
+                                    <span class="material-symbols-outlined text-lg md:text-xl">trending_up</span>
+                                </div>
+                                <h4 class="font-bold text-slate-900 dark:text-white text-sm md:text-base">After the Test</h4>
+                            </div>
+                            <ul class="space-y-3 md:space-y-4">
+                                <li class="flex items-start gap-3 text-xs md:text-sm text-slate-600 dark:text-slate-400">
+                                    <span class="material-symbols-outlined text-[10px] md:text-xs mt-1 text-orange-500">check_circle</span>
+                                    Analyze your performance
+                                </li>
+                                <li class="flex items-start gap-3 text-xs md:text-sm text-slate-600 dark:text-slate-400">
+                                    <span class="material-symbols-outlined text-[10px] md:text-xs mt-1 text-orange-500">check_circle</span>
+                                    Identify knowledge gaps
+                                </li>
+                                <li class="flex items-start gap-3 text-xs md:text-sm text-slate-600 dark:text-slate-400">
+                                    <span class="material-symbols-outlined text-[10px] md:text-xs mt-1 text-orange-500">check_circle</span>
+                                    Review solution patterns
+                                </li>
+                                <li class="flex items-start gap-3 text-xs md:text-sm text-slate-600 dark:text-slate-400">
+                                    <span class="material-symbols-outlined text-[10px] md:text-xs mt-1 text-orange-500">check_circle</span>
+                                    Target advanced role competencies
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+            </main>
+        </div>
+    </main>
+
+    <script>
+    // Initialize theme on page load
+    document.addEventListener('DOMContentLoaded', function() {
+      const savedTheme = localStorage.getItem('theme') || 'light';
+      const html = document.documentElement;
+      const themeToggle = document.getElementById('theme-toggle');
+      const knob = document.getElementById('knob');
+      const stars = document.getElementById('stars');
+      
+      // Create stars
+      for(let i=0;i<40;i++){
+        let s=document.createElement("div");
+        s.className="star";
+        s.style.left=Math.random()*100+"%";
+        s.style.top=Math.random()*100+"%";
+        s.style.animationDelay=Math.random()*2+"s";
+        stars.appendChild(s);
+      }
+      
+      // Set initial theme state
+      let night = savedTheme === 'dark';
+      if (night) {
+        html.classList.add('dark');
+        themeToggle.classList.add('active');
+        knob.classList.add('moon');
+        knob.innerHTML="<div class='moon-shadow'></div>";
+        document.querySelectorAll(".star").forEach(s=>s.style.opacity=1);
+        document.querySelectorAll(".cloud").forEach(c=>c.style.opacity=0);
+      } else {
+        document.querySelectorAll(".star").forEach(s=>s.style.opacity=0);
+        document.querySelectorAll(".cloud").forEach(c=>c.style.opacity=1);
+      }
+      
+      // Add click event listener
+      themeToggle.addEventListener('click', () => {
+        night = !night;
+        themeToggle.classList.toggle('active');
+        
+        if(night){
+          html.classList.add('dark');
+          localStorage.setItem('theme', 'dark');
+          knob.classList.add('moon');
+          knob.innerHTML="<div class='moon-shadow'></div>";
+          document.querySelectorAll(".star").forEach(s=>s.style.opacity=1);
+          document.querySelectorAll(".cloud").forEach(c=>c.style.opacity=0);
+        }else{
+          html.classList.remove('dark');
+          localStorage.setItem('theme', 'light');
+          knob.classList.remove('moon');
+          knob.innerHTML="";
+          document.querySelectorAll(".star").forEach(s=>s.style.opacity=0);
+          document.querySelectorAll(".cloud").forEach(c=>c.style.opacity=1);
+        }
+      });
+    });
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,363 @@
+{% extends "users/user_tailwind_base.html" %}
+{% load static %}
+
+{% block title %}Mission Control Center{% endblock %}
+
+{% block page_title %}Mission Control{% endblock %}
+
+{% block contents %}
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    {% if messages %}
+<div class="mb-8 space-y-4">
+    {% for message in messages %}
+        <div class="p-4 rounded-xl shadow-sm {% if message.tags == 'error' %}bg-red-50 text-red-700 border border-red-200{% elif message.tags == 'success' %}bg-green-50 text-green-700 border border-green-200{% elif message.tags == 'warning' %}bg-yellow-50 text-yellow-700 border border-yellow-200{% else %}bg-blue-50 text-blue-700 border border-blue-200{% endif %} flex items-center auto-dismiss-message" style="transition: opacity 0.5s ease;">
+            {% if message.tags == 'success' %}
+                <span class="material-symbols-outlined mr-2 text-2xl">check_circle</span>
+            {% elif message.tags == 'error' %}
+                <span class="material-symbols-outlined mr-2 text-2xl">error</span>
+            {% elif message.tags == 'warning' %}
+                <span class="material-symbols-outlined mr-2 text-2xl">warning</span>
+            {% else %}
+                <span class="material-symbols-outlined mr-2 text-2xl">info</span>
+            {% endif %}
+            {{ message }}
+        </div>
+    {% endfor %}
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        setTimeout(function() {
+            const messages = document.querySelectorAll('.auto-dismiss-message');
+            messages.forEach(function(msg) {
+                msg.style.opacity = '0';
+                setTimeout(function() {
+                    msg.remove();
+                }, 500);
+            });
+        }, 20000);
+    });
+</script>
+{% endif %}
+
+<div class="space-y-8">
+    
+    <!-- The Journey Map -->
+    <div class="relative space-y-16 pl-4 md:pl-0 mt-8">
+        <!-- Vertical Line -->
+        <div class="absolute left-8 md:left-1/2 top-0 bottom-0 w-1 bg-slate-200 dark:bg-slate-700 -translate-x-1/2 hidden md:block"></div>
+        
+        {% for week_data in plan_data %}
+        <!-- Sector (Week) Node -->
+        <div class="relative sector-node group" data-status="{{ week_data.week.status }}">
+            
+            <!-- Center Connector (Desktop) -->
+            <div class="hidden md:flex absolute left-1/2 top-8 -translate-x-1/2 z-20 flex-col items-center justify-center">
+                <div class="w-10 h-10 rounded-full border-4 border-slate-50 dark:border-slate-900 flex items-center justify-center shadow-lg transition-all duration-300 group-hover:scale-110
+                    {% if week_data.week.status == 'completed' %}bg-green-500 text-white shadow-green-500/30
+                    {% elif week_data.week.status == 'in_progress' %}bg-blue-600 text-white shadow-blue-500/30 ring-4 ring-blue-100 dark:ring-blue-900/30
+                    {% elif week_data.week.status == 'failed' %}bg-red-500 text-white shadow-red-500/30
+                    {% else %}bg-slate-200 dark:bg-slate-700 text-slate-400{% endif %}">
+                    <span class="text-sm font-bold font-mono">
+                        {% if week_data.week.status == 'completed' %}✓{% else %}{{ week_data.week.week_number }}{% endif %}
+                    </span>
+                </div>
+            </div>
+
+            <!-- Sector Header -->
+            <div class="md:w-1/2 mx-auto mb-8 text-center relative z-10 pl-12 md:pl-0">
+                <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider mb-3 shadow-sm border
+                    {% if week_data.week.status == 'completed' %}bg-green-100 text-green-700 border-green-200 dark:bg-green-900/30 dark:text-green-400 dark:border-green-800
+                    {% elif week_data.week.status == 'in_progress' %}bg-blue-100 text-blue-700 border-blue-200 dark:bg-blue-900/30 dark:text-blue-400 dark:border-blue-800
+                    {% elif week_data.week.status == 'failed' %}bg-red-100 text-red-700 border-red-200 dark:bg-red-900/30 dark:text-red-400 dark:border-red-800
+                    {% else %}bg-slate-100 text-slate-500 border-slate-200 dark:bg-slate-800 dark:text-slate-400 dark:border-slate-700{% endif %}">
+                    <span class="material-symbols-rounded text-2xl">
+                        {% if week_data.week.status == 'locked' %}lock{% else %}flag{% endif %}
+                    </span>
+                    Sector {{ week_data.week.week_number }}
+                </div>
+                <h2 class="text-2xl md:text-3xl font-black text-slate-900 dark:text-white mb-2">{{ week_data.week.skill_focus }}</h2>
+                
+                {% if week_data.week.status == 'failed' or week_data.has_revised %}
+                <div class="inline-flex items-center gap-2 bg-red-50 dark:bg-red-900/10 border border-red-200 dark:border-red-800 text-red-600 dark:text-red-400 px-6 py-3 rounded-full shadow-sm mb-4">
+                    <span class="material-symbols-rounded text-2xl">warning</span>
+                    <span class="font-bold text-sm">Sector Critical - Complete Revised Tasks to Unlock Retake</span>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6 max-w-4xl mx-auto text-left">
+                    <div class="bg-amber-50 dark:bg-amber-900/10 border border-amber-200 dark:border-amber-800 rounded-2xl p-6 shadow-sm">
+                        <div class="flex items-center gap-3 text-amber-700 dark:text-amber-400 mb-3">
+                            <span class="material-symbols-outlined text-2xl">auto_fix_high</span>
+                            <h3 class="font-black text-sm uppercase tracking-wider">Adaptive Strategy</h3>
+                        </div>
+                        <p class="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
+                            Based on your previous attempt, the system has identified core weaknesses. You must complete the <strong>REVISED</strong> tasks below to regain combat readiness for the boss level.
+                        </p>
+                    </div>
+                    
+                    <div class="bg-white dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-2xl p-6 shadow-sm">
+                        <div class="flex items-center gap-3 text-blue-600 dark:text-blue-400 mb-3">
+                            <span class="material-symbols-outlined text-2xl">target</span>
+                            <h3 class="font-black text-sm uppercase tracking-wider">Recommended Focus Topics</h3>
+                        </div>
+                        <div class="flex flex-wrap gap-2">
+                            {% if week_data.top_failed_topics %}
+                                {% for topic in week_data.top_failed_topics %}
+                                <span class="px-3 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400 rounded-full text-[10px] font-bold uppercase tracking-wider border border-blue-200 dark:border-blue-800">
+                                    {{ topic }}
+                                </span>
+                                {% endfor %}
+                            {% else %}
+                                {% for task in week_data.tasks %}
+                                    {% if "Revised Plan" in task.topic %}
+                                    <div class="flex items-start gap-2 text-[10px] text-slate-500 dark:text-slate-400">
+                                        <span class="text-amber-500">•</span>
+                                        {{ task.topic|truncatechars:60 }}
+                                    </div>
+                                    {% endif %}
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+                
+                <p class="text-slate-500 dark:text-slate-400 text-sm max-w-md mx-auto">Complete all missions in this sector to unlock the boss challenge.</p>
+            </div>
+
+            <!-- Missions Grid (Tasks) -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 relative z-10">
+                {% for task in week_data.tasks %}
+                <div class="relative group/card perspective">
+                    <!-- Card Container -->
+                    <div class="relative h-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl p-5 transition-all duration-300 hover:transform hover:-translate-y-1 hover:shadow-xl hover:border-blue-300 dark:hover:border-blue-700 overflow-hidden flex flex-col
+                        {% if task.status == 'completed' %}border-green-200 dark:border-green-900 bg-green-50/50 dark:bg-green-900/10
+                        {% elif task.status == 'unlocked' %}border-blue-200 dark:border-blue-900 bg-blue-50/50 dark:bg-blue-900/10
+                        {% else %}opacity-70 grayscale bg-slate-50 dark:bg-slate-800/50{% endif %}">
+                        
+                        <!-- Locked Overlay -->
+                        {% if task.status == 'locked' %}
+                        <div class="absolute inset-0 bg-slate-100/60 dark:bg-slate-900/60 backdrop-blur-[1px] z-20 flex flex-col items-center justify-center border-2 border-dashed border-slate-300 dark:border-slate-700 rounded-2xl m-[1px]">
+                            <div class="w-12 h-12 rounded-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-600 flex items-center justify-center mb-2 shadow-sm">
+                                <span class="material-symbols-rounded text-slate-400 text-3xl">lock</span>
+                            </div>
+                            <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Locked</span>
+                        </div>
+                        {% endif %}
+
+                        <!-- Card Header -->
+                        <div class="flex justify-between items-start mb-4">
+                            <div class="flex items-center gap-2">
+                                <span class="text-[10px] font-mono font-bold px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-700 text-slate-500 dark:text-slate-400 border border-slate-200 dark:border-slate-600">
+                                    DAY {{ task.day_number }}
+                                </span>
+                                {% if "Revised Plan" in task.topic %}
+                                <span class="text-[10px] font-bold px-1.5 py-0.5 rounded bg-amber-100 text-amber-700 border border-amber-200 dark:bg-amber-900/30 dark:text-amber-400 dark:border-amber-800">
+                                    REVISED
+                                </span>
+                                {% endif %}
+                                {% if task.status == 'completed' %}
+                                <span class="material-symbols-rounded text-green-500 text-2xl">check_circle</span>
+                                {% endif %}
+                            </div>
+                            <div class="text-[10px] font-bold text-amber-600 dark:text-amber-400 flex items-center gap-1 bg-amber-50 dark:bg-amber-900/20 px-1.5 py-0.5 rounded border border-amber-100 dark:border-amber-800">
+                                <span class="material-symbols-rounded text-2xl">bolt</span> {{ task.xp_reward }} XP
+                            </div>
+                        </div>
+
+                        <!-- Content -->
+                        <div class="mb-4 flex-1">
+                            <h3 class="text-slate-900 dark:text-white font-bold text-lg leading-tight mb-2 group-hover/card:text-blue-600 dark:group-hover/card:text-blue-400 transition-colors">{{ task.topic }}</h3>
+                            <p class="text-slate-500 dark:text-slate-400 text-xs leading-relaxed line-clamp-3">{{ task.description }}</p>
+                        </div>
+
+                        <!-- Action Area -->
+                        <div class="mt-auto pt-4 border-t border-slate-100 dark:border-slate-700 flex items-center justify-between">
+                            {% if task.status == 'completed' %}
+                                <div class="flex items-center gap-2 text-green-600 dark:text-green-400 w-full justify-center font-bold text-xs py-2 bg-green-50 dark:bg-green-900/20 rounded-lg">
+                                    Mission Complete
+                                </div>
+                            {% elif task.status == 'locked' %}
+                                <div class="text-slate-400 text-[10px] font-mono text-center w-full py-2">
+                                    COMPLETE PREVIOUS
+                                </div>
+                            {% else %}
+                                <button onclick="completeTask('{{ task.id }}')" class="w-full group relative flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-500 text-white font-bold py-2.5 px-4 rounded-xl transition-all shadow-lg shadow-blue-500/20 hover:shadow-blue-500/40 hover:-translate-y-0.5 active:translate-y-0 text-sm">
+                                    <span>Start Mission</span>
+                                    <span class="material-symbols-rounded text-2xl transition-transform group-hover:translate-x-1">arrow_forward</span>
+                                </button>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+
+            <!-- Sector Actions (Boss Level) -->
+            <div class="mt-12 flex justify-center">
+                {% if week_data.week.status == 'ready_for_test' %}
+                    <a href="{% url 'personalizedplan:weekly_test' week_data.week.id %}" 
+                       class="group relative inline-flex items-center justify-center">
+                        <div class="absolute inset-0 bg-gradient-to-r from-red-500 to-orange-500 rounded-2xl blur opacity-75 group-hover:opacity-100 animate-pulse transition-opacity"></div>
+                        <div class="relative bg-white dark:bg-slate-900 border border-red-200 dark:border-red-900 text-slate-900 dark:text-white px-8 py-4 rounded-2xl flex items-center gap-4 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors shadow-xl">
+                            <span class="text-3xl">⚔️</span>
+                            <div class="text-left">
+                                <div class="text-[10px] text-red-500 font-bold uppercase tracking-widest">Boss Level Unlocked</div>
+                                <div class="text-lg font-black">Challenge Sector Boss</div>
+                            </div>
+                            <span class="material-symbols-rounded text-red-500 text-2xl group-hover:translate-x-1 transition-transform">arrow_forward_ios</span>
+                        </div>
+                    </a>
+                {% elif week_data.week.status == 'completed' %}
+                    <div class="inline-flex items-center gap-2 bg-green-50 dark:bg-green-900/10 border border-green-200 dark:border-green-800 text-green-600 dark:text-green-400 px-6 py-3 rounded-full shadow-sm">
+                        <span class="material-symbols-rounded text-2xl">verified</span>
+                        <span class="font-bold text-sm">Sector Secured</span>
+                    </div>
+                {% elif week_data.week.status == 'failed' or week_data.has_revised %}
+                    <div class="inline-flex items-center gap-2 bg-red-50 dark:bg-red-900/10 border border-red-200 dark:border-red-800 text-red-600 dark:text-red-400 px-6 py-3 rounded-full shadow-sm">
+                        <span class="material-symbols-rounded text-2xl">warning</span>
+                        <span class="font-bold text-sm">Sector Critical - Retake Required</span>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+        {% endfor %}
+        
+    </div>
+
+    <!-- System Controls -->
+    <div class="mt-24 border-t border-slate-200 dark:border-slate-800 pt-8 flex justify-center gap-4 opacity-60 hover:opacity-100 transition-opacity">
+        <button onclick="pausePlan()" class="text-slate-500 hover:text-slate-700 dark:hover:text-slate-300 flex items-center gap-2 px-4 py-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors text-sm font-medium">
+            <span class="material-symbols-rounded text-2xl">pause_circle</span>
+            Suspend Mission
+        </button>
+        <button onclick="resetProgress()" class="text-red-500 hover:text-red-600 dark:hover:text-red-400 flex items-center gap-2 px-4 py-2 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors text-sm font-medium">
+            <span class="material-symbols-rounded text-2xl">cancel</span>
+            Abort Protocol
+        </button>
+    </div>
+</div>
+</div>
+
+<!-- Level Up Modal -->
+<div id="successModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4">
+    <div class="absolute inset-0 bg-slate-900/60 backdrop-blur-sm transition-opacity" onclick="closeModal()"></div>
+    <div class="relative bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-3xl p-1 overflow-hidden max-w-sm w-full shadow-2xl animate-bounce-in">
+        <div class="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500"></div>
+        
+        <div class="relative p-8 text-center">
+                            <div class="w-20 h-20 mx-auto mb-6 relative">
+                                <div class="absolute inset-0 bg-green-400 rounded-full blur-xl opacity-30 animate-pulse"></div>
+                                <div class="relative bg-gradient-to-br from-green-100 to-emerald-100 dark:from-green-900 dark:to-emerald-900 rounded-full p-1 shadow-lg border border-green-200 dark:border-green-700">
+                                    <div class="w-full h-full bg-white dark:bg-slate-800 rounded-full flex items-center justify-center text-5xl">
+                                        ✨
+                                    </div>
+                                </div>
+                            </div>
+            
+            <h3 class="text-2xl font-black text-slate-900 dark:text-white mb-2 tracking-tight">Mission Success!</h3>
+            <p class="text-slate-500 dark:text-slate-400 text-sm mb-6">You've successfully completed the daily objective.</p>
+            
+            <div class="bg-slate-50 dark:bg-slate-900 rounded-xl p-4 mb-8 border border-slate-100 dark:border-slate-700">
+                <div class="text-xs text-slate-400 font-bold uppercase tracking-wider mb-1">Reward Acquired</div>
+                <div class="flex items-center justify-center gap-2">
+                    <span class="text-2xl">⚡</span>
+                    <span id="xpEarned" class="text-3xl font-black text-slate-800 dark:text-white"></span>
+                    <span class="text-sm font-bold text-slate-400 mt-2">XP</span>
+                </div>
+            </div>
+            
+            <button onclick="closeModal()" class="w-full bg-slate-900 dark:bg-white hover:bg-slate-800 dark:hover:bg-slate-100 text-white dark:text-slate-900 font-bold py-3.5 rounded-xl shadow-lg transition-all transform hover:-translate-y-1">
+                Continue Mission
+            </button>
+        </div>
+    </div>
+</div>
+
+<style>
+    @keyframes shimmer {
+        0% { transform: translateX(-100%); }
+        100% { transform: translateX(100%); }
+    }
+    .animate-shimmer {
+        animation: shimmer 2s infinite;
+    }
+    .perspective {
+        perspective: 1000px;
+    }
+    @keyframes bounceIn {
+        0% { transform: scale(0.9); opacity: 0; }
+        50% { transform: scale(1.05); opacity: 1; }
+        100% { transform: scale(1); opacity: 1; }
+    }
+    .animate-bounce-in {
+        animation: bounceIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+    }
+</style>
+
+<script>
+    function completeTask(taskId) {
+        fetch(`/personalized-plan/complete-task/${taskId}/`, {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': '{{ csrf_token }}',
+                'Content-Type': 'application/json'
+            },
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                // Update UI elements
+                document.getElementById('xpEarned').textContent = data.xp_earned || '50';
+                
+                // Show modal
+                const modal = document.getElementById('successModal');
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+                
+                // Add confetti effect if available
+                if (typeof confetti !== 'undefined') {
+                    confetti({
+                        particleCount: 100,
+                        spread: 70,
+                        origin: { y: 0.6 }
+                    });
+                }
+            }
+        })
+        .catch(error => console.error('Error:', error));
+    }
+
+    function closeModal() {
+        const modal = document.getElementById('successModal');
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+        // Reload page to update state
+        window.location.reload();
+    }
+
+    function pausePlan() {
+        // Feature coming soon
+        alert("Mission suspension protocol is currently unavailable. Please continue your mission!");
+    }
+
+    function resetProgress() {
+        if(confirm('WARNING: This will reset all your progress for this plan. This action cannot be undone. Are you sure?')) {
+            const form = document.createElement('form');
+            form.method = 'POST';
+            form.action = "{% url 'personalizedplan:reset_plan' %}";
+            
+            const csrfInput = document.createElement('input');
+            csrfInput.type = 'hidden';
+            csrfInput.name = 'csrfmiddlewaretoken';
+            csrfInput.value = '{{ csrf_token }}';
+            form.appendChild(csrfInput);
+            
+            document.body.appendChild(form);
+            form.submit();
+        }
+    }
+</script>
+{% endblock %}

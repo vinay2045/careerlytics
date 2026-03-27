@@ -1,0 +1,97 @@
+[
+    {
+        "question_text": "If all roses are flowers and some flowers fade quickly, which statement is necessarily true?",
+        "options": ["All roses fade quickly", "Some roses fade quickly", "All flowers are roses", "Some roses are flowers"],
+        "correct_answer": 1
+    },
+    {
+        "question_text": "Look at this series: 3, 6, 9, 12, 15. What number comes next?",
+        "options": ["16", "17", "18", "20"],
+        "correct_answer": 2
+    },
+    {
+        "question_text": "If A is taller than B, and B is taller than C, who is the shortest?",
+        "options": ["A", "B", "C", "Cannot determine"],
+        "correct_answer": 2
+    },
+    {
+        "question_text": "Which word does NOT belong with the others?",
+        "options": ["Apple", "Orange", "Carrot", "Banana"],
+        "correct_answer": 2
+    },
+    {
+        "question_text": "If today is Tuesday, what day will it be in 3 days?",
+        "options": ["Thursday", "Friday", "Saturday", "Sunday"],
+        "correct_answer": 1
+    },
+    {
+        "question_text": "Complete the analogy: Dog is to Puppy as Cat is to?",
+        "options": ["Kitten", "Calf", "Foal", "Cub"],
+        "correct_answer": 0
+    },
+    {
+        "question_text": "If 2 + 2 = fish, 3 + 3 = eight, 5 + 5 =?",
+        "options": ["ten", "two", "eight", "fish"],
+        "correct_answer": 0
+    },
+    {
+        "question_text": "Which number should replace the question mark: 1, 4, 9, 16, ?",
+        "options": ["20", "25", "30", "36"],
+        "correct_answer": 1
+    },
+    {
+        "question_text": "If all birds can fly and penguins are birds, what can we conclude?",
+        "options": ["Penguins can fly", "Some birds cannot fly", "Penguins are not birds", "All flying things are birds"],
+        "correct_answer": 1
+    },
+    {
+        "question_text": "Which pattern comes next: ○, △, □, ○, △, ?",
+        "options": ["○", "△", "□", "◇"],
+        "correct_answer": 2
+    },
+    {
+        "question_text": "If some doctors are surgeons and all surgeons are medical professionals, what is necessarily true?",
+        "options": ["All doctors are medical professionals", "Some medical professionals are doctors", "All medical professionals are surgeons", "Some surgeons are not doctors"],
+        "correct_answer": 1
+    },
+    {
+        "question_text": "What is the missing number: 2, 6, 12, 20, 30, ?",
+        "options": ["36", "42", "48", "54"],
+        "correct_answer": 1
+    },
+    {
+        "question_text": "If A = B, B = C, and C ≠ A, what can we conclude?",
+        "options": ["A = C", "The statements are contradictory", "A, B, and C are all different", "B = A"],
+        "correct_answer": 1
+    },
+    {
+        "question_text": "Which is the odd one out: Hammer, Saw, Wrench, Nail",
+        "options": ["Hammer", "Saw", "Wrench", "Nail"],
+        "correct_answer": 3
+    },
+    {
+        "question_text": "If the first two statements are true, is the third statement true? 1) All cats are mammals. 2) Some mammals are pets. 3) Some cats are pets.",
+        "options": ["Yes", "No", "Cannot determine", "Sometimes"],
+        "correct_answer": 2
+    },
+    {
+        "question_text": "Complete the series: AB, DE, FG, IJ, ?",
+        "options": ["KL", "LM", "MN", "OP"],
+        "correct_answer": 0
+    },
+    {
+        "question_text": "If X > Y, Y > Z, and Z > W, which is definitely true?",
+        "options": ["X > Z", "Y > W", "X > W", "All of the above"],
+        "correct_answer": 3
+    },
+    {
+        "question_text": "Which number is missing: 1, 1, 2, 3, 5, 8, ?",
+        "options": ["11", "13", "15", "21"],
+        "correct_answer": 1
+    },
+    {
+        "question_text": "If all students are people and some people are teachers, which must be false?",
+        "options": ["Some students are teachers", "All teachers are students", "Some people are students", "All students are people"],
+        "correct_answer": 1
+    }
+]

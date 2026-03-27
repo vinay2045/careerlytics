@@ -1,0 +1,29 @@
+{
+  "student_id": "hello",
+  "test_id": 1,
+  "score_percentage": 1.67,
+  "classification": "at_risk",
+  "categories": {
+    "aptitude": {
+      "total": 9,
+      "correct": 1,
+      "percentage": 11.11
+    },
+    "reasoning": {
+      "total": 9,
+      "correct": 0,
+      "percentage": 0.0
+    },
+    "english": {
+      "total": 6,
+      "correct": 0,
+      "percentage": 0.0
+    },
+    "core": {
+      "total": 36,
+      "correct": 0,
+      "percentage": 0.0
+    }
+  },
+  "completed_at": "2026-03-23T20:14:01.673866+00:00"
+}

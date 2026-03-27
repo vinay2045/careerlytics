@@ -1,0 +1,452 @@
+[
+    {
+        "id": "docker_001",
+        "category": "devops",
+        "difficulty": "easy",
+        "question_text": "What is Docker?",
+        "options": [
+            "Virtual machine software",
+            "Containerization platform",
+            "Cloud provider",
+            "Database system"
+        ],
+        "correct_answer": 1,
+        "explanation": "Docker is a containerization platform that enables developers to package applications into containers for consistent deployment across environments.",
+        "tags": ["devops", "docker", "containerization", "platform"]
+    },
+    {
+        "id": "docker_002",
+        "category": "devops",
+        "difficulty": "easy",
+        "question_text": "What command builds a Docker image?",
+        "options": [
+            "docker build",
+            "docker create",
+            "docker make",
+            "docker compile"
+        ],
+        "correct_answer": 0,
+        "explanation": "The 'docker build' command builds Docker images from a Dockerfile and a context directory.",
+        "tags": ["devops", "docker", "build", "image", "command"]
+    },
+    {
+        "id": "docker_003",
+        "category": "devops",
+        "difficulty": "easy",
+        "question_text": "What is a Docker container?",
+        "options": [
+            "Virtual machine",
+            "Isolated application environment",
+            "Database instance",
+            "Network configuration"
+        ],
+        "correct_answer": 1,
+        "explanation": "A Docker container is a lightweight, isolated application environment that runs applications with their dependencies bundled together.",
+        "tags": ["devops", "docker", "container", "isolation"]
+    },
+    {
+        "id": "docker_004",
+        "category": "devops",
+        "difficulty": "easy",
+        "question_text": "Which file defines Docker container configuration?",
+        "options": [
+            "docker.yml",
+            "Dockerfile",
+            "container.json",
+            "docker.conf"
+        ],
+        "correct_answer": 1,
+        "explanation": "A Dockerfile is a text document that contains all the commands to assemble a Docker image.",
+        "tags": ["devops", "docker", "dockerfile", "configuration"]
+    },
+    {
+        "id": "docker_005",
+        "category": "devops",
+        "difficulty": "easy",
+        "question_text": "What command runs a Docker container?",
+        "options": [
+            "docker start",
+            "docker run",
+            "docker execute",
+            "docker launch"
+        ],
+        "correct_answer": 1,
+        "explanation": "The 'docker run' command creates and starts a new container from a specified image.",
+        "tags": ["devops", "docker", "run", "container", "command"]
+    },
+    {
+        "id": "docker_006",
+        "category": "devops",
+        "difficulty": "medium",
+        "question_text": "What is Docker Hub?",
+        "options": [
+            "Container registry",
+            "Virtual machine marketplace",
+            "Cloud storage service",
+            "Code repository"
+        ],
+        "correct_answer": 0,
+        "explanation": "Docker Hub is a cloud-based container registry service where users can store and share container images.",
+        "tags": ["devops", "docker", "docker-hub", "registry"]
+    },
+    {
+        "id": "docker_007",
+        "category": "devops",
+        "difficulty": "medium",
+        "question_text": "What is the purpose of docker-compose?",
+        "options": [
+            "Build Docker images",
+            "Manage multi-container applications",
+            "Monitor containers",
+            "Backup containers"
+        ],
+        "correct_answer": 1,
+        "explanation": "Docker Compose is a tool for defining and running multi-container Docker applications using a YAML file.",
+        "tags": ["devops", "docker", "docker-compose", "multi-container"]
+    },
+    {
+        "id": "docker_008",
+        "category": "devops",
+        "difficulty": "medium",
+        "question_text": "What command lists running containers?",
+        "options": [
+            "docker list",
+            "docker ps",
+            "docker show",
+            "docker containers"
+        ],
+        "correct_answer": 1,
+        "explanation": "The 'docker ps' command lists all running containers, showing their container ID, image, and status.",
+        "tags": ["devops", "docker", "ps", "containers", "command"]
+    },
+    {
+        "id": "docker_009",
+        "category": "devops",
+        "difficulty": "medium",
+        "question_text": "What is a Docker volume?",
+        "options": [
+            "Container image",
+            "Persistent data storage",
+            "Network configuration",
+            "Security policy"
+        ],
+        "correct_answer": 1,
+        "explanation": "Docker volumes provide persistent data storage that exists independently of containers, allowing data to persist after container removal.",
+        "tags": ["devops", "docker", "volume", "storage", "persistence"]
+    },
+    {
+        "id": "docker_010",
+        "category": "devops",
+        "difficulty": "hard",
+        "question_text": "What is the difference between COPY and ADD in Dockerfile?",
+        "options": [
+            "No difference",
+            "ADD can handle remote URLs and auto-extraction",
+            "COPY is faster than ADD",
+            "ADD only works with local files"
+        ],
+        "correct_answer": 1,
+        "explanation": "ADD can handle remote URLs and automatically extract compressed files, while COPY only copies local files. COPY is preferred for simplicity.",
+        "tags": ["devops", "docker", "dockerfile", "copy", "add"]
+    },
+    {
+        "id": "docker_011",
+        "category": "devops",
+        "difficulty": "easy",
+        "question_text": "What is the purpose of docker-compose.yml?",
+        "options": [
+            "Define multi-container applications",
+            "Build Docker images",
+            "Run single container",
+            "Manage Docker networks"
+        ],
+        "correct_answer": 0,
+        "explanation": "docker-compose.yml is used to define and run multi-container Docker applications using a single configuration file.",
+        "tags": ["devops", "docker", "docker-compose", "multi-container"]
+    },
+    {
+        "id": "docker_012",
+        "category": "devops",
+        "difficulty": "easy",
+        "question_text": "Which command stops all running containers?",
+        "options": [
+            "docker stop $(docker ps -q)",
+            "docker stop all",
+            "docker halt",
+            "docker shutdown"
+        ],
+        "correct_answer": 0,
+        "explanation": "docker stop $(docker ps -q) stops all running containers by getting their IDs and passing them to stop command.",
+        "tags": ["devops", "docker", "stop", "containers"]
+    },
+    {
+        "id": "docker_013",
+        "category": "devops",
+        "difficulty": "easy",
+        "question_text": "What is a Docker image?",
+        "options": [
+            "Template for creating containers",
+            "Running container instance",
+            "Container configuration",
+            "Network configuration"
+        ],
+        "correct_answer": 0,
+        "explanation": "A Docker image is a read-only template used to create container instances.",
+        "tags": ["devops", "docker", "image", "template"]
+    },
+    {
+        "id": "docker_014",
+        "category": "devops",
+        "difficulty": "easy",
+        "question_text": "Which command removes Docker images?",
+        "options": [
+            "docker rmi",
+            "docker remove",
+            "docker delete",
+            "docker clean"
+        ],
+        "correct_answer": 0,
+        "explanation": "docker rmi (remove image) removes one or more Docker images from the local system.",
+        "tags": ["devops", "docker", "rmi", "image-removal"]
+    },
+    {
+        "id": "docker_015",
+        "category": "devops",
+        "difficulty": "medium",
+        "question_text": "What is Docker Swarm?",
+        "options": [
+            "Container orchestration",
+            "Image registry",
+            "Volume management",
+            "Network management"
+        ],
+        "correct_answer": 0,
+        "explanation": "Docker Swarm is a native clustering and orchestration tool for Docker containers.",
+        "tags": ["devops", "docker", "swarm", "orchestration"]
+    },
+    {
+        "id": "docker_016",
+        "category": "devops",
+        "difficulty": "medium",
+        "question_text": "Which command shows container logs?",
+        "options": [
+            "docker logs",
+            "docker show",
+            "docker output",
+            "docker tail"
+        ],
+        "correct_answer": 0,
+        "explanation": "docker logs displays the logs of a container, useful for debugging and monitoring.",
+        "tags": ["devops", "docker", "logs", "monitoring"]
+    },
+    {
+        "id": "docker_017",
+        "category": "devops",
+        "difficulty": "medium",
+        "question_text": "What is the purpose of Docker networks?",
+        "options": [
+            "Connect containers",
+            "Store data",
+            "Build images",
+            "Manage resources"
+        ],
+        "correct_answer": 0,
+        "explanation": "Docker networks enable communication between containers while providing isolation from external networks.",
+        "tags": ["devops", "docker", "networks", "container-communication"]
+    },
+    {
+        "id": "docker_018",
+        "category": "devops",
+        "difficulty": "medium",
+        "question_text": "Which command executes commands in a running container?",
+        "options": [
+            "docker exec",
+            "docker run",
+            "docker execute",
+            "docker command"
+        ],
+        "correct_answer": 0,
+        "explanation": "docker exec executes commands in a running container, useful for debugging and maintenance.",
+        "tags": ["devops", "docker", "exec", "container-management"]
+    },
+    {
+        "id": "docker_019",
+        "category": "devops",
+        "difficulty": "medium",
+        "question_text": "What is the purpose of .dockerignore file?",
+        "options": [
+            "Exclude files from build context",
+            "Define environment variables",
+            "Configure networks",
+            "Set volume paths"
+        ],
+        "correct_answer": 0,
+        "explanation": ".dockerignore specifies files and directories that should be excluded from the Docker build context.",
+        "tags": ["devops", "docker", "dockerignore", "build-context"]
+    },
+    {
+        "id": "docker_020",
+        "category": "devops",
+        "difficulty": "hard",
+        "question_text": "What is the difference between CMD and ENTRYPOINT?",
+        "options": [
+            "Default command vs executable",
+            "Build vs run",
+            "Environment vs arguments",
+            "Shell vs exec form"
+        ],
+        "correct_answer": 0,
+        "explanation": "CMD provides default command and parameters that can be overridden, while ENTRYPOINT configures container that will run as executable.",
+        "tags": ["devops", "docker", "cmd", "entrypoint"]
+    },
+    {
+        "id": "docker_021",
+        "category": "devops",
+        "difficulty": "hard",
+        "question_text": "What is the purpose of Docker secrets?",
+        "options": [
+            "Manage sensitive data",
+            "Container networking",
+            "Image optimization",
+            "Volume encryption"
+        ],
+        "correct_answer": 0,
+        "explanation": "Docker secrets provide a secure way to manage sensitive data like passwords, tokens, and keys without storing them in images or environment variables.",
+        "tags": ["devops", "docker", "secrets", "security"]
+    },
+    {
+        "id": "docker_022",
+        "category": "devops",
+        "difficulty": "hard",
+        "question_text": "What is the purpose of Docker health checks?",
+        "options": [
+            "Monitor container health",
+            "Optimize performance",
+            "Manage resources",
+            "Schedule tasks"
+        ],
+        "correct_answer": 0,
+        "explanation": "Docker health checks provide a way to monitor the health of containers and automatically restart unhealthy ones.",
+        "tags": ["devops", "docker", "health-checks", "monitoring"]
+    },
+    {
+        "id": "docker_023",
+        "category": "devops",
+        "difficulty": "hard",
+        "question_text": "What is the purpose of Docker multi-stage builds?",
+        "options": [
+            "Optimize image size",
+            "Parallel builds",
+            "Multiple architectures",
+            "Cross-platform builds"
+        ],
+        "correct_answer": 0,
+        "explanation": "Multi-stage builds allow you to use multiple FROM statements in a Dockerfile to create smaller, more optimized final images.",
+        "tags": ["devops", "docker", "multi-stage", "optimization"]
+    },
+    {
+        "id": "docker_024",
+        "category": "devops",
+        "difficulty": "hard",
+        "question_text": "What is the purpose of Docker content trust?",
+        "options": [
+            "Verify image authenticity",
+            "Encrypt data",
+            "Manage permissions",
+            "Control access"
+        ],
+        "correct_answer": 0,
+        "explanation": "Docker content trust provides digital signature verification to ensure images are authentic and haven't been tampered with.",
+        "tags": ["devops", "docker", "content-trust", "security"]
+    },
+    {
+        "id": "docker_025",
+        "category": "devops",
+        "difficulty": "medium",
+        "question_text": "Which command removes stopped containers?",
+        "options": [
+            "docker container prune",
+            "docker cleanup",
+            "docker remove stopped",
+            "docker clear"
+        ],
+        "correct_answer": 0,
+        "explanation": "docker container prune removes all stopped containers, freeing up disk space.",
+        "tags": ["devops", "docker", "prune", "cleanup"]
+    },
+    {
+        "id": "docker_026",
+        "category": "devops",
+        "difficulty": "medium",
+        "question_text": "What is the purpose of Docker labels?",
+        "options": [
+            "Metadata for containers/images",
+            "Version control",
+            "Build instructions",
+            "Network configuration"
+        ],
+        "correct_answer": 0,
+        "explanation": "Docker labels are key-value pairs of metadata that can be applied to containers, images, volumes, and networks.",
+        "tags": ["devops", "docker", "labels", "metadata"]
+    },
+    {
+        "id": "docker_027",
+        "category": "devops",
+        "difficulty": "medium",
+        "question_text": "Which command copies files from container to host?",
+        "options": [
+            "docker cp",
+            "docker copy",
+            "docker transfer",
+            "docker export"
+        ],
+        "correct_answer": 0,
+        "explanation": "docker cp copies files from containers to the host system or between containers.",
+        "tags": ["devops", "docker", "cp", "file-transfer"]
+    },
+    {
+        "id": "docker_028",
+        "category": "devops",
+        "difficulty": "easy",
+        "question_text": "What is the default Docker registry?",
+        "options": [
+            "Docker Hub",
+            "GitHub Registry",
+            "AWS ECR",
+            "Google Container Registry"
+        ],
+        "correct_answer": 0,
+        "explanation": "Docker Hub is the default public registry where Docker images are stored and shared.",
+        "tags": ["devops", "docker", "docker-hub", "registry"]
+    },
+    {
+        "id": "docker_029",
+        "category": "devops",
+        "difficulty": "easy",
+        "question_text": "Which command pulls an image from registry?",
+        "options": [
+            "docker pull",
+            "docker get",
+            "docker download",
+            "docker fetch"
+        ],
+        "correct_answer": 0,
+        "explanation": "docker pull downloads Docker images from a registry to the local system.",
+        "tags": ["devops", "docker", "pull", "image-download"]
+    },
+    {
+        "id": "docker_030",
+        "category": "devops",
+        "difficulty": "medium",
+        "question_text": "What is the purpose of Docker userns remapping?",
+        "options": [
+            "Security isolation",
+            "Performance optimization",
+            "Network configuration",
+            "Volume management"
+        ],
+        "correct_answer": 0,
+        "explanation": "User namespace remapping enhances security by mapping container users to different host users, preventing privilege escalation.",
+        "tags": ["devops", "docker", "userns", "security", "isolation"]
+    }
+]

@@ -1,0 +1,282 @@
+Personalized Plan System Implementation
+Create a comprehensive personalized learning plan system that generates 3-4 week skill development plans based on mock test performance, with daily tasks, weekly tests, and adaptive progression.
+
+Overview
+Implement a personalized plan system where users take initial assessment tests, receive AI-generated 3-4 week learning plans, complete daily tasks, pass weekly tests, and receive career readiness recommendations with adaptive difficulty adjustments.
+
+Key Components
+1. Personalized Plan Button & Initial Assessment
+Add "Personalized Plan" button to UserHome dashboard
+Create role/language selection interface
+Implement comprehensive assessment test covering:
+Topic accuracy analysis
+Speed and consistency metrics
+Weak area identification
+Store assessment results for plan generation
+2. AI Plan Generation System
+Create models for storing personalized plans
+Implement algorithm to generate 3-4 week plans based on assessment
+Each week contains one skill block with daily topic assignments
+Entire plan displayed but blurred/locked until unlocked
+Sequential unlocking: Complete current day → Unlock next day
+XP rewards: Daily task (15 XP), Weekly test completion (300 XP)
+Bonus XP: Streak XP (discipline), Recovery XP (motivation after failure), Speed XP (mastery), Consistency XP (honesty)
+Level system: 100 XP per level, displayed at top
+Users use external platforms for actual learning and practice
+3. Weekly Progression System
+Weekly tests with 30 questions at end of each week
+Pass threshold: ≥70% unlocks next week
+Fail threshold: Weak Topic Diagnosis → Add 2-4 extra days to focus on week's weak topics
+Adaptive difficulty based on performance
+4. Final Assessment & Career Decision
+Final role readiness test with 60 questions after 4 weeks
+Calculate overall readiness percentage
+If final test score ≤70%: Create 2-week correction plan focusing on all week topics
+After 2-week correction completion: Take comprehensive test on all topics
+Career recommendations based on final performance:
+≥80%: Job Ready
+60-80%: Needs additional training
+<60%: Not suitable for this role
+Role switch recommendations for persistent failures
+5. Plan Management Features
+Only one active plan at a time
+Pause functionality with progress saving
+Resume paused plans
+Switch between plans (not concurrent)
+Progress persistence across sessions
+6. Resume Upgrade Tracking
+Track resume improvement before and after personalized plan completion
+Compare resume scores by role and skill
+Display improvement percentages to users
+Show impact statements like "Your Frontend resume is now 31% stronger"
+Technical Implementation
+Database Models
+PersonalizedPlan: Main plan records
+WeeklyPlan: Weekly skill blocks
+DailyTask: Daily learning missions
+PlanProgress: User progress tracking
+AssessmentResult: Initial test results
+WeakTopicDiagnosis: Weak area identification
+CorrectionPlan: 2-week comprehensive correction plans
+FinalRetest: Comprehensive re-test after correction
+UserXP: User XP tracking and levels
+XPReward: XP reward transactions
+UserStreak: User streak tracking
+DailyActivity: Daily activity logging
+ResumeImpact: Resume improvement tracking
+Views & Templates
+Personalized plan selection interface
+Complete plan display with blur/lock system
+Daily topic display with "Mark Complete" button
+XP reward display after task completion
+Weekly test functionality
+Weak topic diagnosis interface
+Extra days display for weak topics (2-4 days)
+Weekly test re-test functionality
+Correction plan interface (2 weeks)
+Comprehensive re-test functionality
+Progress tracking dashboard with XP/level display
+Streak display showing daily presence by week
+Daily streak progress counter
+Resume improvement display with impact statements
+Final assessment interface
+Congratulations screen
+Business Logic
+Adaptive difficulty algorithms
+Weak area identification
+Progress calculation methods
+Readiness scoring system
+Career recommendation engine
+Weak topic diagnosis algorithms
+Extra days calculation for weak topics (2-4 days)
+Weekly test re-test logic after extra days
+Correction plan generation (2 weeks)
+Comprehensive re-test logic
+XP calculation and leveling system
+Bonus XP algorithms: Streak, Recovery, Speed, Consistency
+Streak tracking and calculation logic
+Daily activity logging and visualization
+Resume impact calculation and display
+Real-time XP updates and display
+XP Reward System Details
+📊 XP Reward Types:
+daily_task: 15 XP for daily completion
+weekly_test: 300 XP for weekly test completion
+streak: Bonus XP for consecutive days
+recovery: Bonus XP for overcoming failures
+speed: Bonus XP for quick completion
+consistency: Bonus XP for regular engagement
+🧮 Bonus XP Logic:
+Streak XP: +5 XP per consecutive day (resets on miss)
+Recovery XP: +25 XP after passing failed weekly test
+Speed XP: +10 XP for completing tasks in <50% estimated time
+Consistency XP: +20 XP for 7-day completion streak
+Database Schema Design
+Core Tables
+sql
+-- Personalized Plan Main Table
+PersonalizedPlan(
+    id = UUID (Primary Key)
+    user = ForeignKey(UserRegistration)
+    plan_type = CharField (role/language)
+    target_role/language = CharField
+    current_week = IntegerField (default=1)
+    current_day = IntegerField (default=1)
+    status = CharField (active/paused/completed/failed)
+    created_at = DateTimeField
+    updated_at = DateTimeField
+)
+ 
+-- Weekly Plans
+WeeklyPlan(
+    id = UUID (Primary Key)
+    personalized_plan = ForeignKey(PersonalizedPlan)
+    week_number = IntegerField
+    skill_focus = CharField
+    topics = JSONField (daily topics)
+    status = CharField (locked/in_progress/completed/failed)
+    extra_days_added = IntegerField (default=0)
+    weak_topics_focus = JSONField (null=True)
+    created_at = DateTimeField
+)
+ 
+-- Daily Tasks
+DailyTask(
+    id = UUID (Primary Key)
+    weekly_plan = ForeignKey(WeeklyPlan)
+    day_number = IntegerField
+    topic = CharField
+    description = TextField
+    status = CharField (locked/unlocked/completed)
+    completed_at = DateTimeField (null=True)
+    xp_reward = IntegerField (default=15)
+)
+ 
+-- User Progress Tracking
+PlanProgress(
+    id = UUID (Primary Key)
+    user = ForeignKey(UserRegistration)
+    personalized_plan = ForeignKey(PersonalizedPlan)
+    current_week = IntegerField
+    current_day = IntegerField
+    total_days_completed = IntegerField
+    weekly_tests_passed = IntegerField
+    weekly_tests_failed = IntegerField
+    last_activity = DateTimeField
+)
+ 
+-- Assessment Results
+AssessmentResult(
+    id = UUID (Primary Key)
+    user = ForeignKey(UserRegistration)
+    personalized_plan = ForeignKey(PersonalizedPlan)
+    test_type = CharField (initial/weekly/final/correction)
+    score = IntegerField
+    total_questions = IntegerField
+    weak_areas = JSONField
+    created_at = DateTimeField
+)
+ 
+-- Weak Topic Diagnosis
+WeakTopicDiagnosis(
+    id = UUID (Primary Key)
+    assessment_result = ForeignKey(AssessmentResult)
+    weak_topics = JSONField (topic names and scores)
+    severity_level = CharField (low/medium/high)
+    created_at = DateTimeField
+)
+ 
+-- Correction Plans (2 weeks)
+CorrectionPlan(
+    id = UUID (Primary Key)
+    user = ForeignKey(UserRegistration)
+    personalized_plan = ForeignKey(PersonalizedPlan)
+    duration_weeks = IntegerField (default=2)
+    all_topics = JSONField (comprehensive topic list)
+    status = CharField (active/completed/failed)
+    created_at = DateTimeField
+)
+ 
+-- Final Retest Results
+FinalRetest(
+    id = UUID (Primary Key)
+    correction_plan = ForeignKey(CorrectionPlan)
+    score = IntegerField
+    total_questions = IntegerField (60)
+    career_recommendation = CharField
+    readiness_level = CharField
+    created_at = DateTimeField
+)
+ 
+-- XP System
+UserXP(
+    id = UUID (Primary Key)
+    user = ForeignKey(UserRegistration, OneToOne)
+    total_xp = IntegerField (default=0)
+    current_level = IntegerField (default=1)
+    xp_to_next_level = IntegerField (100)
+    level_progress = IntegerField (0-100)
+    last_updated = DateTimeField
+)
+ 
+-- XP Reward Transactions
+XPReward(
+    id = UUID (Primary Key)
+    user_xp = ForeignKey(UserXP)
+    reward_type = CharField (daily_task/weekly_test/streak/recovery/speed/consistency)
+    xp_amount = IntegerField
+    reason = CharField
+    related_object_id = UUIDField (task/assessment ID)
+    created_at = DateTimeField
+)
+ 
+-- Streak Tracking
+UserStreak(
+    id = UUID (Primary Key)
+    user = ForeignKey(UserRegistration, OneToOne)
+    current_streak = IntegerField (default=0)
+    longest_streak = IntegerField (default=0)
+    last_activity_date = DateField (null=True)
+    total_days_active = IntegerField (default=0)
+    created_at = DateTimeField
+)
+ 
+-- Daily Activity Log
+DailyActivity(
+    id = UUID (Primary Key)
+    user = ForeignKey(UserRegistration)
+    date = DateField
+    week_number = IntegerField
+    day_number = IntegerField
+    is_active = BooleanField (default=False)
+    tasks_completed = IntegerField (default=0)
+    xp_earned = IntegerField (default=0)
+    created_at = DateTimeField
+)
+ 
+-- Resume Impact Tracking
+ResumeImpact(
+    id = UUID (Primary Key)
+    user = ForeignKey(UserRegistration)
+    role = CharField
+    skill = CharField
+    before_score = IntegerField
+    after_score = IntegerField
+    improvement_percentage = FloatField
+    created_at = DateTimeField
+)
+Relationships and Constraints
+One user can have only one active PersonalizedPlan
+PersonalizedPlan has 3-4 WeeklyPlans
+Each WeeklyPlan has 7 DailyTasks
+XP updates trigger level calculations automatically
+All foreign key relationships with CASCADE delete
+File Structure
+All files will be saved in D:\Careerlytics\personalizedplan\ directory as requested.
+
+Success Metrics
+User engagement with daily tasks
+Weekly test pass rates
+Final readiness improvements
+Plan completion rates
+Career placement success

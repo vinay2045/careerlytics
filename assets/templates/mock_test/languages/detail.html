@@ -1,0 +1,603 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ language.name }} Assessment - Careerlytics</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+    <script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              primary: "#3b82f6",
+              "background-light": "#f8fafc",
+              "background-dark": "#0f172a",
+            },
+            fontFamily: {
+              display: ["Inter", "sans-serif"],
+              body: ["Inter", "sans-serif"],
+            },
+            borderRadius: {
+              DEFAULT: "1rem",
+              'xl': "1.5rem",
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+        :root {
+          --sidebar-light: #1e293b;
+          --sidebar-dark: #0f172a;
+          --sidebar-accent: #3730a3;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+        }
+        .card {
+            background-color: #ffffff;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+        .dark .card {
+            background-color: #1f2937;
+        }
+        .btn-primary {
+            background-color: #2563eb;
+            color: #ffffff;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            font-weight: 500;
+            transition: background-color 0.2s;
+        }
+        .btn-primary:hover {
+            background-color: #1e40af;
+        }
+        .text-blue-dashboard {
+            color: #2563eb;
+        }
+        .dark .text-blue-dashboard {
+            color: #60a5fa;
+        }
+        .text-dark-dashboard {
+            color: #1a202c;
+        }
+        .dark .text-dark-dashboard {
+            color: #e2e8f0;
+        }
+        .sidebar-icon {
+            font-size: 28px;
+            color: #a0aec0;
+        }
+        .sidebar-item.active .sidebar-icon,
+        .sidebar-item:hover .sidebar-icon {
+            color: #ffffff;
+        }
+        .pulse-indicator {
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(59, 130, 246, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0); }
+        }
+        .sidebar-item {
+            position: relative;
+        }
+        
+        .sidebar-item::after {
+            content: attr(title);
+            position: absolute;
+            left: 100%;
+            top: 50%;
+            transform: translateY(-50%);
+            margin-left: 10px;
+            padding: 0.5rem 0.75rem;
+            background-color: #1f2937;
+            color: white;
+            border-radius: 0.375rem;
+            font-size: 0.875rem;
+            white-space: nowrap;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.2s, visibility 0.2s;
+            z-index: 1000;
+            pointer-events: none;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        .sidebar-item::before {
+            content: '';
+            position: absolute;
+            left: 100%;
+            top: 50%;
+            transform: translateY(-50%);
+            margin-left: 6px;
+            width: 0;
+            height: 0;
+            border-top: 6px solid transparent;
+            border-bottom: 6px solid transparent;
+            border-right: 6px solid #1f2937;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.2s, visibility 0.2s;
+            z-index: 1000;
+            pointer-events: none;
+        }
+        .sidebar-item:hover::after {
+            opacity: 1;
+            visibility: visible;
+        }
+        .sidebar-item:hover::before {
+            opacity: 1;
+            visibility: visible;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        .dark .glass-card {
+            background: rgba(30, 41, 59, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .premium-shadow {
+            box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+        /* Glass Day Night Toggle */
+        .toggle-wrapper{
+            width:90px;
+            height:38px;
+            border-radius:21px;
+            background:rgba(255,255,255,0.25);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border:1px solid rgba(255,255,255,0.4);
+            box-shadow:0 6px 15px rgba(0,0,0,0.05);
+            position:relative;
+            overflow:hidden;
+            cursor:pointer;
+            flex-shrink:0;
+        }
+
+        /* Inner sky */
+        .sky{
+            position:absolute;
+            inset:0;
+            border-radius:21px;
+            transition:1s;
+            background:linear-gradient(135deg,#7fc8ff,#cceeff);
+        }
+
+        /* Clouds */
+        .cloud{
+            position:absolute;
+            width:38px;
+            height:14px;
+            background:rgba(255,255,255,0.95);
+            border-radius:14px;
+            top:11px;
+            animation:cloudMove 18s linear infinite;
+            box-shadow:0 1px 4px rgba(0,0,0,0.03);
+        }
+        .cloud::before,
+        .cloud::after{
+            content:'';
+            position:absolute;
+            background:rgba(255,255,255,0.95);
+            width:15px;
+            height:15px;
+            border-radius:50%;
+            top:-8px;
+        }
+        .cloud::before{left:5px;}
+        .cloud::after{left:19px;}
+
+        @keyframes cloudMove{
+            from{left:-45px;}
+            to{left:95px;}
+        }
+
+        /* Stars */
+        .star{
+            position:absolute;
+            width:0.8px;
+            height:0.8px;
+            background:white;
+            border-radius:50%;
+            opacity:0;
+            animation:twinkle 2s infinite alternate;
+        }
+        @keyframes twinkle{
+            from{opacity:.3;}
+            to{opacity:1;}
+        }
+
+        /* Knob */
+        .knob{
+            position:absolute;
+            top:3px;
+            left:3px;
+            width:32px;
+            height:32px;
+            border-radius:50%;
+            background:linear-gradient(135deg,#FFD700,#FF8C00);
+            box-shadow:0 0 8px #FFD700, 0 3px 8px rgba(0,0,0,0.12);
+            transition:0.9s cubic-bezier(0.4,0,0.2,1);
+            z-index:5;
+        }
+
+        /* Moon */
+        .moon{
+            background:linear-gradient(135deg,#eee,#aaa);
+            box-shadow:inset -3px -3px 0 rgba(0,0,0,0.2),
+                       0 0 6px #aaa;
+        }
+
+        /* Moon shadow */
+        .moon-shadow{
+            position:absolute;
+            width:8px;
+            height:8px;
+            background:rgba(0,0,0,0.25);
+            border-radius:50%;
+            top:7px;
+            left:7px;
+        }
+
+        /* Night Mode */
+        .toggle-wrapper.active .knob{
+            transform:translateX(52px) rotate(360deg);
+        }
+        .toggle-wrapper.active .sky{
+            background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+        }
+    </style>
+</head>
+<body class="bg-slate-50 dark:bg-gray-900 min-h-screen">
+    <!-- Mobile Sidebar Overlay -->
+    <div id="sidebar-overlay" class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-40 hidden lg:hidden transition-opacity duration-300"></div>
+
+    <!-- Sidebar -->
+    <aside id="sidebar" class="w-20 bg-blue-700 dark:bg-gradient-to-b dark:from-[var(--sidebar-dark)] dark:to-[var(--sidebar-accent)] flex flex-col items-center py-6 fixed h-full shadow-lg z-50 transition-transform duration-300 -translate-x-full lg:translate-x-0">
+        <div class="flex flex-col items-center gap-8 w-full">
+            <a href="{% url 'users:UserHome' %}" class="w-12 h-12 bg-white/10 rounded-xl flex items-center justify-center hover:bg-white/20 transition-colors group" title="Dashboard">
+                <span class="material-symbols-outlined text-white text-2xl group-hover:scale-110 transition-transform">dashboard</span>
+            </a>
+            
+            <nav class="flex flex-col items-center gap-6 w-full">
+                <a href="{% url 'mock_test' %}" class="sidebar-item w-12 h-12 flex items-center justify-center rounded-xl bg-white/20 text-white" title="Mock Tests">
+                    <span class="material-symbols-outlined">quiz</span>
+                </a>
+                <a href="{% url 'resumeanalysis:upload_resume' %}" class="sidebar-item w-12 h-12 flex items-center justify-center rounded-xl text-white/70 hover:bg-white/10 hover:text-white transition-all" title="Resume Analysis">
+                    <span class="material-symbols-outlined">description</span>
+                </a>
+                <a href="{% url 'personalizedplan:dashboard' %}" class="sidebar-item w-12 h-12 flex items-center justify-center rounded-xl text-white/70 hover:bg-white/10 hover:text-white transition-all" title="Learning Plan">
+                    <span class="material-symbols-outlined">event_note</span>
+                </a>
+            </nav>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="min-h-screen transition-all duration-300 lg:ml-20">
+        <!-- Header -->
+        <header class="h-16 border-b border-slate-200 dark:border-slate-700 bg-white dark:bg-gray-800 flex flex-shrink-0 items-center justify-between px-4 md:px-8 z-40 sticky top-0">
+            <div class="flex items-center gap-4 md:gap-6">
+                <!-- Mobile Menu Toggle -->
+                <button id="mobile-menu-toggle" class="lg:hidden p-2 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg transition-colors">
+                    <span class="material-symbols-outlined">menu</span>
+                </button>
+                <!-- Removed System Live indicator -->
+                <h1 class="font-bold text-[10px] md:text-[11px] uppercase tracking-[0.1em] md:tracking-[0.15em] text-slate-400 dark:text-slate-300 truncate max-w-[150px] md:max-w-none">Careerlytics Assessment Portal</h1>
+            </div>
+            <div class="flex items-center gap-6">
+                <div class="flex items-center gap-5">
+                    <div class="toggle-wrapper" id="theme-toggle">
+                        <div class="sky">
+                            <div class="cloud" style="animation-delay:0s"></div>
+                            <div class="cloud" style="top:60px;animation-delay:7s"></div>
+                            <div id="stars"></div>
+                        </div>
+                        <div class="knob" id="knob"></div>
+                    </div>
+                    <button class="p-2 text-slate-400 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors relative">
+                        <span class="material-symbols-outlined text-[24px]">notifications</span>
+                        <span class="absolute top-2 right-2 w-2 h-2 bg-red-500 rounded-full border-2 border-white dark:border-gray-900"></span>
+                    </button>
+                    <div class="flex items-center gap-3 border-l border-slate-100 pl-5">
+                        <div class="text-right hidden sm:block">
+                            <p class="text-[9px] font-black text-slate-400 uppercase tracking-tighter">PROFILE ACCESS</p>
+                            <p class="text-xs text-slate-800 dark:text-slate-200 font-bold font-mono uppercase">{{ user.userid|default:"user" }}</p>
+                        </div>
+                        {% if user.pic %}
+                        <div class="w-9 h-9 rounded-lg border border-slate-200 p-0.5 bg-white shadow-sm overflow-hidden">
+                            <img alt="User" class="w-full h-full object-cover rounded-[6px]" src="{{ user.pic.url }}"/>
+                        </div>
+                        {% else %}
+                        <div class="w-9 h-9 rounded-lg border border-slate-200 p-0.5 bg-white shadow-sm overflow-hidden flex items-center justify-center">
+                            <span class="material-symbols-outlined text-slate-400">person</span>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="h-8 w-px bg-slate-200"></div>
+                <a href="{% url 'users:UserLogout' %}" class="flex items-center gap-2 text-slate-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-all px-2.5 py-2.5">
+                    <span class="text-xs font-bold uppercase tracking-widest hidden lg:block">Logout</span>
+                    <span class="material-symbols-outlined text-[24px]">logout</span>
+                </a>
+            </div>
+        </header>
+
+        <!-- Page Content -->
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 py-6 md:py-10">
+            <!-- Navigation -->
+            <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-8">
+                <nav class="flex items-center space-x-2 text-[10px] sm:text-sm text-slate-400 dark:text-slate-500 font-medium overflow-x-auto no-scrollbar whitespace-nowrap w-full sm:w-auto">
+                    <a class="hover:text-primary transition-colors" href="{% url 'mock_test' %}">Mock Test Center</a>
+                    <span class="material-icons-outlined text-[10px] sm:text-xs">chevron_right</span>
+                    <a class="hover:text-primary transition-colors" href="{% url 'language_selection' %}">Language-Based Tests</a>
+                    <span class="material-icons-outlined text-[10px] sm:text-xs">chevron_right</span>
+                    <span class="text-slate-600 dark:text-slate-300">{{ language.name }}</span>
+                </nav>
+                <a href="{% url 'language_selection' %}" class="group flex items-center gap-2 px-4 py-2 bg-white dark:bg-gray-800 text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 rounded-xl hover:shadow-lg hover:ring-1 hover:ring-blue-100 dark:hover:ring-blue-900 transition-all duration-300 font-semibold text-xs sm:text-sm w-full sm:w-auto justify-center">
+                    <span class="material-symbols-outlined text-lg transition-transform group-hover:-translate-x-1">arrow_back</span>
+                    Return
+                </a>
+            </div>
+            
+            <main class="space-y-10">
+                <!-- Skills Covered Section - Moved to Top -->
+                <section>
+                    <div class="flex items-center justify-between mb-6">
+                        <h3 class="font-display text-xl font-bold text-slate-900 dark:text-white">Skills Covered in {{ language.name }} Tests</h3>
+                        <div class="h-1 flex-1 mx-6 bg-slate-100 dark:bg-slate-700 rounded-full"></div>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                        <div class="glass-card p-4 rounded-xl flex items-center gap-4 transition-all duration-300 hover:scale-105 hover:shadow-[0_0_15px_rgba(251,146,60,0.5)] cursor-default border border-transparent hover:border-orange-300 dark:hover:border-orange-700 hover:bg-orange-50/50 dark:hover:bg-orange-900/20">
+                            <div class="w-10 h-10 rounded-lg bg-orange-50 dark:bg-orange-900/20 flex items-center justify-center text-orange-500 font-bold">{{ language.name|slice:":2" }}</div>
+                            <span class="text-sm font-semibold">{{ language.name }} Fundamentals</span>
+                        </div>
+                        <div class="glass-card p-4 rounded-xl flex items-center gap-4 transition-all duration-300 hover:scale-105 hover:shadow-[0_0_15px_rgba(59,130,246,0.5)] cursor-default border border-transparent hover:border-blue-300 dark:hover:border-blue-700 hover:bg-blue-50/50 dark:hover:bg-blue-900/20">
+                            <div class="w-10 h-10 rounded-lg bg-blue-50 dark:bg-blue-900/20 flex items-center justify-center text-blue-500 font-bold">AD</div>
+                            <span class="text-sm font-semibold">Advanced Concepts</span>
+                        </div>
+                        <div class="glass-card p-4 rounded-xl flex items-center gap-4 transition-all duration-300 hover:scale-105 hover:shadow-[0_0_15px_rgba(234,179,8,0.5)] cursor-default border border-transparent hover:border-yellow-300 dark:hover:border-yellow-700 hover:bg-yellow-50/50 dark:hover:bg-yellow-900/20">
+                            <div class="w-10 h-10 rounded-lg bg-yellow-50 dark:bg-yellow-900/20 flex items-center justify-center text-yellow-600 font-bold">PR</div>
+                            <span class="text-sm font-semibold">Problem Solving</span>
+                        </div>
+                        <div class="glass-card p-4 rounded-xl flex items-center gap-4 transition-all duration-300 hover:scale-105 hover:shadow-[0_0_15px_rgba(6,182,212,0.5)] cursor-default border border-transparent hover:border-cyan-300 dark:hover:border-cyan-700 hover:bg-cyan-50/50 dark:hover:bg-cyan-900/20">
+                            <div class="w-10 h-10 rounded-lg bg-cyan-50 dark:bg-cyan-900/20 flex items-center justify-center text-cyan-500 font-bold">BE</div>
+                            <span class="text-sm font-semibold">Best Practices</span>
+                        </div>
+                    </div>
+                </section>
+
+                {% for test in tests %}
+                <section>
+                    <div class="bg-white dark:bg-slate-800 rounded-xl p-8 border border-slate-100 dark:border-slate-700 transition-all duration-300 hover:shadow-[0_0_30px_rgba(59,130,246,0.15)] hover:border-primary/50 hover:-translate-y-1">
+                        <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-8">
+                            <div class="flex-1">
+                                <div class="flex items-center gap-3 mb-2">
+                                    <h2 class="font-display text-2xl font-bold text-slate-900 dark:text-white">{{ test.name }}</h2>
+                                    <span class="px-3 py-1 bg-blue-50 dark:bg-blue-900/30 text-primary text-xs font-bold uppercase tracking-wider rounded-full">{{ test.difficulty|title }}</span>
+                                </div>
+                                <p class="text-slate-500 dark:text-slate-400 mb-6">{{ test.description }}</p>
+                                <div class="flex flex-wrap items-center gap-4">
+                                    <div class="flex items-center gap-4 bg-slate-50 dark:bg-slate-700/50 px-6 py-4 rounded-xl border border-slate-100 dark:border-slate-600/50 transition-colors hover:bg-slate-100 dark:hover:bg-slate-700">
+                                        <div class="flex items-center gap-2">
+                                            <span class="material-icons-outlined text-primary">quiz</span>
+                                            <div>
+                                                <p class="text-[10px] uppercase font-bold tracking-widest text-slate-400">Questions</p>
+                                                <p class="text-lg font-bold text-slate-900 dark:text-white">{{ test.questions_count }}</p>
+                                            </div>
+                                        </div>
+                                        <div class="w-px h-8 bg-slate-200 dark:bg-slate-600"></div>
+                                        <div class="flex items-center gap-2">
+                                            <span class="material-icons-outlined text-primary">timer</span>
+                                            <div>
+                                                <p class="text-[10px] uppercase font-bold tracking-widest text-slate-400">Minutes</p>
+                                                <p class="text-lg font-bold text-slate-900 dark:text-white">{{ test.time_limit }}</p>
+                                            </div>
+                                        </div>
+                                        <div class="w-px h-8 bg-slate-200 dark:bg-slate-600"></div>
+                                        <div class="flex items-center gap-2">
+                                            <span class="material-icons-outlined text-primary">bar_chart</span>
+                                            <div>
+                                                <p class="text-[10px] uppercase font-bold tracking-widest text-slate-400">Level</p>
+                                                <p class="text-lg font-bold text-slate-900 dark:text-white">{{ test.difficulty|title }}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex flex-col sm:flex-row items-center gap-6 lg:border-l lg:border-slate-100 lg:dark:border-slate-700 lg:pl-12">
+                                <div class="flex items-center gap-2">
+                                    <span class="relative flex h-3 w-3">
+                                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                                        <span class="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
+                                    </span>
+                                    <span class="text-sm font-medium text-slate-500">Available Now</span>
+                                </div>
+                                <a href="{% url 'test_variations' 'language' language.key forloop.counter0 %}" class="w-full sm:w-auto px-8 py-4 bg-primary text-white font-bold rounded-xl shadow-lg shadow-primary/25 hover:bg-blue-600 transition-all duration-300 hover:shadow-[0_0_25px_rgba(37,99,235,0.6)] hover:scale-105 flex items-center justify-center gap-2">
+                                    Select Test
+                                    <span class="material-icons-outlined text-lg">arrow_forward</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                {% empty %}
+                <div class="bg-white dark:bg-slate-800 rounded-xl p-8 text-center">
+                    <p class="text-slate-500 dark:text-slate-400">No tests available for {{ language.name }} yet.</p>
+                </div>
+                {% endfor %}
+
+                <section class="bg-blue-50/50 dark:bg-slate-800/50 rounded-xl border border-blue-100 dark:border-slate-700 p-8 transition-all duration-300 hover:shadow-[0_0_20px_rgba(59,130,246,0.1)] hover:border-blue-300 dark:hover:border-blue-600">
+                    <h3 class="font-display text-xl font-bold text-slate-900 dark:text-white mb-8">Test Preparation Tips</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+                        <div>
+                            <div class="flex items-center gap-3 mb-6">
+                                <div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+                                    <span class="material-icons-outlined">lightbulb</span>
+                                </div>
+                                <h4 class="font-bold text-slate-900 dark:text-white">Before the Test</h4>
+                            </div>
+                            <ul class="space-y-4">
+                                <li class="flex items-start gap-3 text-sm text-slate-600 dark:text-slate-400">
+                                    <span class="material-icons-outlined text-xs mt-1 text-primary">check_circle</span>
+                                    Review {{ language.name }} fundamentals
+                                </li>
+                                <li class="flex items-start gap-3 text-sm text-slate-600 dark:text-slate-400">
+                                    <span class="material-icons-outlined text-xs mt-1 text-primary">check_circle</span>
+                                    Practice coding exercises
+                                </li>
+                                <li class="flex items-start gap-3 text-sm text-slate-600 dark:text-slate-400">
+                                    <span class="material-icons-outlined text-xs mt-1 text-primary">check_circle</span>
+                                    Study documentation and examples
+                                </li>
+                                <li class="flex items-start gap-3 text-sm text-slate-600 dark:text-slate-400">
+                                    <span class="material-icons-outlined text-xs mt-1 text-primary">check_circle</span>
+                                    Understand common patterns
+                                </li>
+                            </ul>
+                        </div>
+                        <div>
+                            <div class="flex items-center gap-3 mb-6">
+                                <div class="w-10 h-10 rounded-full bg-green-100 dark:bg-green-900/20 flex items-center justify-center text-green-600">
+                                    <span class="material-icons-outlined">schedule</span>
+                                </div>
+                                <h4 class="font-bold text-slate-900 dark:text-white">During the Test</h4>
+                            </div>
+                            <ul class="space-y-4">
+                                <li class="flex items-start gap-3 text-sm text-slate-600 dark:text-slate-400">
+                                    <span class="material-icons-outlined text-xs mt-1 text-green-500">check_circle</span>
+                                    Read each question carefully
+                                </li>
+                                <li class="flex items-start gap-3 text-sm text-slate-600 dark:text-slate-400">
+                                    <span class="material-icons-outlined text-xs mt-1 text-green-500">check_circle</span>
+                                    Manage your time effectively
+                                </li>
+                                <li class="flex items-start gap-3 text-sm text-slate-600 dark:text-slate-400">
+                                    <span class="material-icons-outlined text-xs mt-1 text-green-500">check_circle</span>
+                                    Mark difficult questions for review
+                                </li>
+                                <li class="flex items-start gap-3 text-sm text-slate-600 dark:text-slate-400">
+                                    <span class="material-icons-outlined text-xs mt-1 text-green-500">check_circle</span>
+                                    Double-check your answers
+                                </li>
+                            </ul>
+                        </div>
+                        <div>
+                            <div class="flex items-center gap-3 mb-6">
+                                <div class="w-10 h-10 rounded-full bg-orange-100 dark:bg-orange-900/20 flex items-center justify-center text-orange-600">
+                                    <span class="material-icons-outlined">trending_up</span>
+                                </div>
+                                <h4 class="font-bold text-slate-900 dark:text-white">After the Test</h4>
+                            </div>
+                            <ul class="space-y-4">
+                                <li class="flex items-start gap-3 text-sm text-slate-600 dark:text-slate-400">
+                                    <span class="material-icons-outlined text-xs mt-1 text-orange-500">check_circle</span>
+                                    Review your results thoroughly
+                                </li>
+                                <li class="flex items-start gap-3 text-sm text-slate-600 dark:text-slate-400">
+                                    <span class="material-icons-outlined text-xs mt-1 text-orange-500">check_circle</span>
+                                    Focus on weak areas
+                                </li>
+                                <li class="flex items-start gap-3 text-sm text-slate-600 dark:text-slate-400">
+                                    <span class="material-icons-outlined text-xs mt-1 text-orange-500">check_circle</span>
+                                    Practice similar problems
+                                </li>
+                                <li class="flex items-start gap-3 text-sm text-slate-600 dark:text-slate-400">
+                                    <span class="material-icons-outlined text-xs mt-1 text-orange-500">check_circle</span>
+                                    Take advanced level tests
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+            </main>
+        </div>
+    </main>
+
+    <script>
+    // Initialize theme on page load
+    document.addEventListener('DOMContentLoaded', function() {
+      const savedTheme = localStorage.getItem('theme') || 'light';
+      const html = document.documentElement;
+      const themeToggle = document.getElementById('theme-toggle');
+      const knob = document.getElementById('knob');
+      const stars = document.getElementById('stars');
+      
+      // Create stars
+      for(let i=0;i<40;i++){
+        let s=document.createElement("div");
+        s.className="star";
+        s.style.left=Math.random()*100+"%";
+        s.style.top=Math.random()*100+"%";
+        s.style.animationDelay=Math.random()*2+"s";
+        stars.appendChild(s);
+      }
+      
+      // Set initial theme state
+      let night = savedTheme === 'dark';
+      if (night) {
+        html.classList.add('dark');
+        themeToggle.classList.add('active');
+        knob.classList.add('moon');
+        knob.innerHTML="<div class='moon-shadow'></div>";
+        document.querySelectorAll(".star").forEach(s=>s.style.opacity=1);
+        document.querySelectorAll(".cloud").forEach(c=>c.style.opacity=0);
+      } else {
+        document.querySelectorAll(".star").forEach(s=>s.style.opacity=0);
+        document.querySelectorAll(".cloud").forEach(c=>c.style.opacity=1);
+      }
+      
+      // Mobile Menu Toggle
+      const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+      const sidebar = document.getElementById('sidebar');
+      const sidebarOverlay = document.getElementById('sidebar-overlay');
+
+      if (mobileMenuToggle && sidebar && sidebarOverlay) {
+        mobileMenuToggle.addEventListener('click', () => {
+          sidebar.classList.toggle('-translate-x-full');
+          sidebarOverlay.classList.toggle('hidden');
+        });
+
+        sidebarOverlay.addEventListener('click', () => {
+          sidebar.classList.add('-translate-x-full');
+          sidebarOverlay.classList.add('hidden');
+        });
+      }
+
+      // Add click event listener
+      themeToggle.addEventListener('click', () => {
+        night = !night;
+        themeToggle.classList.toggle('active');
+        
+        if(night){
+          html.classList.add('dark');
+          localStorage.setItem('theme', 'dark');
+          knob.classList.add('moon');
+          knob.innerHTML="<div class='moon-shadow'></div>";
+          document.querySelectorAll(".star").forEach(s=>s.style.opacity=1);
+          document.querySelectorAll(".cloud").forEach(c=>c.style.opacity=0);
+        }else{
+          html.classList.remove('dark');
+          localStorage.setItem('theme', 'light');
+          knob.classList.remove('moon');
+          knob.innerHTML="";
+          document.querySelectorAll(".star").forEach(s=>s.style.opacity=0);
+          document.querySelectorAll(".cloud").forEach(c=>c.style.opacity=1);
+        }
+      });
+    });
+    </script>
+</body>
+</html>

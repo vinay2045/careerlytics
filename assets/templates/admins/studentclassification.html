@@ -1,0 +1,547 @@
+{% extends 'admins/admin_base.html' %}
+{% load static %}
+{% load custom_filters %}
+
+{% block title %}Student Readiness{% endblock %}
+{% block header_title %}Student Readiness{% endblock %}
+
+{% block content %}
+<div class="space-y-8">
+    
+    <!-- Header & Summary Metrics -->
+    <div class="flex flex-col gap-6">
+        <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+            <div>
+                <h1 class="text-2xl font-bold text-gray-900 dark:text-white tracking-tight">Student Readiness Insights</h1>
+                <p class="text-gray-500 mt-1">Classification based on latest readiness tests and performance metrics</p>
+            </div>
+            <div class="flex items-center gap-3">
+            </div>
+        </div>
+
+        <!-- Quick Metrics Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            <!-- Total Attempts -->
+            <div class="bg-white dark:bg-dark-card border border-gray-200 dark:border-dark-border p-5 rounded-xl shadow-sm">
+                <div class="flex items-center justify-between mb-3">
+                    <div class="w-10 h-10 rounded-lg bg-blue-50 dark:bg-blue-500/10 flex items-center justify-center text-blue-600 dark:text-blue-400">
+                        <span class="material-symbols-outlined">groups</span>
+                    </div>
+                </div>
+                <div class="space-y-1">
+                    <h3 class="text-gray-500 text-xs font-medium uppercase tracking-wider">Total Attempts</h3>
+                    <div class="flex items-baseline gap-2">
+                        <span class="text-2xl font-bold text-gray-900 dark:text-white">{{ metrics.total }}</span>
+                        <span class="text-xs text-emerald-600 font-medium">Live</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Placement Ready -->
+            <div class="bg-white dark:bg-dark-card border border-gray-200 dark:border-dark-border p-5 rounded-xl shadow-sm">
+                <div class="flex items-center justify-between mb-3">
+                    <div class="w-10 h-10 rounded-lg bg-green-50 dark:bg-green-500/10 flex items-center justify-center text-green-600 dark:text-green-400">
+                        <span class="material-symbols-outlined">check_circle</span>
+                    </div>
+                    <span class="text-xs font-bold text-green-600 bg-green-50 dark:bg-green-500/10 px-2 py-0.5 rounded-full">{{ metrics.ready_percent }}%</span>
+                </div>
+                <div class="space-y-1">
+                    <h3 class="text-gray-500 text-xs font-medium uppercase tracking-wider">Placement Ready</h3>
+                    <div class="flex items-baseline gap-2">
+                        <span class="text-2xl font-bold text-gray-900 dark:text-white">{{ metrics.ready }}</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Needs Improvement -->
+            <div class="bg-white dark:bg-dark-card border border-gray-200 dark:border-dark-border p-5 rounded-xl shadow-sm">
+                <div class="flex items-center justify-between mb-3">
+                    <div class="w-10 h-10 rounded-lg bg-orange-50 dark:bg-orange-500/10 flex items-center justify-center text-orange-600 dark:text-orange-400">
+                        <span class="material-symbols-outlined">trending_up</span>
+                    </div>
+                </div>
+                <div class="space-y-1">
+                    <h3 class="text-gray-500 text-xs font-medium uppercase tracking-wider">Needs Improvement</h3>
+                    <div class="flex items-baseline gap-2">
+                        <span class="text-2xl font-bold text-gray-900 dark:text-white">{{ metrics.improvement }}</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- At Risk -->
+            <div class="bg-white dark:bg-dark-card border border-gray-200 dark:border-dark-border p-5 rounded-xl shadow-sm">
+                <div class="flex items-center justify-between mb-3">
+                    <div class="w-10 h-10 rounded-lg bg-red-50 dark:bg-red-500/10 flex items-center justify-center text-red-600 dark:text-red-400">
+                        <span class="material-symbols-outlined">warning</span>
+                    </div>
+                </div>
+                <div class="space-y-1">
+                    <h3 class="text-gray-500 text-xs font-medium uppercase tracking-wider">At Risk</h3>
+                    <div class="flex items-baseline gap-2">
+                        <span class="text-2xl font-bold text-gray-900 dark:text-white">{{ metrics.at_risk }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- NEW: Placement Cell Analytics -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6">
+            <!-- Department Readiness Heatmap -->
+            <div class="bg-white dark:bg-dark-card border border-gray-200 dark:border-dark-border rounded-xl shadow-sm p-6">
+                <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
+                    <span class="material-symbols-outlined text-brand-blue">grid_view</span>
+                    Department Readiness Heatmap
+                </h3>
+                <div class="space-y-4">
+                    {% for dept in dept_readiness %}
+                    <div class="space-y-1.5">
+                        <div class="flex justify-between items-end">
+                            <span class="text-xs font-bold text-gray-700 dark:text-gray-300">{{ dept.student__branch }}</span>
+                            <span class="text-[10px] font-bold text-green-600">{{ dept.ready_pct }}% Ready</span>
+                        </div>
+                        <div class="h-3 w-full bg-gray-100 dark:bg-white/5 rounded-full overflow-hidden flex">
+                            <div class="h-full bg-green-500" style="width: {{ dept.ready_pct }}%" title="Ready: {{ dept.ready }}"></div>
+                            <div class="h-full bg-orange-500" style="width: {{ dept.improvement_pct }}%" title="Improvement: {{ dept.improvement }}"></div>
+                            <div class="h-full bg-red-500" style="width: {{ dept.at_risk_pct }}%" title="At Risk: {{ dept.at_risk }}"></div>
+                        </div>
+                    </div>
+                    {% empty %}
+                    <p class="text-center text-gray-500 text-sm py-8">No department data available</p>
+                    {% endfor %}
+                    <div class="flex justify-center gap-4 pt-2 border-t border-gray-100 dark:border-white/5 mt-4">
+                        <div class="flex items-center gap-1.5">
+                            <div class="w-2 h-2 rounded-full bg-green-500"></div>
+                            <span class="text-[10px] text-gray-500 font-bold">Ready</span>
+                        </div>
+                        <div class="flex items-center gap-1.5">
+                            <div class="w-2 h-2 rounded-full bg-orange-500"></div>
+                            <span class="text-[10px] text-gray-500 font-bold">Improvement</span>
+                        </div>
+                        <div class="flex items-center gap-1.5">
+                            <div class="w-2 h-2 rounded-full bg-red-500"></div>
+                            <span class="text-[10px] text-gray-500 font-bold">Risk</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Year-wise Risk Distribution & Placement Trend -->
+            <div class="space-y-6">
+                <!-- Year-wise Risk Distribution -->
+                <div class="bg-white dark:bg-dark-card border border-gray-200 dark:border-dark-border rounded-xl shadow-sm p-6">
+                    <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
+                        <span class="material-symbols-outlined text-orange-500">error</span>
+                        Year-wise Risk Distribution
+                    </h3>
+                    <div class="flex items-end justify-around h-40 gap-4">
+                        {% for yr in year_risk %}
+                        <div class="flex flex-col items-center flex-1 group">
+                            <div class="w-full flex flex-col-reverse rounded-t-lg overflow-hidden">
+                                <div class="w-full bg-red-500 transition-all duration-500" style="height: {% widthratio yr.at_risk yr.total 100 %}px" title="At Risk: {{ yr.at_risk }}"></div>
+                                <div class="w-full bg-orange-500 transition-all duration-500" style="height: {% widthratio yr.needs_improvement yr.total 100 %}px" title="Needs Improvement: {{ yr.needs_improvement }}"></div>
+                                <div class="w-full bg-green-500 transition-all duration-500" style="height: {% widthratio yr.placement_ready yr.total 100 %}px" title="Ready: {{ yr.placement_ready }}"></div>
+                            </div>
+                            <span class="text-[10px] font-bold text-gray-500 mt-2">Year {{ yr.student__year }}</span>
+                        </div>
+                        {% empty %}
+                        <p class="text-center text-gray-500 text-sm py-8 w-full">No year-wise data available</p>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <!-- Skill Gap Clusters & Placement Trend -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <!-- Skill Gap Clusters -->
+                    <div class="bg-white dark:bg-dark-card border border-gray-200 dark:border-dark-border rounded-xl shadow-sm p-5">
+                        <h4 class="text-xs font-black text-gray-400 uppercase tracking-widest mb-3">Skill Gap Clusters</h4>
+                        <div class="space-y-3">
+                            {% for skill, count in skill_gaps.items %}
+                            <div class="flex items-center justify-between">
+                                <span class="text-xs font-bold text-gray-700 dark:text-gray-300">{{ skill }}</span>
+                                <span class="text-xs font-black text-red-500 bg-red-50 dark:bg-red-500/10 px-2 py-0.5 rounded-full">{{ count }}</span>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    <!-- Placement Trend Comparison -->
+                    <div class="bg-white dark:bg-dark-card border border-gray-200 dark:border-dark-border rounded-xl shadow-sm p-5">
+                        <h4 class="text-xs font-black text-gray-400 uppercase tracking-widest mb-3">Placement Trend</h4>
+                        <div class="space-y-2">
+                            <div class="flex items-baseline justify-between">
+                                <span class="text-2xl font-black text-gray-900 dark:text-white">{{ trend_comparison.current_count }}</span>
+                                <span class="text-[10px] font-bold {% if trend_comparison.growth >= 0 %}text-green-500{% else %}text-red-500{% endif %}">
+                                    {% if trend_comparison.growth >= 0 %}+{% endif %}{{ trend_comparison.growth }}%
+                                </span>
+                            </div>
+                            <p class="text-[10px] text-gray-500 font-medium">Placements in {{ trend_comparison.current_year }}</p>
+                            <div class="pt-2 border-t border-gray-50 dark:border-white/5">
+                                <p class="text-[9px] text-gray-400 font-bold uppercase">vs {{ trend_comparison.prev_year }}: {{ trend_comparison.prev_count }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Filters & Student Insights -->
+    <div class="bg-white dark:bg-dark-card border border-gray-200 dark:border-dark-border rounded-xl shadow-sm overflow-hidden">
+        <div class="p-6 border-b border-gray-100 dark:border-dark-border/50">
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                <h2 class="text-lg font-bold text-gray-900 dark:text-white">Student Performance Insights</h2>
+                
+                <form method="get" class="flex flex-wrap items-center gap-3">
+                    <div class="relative">
+                        <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 text-sm">search</span>
+                        <input type="text" name="search" value="{{ search_query }}" placeholder="Search by ID or Test..." 
+                               class="bg-gray-50 dark:bg-white/5 border border-gray-200 dark:border-dark-border rounded-lg pl-9 pr-4 py-2 text-xs focus:outline-none focus:border-brand-blue transition-all w-64">
+                    </div>
+                    
+                    <select name="classification" class="bg-gray-50 dark:bg-white/5 border border-gray-200 dark:border-dark-border rounded-lg px-4 py-2 text-xs focus:outline-none focus:border-brand-blue transition-all">
+                        <option value="">All Classifications</option>
+                        <option value="placement_ready" {% if classification_filter == 'placement_ready' %}selected{% endif %}>Placement Ready</option>
+                        <option value="needs_improvement" {% if classification_filter == 'needs_improvement' %}selected{% endif %}>Needs Improvement</option>
+                        <option value="at_risk" {% if classification_filter == 'at_risk' %}selected{% endif %}>At Risk</option>
+                    </select>
+                    
+                    <button type="submit" class="bg-gray-900 dark:bg-brand-blue text-white px-4 py-2 rounded-lg text-xs font-semibold hover:opacity-90 transition-all">
+                        Filter
+                    </button>
+                    
+                    {% if search_query or classification_filter %}
+                    <a href="{% url 'readiness_admin:student_classification' %}" class="text-xs text-gray-500 hover:text-red-500 underline">Clear</a>
+                    {% endif %}
+                </form>
+            </div>
+        </div>
+
+        <div class="overflow-x-auto custom-scrollbar">
+            <table class="w-full text-left border-collapse min-w-[1000px]">
+                <thead>
+                    <tr class="bg-gray-50/80 dark:bg-white/[0.02] border-b border-gray-100 dark:border-white/5 backdrop-blur-md sticky top-0 z-10">
+                        <th class="px-6 py-5 text-[10px] font-black text-gray-400 dark:text-gray-500 uppercase tracking-[0.2em]">Student Profile</th>
+                        <th class="px-6 py-5 text-[10px] font-black text-gray-400 dark:text-gray-500 uppercase tracking-[0.2em]">Assessment</th>
+                        <th class="px-6 py-5 text-[10px] font-black text-gray-400 dark:text-gray-500 uppercase tracking-[0.2em]">Competency Matrix</th>
+                        <th class="px-6 py-5 text-[10px] font-black text-gray-400 dark:text-gray-500 uppercase tracking-[0.2em] text-center">Efficiency</th>
+                        <th class="px-6 py-5 text-[10px] font-black text-gray-400 dark:text-gray-500 uppercase tracking-[0.2em]">Core Strengths</th>
+                        <th class="px-6 py-5 text-[10px] font-black text-gray-400 dark:text-gray-500 uppercase tracking-[0.2em]">Growth Areas</th>
+                        <th class="px-6 py-5 text-[10px] font-black text-gray-400 dark:text-gray-500 uppercase tracking-[0.2em] text-center">Status</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-100 dark:divide-dark-border/50">
+                    {% for res in results %}
+                    <tr class="group hover:bg-gray-50/80 dark:hover:bg-white/[0.02] transition-all duration-300">
+                        <td class="px-6 py-5">
+                            <div class="flex items-center gap-4">
+                                <div class="relative">
+                                    <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-brand-blue/20 to-brand-blue/5 flex items-center justify-center text-brand-blue font-bold text-sm border border-brand-blue/10 group-hover:scale-110 transition-transform duration-300">
+                                        {{ res.student.userid|slice:":1" }}
+                                    </div>
+                                    <div class="absolute -bottom-1 -right-1 w-4 h-4 rounded-full border-2 border-white dark:border-dark-card {% if res.readiness_classification == 'placement_ready' %}bg-green-500{% elif res.readiness_classification == 'needs_improvement' %}bg-orange-500{% else %}bg-red-500{% endif %} shadow-sm"></div>
+                                </div>
+                                <div class="flex flex-col">
+                                    <span class="font-bold text-sm text-gray-900 dark:text-white group-hover:text-brand-blue transition-colors">{{ res.student.userid }}</span>
+                                    <span class="text-[10px] text-gray-500 font-medium uppercase tracking-wider">{{ res.student.branch|default:"B.Tech" }}</span>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="px-6 py-5">
+                            <div class="flex flex-col gap-1">
+                                <span class="text-xs font-semibold text-gray-700 dark:text-gray-300">{{ res.test_title }}</span>
+                                <span class="text-[10px] text-gray-500 flex items-center gap-1">
+                                    <span class="material-symbols-outlined text-[12px]">calendar_month</span>
+                                    {{ res.completed_at|date:"M d, Y" }}
+                                </span>
+                            </div>
+                        </td>
+                        <td class="px-6 py-5">
+                            <div class="grid grid-cols-2 gap-x-6 gap-y-3 min-w-[200px]">
+                                <!-- Aptitude -->
+                                <div class="space-y-1">
+                                    <div class="flex justify-between items-end">
+                                        <span class="text-[9px] font-bold text-gray-400 uppercase tracking-tighter">Aptitude</span>
+                                        <span class="text-[10px] font-bold text-gray-700 dark:text-gray-300">{{ res.aptitude_raw }}/9</span>
+                                    </div>
+                                    <div class="h-1.5 w-full bg-gray-100 dark:bg-white/5 rounded-full overflow-hidden">
+                                        <div class="h-full {% if res.aptitude_score_pct >= 70 %}bg-green-500{% elif res.aptitude_score_pct >= 40 %}bg-orange-500{% else %}bg-red-500{% endif %} rounded-full transition-all duration-500" style="width: {{ res.aptitude_score_pct }}%"></div>
+                                    </div>
+                                </div>
+                                <!-- Reasoning -->
+                                <div class="space-y-1">
+                                    <div class="flex justify-between items-end">
+                                        <span class="text-[9px] font-bold text-gray-400 uppercase tracking-tighter">Reasoning</span>
+                                        <span class="text-[10px] font-bold text-gray-700 dark:text-gray-300">{{ res.reasoning_raw }}/9</span>
+                                    </div>
+                                    <div class="h-1.5 w-full bg-gray-100 dark:bg-white/5 rounded-full overflow-hidden">
+                                        <div class="h-full {% if res.reasoning_score_pct >= 70 %}bg-green-500{% elif res.reasoning_score_pct >= 40 %}bg-orange-500{% else %}bg-red-500{% endif %} rounded-full transition-all duration-500" style="width: {{ res.reasoning_score_pct }}%"></div>
+                                    </div>
+                                </div>
+                                <!-- English -->
+                                <div class="space-y-1">
+                                    <div class="flex justify-between items-end">
+                                        <span class="text-[9px] font-bold text-gray-400 uppercase tracking-tighter">English</span>
+                                        <span class="text-[10px] font-bold text-gray-700 dark:text-gray-300">{{ res.english_raw }}/6</span>
+                                    </div>
+                                    <div class="h-1.5 w-full bg-gray-100 dark:bg-white/5 rounded-full overflow-hidden">
+                                        <div class="h-full {% if res.english_score_pct >= 70 %}bg-green-500{% elif res.english_score_pct >= 40 %}bg-orange-500{% else %}bg-red-500{% endif %} rounded-full transition-all duration-500" style="width: {{ res.english_score_pct }}%"></div>
+                                    </div>
+                                </div>
+                                <!-- Core -->
+                                <div class="space-y-1">
+                                    <div class="flex justify-between items-end">
+                                        <span class="text-[9px] font-bold text-gray-400 uppercase tracking-tighter">Core</span>
+                                        <span class="text-[10px] font-bold text-gray-700 dark:text-gray-300">{{ res.core_raw }}/36</span>
+                                    </div>
+                                    <div class="h-1.5 w-full bg-gray-100 dark:bg-white/5 rounded-full overflow-hidden">
+                                        <div class="h-full {% if res.core_subjects_score_pct >= 70 %}bg-green-500{% elif res.core_subjects_score_pct >= 40 %}bg-orange-500{% else %}bg-red-500{% endif %} rounded-full transition-all duration-500" style="width: {{ res.core_subjects_score_pct }}%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="px-6 py-5 text-center">
+                            <div class="inline-flex flex-col items-center gap-1.5 p-2 rounded-xl bg-gray-50 dark:bg-white/[0.03] border border-gray-100 dark:border-white/5 min-w-[70px]">
+                                <span class="text-xs font-black text-gray-900 dark:text-white leading-none">{{ res.score }}%</span>
+                                <span class="text-[9px] font-bold text-gray-400 uppercase tracking-tighter leading-none">{{ res.total_correct_raw }}/{{ res.total_questions_raw }}</span>
+                            </div>
+                        </td>
+                        <td class="px-6 py-5">
+                            <div class="flex flex-wrap gap-1.5 max-w-[150px]">
+                                {% for s in res.strengths %}
+                                <span class="text-[9px] font-black bg-green-500/10 text-green-600 dark:text-green-400 px-2 py-0.5 rounded-md border border-green-500/20 uppercase tracking-wider">{{ s }}</span>
+                                {% empty %}
+                                <span class="text-[9px] text-gray-400 italic font-medium">None</span>
+                                {% endfor %}
+                            </div>
+                        </td>
+                        <td class="px-6 py-5">
+                            <div class="flex flex-wrap gap-1.5 max-w-[150px]">
+                                {% for w in res.weaknesses %}
+                                <span class="text-[9px] font-black bg-red-500/10 text-red-600 dark:text-red-400 px-2 py-0.5 rounded-md border border-red-500/20 uppercase tracking-wider">{{ w }}</span>
+                                {% empty %}
+                                <span class="text-[9px] text-gray-400 italic font-medium">None</span>
+                                {% endfor %}
+                            </div>
+                        </td>
+                        <td class="px-6 py-5">
+                            <div class="flex flex-col items-center gap-2">
+                                {% if res.readiness_classification == 'placement_ready' %}
+                                    <div class="flex flex-col items-center group/status">
+                                        <div class="w-2 h-2 rounded-full bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.5)] mb-1 group-hover/status:scale-125 transition-transform"></div>
+                                        <span class="text-[9px] font-black text-green-600 dark:text-green-400 uppercase tracking-widest">READY</span>
+                                    </div>
+                                {% elif res.readiness_classification == 'needs_improvement' %}
+                                    <div class="flex flex-col items-center group/status">
+                                        <div class="w-2 h-2 rounded-full bg-orange-500 shadow-[0_0_8px_rgba(249,115,22,0.5)] mb-1 group-hover/status:scale-125 transition-transform"></div>
+                                        <span class="text-[9px] font-black text-orange-600 dark:text-orange-400 uppercase tracking-widest">IMPROVE</span>
+                                    </div>
+                                {% else %}
+                                    <div class="flex flex-col items-center group/status">
+                                        <div class="w-2 h-2 rounded-full bg-red-500 shadow-[0_0_8px_rgba(239,68,68,0.5)] mb-1 group-hover/status:scale-125 transition-transform"></div>
+                                        <span class="text-[9px] font-black text-red-600 dark:text-red-400 uppercase tracking-widest">AT RISK</span>
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="6" class="px-6 py-12 text-center text-gray-500 dark:text-gray-400">
+                            No student data matches your current filters.
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Test Configuration & Thresholds -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div class="lg:col-span-2 relative group">
+            <!-- Glassmorphism Card -->
+            <div class="absolute -inset-0.5 bg-gradient-to-r from-brand-blue to-green-500 rounded-2xl blur opacity-10 group-hover:opacity-20 transition duration-1000"></div>
+            <div class="relative bg-white/80 dark:bg-dark-card/80 backdrop-blur-xl border border-gray-200 dark:border-dark-border rounded-2xl shadow-xl overflow-hidden">
+                <div class="p-6 border-b border-gray-100/50 dark:border-dark-border/30 flex items-center justify-between">
+                    <div>
+                        <h2 class="text-xl font-black text-gray-900 dark:text-white tracking-tight">Readiness Test Configuration</h2>
+                        <p class="text-xs text-gray-500 mt-1 font-medium">Control the standard of excellence for student assessment</p>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        {% if current_test %}
+                        <div class="flex items-center bg-gray-100 dark:bg-white/5 p-1 rounded-xl border border-gray-200 dark:border-white/10">
+                            <a href="{% url 'admin_toggle_activity_status' current_test.id %}?action=activate" 
+                               class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-black transition-all {% if current_test.is_active %}bg-green-500 text-white shadow-lg shadow-green-500/30{% else %}text-gray-400 hover:text-gray-600{% endif %}">
+                                <span class="material-symbols-outlined text-[16px]">check_circle</span>
+                                ACTIVE
+                            </a>
+                            <a href="{% url 'admin_toggle_activity_status' current_test.id %}?action=deactivate" 
+                               class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-black transition-all {% if not current_test.is_active %}bg-red-500 text-white shadow-lg shadow-red-500/30{% else %}text-gray-400 hover:text-gray-600{% endif %}">
+                                <span class="material-symbols-outlined text-[16px]">cancel</span>
+                                DEACTIVE
+                            </a>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+                
+                <div class="p-8">
+                    <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
+                        <div class="md:col-span-7 space-y-6">
+                            <div class="p-5 rounded-2xl bg-gradient-to-br from-gray-50 to-gray-100 dark:from-white/5 dark:to-white/[0.02] border border-gray-200 dark:border-dark-border relative overflow-hidden group/info">
+                                <div class="absolute -right-4 -bottom-4 opacity-[0.03] group-hover/info:opacity-[0.07] transition-opacity">
+                                    <span class="material-symbols-outlined text-9xl">quiz</span>
+                                </div>
+                                <h3 class="text-lg font-black text-gray-900 dark:text-white mb-2 flex items-center gap-2">
+                                    Global Assessment Engine
+                                    <span class="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse"></span>
+                                </h3>
+                                <p class="text-sm text-gray-600 dark:text-gray-400 leading-relaxed mb-4">
+                                    Adaptive assessment covering Aptitude, Reasoning, English, and Core Engineering subjects.
+                                </p>
+                                
+                                <div class="flex flex-wrap gap-4">
+                                    {% if current_test and can_reset %}
+                                    <a href="{% url 'admin_reset_readiness_test' current_test.id %}" 
+                                       onclick="return confirm('CRITICAL: This will erase all student performance data. Proceed?')"
+                                       class="flex items-center gap-2 text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-500/10 px-3 py-1.5 rounded-lg text-xs font-black transition-all group/reset">
+                                        <span class="material-symbols-outlined text-sm group-hover/reset:rotate-180 transition-transform duration-700">restart_alt</span>
+                                        ERASE ALL RESULTS
+                                    </a>
+                                    {% endif %}
+                                </div>
+                            </div>
+
+                            <!-- Threshold Visualizer -->
+                            <div class="space-y-4">
+                                <h4 class="text-[10px] font-black text-gray-400 dark:text-gray-500 uppercase tracking-widest flex items-center gap-2">
+                                    Current Threshold Distribution
+                                    <span class="h-px flex-1 bg-gray-100 dark:bg-white/10"></span>
+                                </h4>
+                                <div class="h-3 w-full bg-gray-100 dark:bg-white/5 rounded-full overflow-hidden flex shadow-inner">
+                                    <div class="h-full bg-red-500 shadow-[0_0_10px_rgba(239,68,68,0.2)]" style="width: {{ thresholds.needs_improvement_threshold }}%" title="Risk: <{{ thresholds.needs_improvement_threshold }}%"></div>
+                                    <div class="h-full bg-orange-500 shadow-[0_0_10px_rgba(249,115,22,0.2)]" style="width: calc({{ thresholds.placement_ready_threshold }}% - {{ thresholds.needs_improvement_threshold }}%)" title="Improvement: {{ thresholds.needs_improvement_threshold }}% - {{ thresholds.placement_ready_threshold }}%"></div>
+                                    <div class="h-full bg-green-500 shadow-[0_0_10px_rgba(34,197,94,0.2)] flex-1" title="Ready: >{{ thresholds.placement_ready_threshold }}%"></div>
+                                </div>
+                                <div class="flex justify-between text-[10px] font-black">
+                                    <span class="text-green-500 flex items-center gap-1">
+                                        <span class="w-1.5 h-1.5 rounded-full bg-green-500"></span>
+                                        READY: {{ thresholds.placement_ready_threshold }}%+
+                                    </span>
+                                    <span class="text-orange-500 flex items-center gap-1">
+                                        <span class="w-1.5 h-1.5 rounded-full bg-orange-500"></span>
+                                        IMPROVE: {{ thresholds.needs_improvement_threshold }}-{{ thresholds.placement_ready_threshold }}%
+                                    </span>
+                                    <span class="text-red-500 flex items-center gap-1">
+                                        <span class="w-1.5 h-1.5 rounded-full bg-red-500"></span>
+                                        RISK: < {{ thresholds.needs_improvement_threshold }}%
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="md:col-span-5">
+                            {% if current_test %}
+                            <form action="{% url 'admin_update_readiness_thresholds' current_test.id %}" method="post" class="space-y-4 bg-gray-50 dark:bg-white/5 p-6 rounded-3xl border border-gray-200 dark:border-white/10 shadow-xl dark:shadow-2xl">
+                                {% csrf_token %}
+                                <h4 class="text-xs font-black text-gray-900 dark:text-white uppercase tracking-widest mb-4 flex items-center gap-2">
+                                    <span class="material-symbols-outlined text-sm">tune</span>
+                                    Precision Tuning
+                                </h4>
+                                
+                                <div class="space-y-5">
+                                    <div class="relative group/input">
+                                        <label class="block text-[10px] text-green-600 dark:text-green-400 font-black mb-1.5 uppercase tracking-widest">Ready Threshold (%)</label>
+                                        <div class="relative">
+                                            <input type="number" name="placement_ready_threshold" value="{{ thresholds.placement_ready_threshold }}" min="0" max="100"
+                                                   class="w-full bg-white dark:bg-black/40 border border-gray-200 dark:border-white/10 rounded-xl px-4 py-3 text-sm text-gray-900 dark:text-white focus:border-green-500 focus:ring-4 focus:ring-green-500/10 outline-none transition-all font-bold">
+                                            <span class="absolute right-4 top-1/2 -translate-y-1/2 text-green-500 text-xs font-bold">%</span>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="relative group/input">
+                                        <label class="block text-[10px] text-orange-600 dark:text-orange-400 font-black mb-1.5 uppercase tracking-widest">Improvement Threshold (%)</label>
+                                        <div class="relative">
+                                            <input type="number" name="needs_improvement_threshold" value="{{ thresholds.needs_improvement_threshold }}" min="0" max="100"
+                                                   class="w-full bg-white dark:bg-black/40 border border-gray-200 dark:border-white/10 rounded-xl px-4 py-3 text-sm text-gray-900 dark:text-white focus:border-orange-500 focus:ring-4 focus:ring-orange-500/10 outline-none transition-all font-bold">
+                                            <span class="absolute right-4 top-1/2 -translate-y-1/2 text-orange-500 text-xs font-bold">%</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="relative group/input">
+                                        <label class="block text-[10px] text-red-600 dark:text-red-400 font-black mb-1.5 uppercase tracking-widest">At Risk Floor (%)</label>
+                                        <div class="relative">
+                                            <input type="number" name="at_risk_threshold" value="{{ thresholds.at_risk_threshold }}" min="0" max="100"
+                                                   class="w-full bg-white dark:bg-black/40 border-2 border-red-500/30 dark:border-red-500/20 rounded-xl px-4 py-3 text-sm text-gray-900 dark:text-white focus:border-red-500 focus:ring-4 focus:ring-red-500/10 outline-none transition-all font-bold">
+                                            <span class="absolute right-4 top-1/2 -translate-y-1/2 text-red-500 text-xs font-bold">%</span>
+                                        </div>
+                                        <p class="text-[9px] text-red-500/70 font-bold mt-1 uppercase tracking-tighter">Scores below this are flagged as high risk</p>
+                                    </div>
+                                </div>
+                                
+                                <button type="submit" class="w-full mt-4 bg-gray-900 dark:bg-brand-blue hover:opacity-90 text-white px-4 py-3.5 rounded-xl text-xs font-black shadow-lg transition-all hover:-translate-y-0.5 active:translate-y-0 flex items-center justify-center gap-2">
+                                    <span class="material-symbols-outlined text-sm">save</span>
+                                    APPLY CHANGES
+                                </button>
+                            </form>
+                            {% else %}
+                            <div class="bg-gray-100 dark:bg-white/5 p-8 rounded-3xl border border-dashed border-gray-300 dark:border-white/10 flex flex-col items-center justify-center text-center">
+                                <span class="material-symbols-outlined text-4xl text-gray-400 mb-2">error</span>
+                                <p class="text-xs font-bold text-gray-500">No active test to configure</p>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-white dark:bg-dark-card border border-gray-200 dark:border-dark-border rounded-xl shadow-sm p-6">
+            <h2 class="text-lg font-bold text-gray-900 dark:text-white mb-4">Quick Actions</h2>
+            <div class="space-y-3">
+                <a href="{% url 'admin_placement_drives' %}" class="flex items-center gap-3 p-3 rounded-lg border border-gray-100 dark:border-dark-border/50 hover:bg-gray-50 dark:hover:bg-white/5 transition-all group">
+                    <div class="w-8 h-8 rounded-full bg-indigo-50 dark:bg-indigo-500/10 flex items-center justify-center text-indigo-600 dark:text-indigo-400">
+                        <span class="material-symbols-outlined text-lg">campaign</span>
+                    </div>
+                    <div class="flex-1">
+                        <p class="text-sm font-bold text-gray-900 dark:text-white group-hover:text-brand-blue">Manage Drives</p>
+                        <p class="text-[10px] text-gray-500">View all active placement drives</p>
+                    </div>
+                </a>
+
+                <a href="{% url 'admin_test_results' %}" class="flex items-center gap-3 p-3 rounded-lg border border-gray-100 dark:border-dark-border/50 hover:bg-gray-50 dark:hover:bg-white/5 transition-all group">
+                    <div class="w-8 h-8 rounded-full bg-amber-50 dark:bg-amber-500/10 flex items-center justify-center text-amber-600 dark:text-amber-400">
+                        <span class="material-symbols-outlined text-lg">history</span>
+                    </div>
+                    <div class="flex-1">
+                        <p class="text-sm font-bold text-gray-900 dark:text-white group-hover:text-brand-blue">All Test Results</p>
+                        <p class="text-[10px] text-gray-500">View comprehensive history</p>
+                    </div>
+                </a>
+
+                <a href="{% url 'admin_all_students' %}" class="flex items-center gap-3 p-3 rounded-lg border border-gray-100 dark:border-dark-border/50 hover:bg-gray-50 dark:hover:bg-white/5 transition-all group">
+                    <div class="w-8 h-8 rounded-full bg-emerald-50 dark:bg-emerald-500/10 flex items-center justify-center text-emerald-600 dark:text-emerald-400">
+                        <span class="material-symbols-outlined text-lg">person_search</span>
+                    </div>
+                    <div class="flex-1">
+                        <p class="text-sm font-bold text-gray-900 dark:text-white group-hover:text-brand-blue">Student Database</p>
+                        <p class="text-[10px] text-gray-500">Manage student profiles</p>
+                    </div>
+                </a>
+            </div>
+
+            <div class="mt-8 p-4 bg-blue-50 dark:bg-brand-blue/10 rounded-lg border border-blue-100 dark:border-brand-blue/20">
+                <div class="flex gap-3">
+                    <span class="material-symbols-outlined text-brand-blue">info</span>
+                    <div>
+                        <p class="text-xs font-bold text-blue-900 dark:text-blue-300">About Classification</p>
+                        <p class="text-[10px] text-blue-800 dark:text-blue-400/80 mt-1 leading-relaxed">
+                            Students are classified based on their composite score across Aptitude, Reasoning, English, and Core Subjects.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

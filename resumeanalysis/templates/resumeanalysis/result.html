@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>AI Resume Analysis - Deep Dive Analytics</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@500;600;700&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet"/>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+    <script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              primary: "#2563eb",
+              "background-light": "#f8fafc",
+              "background-dark": "#0f172a",
+              "surface-light": "#ffffff",
+              "surface-dark": "#1e293b",
+            },
+            fontFamily: {
+              display: ["Outfit", "Inter", "sans-serif"],
+              sans: ["Inter", "sans-serif"],
+            },
+            borderRadius: {
+              DEFAULT: "0.75rem",
+              'xl': '1rem',
+              '2xl': '1.5rem',
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 10px;
+        }
+        .dark ::-webkit-scrollbar-thumb {
+            background: #475569;
+        }
+        .sparkline-bar {
+            transition: width 1s ease-in-out;
+        }
+        .glass-panel {
+            backdrop-filter: blur(8px);
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 min-h-screen font-sans">
+<nav class="sticky top-0 z-50 border-b border-slate-200 dark:border-slate-800 bg-surface-light/80 dark:bg-surface-dark/80 glass-panel">
+<div class="max-w-[1600px] mx-auto px-6 h-16 flex items-center justify-between">
+<div class="flex items-center gap-4">
+<div class="bg-primary p-2 rounded-lg text-white">
+<span class="material-icons-outlined block">analytics</span>
+</div>
+<h1 class="font-display text-xl font-bold tracking-tight">
+                    <span class="text-primary">Career</span>lytics
+<span class="ml-2 px-2 py-0.5 text-[10px] uppercase tracking-widest bg-primary/10 text-primary rounded-full font-bold">Pro</span>
+</h1>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors text-slate-500" onclick="document.documentElement.classList.toggle('dark')">
+<span class="material-icons-outlined">dark_mode</span>
+</button>
+<a class="flex items-center gap-2 text-sm font-medium text-slate-500 hover:text-primary transition-colors" href="{% url 'users:UserHome' %}">
+<span class="material-icons-outlined text-lg">arrow_back</span>
+                    Back to Dashboard
+                </a>
+<button class="bg-primary text-white px-4 py-2 rounded-lg font-medium hover:bg-blue-700 transition-all flex items-center gap-2 shadow-sm" onclick="window.print()">
+<span class="material-icons-outlined text-lg">download</span>
+                    Export Report
+                </button>
+</div>
+</div>
+</nav>
+
+    <main class="max-w-[1600px] mx-auto flex h-[calc(100vh-64px)] overflow-hidden">
+<aside class="w-[320px] border-r border-slate-200 dark:border-slate-800 p-6 overflow-hidden hidden lg:block bg-surface-light dark:bg-surface-dark/40">
+<div class="space-y-6 h-full flex flex-col">
+<div class="bg-slate-50 dark:bg-slate-800/50 p-4 rounded-2xl border border-slate-100 dark:border-slate-700">
+<div class="flex items-start gap-3">
+<div class="p-2 {% if overall_score >= 80 %}bg-green-100 dark:bg-green-900/30 text-green-600{% elif overall_score >= 60 %}bg-yellow-100 dark:bg-yellow-900/30 text-yellow-600{% else %}bg-red-100 dark:bg-red-900/30 text-red-600{% endif %} rounded-lg">
+<span class="material-icons-outlined text-lg">assessment</span>
+</div>
+<div class="flex-1 overflow-hidden">
+<h3 class="font-semibold text-sm truncate">{{ quiz.target_role|title }} Assessment</h3>
+<p class="text-[10px] text-slate-500 mt-1 uppercase tracking-wider">QUIZ • {% now "M d, Y" %}</p>
+<p class="text-[8px] text-slate-400 mt-1 italic">Completed: {% now "M d, Y" %}</p>
+</div>
+</div>
+</div>
+<div class="text-center py-4 flex-1 flex flex-col justify-center">
+<div class="relative inline-flex items-center justify-center mb-6">
+<svg class="w-48 h-48 transform -rotate-90">
+<circle class="text-slate-100 dark:text-slate-800" cx="96" cy="96" fill="transparent" r="88" stroke="currentColor" stroke-width="12"></circle>
+<circle class="{% if overall_score >= 80 %}text-green-500{% elif overall_score >= 60 %}text-yellow-500{% else %}text-red-500{% endif %} transition-all duration-1000" cx="96" cy="96" fill="transparent" r="88" stroke="currentColor" stroke-dasharray="552.9" stroke-dashoffset="{{ test_attempt.stroke_dashoffset|default:276.45 }}" stroke-linecap="round" stroke-width="12"></circle>
+</svg>
+<div class="absolute flex flex-col items-center">
+                    <span class="text-5xl font-display font-bold text-slate-800 dark:text-white">{{ overall_score|default:0|floatformat:0 }}%</span>
+                    <span class="text-xs font-medium text-slate-400 uppercase tracking-widest mt-1">Role Likeliness</span>
+                </div>
+            </div>
+            <div class="space-y-2">
+                <span class="inline-block px-3 py-1 {% if overall_score >= 75 %}bg-green-100 dark:bg-green-900/40 text-green-600 dark:text-green-400{% elif overall_score >= 55 %}bg-yellow-100 dark:bg-yellow-900/40 text-yellow-600 dark:text-yellow-400{% else %}bg-red-100 dark:bg-red-900/40 text-red-600 dark:text-red-400{% endif %} text-[10px] font-bold rounded-full uppercase tracking-tighter">
+                    {{ risk_level }}
+                </span>
+                <h2 class="text-lg font-display font-bold text-slate-800 dark:text-slate-200 mt-3">
+                    {% if overall_score >= 75 %}Job Ready{% elif overall_score >= 55 %}Trainable Potential{% else %}Career Mismatch{% endif %}
+                </h2>
+                <p class="text-xs text-slate-500 leading-relaxed max-w-xs mx-auto">
+                    {% if overall_score >= 75 %}
+                        Excellent! You are highly likely to succeed in this role.
+                    {% elif overall_score >= 55 %}
+                        Good potential. With focused training, you can bridge the gaps.
+                    {% else %}
+                        High risk. Consider exploring other roles or significant upskilling.
+                    {% endif %}
+                </p>
+            </div>
+</div>
+<div class="pt-4 border-t border-slate-200 dark:border-slate-800">
+<h4 class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-3">Next Steps</h4>
+<div class="space-y-2">
+<a href="/mock-test/role/{{ quiz.target_role|lower|cut:' ' }}/" class="w-full px-3 py-2 bg-primary text-white rounded-lg font-medium hover:bg-blue-700 transition-all flex items-center justify-center gap-2 shadow-sm text-sm">
+<span class="material-icons-outlined text-base">play_arrow</span>
+Continue With {{ quiz.target_role|title }} Mock Test
+</a>
+<a href="/mock-test/" class="w-full px-3 py-2 bg-primary text-white rounded-lg font-medium hover:bg-blue-700 transition-all flex items-center justify-center gap-2 shadow-sm text-sm">
+<span class="material-icons-outlined text-base">dashboard</span>
+Go To Mock Test Dashboard
+</a>
+</div>
+</div>
+{% if recommended_roles %}
+<div class="pt-4 border-t border-slate-200 dark:border-slate-800">
+<h4 class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-3">Recommended Roles</h4>
+<div class="space-y-2">
+{% for role in recommended_roles %}
+<div class="bg-slate-50 dark:bg-slate-800/30 rounded-lg p-2 hover:bg-slate-100 dark:hover:bg-slate-800/50 transition-colors">
+<div class="flex items-center justify-between mb-1">
+<h5 class="font-medium text-xs text-slate-900 dark:text-slate-100 truncate">{{ role.role_name }}</h5>
+<span class="text-xs font-medium text-primary">{{ role.match_percentage }}%</span>
+</div>
+{% if role.match_reasons %}
+<div class="text-[10px] text-slate-500 dark:text-slate-400">
+{% for reason in role.match_reasons %}
+<div class="truncate">{{ reason }}</div>
+{% endfor %}
+</div>
+{% endif %}
+</div>
+{% endfor %}
+</div>
+</div>
+{% endif %}
+</div>
+</aside>
+
+    <section class="flex-1 overflow-y-auto p-6 md:p-10 bg-white dark:bg-transparent">
+<div class="max-w-5xl mx-auto space-y-6">
+<div class="flex items-center justify-between mb-2">
+<h2 class="font-display text-2xl font-bold tracking-tight">Deep-Dive Analytics</h2>
+<div class="flex gap-2">
+<span class="flex items-center gap-1 text-xs text-slate-400"><span class="w-2 h-2 rounded-full bg-red-400"></span> Critical</span>
+<span class="flex items-center gap-1 text-xs text-slate-400"><span class="w-2 h-2 rounded-full bg-yellow-400"></span> Average</span>
+<span class="flex items-center gap-1 text-xs text-slate-400"><span class="w-2 h-2 rounded-full bg-blue-500"></span> Good</span>
+<span class="flex items-center gap-1 text-xs text-slate-400"><span class="w-2 h-2 rounded-full bg-green-500"></span> Excellent</span>
+</div>
+</div>
+
+
+
+<!-- Performance Quick Stats -->
+<div class="bg-surface-light dark:bg-surface-dark border border-slate-200 dark:border-slate-800 rounded-2xl p-6 mb-6">
+    <div class="flex items-center justify-between mb-6">
+        <div class="flex items-center gap-3">
+            <div class="p-2 bg-primary/10 dark:bg-primary/20 text-primary rounded-lg">
+                <span class="material-icons-outlined text-xl">speed</span>
+            </div>
+            <div>
+                <h3 class="font-bold text-lg">Performance Quick Stats</h3>
+                <p class="text-[10px] text-slate-400 uppercase tracking-wider">Real-time Metrics</p>
+            </div>
+        </div>
+        <div class="flex items-center gap-2">
+            <span class="px-3 py-1 bg-primary/10 dark:bg-primary/20 text-primary rounded-full text-xs font-medium">
+                Live Data
+            </span>
+        </div>
+    </div>
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900/20 dark:to-blue-800/20 border border-blue-200 dark:border-blue-800 rounded-xl p-4 hover:shadow-lg transition-all">
+            <div class="flex items-center justify-between mb-2">
+                <span class="material-icons-outlined text-blue-600 dark:text-blue-400 text-lg">quiz</span>
+                <span class="text-xs text-blue-600 dark:text-blue-400 font-medium">Attempted</span>
+            </div>
+            <p class="text-2xl font-bold text-blue-900 dark:text-blue-100">{{ test_attempt.questions_answered }}</p>
+            <p class="text-xs text-blue-700 dark:text-blue-300 mt-1">Questions</p>
+        </div>
+        
+        <div class="bg-gradient-to-br from-green-50 to-green-100 dark:from-green-900/20 dark:to-green-800/20 border border-green-200 dark:border-green-800 rounded-xl p-4 hover:shadow-lg transition-all">
+            <div class="flex items-center justify-between mb-2">
+                <span class="material-icons-outlined text-green-600 dark:text-green-400 text-lg">check_circle</span>
+                <span class="text-xs text-green-600 dark:text-green-400 font-medium">Answers</span>
+            </div>
+            <p class="text-2xl font-bold text-green-900 dark:text-green-100">{{ test_attempt.questions_correct }}</p>
+            <p class="text-xs text-green-700 dark:text-green-300 mt-1">Correct</p>
+        </div>
+
+        <div class="bg-gradient-to-br from-purple-50 to-purple-100 dark:from-purple-900/20 dark:to-purple-800/20 border border-purple-200 dark:border-purple-800 rounded-xl p-4 hover:shadow-lg transition-all">
+            <div class="flex items-center justify-between mb-2">
+                <span class="material-icons-outlined text-purple-600 dark:text-purple-400 text-lg">target</span>
+                <span class="text-xs text-purple-600 dark:text-purple-400 font-medium">Accuracy</span>
+            </div>
+            <p class="text-2xl font-bold text-purple-900 dark:text-purple-100">{{ test_attempt.accuracy_percentage }}%</p>
+            <p class="text-xs text-purple-700 dark:text-purple-300 mt-1">Rate</p>
+        </div>
+
+        <div class="bg-gradient-to-br from-amber-50 to-amber-100 dark:from-amber-900/20 dark:to-amber-800/20 border border-amber-200 dark:border-amber-800 rounded-xl p-4 hover:shadow-lg transition-all">
+            <div class="flex items-center justify-between mb-2">
+                <span class="material-icons-outlined text-amber-600 dark:text-amber-400 text-lg">timer</span>
+                <span class="text-xs text-amber-600 dark:text-amber-400 font-medium">Duration</span>
+            </div>
+            <p class="text-2xl font-bold text-amber-900 dark:text-amber-100">{{ test_attempt.time_taken|default:0 }}s</p>
+            <p class="text-xs text-amber-700 dark:text-amber-300 mt-1">Time</p>
+        </div>
+    </div>
+</div>
+
+{% if eligibility %}
+<div class="bg-surface-light dark:bg-surface-dark border border-slate-200 dark:border-slate-800 rounded-2xl overflow-hidden shadow-sm flex flex-col mb-6">
+    <div class="p-6">
+        <div class="flex items-center justify-between mb-4">
+            <div class="flex items-center gap-3">
+                <div class="p-2 bg-amber-100 dark:bg-amber-900/30 text-amber-600 rounded-lg">
+                    <span class="material-icons-outlined text-xl">verified</span>
+                </div>
+                <div>
+                    <h3 class="font-bold">Role Eligibility</h3>
+                    <p class="text-[10px] text-slate-400 uppercase tracking-wider">Career Fit Analysis</p>
+                </div>
+            </div>
+            <div class="text-right">
+                <div class="text-2xl font-display font-bold {% if eligibility.is_eligible %}text-green-500{% else %}text-red-500{% endif %}">{{ eligibility.eligibility_score|floatformat:0 }}<span class="text-xs text-slate-300">/100</span></div>
+                <span class="text-[10px] font-bold text-white {% if eligibility.is_eligible %}bg-green-500{% else %}bg-red-500{% endif %} px-1.5 py-0.5 rounded uppercase">
+                    {% if eligibility.is_eligible %}Eligible{% else %}Not Ready{% endif %}
+                </span>
+            </div>
+        </div>
+        <div class="relative h-1.5 w-full bg-slate-100 dark:bg-slate-700 rounded-full mb-4 overflow-hidden">
+            <div class="absolute top-0 left-0 h-full {% if eligibility.is_eligible %}bg-green-500{% else %}bg-red-500{% endif %} rounded-full" style="width: {{ eligibility.eligibility_score }}%"></div>
+        </div>
+        <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+            {% if eligibility.is_eligible %}
+                Congratulations! You meet the requirements for {{ eligibility.role_name|title }} roles.
+            {% else %}
+                Continue developing your skills to become eligible for {{ eligibility.role_name|title }} positions.
+            {% endif %}
+        </p>
+    </div>
+</div>
+{% endif %}
+
+<!-- Recommended Roles Section -->
+{% if recommended_roles %}
+<div class="bg-primary/5 border border-primary/10 rounded-2xl p-6 mb-6">
+<div class="flex items-center justify-between mb-6">
+<div class="flex items-center gap-3">
+<div class="p-2 bg-primary/10 dark:bg-primary/20 text-primary rounded-lg">
+<span class="material-icons-outlined text-xl">recommend</span>
+</div>
+<div>
+<h3 class="font-bold text-lg">Roles Recommended by Careerlytics for You</h3>
+<p class="text-[10px] text-slate-400 uppercase tracking-wider">AI-Powered Career Suggestions</p>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<span class="px-3 py-1 bg-primary/10 dark:bg-primary/20 text-primary rounded-full text-xs font-medium">
+{{ recommended_roles|length }} Recommendations
+</span>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+{% for role in recommended_roles %}
+<div class="bg-white dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-xl p-4 hover:border-primary/50 hover:shadow-lg transition-all group">
+<div class="flex items-center justify-between mb-3">
+<div class="flex items-center gap-2">
+<div class="p-2 bg-primary/5 dark:bg-primary/10 rounded-lg group-hover:bg-primary/10 dark:group-hover:bg-primary/20 transition-colors">
+<span class="material-icons-outlined text-primary text-lg">work</span>
+</div>
+<h4 class="font-semibold text-slate-900 dark:text-slate-100">{{ role.role_name|title }}</h4>
+</div>
+<span class="text-sm font-bold text-primary">Also good: {{ role.match_percentage }}%</span>
+</div>
+{% if role.match_reasons %}
+<div class="space-y-2">
+<div class="text-sm font-medium text-slate-700 dark:text-slate-300">Why this role fits:</div>
+<ul class="space-y-1">
+{% for reason in role.match_reasons %}
+<li class="text-xs text-slate-600 dark:text-slate-400 flex items-start gap-2">
+<span class="material-icons-outlined text-[10px] text-primary mt-0.5 flex-shrink-0">check_circle</span>
+<span>{{ reason }}</span>
+</li>
+{% endfor %}
+</ul>
+</div>
+{% endif %}
+<div class="mt-4 pt-3 border-t border-slate-100 dark:border-slate-700">
+<div class="flex items-center justify-between">
+<span class="text-xs text-slate-500">Career Fit</span>
+<div class="flex items-center gap-1">
+{% for i in "123" %}
+<span class="w-1.5 h-1.5 rounded-full {% if forloop.counter <= 3 %}bg-primary{% else %}bg-slate-300{% endif %}"></span>
+{% endfor %}
+</div>
+</div>
+</div>
+</div>
+{% endfor %}
+</div>
+</div>
+{% endif %}
+
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <!-- General Ability Section -->
+    <div class="bg-surface-light dark:bg-surface-dark border border-slate-200 dark:border-slate-800 rounded-2xl overflow-hidden shadow-sm flex flex-col">
+        <div class="p-6">
+            <div class="flex items-center justify-between mb-4">
+                <div class="flex items-center gap-3">
+                    <div class="p-2 bg-blue-100 dark:bg-blue-900/30 text-blue-600 rounded-lg">
+                        <span class="material-icons-outlined text-xl">psychology</span>
+                    </div>
+                    <div>
+                        <h3 class="font-bold">General Ability</h3>
+                        <p class="text-[10px] text-slate-400 uppercase tracking-wider">Aptitude & Logic</p>
+                    </div>
+                </div>
+                <div class="text-right">
+                    <div class="text-2xl font-display font-bold {% if test_attempt.general_score >= 80 %}text-green-500{% elif test_attempt.general_score >= 60 %}text-blue-500{% else %}text-red-500{% endif %}">{{ test_attempt.general_score }}<span class="text-xs text-slate-300">/100</span></div>
+                    <span class="text-[10px] font-bold text-white {% if test_attempt.general_score >= 80 %}bg-green-500{% elif test_attempt.general_score >= 60 %}bg-blue-500{% else %}bg-red-500{% endif %} px-1.5 py-0.5 rounded uppercase">
+                        {% if test_attempt.general_score >= 80 %}Excellent{% elif test_attempt.general_score >= 60 %}Good{% else %}Critical{% endif %}
+                    </span>
+                </div>
+            </div>
+            <div class="relative h-1.5 w-full bg-slate-100 dark:bg-slate-700 rounded-full mb-4 overflow-hidden">
+                <div class="absolute top-0 left-0 h-full {% if test_attempt.general_score >= 80 %}bg-green-500{% elif test_attempt.general_score >= 60 %}bg-blue-500{% else %}bg-red-500{% endif %} rounded-full" style="width: {{ test_attempt.general_score }}%"></div>
+            </div>
+            <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+                {% if test_attempt.general_score >= 80 %}
+                    Exceptional problem-solving and logical reasoning capabilities.
+                {% elif test_attempt.general_score >= 60 %}
+                    Good analytical skills with strong potential for growth.
+                {% else %}
+                    Needs improvement in logical reasoning and aptitude.
+                {% endif %}
+            </p>
+        </div>
+        <details class="group border-t border-slate-100 dark:border-slate-800">
+            <summary class="flex items-center justify-between p-4 cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+                <span class="text-xs font-bold uppercase tracking-widest text-slate-500">Actionable Insights</span>
+                <span class="material-icons-outlined text-sm group-open:rotate-180 transition-transform">expand_more</span>
+            </summary>
+            <div class="px-6 pb-6 space-y-3">
+                <div class="flex gap-3 text-sm">
+                    <span class="material-icons-outlined {% if test_attempt.general_score >= 60 %}text-green-500{% else %}text-red-500{% endif %} text-base">
+                        {% if test_attempt.general_score >= 60 %}check_circle{% else %}error_outline{% endif %}
+                    </span>
+                    <span class="text-slate-600 dark:text-slate-400">
+                        {% if test_attempt.general_score >= 60 %}
+                            Strong cognitive abilities detected. Maintain sharp analytical skills.
+                        {% else %}
+                            Practice aptitude tests and logical reasoning exercises daily.
+                        {% endif %}
+                    </span>
+                </div>
+            </div>
+        </details>
+    </div>
+    
+    <div class="bg-surface-light dark:bg-surface-dark border border-slate-200 dark:border-slate-800 rounded-2xl overflow-hidden shadow-sm flex flex-col">
+<div class="p-6">
+<div class="flex items-center justify-between mb-4">
+<div class="flex items-center gap-3">
+<div class="p-2 bg-emerald-100 dark:bg-emerald-900/30 text-emerald-600 rounded-lg">
+<span class="material-icons-outlined text-xl">code</span>
+</div>
+<div>
+<h3 class="font-bold">Technical Skills</h3>
+<p class="text-[10px] text-slate-400 uppercase tracking-wider">Tech Knowledge</p>
+</div>
+</div>
+<div class="text-right">
+<div class="text-2xl font-display font-bold {% if test_attempt.tech_score >= 80 %}text-green-500{% elif test_attempt.tech_score >= 60 %}text-blue-500{% else %}text-red-500{% endif %}">{{ test_attempt.tech_score }}<span class="text-xs text-slate-300">/100</span></div>
+<span class="text-[10px] font-bold text-white {% if test_attempt.tech_score >= 80 %}bg-green-500{% elif test_attempt.tech_score >= 60 %}bg-blue-500{% else %}bg-red-500{% endif %} px-1.5 py-0.5 rounded uppercase">
+    {% if test_attempt.tech_score >= 80 %}Excellent{% elif test_attempt.tech_score >= 60 %}Good{% else %}Critical{% endif %}
+</span>
+</div>
+</div>
+<div class="relative h-1.5 w-full bg-slate-100 dark:bg-slate-700 rounded-full mb-4 overflow-hidden">
+<div class="absolute top-0 left-0 h-full {% if test_attempt.tech_score >= 80 %}bg-green-500{% elif test_attempt.tech_score >= 60 %}bg-blue-500{% else %}bg-red-500{% endif %} rounded-full" style="width: {{ test_attempt.tech_score }}%"></div>
+</div>
+<p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+    {% if test_attempt.tech_score >= 80 %}
+        Strong technical foundation with excellent knowledge of core concepts.
+    {% elif test_attempt.tech_score >= 60 %}
+        Good technical skills with some gaps in specific areas.
+    {% else %}
+        Significant technical knowledge gaps require immediate attention.
+    {% endif %}
+</p>
+</div>
+<details class="group border-t border-slate-100 dark:border-slate-800">
+<summary class="flex items-center justify-between p-4 cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+<span class="text-xs font-bold uppercase tracking-widest text-slate-500">Actionable Insights</span>
+<span class="material-icons-outlined text-sm group-open:rotate-180 transition-transform">expand_more</span>
+</summary>
+<div class="px-6 pb-6 space-y-3">
+<div class="flex gap-3 text-sm">
+<span class="material-icons-outlined {% if test_attempt.tech_score >= 60 %}text-green-500{% else %}text-red-500{% endif %} text-base">
+    {% if test_attempt.tech_score >= 60 %}check_circle{% else %}error_outline{% endif %}
+</span>
+<span class="text-slate-600 dark:text-slate-400">
+    {% if test_attempt.tech_score >= 60 %}
+        Solid technical foundation detected. Continue building advanced skills.
+    {% else %}
+        Technical skills need significant improvement. Focus on fundamentals.
+    {% endif %}
+</span>
+</div>
+</div>
+</details>
+</div>
+<div class="bg-surface-light dark:bg-surface-dark border border-slate-200 dark:border-slate-800 rounded-2xl overflow-hidden shadow-sm flex flex-col">
+<div class="p-6">
+<div class="flex items-center justify-between mb-4">
+<div class="flex items-center gap-3">
+<div class="p-2 bg-purple-100 dark:bg-purple-900/30 text-purple-600 rounded-lg">
+<span class="material-icons-outlined text-xl">work</span>
+</div>
+<div>
+<h3 class="font-bold">Role-Specific</h3>
+<p class="text-[10px] text-slate-400 uppercase tracking-wider">Domain Expertise</p>
+</div>
+</div>
+<div class="text-right">
+<div class="text-2xl font-display font-bold {% if test_attempt.role_score >= 80 %}text-green-500{% elif test_attempt.role_score >= 60 %}text-blue-500{% else %}text-red-500{% endif %}">{{ test_attempt.role_score }}<span class="text-xs text-slate-300">/100</span></div>
+<span class="text-[10px] font-bold text-white {% if test_attempt.role_score >= 80 %}bg-green-500{% elif test_attempt.role_score >= 60 %}bg-blue-500{% else %}bg-red-500{% endif %} px-1.5 py-0.5 rounded uppercase">
+    {% if test_attempt.role_score >= 80 %}Excellent{% elif test_attempt.role_score >= 60 %}Good{% else %}Poor{% endif %}
+</span>
+</div>
+</div>
+<div class="relative h-1.5 w-full bg-slate-100 dark:bg-slate-700 rounded-full mb-4 overflow-hidden">
+<div class="absolute top-0 left-0 h-full {% if test_attempt.role_score >= 80 %}bg-green-500{% elif test_attempt.role_score >= 60 %}bg-blue-500{% else %}bg-red-500{% endif %} rounded-full" style="width: {{ test_attempt.role_score }}%"></div>
+</div>
+<p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+    {% if test_attempt.role_score >= 80 %}
+        Excellent understanding of {{ quiz.target_role|title }} role requirements.
+    {% elif test_attempt.role_score >= 60 %}
+        Good knowledge of {{ quiz.target_role|title }} concepts with room for growth.
+    {% else %}
+        Limited understanding of {{ quiz.target_role|title }} role requirements.
+    {% endif %}
+</p>
+</div>
+<details class="group border-t border-slate-100 dark:border-slate-800">
+<summary class="flex items-center justify-between p-4 cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+<span class="text-xs font-bold uppercase tracking-widest text-slate-500">Actionable Insights</span>
+<span class="material-icons-outlined text-sm group-open:rotate-180 transition-transform">expand_more</span>
+</summary>
+<div class="px-6 pb-6 space-y-3">
+<div class="flex gap-3 text-sm">
+<span class="material-icons-outlined {% if test_attempt.role_score >= 60 %}text-green-500{% else %}text-red-500{% endif %} text-base">
+    {% if test_attempt.role_score >= 60 %}check_circle{% else %}error_outline{% endif %}
+</span>
+<span class="text-slate-600 dark:text-slate-400">
+    {% if test_attempt.role_score >= 60 %}
+        Good understanding of role-specific requirements.
+    {% else %}
+        Focus on learning {{ quiz.target_role|title }} domain knowledge.
+    {% endif %}
+</span>
+</div>
+</div>
+</details>
+</div>
+</div>
+
+</div>
+
+
+</div>
+
+
+<div class="bg-primary/5 border border-primary/10 rounded-2xl p-8 mt-10">
+<div class="flex flex-col md:flex-row items-center justify-between gap-6">
+<div class="space-y-2">
+<h3 class="font-display text-xl font-bold">Ready to boost your score?</h3>
+<p class="text-slate-500 text-sm">Our AI can help you prepare better with personalized learning paths.</p>
+</div>
+<div class="flex gap-3">
+<a href="{% url 'users:UserHome' %}" class="px-6 py-3 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 font-semibold rounded-xl border border-slate-200 dark:border-slate-700 hover:bg-slate-50 transition-colors">
+    Review Feedback
+</a>
+<a href="{% url 'users:UserHome' %}" class="px-6 py-3 bg-primary text-white font-semibold rounded-xl hover:bg-blue-700 transition-all shadow-md">
+    View Dashboard
+</a>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<div class="lg:hidden fixed inset-0 z-[100] bg-white dark:bg-background-dark flex flex-col items-center justify-center p-10 text-center">
+<span class="material-icons-outlined text-6xl text-primary mb-4">desktop_windows</span>
+<h2 class="text-2xl font-bold mb-2">Desktop View Recommended</h2>
+<p class="text-slate-500 mb-6">Deep-Dive Analytics is optimized for larger screens to provide detailed comparisons and data visualization.</p>
+<button class="text-primary font-bold" onclick="this.parentElement.style.display='none'">Continue anyway</button>
+</div>
+
+</body>
+</html>

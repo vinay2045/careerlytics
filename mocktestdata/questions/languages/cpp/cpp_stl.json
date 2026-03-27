@@ -1,0 +1,452 @@
+[
+    {
+        "id": "cpp_001",
+        "category": "cpp",
+        "difficulty": "easy",
+        "question_text": "What is STL in C++?",
+        "options": [
+            "Standard Template Library",
+            "Standard Testing Library", 
+            "Simple Template Library",
+            "System Template Library"
+        ],
+        "correct_answer": 0,
+        "explanation": "STL stands for Standard Template Library, which provides a collection of template classes and functions for data structures and algorithms.",
+        "tags": ["stl", "cpp", "template"]
+    },
+    {
+        "id": "cpp_002",
+        "category": "cpp",
+        "difficulty": "easy",
+        "question_text": "Which STL container provides dynamic array?",
+        "options": [
+            "vector",
+            "list",
+            "deque", 
+            "array"
+        ],
+        "correct_answer": 0,
+        "explanation": "std::vector is a dynamic array container that can grow or shrink in size, providing random access to elements.",
+        "tags": ["stl", "vector", "container"]
+    },
+    {
+        "id": "cpp_003",
+        "category": "cpp",
+        "difficulty": "easy",
+        "question_text": "What is the purpose of std::map?",
+        "options": [
+            "Key-value pairs",
+            "Single values",
+            "Stack operations",
+            "Queue operations"
+        ],
+        "correct_answer": 0,
+        "explanation": "std::map is an associative container that stores elements in key-value pairs, allowing efficient lookup based on keys.",
+        "tags": ["stl", "map", "container"]
+    },
+    {
+        "id": "cpp_004",
+        "category": "cpp",
+        "difficulty": "medium",
+        "question_text": "Which iterator provides bidirectional access?",
+        "options": [
+            "bidirectional_iterator",
+            "forward_iterator",
+            "random_access_iterator",
+            "input_iterator"
+        ],
+        "correct_answer": 0,
+        "explanation": "bidirectional_iterator provides movement in both forward and backward directions, but not random access.",
+        "tags": ["stl", "iterator", "cpp"]
+    },
+    {
+        "id": "cpp_005",
+        "category": "cpp",
+        "difficulty": "easy",
+        "question_text": "What is std::vector?",
+        "options": [
+            "Dynamic array",
+            "Linked list",
+            "Stack",
+            "Queue"
+        ],
+        "correct_answer": 0,
+        "explanation": "std::vector is a dynamic array that can automatically resize when elements are added or removed.",
+        "tags": ["stl", "vector", "dynamic-array"]
+    },
+    {
+        "id": "cpp_006",
+        "category": "cpp",
+        "difficulty": "easy",
+        "question_text": "Which algorithm sorts elements in STL?",
+        "options": [
+            "std::sort",
+            "std::order",
+            "std::arrange",
+            "std::organize"
+        ],
+        "correct_answer": 0,
+        "explanation": "std::sort is the standard STL algorithm for sorting elements in a range using quicksort or introsort.",
+        "tags": ["stl", "algorithm", "sorting"]
+    },
+    {
+        "id": "cpp_007",
+        "category": "cpp",
+        "difficulty": "medium",
+        "question_text": "What does std::list provide?",
+        "options": [
+            "Doubly linked list",
+            "Singly linked list",
+            "Circular linked list",
+            "Dynamic array"
+        ],
+        "correct_answer": 0,
+        "explanation": "std::list is a doubly linked list container that allows constant time insertion and deletion from both ends.",
+        "tags": ["stl", "list", "linked-list"]
+    },
+    {
+        "id": "cpp_008",
+        "category": "cpp",
+        "difficulty": "medium",
+        "question_text": "Which container follows LIFO principle?",
+        "options": [
+            "stack",
+            "queue",
+            "priority_queue",
+            "deque"
+        ],
+        "correct_answer": 0,
+        "explanation": "std::stack follows Last In First Out (LIFO) principle where the last element added is the first to be removed.",
+        "tags": ["stl", "stack", "lifo"]
+    },
+    {
+        "id": "cpp_009",
+        "category": "cpp",
+        "difficulty": "medium",
+        "question_text": "What is std::queue?",
+        "options": [
+            "FIFO container",
+            "LIFO container",
+            "Priority container",
+            "Sorted container"
+        ],
+        "correct_answer": 0,
+        "explanation": "std::queue follows First In First Out (FIFO) principle where the first element added is the first to be removed.",
+        "tags": ["stl", "queue", "fifo"]
+    },
+    {
+        "id": "cpp_010",
+        "category": "cpp",
+        "difficulty": "hard",
+        "question_text": "Which iterator provides random access?",
+        "options": [
+            "random_access_iterator",
+            "bidirectional_iterator",
+            "forward_iterator",
+            "input_iterator"
+        ],
+        "correct_answer": 0,
+        "explanation": "random_access_iterator provides constant time access to any element in the container and supports arithmetic operations on iterators.",
+        "tags": ["stl", "iterator", "random-access"]
+    },
+    {
+        "id": "cpp_011",
+        "category": "cpp",
+        "difficulty": "easy",
+        "question_text": "Which header file is required for std::vector?",
+        "options": [
+            "<vector>",
+            "<array>",
+            "<list>",
+            "<container>"
+        ],
+        "correct_answer": 0,
+        "explanation": "The <vector> header file is required to use std::vector container in C++.",
+        "tags": ["cpp", "stl", "vector", "header"]
+    },
+    {
+        "id": "cpp_012",
+        "category": "cpp",
+        "difficulty": "easy",
+        "question_text": "What is the purpose of std::pair?",
+        "options": [
+            "Store two values",
+            "Store key-value pairs",
+            "Store multiple values",
+            "Store functions"
+        ],
+        "correct_answer": 0,
+        "explanation": "std::pair is a simple container that stores two values as a single unit, accessible as first and second.",
+        "tags": ["cpp", "stl", "pair", "container"]
+    },
+    {
+        "id": "cpp_013",
+        "category": "cpp",
+        "difficulty": "easy",
+        "question_text": "Which method returns the size of a vector?",
+        "options": [
+            "size()",
+            "length()",
+            "count()",
+            "get_size()"
+        ],
+        "correct_answer": 0,
+        "explanation": "The size() method returns the number of elements in a vector.",
+        "tags": ["cpp", "stl", "vector", "size"]
+    },
+    {
+        "id": "cpp_014",
+        "category": "cpp",
+        "difficulty": "easy",
+        "question_text": "What is std::set?",
+        "options": [
+            "Ordered unique elements",
+            "Unordered elements",
+            "Key-value pairs",
+            "Stack structure"
+        ],
+        "correct_answer": 0,
+        "explanation": "std::set is an associative container that stores unique elements in sorted order.",
+        "tags": ["cpp", "stl", "set", "ordered-container"]
+    },
+    {
+        "id": "cpp_015",
+        "category": "cpp",
+        "difficulty": "medium",
+        "question_text": "Which algorithm finds an element in a range?",
+        "options": [
+            "std::find",
+            "std::search",
+            "std::locate",
+            "std::get"
+        ],
+        "correct_answer": 0,
+        "explanation": "std::find searches for a value in a range and returns an iterator to the first occurrence.",
+        "tags": ["cpp", "stl", "algorithm", "find"]
+    },
+    {
+        "id": "cpp_016",
+        "category": "cpp",
+        "difficulty": "medium",
+        "question_text": "What is the purpose of std::unique_ptr?",
+        "options": [
+            "Smart pointer for unique ownership",
+            "Shared pointer",
+            "Weak pointer",
+            "Raw pointer"
+        ],
+        "correct_answer": 0,
+        "explanation": "std::unique_ptr is a smart pointer that uniquely owns and manages an object through a pointer.",
+        "tags": ["cpp", "smart-pointers", "unique_ptr", "memory-management"]
+    },
+    {
+        "id": "cpp_017",
+        "category": "cpp",
+        "difficulty": "medium",
+        "question_text": "Which container provides first-in-first-out behavior?",
+        "options": [
+            "std::queue",
+            "std::stack",
+            "std::deque",
+            "std::priority_queue"
+        ],
+        "correct_answer": 0,
+        "explanation": "std::queue is a container adapter that provides FIFO (first-in-first-out) behavior.",
+        "tags": ["cpp", "stl", "queue", "fifo"]
+    },
+    {
+        "id": "cpp_018",
+        "category": "cpp",
+        "difficulty": "medium",
+        "question_text": "What is std::unordered_map?",
+        "options": [
+            "Hash table key-value pairs",
+            "Ordered key-value pairs",
+            "Single values",
+            "Multiple values"
+        ],
+        "correct_answer": 0,
+        "explanation": "std::unordered_map is an associative container that stores key-value pairs using a hash table for O(1) average access.",
+        "tags": ["cpp", "stl", "unordered_map", "hash-table"]
+    },
+    {
+        "id": "cpp_019",
+        "category": "cpp",
+        "difficulty": "medium",
+        "question_text": "Which method removes elements from a vector?",
+        "options": [
+            "erase()",
+            "remove()",
+            "delete()",
+            "clear()"
+        ],
+        "correct_answer": 0,
+        "explanation": "The erase() method removes elements from a vector at specified positions.",
+        "tags": ["cpp", "stl", "vector", "erase"]
+    },
+    {
+        "id": "cpp_020",
+        "category": "cpp",
+        "difficulty": "hard",
+        "question_text": "What is the difference between std::list and std::vector?",
+        "options": [
+            "Linked list vs dynamic array",
+            "Fixed size vs dynamic size",
+            "Ordered vs unordered",
+            "Thread-safe vs not thread-safe"
+        ],
+        "correct_answer": 0,
+        "explanation": "std::list is implemented as a doubly-linked list, while std::vector is implemented as a dynamic array.",
+        "tags": ["cpp", "stl", "list", "vector", "data-structures"]
+    },
+    {
+        "id": "cpp_021",
+        "category": "cpp",
+        "difficulty": "hard",
+        "question_text": "What is the purpose of std::move?",
+        "options": [
+            "Transfer ownership efficiently",
+            "Copy objects",
+            "Delete objects",
+            "Create objects"
+        ],
+        "correct_answer": 0,
+        "explanation": "std::move converts an object to an rvalue reference, enabling efficient transfer of resources without copying.",
+        "tags": ["cpp", "move-semantics", "std::move", "rvalue"]
+    },
+    {
+        "id": "cpp_022",
+        "category": "cpp",
+        "difficulty": "hard",
+        "question_text": "What is std::shared_ptr?",
+        "options": [
+            "Smart pointer with shared ownership",
+            "Unique ownership pointer",
+            "Weak pointer",
+            "Raw pointer wrapper"
+        ],
+        "correct_answer": 0,
+        "explanation": "std::shared_ptr is a smart pointer that retains shared ownership of an object through a pointer.",
+        "tags": ["cpp", "smart-pointers", "shared_ptr", "memory-management"]
+    },
+    {
+        "id": "cpp_023",
+        "category": "cpp",
+        "difficulty": "hard",
+        "question_text": "Which algorithm sorts a range?",
+        "options": [
+            "std::sort",
+            "std::order",
+            "std::arrange",
+            "std::organize"
+        ],
+        "correct_answer": 0,
+        "explanation": "std::sort sorts elements in a range using introsort (quicksort + heapsort + insertion sort).",
+        "tags": ["cpp", "stl", "algorithm", "sorting"]
+    },
+    {
+        "id": "cpp_024",
+        "category": "cpp",
+        "difficulty": "hard",
+        "question_text": "What is the purpose of std::function?",
+        "options": [
+            "Store callable objects",
+            "Create functions",
+            "Delete functions",
+            "Compare functions"
+        ],
+        "correct_answer": 0,
+        "explanation": "std::function is a general-purpose polymorphic function wrapper that can store, copy, and invoke any callable target.",
+        "tags": ["cpp", "stl", "function", "callable"]
+    },
+    {
+        "id": "cpp_025",
+        "category": "cpp",
+        "difficulty": "medium",
+        "question_text": "Which method adds elements to a vector?",
+        "options": [
+            "push_back()",
+            "add()",
+            "insert()",
+            "append()"
+        ],
+        "correct_answer": 0,
+        "explanation": "The push_back() method adds an element to the end of a vector.",
+        "tags": ["cpp", "stl", "vector", "push_back"]
+    },
+    {
+        "id": "cpp_026",
+        "category": "cpp",
+        "difficulty": "medium",
+        "question_text": "What is std::deque?",
+        "options": [
+            "Double-ended queue",
+            "Single-ended queue",
+            "Priority queue",
+            "Circular queue"
+        ],
+        "correct_answer": 0,
+        "explanation": "std::deque (double-ended queue) allows efficient insertion and deletion at both ends.",
+        "tags": ["cpp", "stl", "deque", "double-ended"]
+    },
+    {
+        "id": "cpp_027",
+        "category": "cpp",
+        "difficulty": "medium",
+        "question_text": "Which header is needed for std::map?",
+        "options": [
+            "<map>",
+            "<unordered_map>",
+            "<dictionary>",
+            "<hash_map>"
+        ],
+        "correct_answer": 0,
+        "explanation": "The <map> header file is required to use std::map container.",
+        "tags": ["cpp", "stl", "map", "header"]
+    },
+    {
+        "id": "cpp_028",
+        "category": "cpp",
+        "difficulty": "easy",
+        "question_text": "What does std::cout do?",
+        "options": [
+            "Output to console",
+            "Input from console",
+            "Error output",
+            "File output"
+        ],
+        "correct_answer": 0,
+        "explanation": "std::cout is the standard output stream used to write data to the console.",
+        "tags": ["cpp", "iostream", "cout", "output"]
+    },
+    {
+        "id": "cpp_029",
+        "category": "cpp",
+        "difficulty": "easy",
+        "question_text": "Which keyword is used for templates?",
+        "options": [
+            "template",
+            "typename",
+            "class",
+            "generic"
+        ],
+        "correct_answer": 0,
+        "explanation": "The 'template' keyword is used to define generic functions and classes in C++.",
+        "tags": ["cpp", "templates", "generic-programming", "keywords"]
+    },
+    {
+        "id": "cpp_030",
+        "category": "cpp",
+        "difficulty": "medium",
+        "question_text": "What is std::array?",
+        "options": [
+            "Fixed-size array container",
+            "Dynamic array",
+            "Resizable array",
+            "Linked list"
+        ],
+        "correct_answer": 0,
+        "explanation": "std::array is a container that encapsulates fixed-size arrays with the performance of C-style arrays.",
+        "tags": ["cpp", "stl", "array", "fixed-size"]
+    }
+]

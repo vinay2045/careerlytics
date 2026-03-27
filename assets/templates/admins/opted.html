@@ -1,0 +1,310 @@
+{% extends 'admins/admin_base.html' %}
+{% load static %}
+
+{% block title %}Applicants - {{ drive.title }}{% endblock %}
+
+{% block content %}
+<div class="space-y-6">
+    <!-- Header -->
+    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div>
+            <div class="flex items-center gap-2 text-sm text-gray-500 mb-1">
+                <a href="{% url 'admin_placement_drives' %}" class="hover:text-blue-600 transition-colors">Drives</a>
+                <span class="material-symbols-outlined text-sm">chevron_right</span>
+                <span>Applications</span>
+            </div>
+            <h1 class="text-2xl font-bold text-gray-900 dark:text-white">{{ drive.title }}</h1>
+            <p class="text-gray-500 dark:text-gray-400">
+                {{ drive.company_name }} • {{ drive.job_role }} • {{ applications.count }} Applicants
+            </p>
+        </div>
+        <div class="flex gap-3">
+            <button onclick="window.print()" class="px-4 py-2 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg text-sm font-medium hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors flex items-center gap-2">
+                <span class="material-symbols-outlined text-lg">print</span> Print List
+            </button>
+            <button class="px-4 py-2 bg-brand-blue hover:bg-brand-blueHover text-white rounded-lg text-sm font-medium transition-colors flex items-center gap-2 shadow-lg shadow-blue-500/20">
+                <span class="material-symbols-outlined text-lg">download</span> Export CSV
+            </button>
+        </div>
+    </div>
+
+    <!-- Stats Cards -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div class="bg-white dark:bg-dark-card p-4 rounded-xl border border-gray-100 dark:border-gray-800 shadow-sm">
+            <p class="text-xs font-bold text-gray-500 uppercase tracking-wider">Total Applied</p>
+            <p class="text-2xl font-black text-gray-900 dark:text-white mt-1">{{ applications.count }}</p>
+        </div>
+        <div class="bg-white dark:bg-dark-card p-4 rounded-xl border border-gray-100 dark:border-gray-800 shadow-sm">
+            <p class="text-xs font-bold text-blue-500 uppercase tracking-wider">Avg. CGPA</p>
+            <p class="text-2xl font-black text-gray-900 dark:text-white mt-1">
+                {% if applications %}
+                    {{ applications.0.student_cgpa|default:"--" }}
+                {% else %}
+                    --
+                {% endif %}
+            </p>
+        </div>
+        <div class="bg-white dark:bg-dark-card p-4 rounded-xl border border-gray-100 dark:border-gray-800 shadow-sm">
+            <p class="text-xs font-bold text-purple-500 uppercase tracking-wider">Shortlisted</p>
+            <p class="text-2xl font-black text-gray-900 dark:text-white mt-1">
+                0
+            </p>
+        </div>
+        <div class="bg-white dark:bg-dark-card p-4 rounded-xl border border-gray-100 dark:border-gray-800 shadow-sm">
+            <p class="text-xs font-bold text-green-500 uppercase tracking-wider">Selected</p>
+            <p class="text-2xl font-black text-gray-900 dark:text-white mt-1">
+                0
+            </p>
+        </div>
+    </div>
+
+    <!-- Applicants Table -->
+    <div class="bg-white dark:bg-dark-card border border-gray-200 dark:border-gray-800 rounded-xl overflow-hidden shadow-sm">
+        <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse">
+                <thead>
+                    <tr class="bg-gray-50 dark:bg-gray-800/50 border-b border-gray-200 dark:border-gray-700">
+                        <th class="px-6 py-4 text-xs font-bold text-gray-500 uppercase tracking-wider">Student</th>
+                        <th class="px-6 py-4 text-xs font-bold text-gray-500 uppercase tracking-wider">Academic Details</th>
+                        <th class="px-6 py-4 text-xs font-bold text-gray-500 uppercase tracking-wider">Contact Info</th>
+                        <th class="px-6 py-4 text-xs font-bold text-gray-500 uppercase tracking-wider">Applied Date</th>
+                        <th class="px-6 py-4 text-xs font-bold text-gray-500 uppercase tracking-wider">Status</th>
+                        <th class="px-6 py-4 text-xs font-bold text-gray-500 uppercase tracking-wider text-right">Actions</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-100 dark:divide-gray-800">
+                    {% for app in applications %}
+                    <tr class="hover:bg-gray-50 dark:hover:bg-gray-800/30 transition-colors group">
+                        <td class="px-6 py-4">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 flex items-center justify-center font-bold text-sm">
+                                    {{ app.full_name|default:app.student.userid|slice:":1"|upper }}
+                                </div>
+                                <div>
+                                    <p class="font-bold text-gray-900 dark:text-white text-sm">{{ app.full_name|default:app.student.userid }}</p>
+                                    <p class="text-xs text-gray-500">HT: {{ app.hall_ticket_number|default:"-" }}</p>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="px-6 py-4">
+                            <div class="space-y-1">
+                                <p class="text-sm font-medium text-gray-900 dark:text-white">{{ app.student_department }}</p>
+                                <p class="text-xs text-gray-500">Year: {{ app.student_year }} • CGPA: <span class="font-bold text-gray-700 dark:text-gray-300">{{ app.student_cgpa }}</span></p>
+                            </div>
+                        </td>
+                        <td class="px-6 py-4">
+                            <div class="space-y-1">
+                                <p class="text-sm text-gray-600 dark:text-gray-300 flex items-center gap-1.5">
+                                    <span class="material-symbols-outlined text-sm text-gray-400">mail</span> {{ app.student.email }}
+                                </p>
+                                <p class="text-sm text-gray-600 dark:text-gray-300 flex items-center gap-1.5">
+                                    <span class="material-symbols-outlined text-sm text-gray-400">call</span> {{ app.student.phone|default:"--" }}
+                                </p>
+                            </div>
+                        </td>
+                        <td class="px-6 py-4">
+                            <p class="text-sm text-gray-600 dark:text-gray-300">{{ app.application_date|date:"M d, Y" }}</p>
+                            <p class="text-xs text-gray-400">{{ app.application_date|time:"H:i A" }}</p>
+                        </td>
+                        <td class="px-6 py-4">
+                            <span class="px-2.5 py-1 rounded-full text-xs font-bold uppercase tracking-wider
+                                {% if app.status == 'applied' %}bg-blue-50 text-blue-600 border border-blue-200 dark:bg-blue-900/20 dark:text-blue-300 dark:border-blue-800
+                                {% elif app.status == 'shortlisted' %}bg-purple-50 text-purple-600 border border-purple-200 dark:bg-purple-900/20 dark:text-purple-300 dark:border-purple-800
+                                {% elif app.status == 'selected' %}bg-green-50 text-green-600 border border-green-200 dark:bg-green-900/20 dark:text-green-300 dark:border-green-800
+                                {% elif app.status == 'rejected' %}bg-red-50 text-red-600 border border-red-200 dark:bg-red-900/20 dark:text-red-300 dark:border-red-800
+                                {% else %}bg-gray-50 text-gray-600 border border-gray-200 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-700{% endif %}">
+                                {{ app.status }}
+                            </span>
+                        </td>
+                        <td class="px-6 py-4 text-right">
+                            <div class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                                {% if app.student_record.resume %}
+                                <a href="{{ app.student_record.resume.url }}" target="_blank" title="View Resume" class="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg text-gray-400 hover:text-red-500 transition-colors">
+                                    <span class="material-symbols-outlined text-xl">picture_as_pdf</span>
+                                </a>
+                                {% endif %}
+                                <button onclick="viewApplicationDetails({{ app.id }})" title="View Details" class="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg text-gray-400 hover:text-blue-600 transition-colors">
+                                    <span class="material-symbols-outlined text-xl">visibility</span>
+                                </button>
+                                <button title="Update Status" class="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg text-gray-400 hover:text-purple-600 transition-colors">
+                                    <span class="material-symbols-outlined text-xl">edit_note</span>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="6" class="px-6 py-12 text-center">
+                            <div class="flex flex-col items-center justify-center">
+                                <div class="w-16 h-16 bg-gray-50 dark:bg-gray-800 rounded-full flex items-center justify-center mb-4">
+                                    <span class="material-symbols-outlined text-3xl text-gray-300">group_off</span>
+                                </div>
+                                <h3 class="text-lg font-bold text-gray-900 dark:text-white">No Applicants Yet</h3>
+                                <p class="text-gray-500 dark:text-gray-400 mt-1">Students haven't started applying to this drive yet.</p>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Details Modal -->
+<div id="applicationModal" class="fixed inset-0 z-[60] hidden overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+    <div class="flex min-h-screen items-end justify-center px-4 pt-4 pb-20 text-center sm:block sm:p-0">
+        <!-- Background backdrop -->
+        <div class="fixed inset-0 bg-gray-900/75 transition-opacity" aria-hidden="true" onclick="closeModal()"></div>
+
+        <!-- Modal panel -->
+        <div class="inline-block transform overflow-hidden rounded-2xl bg-white dark:bg-dark-card text-left align-bottom shadow-2xl transition-all sm:my-8 sm:w-full sm:max-w-2xl sm:align-middle border border-gray-200 dark:border-dark-border">
+            <div class="bg-white dark:bg-dark-card px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                <div class="flex items-center justify-between mb-6 pb-4 border-b border-gray-100 dark:border-dark-border/50">
+                    <div class="flex items-center gap-3">
+                        <div class="w-12 h-12 rounded-xl bg-blue-50 dark:bg-blue-900/20 flex items-center justify-center text-blue-600 dark:text-blue-400">
+                            <span class="material-symbols-outlined text-2xl">person</span>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-gray-900 dark:text-white" id="modal-full-name"></h3>
+                            <div class="flex flex-wrap gap-x-4 gap-y-1">
+                                <p class="text-sm text-gray-500 dark:text-gray-400" id="modal-hall-ticket"></p>
+                            </div>
+                        </div>
+                    </div>
+                    <button onclick="closeModal()" class="text-gray-400 hover:text-gray-500 dark:hover:text-gray-300 p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+                        <span class="material-symbols-outlined">close</span>
+                    </button>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Left Column -->
+                    <div class="space-y-4">
+                        <div>
+                            <p class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">Contact Information</p>
+                            <div class="space-y-2">
+                                <p class="text-sm text-gray-700 dark:text-gray-300 flex items-center gap-2">
+                                    <span class="material-symbols-outlined text-lg text-gray-400">mail</span>
+                                    <span id="modal-email"></span>
+                                </p>
+                                <p class="text-sm text-gray-700 dark:text-gray-300 flex items-center gap-2">
+                                    <span class="material-symbols-outlined text-lg text-gray-400">call</span>
+                                    <span id="modal-phone"></span>
+                                </p>
+                            </div>
+                        </div>
+                        <div>
+                            <p class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">Academic Info</p>
+                            <div class="space-y-2">
+                                <p class="text-sm text-gray-700 dark:text-gray-300 flex items-center gap-2">
+                                    <span class="material-symbols-outlined text-lg text-gray-400">school</span>
+                                    <span id="modal-branch"></span>
+                                </p>
+                                <p class="text-sm text-gray-700 dark:text-gray-300 flex items-center gap-2">
+                                    <span class="material-symbols-outlined text-lg text-gray-400">grade</span>
+                                    <span id="modal-cgpa"></span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right Column -->
+                    <div class="space-y-4">
+                        <div>
+                            <p class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">Drive Details</p>
+                            <div class="space-y-2">
+                                <p class="text-sm text-gray-700 dark:text-gray-300 flex items-center gap-2 font-bold">
+                                    <span class="material-symbols-outlined text-lg text-gray-400">business</span>
+                                    <span id="modal-company"></span>
+                                </p>
+                                <p class="text-sm text-gray-700 dark:text-gray-300 flex items-center gap-2">
+                                    <span class="material-symbols-outlined text-lg text-gray-400">work</span>
+                                    <span id="modal-role"></span>
+                                </p>
+                            </div>
+                        </div>
+                        <div>
+                            <p class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">Application Info</p>
+                            <div class="space-y-2">
+                                <p class="text-sm text-gray-700 dark:text-gray-300 flex items-center gap-2">
+                                    <span class="material-symbols-outlined text-lg text-gray-400">event</span>
+                                    <span id="modal-applied-date"></span>
+                                </p>
+                                <p class="text-sm flex items-center gap-2">
+                                    <span class="material-symbols-outlined text-lg text-gray-400">info</span>
+                                    <span id="modal-status" class="px-2 py-0.5 rounded-full text-xs font-bold uppercase tracking-wider"></span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Full Width Notes -->
+                    <div class="md:col-span-2 pt-4 border-t border-gray-100 dark:border-dark-border/50">
+                        <p class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">Admin Notes</p>
+                        <div class="bg-gray-50 dark:bg-dark-bg p-4 rounded-xl">
+                            <p class="text-sm text-gray-600 dark:text-gray-400 italic" id="modal-notes"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-gray-50 dark:bg-dark-bg px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
+                <button type="button" onclick="closeModal()" class="mt-3 inline-flex w-full justify-center rounded-xl bg-white dark:bg-dark-card px-5 py-2.5 text-sm font-semibold text-gray-900 dark:text-white shadow-sm ring-1 ring-inset ring-gray-300 dark:ring-dark-border hover:bg-gray-50 dark:hover:bg-gray-800 sm:mt-0 sm:w-auto transition-colors">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+function viewApplicationDetails(applicationId) {
+    const modal = document.getElementById('applicationModal');
+    
+    // Fetch application details via AJAX
+    fetch(`/placement-drives/application-detail/${applicationId}/`)
+        .then(response => response.json())
+        .then(data => {
+            if (data.error) {
+                alert(data.error);
+                return;
+            }
+            
+            // Populate modal
+            document.getElementById('modal-full-name').textContent = data.full_name;
+            document.getElementById('modal-hall-ticket').textContent = `HT: ${data.hall_ticket}`;
+            document.getElementById('modal-email').textContent = data.email;
+            document.getElementById('modal-phone').textContent = data.phone;
+            document.getElementById('modal-branch').textContent = data.branch;
+            document.getElementById('modal-cgpa').textContent = `CGPA: ${data.cgpa}`;
+            document.getElementById('modal-company').textContent = data.company;
+            document.getElementById('modal-role').textContent = data.role;
+            document.getElementById('modal-applied-date').textContent = data.applied_date;
+            document.getElementById('modal-notes').textContent = data.notes;
+            
+            const statusBadge = document.getElementById('modal-status');
+            statusBadge.textContent = data.status;
+            
+            // Status styling
+            statusBadge.className = "px-2 py-0.5 rounded-full text-xs font-bold uppercase tracking-wider ";
+            if (data.status === 'applied') statusBadge.classList.add('bg-blue-50', 'text-blue-600', 'border', 'border-blue-200');
+            else if (data.status === 'shortlisted') statusBadge.classList.add('bg-purple-50', 'text-purple-600', 'border', 'border-purple-200');
+            else if (data.status === 'selected') statusBadge.classList.add('bg-green-50', 'text-green-600', 'border', 'border-green-200');
+            else if (data.status === 'rejected') statusBadge.classList.add('bg-red-50', 'text-red-600', 'border', 'border-red-200');
+            
+            // Show modal
+            modal.classList.remove('hidden');
+            document.body.classList.add('overflow-hidden');
+        })
+        .catch(error => {
+            console.error('Error fetching application details:', error);
+            alert('Failed to load application details.');
+        });
+}
+
+function closeModal() {
+    const modal = document.getElementById('applicationModal');
+    modal.classList.add('hidden');
+    document.body.classList.remove('overflow-hidden');
+}
+</script>
+{% endblock %}

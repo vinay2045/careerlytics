@@ -1,0 +1,152 @@
+[
+    {
+        "id": "py_general_001",
+        "category": "python",
+        "difficulty": "easy",
+        "question_text": "Who developed Python Programming Language?",
+        "options": [
+            "Wick van Rossum",
+            "Rasmus Lerdorf",
+            "Guido van Rossum",
+            "Niene Stom"
+        ],
+        "correct_answer": 2,
+        "explanation": "Python language was designed by Dutch programmer Guido van Rossum in the Netherlands and first released in 1991.",
+        "tags": ["python", "history", "guido-van-rossum"]
+    },
+    {
+        "id": "py_general_002",
+        "category": "python",
+        "difficulty": "easy",
+        "question_text": "Which type of Programming does Python support?",
+        "options": [
+            "object-oriented programming",
+            "structured programming",
+            "functional programming",
+            "all of the mentioned"
+        ],
+        "correct_answer": 3,
+        "explanation": "Python is a multi-paradigm programming language that supports object-oriented, structured, functional, and aspect-oriented programming.",
+        "tags": ["python", "programming-paradigm", "multi-paradigm"]
+    },
+    {
+        "id": "py_general_003",
+        "category": "python",
+        "difficulty": "easy",
+        "question_text": "Is Python case sensitive when dealing with identifiers?",
+        "options": [
+            "no",
+            "yes",
+            "machine dependent",
+            "none of the mentioned"
+        ],
+        "correct_answer": 1,
+        "explanation": "Python is case-sensitive, meaning variable names like 'myVar' and 'myvar' are considered different variables.",
+        "tags": ["python", "case-sensitive", "identifiers"]
+    },
+    {
+        "id": "py_general_004",
+        "category": "python",
+        "difficulty": "easy",
+        "question_text": "Which of the following is the correct extension of the Python file?",
+        "options": [
+            ".python",
+            ".pl",
+            ".py",
+            ".p"
+        ],
+        "correct_answer": 2,
+        "explanation": "Python files use the .py extension, which is the standard and recognized extension for Python source code files.",
+        "tags": ["python", "file-extension", "files"]
+    },
+    {
+        "id": "py_general_005",
+        "category": "python",
+        "difficulty": "easy",
+        "question_text": "What is the output of print(2 + 3 * 5)?",
+        "options": [
+            "25",
+            "17",
+            "15",
+            "10"
+        ],
+        "correct_answer": 1,
+        "explanation": "Due to operator precedence, multiplication is performed before addition: 2 + (3 * 5) = 2 + 15 = 17.",
+        "tags": ["python", "operator-precedence", "arithmetic"]
+    },
+    {
+        "id": "py_general_006",
+        "category": "python",
+        "difficulty": "medium",
+        "question_text": "Which keyword is used to define a function in Python?",
+        "options": [
+            "func",
+            "define",
+            "def",
+            "function"
+        ],
+        "correct_answer": 2,
+        "explanation": "The 'def' keyword is used to define a function in Python, followed by the function name and parentheses.",
+        "tags": ["python", "functions", "def", "keywords"]
+    },
+    {
+        "id": "py_general_007",
+        "category": "python",
+        "difficulty": "medium",
+        "question_text": "What is the purpose of the __init__ method?",
+        "options": [
+            "Initialize object attributes",
+            "Delete object",
+            "Compare objects",
+            "Convert object to string"
+        ],
+        "correct_answer": 0,
+        "explanation": "The __init__ method is a special constructor method called when an object is created, used to initialize the object's attributes.",
+        "tags": ["python", "init", "constructor", "oop"]
+    },
+    {
+        "id": "py_general_008",
+        "category": "python",
+        "difficulty": "medium",
+        "question_text": "Which method is used to add an element to a list?",
+        "options": [
+            "add()",
+            "append()",
+            "insert()",
+            "push()"
+        ],
+        "correct_answer": 1,
+        "explanation": "The append() method adds a single element to the end of a list in Python.",
+        "tags": ["python", "list", "append", "methods"]
+    },
+    {
+        "id": "py_general_009",
+        "category": "python",
+        "difficulty": "medium",
+        "question_text": "What is the result of 'hello' * 3?",
+        "options": [
+            "hellohellohello",
+            "hello 3",
+            "Error",
+            "hello"
+        ],
+        "correct_answer": 0,
+        "explanation": "In Python, the * operator can be used to repeat strings. 'hello' * 3 results in 'hellohellohello'.",
+        "tags": ["python", "strings", "repetition", "operators"]
+    },
+    {
+        "id": "py_general_010",
+        "category": "python",
+        "difficulty": "hard",
+        "question_text": "What is list comprehension in Python?",
+        "options": [
+            "A way to create lists",
+            "A type of list",
+            "A list method",
+            "A list iterator"
+        ],
+        "correct_answer": 0,
+        "explanation": "List comprehension is a concise way to create lists using a single line of code with a for loop and optional condition.",
+        "tags": ["python", "list-comprehension", "syntax", "iteration"]
+    }
+]

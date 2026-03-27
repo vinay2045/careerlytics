@@ -1,0 +1,101 @@
+{% extends 'users/user_tailwind_base.html' %}
+{% load static %}
+
+{% block title %}{{ assessment.name }} - Careerlytics{% endblock %}
+
+{% block page_title %}{{ assessment.name }}{% endblock %}
+
+{% block contents %}
+<div class="max-w-7xl mx-auto px-6 md:px-8 lg:px-10 py-6 md:py-8">
+    <!-- Navigation -->
+    <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 mb-8 md:mb-10">
+        <nav class="flex flex-wrap items-center gap-2 text-xs md:text-sm text-slate-500 dark:text-slate-400 font-medium">
+            <a class="hover:text-primary transition-colors" href="{% url 'mock_test' %}">Mock Test Center</a>
+            <span class="material-symbols-outlined text-[10px] md:text-xs">chevron_right</span>
+            <a class="hover:text-primary transition-colors" href="{% url 'users:core_assessment_selection' %}">Core Assessment</a>
+            <span class="material-symbols-outlined text-[10px] md:text-xs">chevron_right</span>
+            <span class="text-slate-900 dark:text-white">{{ assessment.name }}</span>
+        </nav>
+        <a href="{% url 'users:core_assessment_selection' %}" class="group flex items-center gap-2 px-5 py-2.5 bg-white dark:bg-gray-800 text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 rounded-xl hover:shadow-lg hover:ring-1 hover:ring-blue-100 dark:hover:ring-blue-900 transition-all duration-300 font-bold text-xs md:text-sm shadow-sm border border-slate-200 dark:border-slate-700">
+            <span class="material-symbols-outlined text-base md:text-lg transition-transform group-hover:-translate-x-1">arrow_back</span>
+            Return
+        </a>
+    </div>
+
+    <div class="space-y-8 md:space-y-10">
+        <!-- Skills Covered Section -->
+        <section>
+            <div class="flex items-center justify-between mb-4 md:mb-6">
+                <h3 class="font-display text-lg md:text-xl font-bold text-slate-900 dark:text-white">Key Competencies for {{ assessment.name }}</h3>
+                <div class="h-1 flex-1 mx-4 md:mx-6 bg-slate-100 dark:bg-slate-700 rounded-full hidden sm:block"></div>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4">
+                {% for skill in assessment.skills %}
+                <div class="glass-card p-3 md:p-4 rounded-xl flex items-center gap-3 md:gap-4 transition-all duration-300 hover:scale-105 hover:shadow-[0_0_15px_rgba(59,130,246,0.5)] cursor-default border border-transparent hover:border-blue-300 dark:hover:border-blue-700 hover:bg-blue-50/50 dark:hover:bg-blue-900/20">
+                    <div class="w-8 h-8 md:w-10 md:h-10 rounded-lg bg-blue-50 dark:bg-blue-900/20 flex items-center justify-center text-blue-500 font-bold">
+                        <span class="material-symbols-outlined text-lg md:text-xl">{{ assessment.icon }}</span>
+                    </div>
+                    <span class="text-xs md:text-sm font-semibold">{{ skill }}</span>
+                </div>
+                {% endfor %}
+            </div>
+        </section>
+
+        {% for test in tests %}
+        <section>
+            <div class="bg-white dark:bg-slate-800 rounded-xl p-6 md:p-8 border border-slate-100 dark:border-slate-700 transition-all duration-300 hover:shadow-[0_0_30px_rgba(59,130,246,0.15)] hover:border-blue-500/50 hover:-translate-y-1">
+                <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-6 md:gap-8">
+                    <div class="flex-1">
+                        <div class="flex items-center gap-3 mb-2">
+                            <h2 class="font-display text-xl md:text-2xl font-bold text-slate-900 dark:text-white">{{ test.name }}</h2>
+                            <span class="px-3 py-1 bg-blue-50 dark:bg-blue-900/30 text-blue-600 text-[10px] md:text-xs font-bold uppercase tracking-wider rounded-full">{{ test.difficulty|title }}</span>
+                        </div>
+                        <p class="text-sm md:text-base text-slate-500 dark:text-slate-400 mb-6">{{ test.description }}</p>
+                        <div class="flex flex-wrap items-center gap-4">
+                            <div class="flex items-center gap-4 bg-slate-50 dark:bg-slate-700/50 px-4 md:px-6 py-3 md:py-4 rounded-xl border border-slate-100 dark:border-slate-600/50 transition-colors hover:bg-slate-100 dark:hover:bg-slate-700">
+                                <div class="flex items-center gap-2">
+                                    <span class="material-symbols-outlined text-blue-600 text-xl md:text-2xl">quiz</span>
+                                    <div>
+                                        <p class="text-[8px] md:text-[10px] uppercase font-bold tracking-widest text-slate-400">Questions</p>
+                                        <p class="text-base md:text-lg font-bold text-slate-900 dark:text-white">{{ test.questions_count }}</p>
+                                    </div>
+                                </div>
+                                <div class="w-px h-6 md:h-8 bg-slate-200 dark:bg-slate-600"></div>
+                                <div class="flex items-center gap-2">
+                                    <span class="material-symbols-outlined text-blue-600 text-xl md:text-2xl">timer</span>
+                                    <div>
+                                        <p class="text-[8px] md:text-[10px] uppercase font-bold tracking-widest text-slate-400">Minutes</p>
+                                        <p class="text-base md:text-lg font-bold text-slate-900 dark:text-white">{{ test.time_limit }}</p>
+                                    </div>
+                                </div>
+                                <div class="w-px h-6 md:h-8 bg-slate-200 dark:bg-slate-600"></div>
+                                <div class="flex items-center gap-2">
+                                    <span class="material-symbols-outlined text-blue-600 text-xl md:text-2xl">bar_chart</span>
+                                    <div>
+                                        <p class="text-[8px] md:text-[10px] uppercase font-bold tracking-widest text-slate-400">Level</p>
+                                        <p class="text-base md:text-lg font-bold text-slate-900 dark:text-white">{{ test.difficulty|title }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex flex-col sm:flex-row items-center gap-4 md:gap-6 lg:border-l lg:border-slate-100 lg:dark:border-slate-700 lg:pl-12">
+                        <div class="flex items-center gap-2">
+                            <span class="relative flex h-3 w-3">
+                                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                                <span class="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
+                            </span>
+                            <span class="text-xs md:text-sm font-medium text-slate-500">Available Now</span>
+                        </div>
+                        <a href="{% url 'users:start_core_assessment' assessment_type test.test_index %}" class="w-full sm:w-auto px-6 md:px-8 py-3 md:py-4 bg-blue-600 text-white font-bold rounded-xl shadow-lg shadow-blue-600/25 hover:bg-blue-700 transition-all duration-300 hover:shadow-[0_0_25px_rgba(59,130,246,0.6)] hover:scale-105 flex items-center justify-center gap-2 text-sm md:text-base">
+                            Start Test
+                            <span class="material-symbols-outlined text-lg">arrow_forward</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

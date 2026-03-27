@@ -1,0 +1,76 @@
+{% extends "users/user_tailwind_base.html" %}
+{% load static %}
+
+{% block title %}Initializing Assessment...{% endblock %}
+
+{% block contents %}
+<div class="min-h-screen flex items-center justify-center bg-slate-50 dark:bg-slate-900">
+    <div class="text-center p-8 bg-white dark:bg-slate-800 rounded-2xl shadow-xl max-w-md w-full mx-4">
+        <div class="relative w-20 h-20 mx-auto mb-6">
+            <div class="absolute inset-0 border-4 border-indigo-100 dark:border-indigo-900/30 rounded-full"></div>
+            <div class="absolute inset-0 border-4 border-indigo-600 rounded-full border-t-transparent animate-spin"></div>
+            <span class="material-symbols-outlined absolute inset-0 flex items-center justify-center text-indigo-600 dark:text-indigo-400 text-2xl animate-pulse">
+                school
+            </span>
+        </div>
+        
+        <h2 class="text-2xl font-bold text-slate-800 dark:text-white mb-3">
+            Preparing Your Assessment
+        </h2>
+        <p class="text-slate-500 dark:text-slate-400 mb-8">
+            We're setting up your {{ category|title }} environment. The exam will start automatically in a moment.
+        </p>
+
+        <div class="w-full bg-slate-100 dark:bg-slate-700 rounded-full h-2 mb-2 overflow-hidden">
+            <div class="h-full bg-indigo-600 rounded-full animate-[loading_2s_ease-in-out_infinite]" style="width: 70%"></div>
+        </div>
+        <p class="text-xs text-slate-400 uppercase tracking-wider font-semibold">Loading Question Bank...</p>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', async () => {
+        const testType = "{{ test_type }}";
+        const category = "{{ category }}";
+        const testIndex = {{ test_index }};
+        
+        try {
+            // Call the start_exam API to initialize the test
+            const response = await fetch(`/mock-test/start/${testType}/${category}/${testIndex}/`);
+            const data = await response.json();
+            
+            if (data.status === 'success') {
+                // Store test data in sessionStorage for the exam interface
+                // This matches the format expected by assets/templates/mock_test/exam/index.html
+                sessionStorage.setItem('currentTest', JSON.stringify({
+                    type: testType,
+                    category: category,
+                    testIndex: testIndex,
+                    info: data.test_info,
+                    questions: data.questions
+                }));
+                
+                // Add a small delay for visual smoothness before redirecting
+                setTimeout(() => {
+                    window.location.replace("{% url 'exam_interface' %}");
+                }, 800);
+            } else {
+                throw new Error(data.message || 'Failed to start exam');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            alert('Failed to initialize assessment. Please try again.\nError: ' + error.message);
+            // Redirect back to plan selection on error
+            window.location.replace("{% url 'personalizedplan:start' %}");
+        }
+    });
+</script>
+
+<style>
+    @keyframes loading {
+        0% { transform: translateX(-100%); }
+        50% { transform: translateX(0); }
+        100% { transform: translateX(100%); }
+    }
+</style>
+{% endblock %}

@@ -1,0 +1,1726 @@
+[
+  {
+    "id": "tech_001",
+    "category": "tech_fundamentals",
+    "difficulty": "easy",
+    "question_text": "What does API stand for?",
+    "options": [
+      "Application Programming Interface",
+      "Advanced Programming Integration",
+      "Automated Process Implementation",
+      "Application Process Integration"
+    ],
+    "correct_answer": 0,
+    "explanation": "API stands for Application Programming Interface, which allows different software applications to communicate with each other.",
+    "tags": [
+      "api",
+      "terminology",
+      "fundamentals"
+    ]
+  },
+  {
+    "id": "tech_002",
+    "category": "tech_fundamentals",
+    "difficulty": "medium",
+    "question_text": "Which data structure uses LIFO (Last In, First Out) principle?",
+    "options": [
+      "Queue",
+      "Stack",
+      "Array",
+      "Linked List"
+    ],
+    "correct_answer": 1,
+    "explanation": "Stack follows the LIFO principle where the last element added is the first one to be removed.",
+    "tags": [
+      "data-structures",
+      "algorithms"
+    ]
+  },
+  {
+    "id": "tech_003",
+    "category": "tech_fundamentals",
+    "difficulty": "medium",
+    "question_text": "What is the primary purpose of version control systems like Git?",
+    "options": [
+      "Code compilation",
+      "Database management",
+      "Tracking changes in code over time",
+      "Network security"
+    ],
+    "correct_answer": 2,
+    "explanation": "Version control systems track changes in code over time, allowing multiple developers to collaborate and maintain history of modifications.",
+    "tags": [
+      "git",
+      "version-control",
+      "collaboration"
+    ]
+  },
+  {
+    "id": "tech_004",
+    "category": "tech_fundamentals",
+    "difficulty": "easy",
+    "question_text": "Which HTTP status code indicates 'Not Found'?",
+    "options": [
+      "200",
+      "301",
+      "404",
+      "500"
+    ],
+    "correct_answer": 2,
+    "explanation": "HTTP 404 status code indicates that the requested resource could not be found on the server.",
+    "tags": [
+      "http",
+      "web",
+      "status-codes"
+    ]
+  },
+  {
+    "id": "tech_005",
+    "category": "tech_fundamentals",
+    "difficulty": "medium",
+    "question_text": "What is the time complexity of binary search in a sorted array?",
+    "options": [
+      "O(n)",
+      "O(log n)",
+      "O(n log n)",
+      "O(n²)"
+    ],
+    "correct_answer": 1,
+    "explanation": "Binary search has O(log n) time complexity because it halves the search space with each comparison.",
+    "tags": [
+      "algorithms",
+      "complexity",
+      "searching"
+    ]
+  },
+  {
+    "id": "tech_006",
+    "category": "tech_fundamentals",
+    "difficulty": "medium",
+    "question_text": "Which principle states that software entities should be open for extension but closed for modification?",
+    "options": [
+      "Single Responsibility Principle",
+      "Open/Closed Principle",
+      "Liskov Substitution Principle",
+      "Interface Segregation Principle"
+    ],
+    "correct_answer": 1,
+    "explanation": "The Open/Closed Principle is one of SOLID principles, stating that software entities should be open for extension but closed for modification.",
+    "tags": [
+      "solid-principles",
+      "design-patterns",
+      "architecture"
+    ]
+  },
+  {
+    "id": "tech_007",
+    "category": "tech_fundamentals",
+    "difficulty": "easy",
+    "question_text": "What does SQL stand for?",
+    "options": [
+      "Structured Query Language",
+      "Simple Query Language",
+      "Standard Query Logic",
+      "System Query Language"
+    ],
+    "correct_answer": 0,
+    "explanation": "SQL stands for Structured Query Language, used for managing and manipulating relational databases.",
+    "tags": [
+      "sql",
+      "database",
+      "terminology"
+    ]
+  },
+  {
+    "id": "tech_008",
+    "category": "tech_fundamentals",
+    "difficulty": "hard",
+    "question_text": "In object-oriented programming, what concept allows a class to inherit properties and methods from another class?",
+    "options": [
+      "Encapsulation",
+      "Polymorphism",
+      "Inheritance",
+      "Abstraction"
+    ],
+    "correct_answer": 2,
+    "explanation": "Inheritance allows a class (child) to inherit properties and methods from another class (parent), promoting code reuse.",
+    "tags": [
+      "oop",
+      "inheritance",
+      "programming-concepts"
+    ]
+  },
+  {
+    "id": "tech_009",
+    "category": "tech_fundamentals",
+    "difficulty": "medium",
+    "question_text": "Which protocol is used for secure communication over the internet?",
+    "options": [
+      "HTTP",
+      "FTP",
+      "HTTPS",
+      "TCP"
+    ],
+    "correct_answer": 2,
+    "explanation": "HTTPS (HTTP Secure) uses SSL/TLS encryption to ensure secure communication over the internet.",
+    "tags": [
+      "security",
+      "protocols",
+      "networking"
+    ]
+  },
+  {
+    "id": "py_general_001",
+    "category": "python",
+    "difficulty": "easy",
+    "question_text": "Who developed Python Programming Language?",
+    "options": [
+      "Wick van Rossum",
+      "Rasmus Lerdorf",
+      "Guido van Rossum",
+      "Niene Stom"
+    ],
+    "correct_answer": 2,
+    "explanation": "Python language was designed by Dutch programmer Guido van Rossum in the Netherlands and first released in 1991.",
+    "tags": [
+      "python",
+      "history",
+      "guido-van-rossum"
+    ]
+  },
+  {
+    "id": "py_general_002",
+    "category": "python",
+    "difficulty": "easy",
+    "question_text": "Which type of Programming does Python support?",
+    "options": [
+      "object-oriented programming",
+      "structured programming",
+      "functional programming",
+      "all of the mentioned"
+    ],
+    "correct_answer": 3,
+    "explanation": "Python is a multi-paradigm programming language that supports object-oriented, structured, functional, and aspect-oriented programming.",
+    "tags": [
+      "python",
+      "programming-paradigm",
+      "multi-paradigm"
+    ]
+  },
+  {
+    "id": "py_general_003",
+    "category": "python",
+    "difficulty": "easy",
+    "question_text": "Is Python case sensitive when dealing with identifiers?",
+    "options": [
+      "no",
+      "yes",
+      "machine dependent",
+      "none of the mentioned"
+    ],
+    "correct_answer": 1,
+    "explanation": "Python is case-sensitive, meaning variable names like 'myVar' and 'myvar' are considered different variables.",
+    "tags": [
+      "python",
+      "case-sensitive",
+      "identifiers"
+    ]
+  },
+  {
+    "id": "py_general_004",
+    "category": "python",
+    "difficulty": "easy",
+    "question_text": "Which of the following is the correct extension of the Python file?",
+    "options": [
+      ".python",
+      ".pl",
+      ".py",
+      ".p"
+    ],
+    "correct_answer": 2,
+    "explanation": "Python files use the .py extension, which is the standard and recognized extension for Python source code files.",
+    "tags": [
+      "python",
+      "file-extension",
+      "files"
+    ]
+  },
+  {
+    "id": "py_general_005",
+    "category": "python",
+    "difficulty": "easy",
+    "question_text": "What is the output of print(2 + 3 * 5)?",
+    "options": [
+      "25",
+      "17",
+      "15",
+      "10"
+    ],
+    "correct_answer": 1,
+    "explanation": "Due to operator precedence, multiplication is performed before addition: 2 + (3 * 5) = 2 + 15 = 17.",
+    "tags": [
+      "python",
+      "operator-precedence",
+      "arithmetic"
+    ]
+  },
+  {
+    "id": "py_general_006",
+    "category": "python",
+    "difficulty": "medium",
+    "question_text": "Which keyword is used to define a function in Python?",
+    "options": [
+      "func",
+      "define",
+      "def",
+      "function"
+    ],
+    "correct_answer": 2,
+    "explanation": "The 'def' keyword is used to define a function in Python, followed by the function name and parentheses.",
+    "tags": [
+      "python",
+      "functions",
+      "def",
+      "keywords"
+    ]
+  },
+  {
+    "id": "py_general_007",
+    "category": "python",
+    "difficulty": "medium",
+    "question_text": "What is the purpose of the __init__ method?",
+    "options": [
+      "Initialize object attributes",
+      "Delete object",
+      "Compare objects",
+      "Convert object to string"
+    ],
+    "correct_answer": 0,
+    "explanation": "The __init__ method is a special constructor method called when an object is created, used to initialize the object's attributes.",
+    "tags": [
+      "python",
+      "init",
+      "constructor",
+      "oop"
+    ]
+  },
+  {
+    "id": "py_general_008",
+    "category": "python",
+    "difficulty": "medium",
+    "question_text": "Which method is used to add an element to a list?",
+    "options": [
+      "add()",
+      "append()",
+      "insert()",
+      "push()"
+    ],
+    "correct_answer": 1,
+    "explanation": "The append() method adds a single element to the end of a list in Python.",
+    "tags": [
+      "python",
+      "list",
+      "append",
+      "methods"
+    ]
+  },
+  {
+    "id": "py_general_009",
+    "category": "python",
+    "difficulty": "medium",
+    "question_text": "What is the result of 'hello' * 3?",
+    "options": [
+      "hellohellohello",
+      "hello 3",
+      "Error",
+      "hello"
+    ],
+    "correct_answer": 0,
+    "explanation": "In Python, the * operator can be used to repeat strings. 'hello' * 3 results in 'hellohellohello'.",
+    "tags": [
+      "python",
+      "strings",
+      "repetition",
+      "operators"
+    ]
+  },
+  {
+    "id": "py_general_010",
+    "category": "python",
+    "difficulty": "hard",
+    "question_text": "What is list comprehension in Python?",
+    "options": [
+      "A way to create lists",
+      "A type of list",
+      "A list method",
+      "A list iterator"
+    ],
+    "correct_answer": 0,
+    "explanation": "List comprehension is a concise way to create lists using a single line of code with a for loop and optional condition.",
+    "tags": [
+      "python",
+      "list-comprehension",
+      "syntax",
+      "iteration"
+    ]
+  },
+  {
+    "id": "py_001",
+    "category": "python",
+    "difficulty": "easy",
+    "question_text": "What is the output of print(type(5))?",
+    "options": [
+      "<class 'int'>",
+      "<class 'number'>",
+      "<class 'integer'>",
+      "<type 'int'>"
+    ],
+    "correct_answer": 0,
+    "explanation": "In Python 3, the type() function returns the type of an object as a type object, which when printed shows '<class 'int'>'.",
+    "tags": [
+      "python",
+      "type",
+      "int",
+      "data-types"
+    ]
+  },
+  {
+    "id": "py_002",
+    "category": "python",
+    "difficulty": "easy",
+    "question_text": "Which of the following is a valid variable name in Python?",
+    "options": [
+      "1var",
+      "var_1",
+      "var-1",
+      "None"
+    ],
+    "correct_answer": 1,
+    "explanation": "Variable names in Python must start with a letter or underscore, and can contain letters, numbers, and underscores. 'var_1' follows these rules.",
+    "tags": [
+      "python",
+      "variables",
+      "naming"
+    ]
+  },
+  {
+    "id": "py_003",
+    "category": "python",
+    "difficulty": "easy",
+    "question_text": "What does len([1,2,3]) return?",
+    "options": [
+      "2",
+      "3",
+      "4",
+      "Error"
+    ],
+    "correct_answer": 1,
+    "explanation": "The len() function returns the number of items in a list. The list [1,2,3] contains 3 elements.",
+    "tags": [
+      "python",
+      "len",
+      "list",
+      "functions"
+    ]
+  },
+  {
+    "id": "py_004",
+    "category": "python",
+    "difficulty": "easy",
+    "question_text": "Which keyword is used to define a function in Python?",
+    "options": [
+      "func",
+      "define",
+      "def",
+      "function"
+    ],
+    "correct_answer": 2,
+    "explanation": "The 'def' keyword is used to define a function in Python, followed by the function name and parentheses.",
+    "tags": [
+      "python",
+      "def",
+      "functions",
+      "keywords"
+    ]
+  },
+  {
+    "id": "py_005",
+    "category": "python",
+    "difficulty": "easy",
+    "question_text": "What is the correct file extension for Python files?",
+    "options": [
+      ".py",
+      ".python",
+      ".pyth",
+      ".pt"
+    ],
+    "correct_answer": 0,
+    "explanation": "Python files use the .py extension, which is the standard and recognized extension for Python source code.",
+    "tags": [
+      "python",
+      "file-extension",
+      "files"
+    ]
+  },
+  {
+    "id": "py_006",
+    "category": "python",
+    "difficulty": "easy",
+    "question_text": "Which of the following is used to indicate a comment in Python?",
+    "options": [
+      "//",
+      "#",
+      "/*",
+      "--"
+    ],
+    "correct_answer": 1,
+    "explanation": "The hash symbol (#) is used to indicate a single-line comment in Python. Everything after # on that line is ignored.",
+    "tags": [
+      "python",
+      "comments",
+      "syntax"
+    ]
+  },
+  {
+    "id": "py_007",
+    "category": "python",
+    "difficulty": "medium",
+    "question_text": "What is the output of print(2 ** 3)?",
+    "options": [
+      "6",
+      "8",
+      "9",
+      "Error"
+    ],
+    "correct_answer": 1,
+    "explanation": "The ** operator is used for exponentiation in Python. 2 ** 3 means 2 raised to the power of 3, which equals 8.",
+    "tags": [
+      "python",
+      "exponentiation",
+      "operators",
+      "**"
+    ]
+  },
+  {
+    "id": "py_008",
+    "category": "python",
+    "difficulty": "medium",
+    "question_text": "Which method is used to add an element to a list?",
+    "options": [
+      "add()",
+      "append()",
+      "insert()",
+      "push()"
+    ],
+    "correct_answer": 1,
+    "explanation": "The append() method adds a single element to the end of a list in Python.",
+    "tags": [
+      "python",
+      "list",
+      "append",
+      "methods"
+    ]
+  },
+  {
+    "id": "py_009",
+    "category": "python",
+    "difficulty": "medium",
+    "question_text": "What is the result of 'hello' + ' world'?",
+    "options": [
+      "hello world",
+      "hello + world",
+      "helloworld",
+      "Error"
+    ],
+    "correct_answer": 0,
+    "explanation": "The + operator concatenates strings in Python. 'hello' + ' world' results in 'hello world'.",
+    "tags": [
+      "python",
+      "strings",
+      "concatenation",
+      "+"
+    ]
+  },
+  {
+    "id": "py_010",
+    "category": "python",
+    "difficulty": "hard",
+    "question_text": "What is the purpose of the __init__ method?",
+    "options": [
+      "Initialize object attributes",
+      "Delete object",
+      "Compare objects",
+      "Convert object to string"
+    ],
+    "correct_answer": 0,
+    "explanation": "The __init__ method is a special method called when an object is created, used to initialize the object's attributes.",
+    "tags": [
+      "python",
+      "init",
+      "constructor",
+      "oop"
+    ]
+  },
+  {
+    "id": "java_001",
+    "category": "java",
+    "difficulty": "easy",
+    "question_text": "Which keyword is used to define a constant in Java?",
+    "options": [
+      "const",
+      "final",
+      "static",
+      "immutable"
+    ],
+    "correct_answer": 1,
+    "explanation": "The 'final' keyword is used in Java to define constants. Once a variable is declared as final, its value cannot be changed.",
+    "tags": [
+      "java",
+      "keyword",
+      "constant"
+    ]
+  },
+  {
+    "id": "java_002",
+    "category": "java",
+    "difficulty": "easy",
+    "question_text": "What is the default value of a boolean variable in Java?",
+    "options": [
+      "true",
+      "false",
+      "null",
+      "0"
+    ],
+    "correct_answer": 1,
+    "explanation": "The default value of a boolean variable in Java is 'false'. All instance variables are initialized with default values.",
+    "tags": [
+      "java",
+      "boolean",
+      "default-value"
+    ]
+  },
+  {
+    "id": "java_003",
+    "category": "java",
+    "difficulty": "easy",
+    "question_text": "Which method is used to get the length of a string in Java?",
+    "options": [
+      "length()",
+      "size()",
+      "count()",
+      "getLength()"
+    ],
+    "correct_answer": 0,
+    "explanation": "The length() method is used to get the number of characters in a Java String object.",
+    "tags": [
+      "java",
+      "string",
+      "method"
+    ]
+  },
+  {
+    "id": "java_004",
+    "category": "java",
+    "difficulty": "medium",
+    "question_text": "What is the purpose of the 'static' keyword?",
+    "options": [
+      "Make method thread-safe",
+      "Define class-level member",
+      "Prevent inheritance",
+      "Create abstract method"
+    ],
+    "correct_answer": 1,
+    "explanation": "The 'static' keyword is used to define class-level members (variables and methods) that belong to the class rather than instances.",
+    "tags": [
+      "java",
+      "static",
+      "class-member"
+    ]
+  },
+  {
+    "id": "java_005",
+    "category": "java",
+    "difficulty": "medium",
+    "question_text": "Which interface is used to compare objects for sorting?",
+    "options": [
+      "Comparable",
+      "Comparator",
+      "Sortable",
+      "Orderable"
+    ],
+    "correct_answer": 0,
+    "explanation": "The Comparable interface provides the compareTo() method for natural ordering of objects, used by sorting algorithms.",
+    "tags": [
+      "java",
+      "interface",
+      "sorting",
+      "comparable"
+    ]
+  },
+  {
+    "id": "java_006",
+    "category": "java",
+    "difficulty": "easy",
+    "question_text": "What is Java's automatic memory management called?",
+    "options": [
+      "Garbage Collection",
+      "Memory Management",
+      "Auto Cleanup",
+      "Resource Management"
+    ],
+    "correct_answer": 0,
+    "explanation": "Java's automatic memory management is called Garbage Collection, which automatically reclaims memory from objects that are no longer referenced.",
+    "tags": [
+      "java",
+      "memory",
+      "garbage-collection"
+    ]
+  },
+  {
+    "id": "java_007",
+    "category": "java",
+    "difficulty": "medium",
+    "question_text": "Which access modifier provides the most restrictive access?",
+    "options": [
+      "public",
+      "protected",
+      "private",
+      "default"
+    ],
+    "correct_answer": 2,
+    "explanation": "The 'private' access modifier provides the most restrictive access, limiting visibility to only within the same class.",
+    "tags": [
+      "java",
+      "access-modifier",
+      "visibility"
+    ]
+  },
+  {
+    "id": "java_008",
+    "category": "java",
+    "difficulty": "medium",
+    "question_text": "What is the superclass of all classes in Java?",
+    "options": [
+      "Object",
+      "Class",
+      "Base",
+      "Super"
+    ],
+    "correct_answer": 0,
+    "explanation": "The Object class is the superclass of all classes in Java. Every class implicitly extends Object.",
+    "tags": [
+      "java",
+      "inheritance",
+      "object-class"
+    ]
+  },
+  {
+    "id": "java_009",
+    "category": "java",
+    "difficulty": "medium",
+    "question_text": "Which keyword is used to inherit a class in Java?",
+    "options": [
+      "extends",
+      "implements",
+      "inherits",
+      "super"
+    ],
+    "correct_answer": 0,
+    "explanation": "The 'extends' keyword is used to inherit from a parent class in Java, creating a subclass-superclass relationship.",
+    "tags": [
+      "java",
+      "inheritance",
+      "extends"
+    ]
+  },
+  {
+    "id": "java_010",
+    "category": "java",
+    "difficulty": "hard",
+    "question_text": "What is method overriding in Java?",
+    "options": [
+      "Redefining a method in subclass",
+      "Creating multiple methods with same name",
+      "Hiding a method in subclass",
+      "Creating abstract method"
+    ],
+    "correct_answer": 0,
+    "explanation": "Method overriding is when a subclass provides a specific implementation for a method that is already defined in its superclass.",
+    "tags": [
+      "java",
+      "polymorphism",
+      "overriding"
+    ]
+  },
+  {
+    "id": "java_001",
+    "category": "java",
+    "difficulty": "easy",
+    "question_text": "Which keyword is used to define a constant in Java?",
+    "options": [
+      "const",
+      "final",
+      "static",
+      "immutable"
+    ],
+    "correct_answer": 1,
+    "explanation": "The 'final' keyword is used in Java to define constants. Once a variable is declared as final, its value cannot be changed.",
+    "tags": [
+      "java",
+      "keyword",
+      "constant"
+    ]
+  },
+  {
+    "id": "java_002",
+    "category": "java",
+    "difficulty": "easy",
+    "question_text": "What is the default value of a boolean variable in Java?",
+    "options": [
+      "true",
+      "false",
+      "null",
+      "0"
+    ],
+    "correct_answer": 1,
+    "explanation": "The default value of a boolean variable in Java is 'false'. All instance variables are initialized with default values.",
+    "tags": [
+      "java",
+      "boolean",
+      "default-value"
+    ]
+  },
+  {
+    "id": "java_003",
+    "category": "java",
+    "difficulty": "easy",
+    "question_text": "Which method is used to get the length of a string in Java?",
+    "options": [
+      "length()",
+      "size()",
+      "count()",
+      "getLength()"
+    ],
+    "correct_answer": 0,
+    "explanation": "The length() method is used to get the number of characters in a Java String object.",
+    "tags": [
+      "java",
+      "string",
+      "method"
+    ]
+  },
+  {
+    "id": "java_004",
+    "category": "java",
+    "difficulty": "medium",
+    "question_text": "What is the purpose of the 'static' keyword?",
+    "options": [
+      "Make method thread-safe",
+      "Define class-level member",
+      "Prevent inheritance",
+      "Create abstract method"
+    ],
+    "correct_answer": 1,
+    "explanation": "The 'static' keyword is used to define class-level members (variables and methods) that belong to the class rather than instances.",
+    "tags": [
+      "java",
+      "static",
+      "class-member"
+    ]
+  },
+  {
+    "id": "java_005",
+    "category": "java",
+    "difficulty": "medium",
+    "question_text": "Which interface is used to compare objects for sorting?",
+    "options": [
+      "Comparable",
+      "Comparator",
+      "Sortable",
+      "Orderable"
+    ],
+    "correct_answer": 0,
+    "explanation": "The Comparable interface provides the compareTo() method for natural ordering of objects, used by sorting algorithms.",
+    "tags": [
+      "java",
+      "interface",
+      "sorting",
+      "comparable"
+    ]
+  },
+  {
+    "id": "java_006",
+    "category": "java",
+    "difficulty": "easy",
+    "question_text": "What is Java's automatic memory management called?",
+    "options": [
+      "Garbage Collection",
+      "Memory Management",
+      "Auto Cleanup",
+      "Resource Management"
+    ],
+    "correct_answer": 0,
+    "explanation": "Java's automatic memory management is called Garbage Collection, which automatically reclaims memory from objects that are no longer referenced.",
+    "tags": [
+      "java",
+      "memory",
+      "garbage-collection"
+    ]
+  },
+  {
+    "id": "java_007",
+    "category": "java",
+    "difficulty": "medium",
+    "question_text": "Which access modifier provides the most restrictive access?",
+    "options": [
+      "public",
+      "protected",
+      "private",
+      "default"
+    ],
+    "correct_answer": 2,
+    "explanation": "The 'private' access modifier provides the most restrictive access, limiting visibility to only within the same class.",
+    "tags": [
+      "java",
+      "access-modifier",
+      "visibility"
+    ]
+  },
+  {
+    "id": "java_008",
+    "category": "java",
+    "difficulty": "medium",
+    "question_text": "What is the superclass of all classes in Java?",
+    "options": [
+      "Object",
+      "Class",
+      "Base",
+      "Super"
+    ],
+    "correct_answer": 0,
+    "explanation": "The Object class is the superclass of all classes in Java. Every class implicitly extends Object.",
+    "tags": [
+      "java",
+      "inheritance",
+      "object-class"
+    ]
+  },
+  {
+    "id": "java_009",
+    "category": "java",
+    "difficulty": "medium",
+    "question_text": "Which keyword is used to inherit a class in Java?",
+    "options": [
+      "extends",
+      "implements",
+      "inherits",
+      "super"
+    ],
+    "correct_answer": 0,
+    "explanation": "The 'extends' keyword is used to inherit from a parent class in Java, creating a subclass-superclass relationship.",
+    "tags": [
+      "java",
+      "inheritance",
+      "extends"
+    ]
+  },
+  {
+    "id": "java_010",
+    "category": "java",
+    "difficulty": "hard",
+    "question_text": "What is method overriding in Java?",
+    "options": [
+      "Redefining a method in subclass",
+      "Creating multiple methods with same name",
+      "Hiding a method in subclass",
+      "Creating abstract method"
+    ],
+    "correct_answer": 0,
+    "explanation": "Method overriding is when a subclass provides a specific implementation for a method that is already defined in its superclass.",
+    "tags": [
+      "java",
+      "polymorphism",
+      "overriding"
+    ]
+  },
+  {
+    "id": "js_001",
+    "category": "javascript",
+    "difficulty": "easy",
+    "question_text": "Which keyword declares a block-scoped variable in ES6?",
+    "options": [
+      "var",
+      "let",
+      "const",
+      "block"
+    ],
+    "correct_answer": 1,
+    "explanation": "The 'let' keyword declares block-scoped variables in ES6, unlike 'var' which is function-scoped.",
+    "tags": [
+      "javascript",
+      "es6",
+      "let",
+      "block-scope"
+    ]
+  },
+  {
+    "id": "js_002",
+    "category": "javascript",
+    "difficulty": "easy",
+    "question_text": "What is the purpose of arrow functions in ES6?",
+    "options": [
+      "Shorter syntax for function expressions",
+      "Create classes",
+      "Define modules",
+      "Handle events"
+    ],
+    "correct_answer": 0,
+    "explanation": "Arrow functions provide a shorter syntax for writing function expressions and lexically bind the 'this' value.",
+    "tags": [
+      "javascript",
+      "es6",
+      "arrow-functions",
+      "syntax"
+    ]
+  },
+  {
+    "id": "js_003",
+    "category": "javascript",
+    "difficulty": "easy",
+    "question_text": "Which method creates a new array from an iterable object?",
+    "options": [
+      "Array.from()",
+      "Array.create()",
+      "Array.new()",
+      "Array.make()"
+    ],
+    "correct_answer": 0,
+    "explanation": "Array.from() creates a new array instance from an array-like or iterable object.",
+    "tags": [
+      "javascript",
+      "array",
+      "es6",
+      "array-from"
+    ]
+  },
+  {
+    "id": "js_004",
+    "category": "javascript",
+    "difficulty": "easy",
+    "question_text": "What is template literal in ES6?",
+    "options": [
+      "String with backticks",
+      "String with quotes",
+      "String with double quotes",
+      "String with single quotes"
+    ],
+    "correct_answer": 0,
+    "explanation": "Template literals are string literals allowing embedded expressions, denoted by backticks (`) instead of quotes.",
+    "tags": [
+      "javascript",
+      "es6",
+      "template-literals",
+      "strings"
+    ]
+  },
+  {
+    "id": "js_005",
+    "category": "javascript",
+    "difficulty": "easy",
+    "question_text": "Which keyword declares a constant in ES6?",
+    "options": [
+      "var",
+      "let",
+      "const",
+      "final"
+    ],
+    "correct_answer": 2,
+    "explanation": "The 'const' keyword declares a constant reference to a value that cannot be reassigned in ES6.",
+    "tags": [
+      "javascript",
+      "es6",
+      "const",
+      "constant"
+    ]
+  },
+  {
+    "id": "js_006",
+    "category": "javascript",
+    "difficulty": "medium",
+    "question_text": "What is destructuring assignment?",
+    "options": [
+      "Extract values from arrays/objects",
+      "Create new objects",
+      "Delete object properties",
+      "Merge objects"
+    ],
+    "correct_answer": 0,
+    "explanation": "Destructuring assignment extracts values from arrays or objects into distinct variables using a concise syntax.",
+    "tags": [
+      "javascript",
+      "es6",
+      "destructuring",
+      "assignment"
+    ]
+  },
+  {
+    "id": "js_007",
+    "category": "javascript",
+    "difficulty": "medium",
+    "question_text": "Which feature allows default parameter values in ES6?",
+    "options": [
+      "Default parameters",
+      "Optional parameters",
+      "Null parameters",
+      "Undefined parameters"
+    ],
+    "correct_answer": 0,
+    "explanation": "ES6 allows default parameter values, which are used when arguments are not provided or are undefined.",
+    "tags": [
+      "javascript",
+      "es6",
+      "default-parameters",
+      "functions"
+    ]
+  },
+  {
+    "id": "js_008",
+    "category": "javascript",
+    "difficulty": "medium",
+    "question_text": "What is the spread operator in ES6?",
+    "options": [
+      "Expands iterable into elements",
+      "Compresses array elements",
+      "Creates new array",
+      "Removes duplicates"
+    ],
+    "correct_answer": 0,
+    "explanation": "The spread operator (...) expands an iterable (like an array) into individual elements where zero or more arguments are expected.",
+    "tags": [
+      "javascript",
+      "es6",
+      "spread-operator",
+      "syntax"
+    ]
+  },
+  {
+    "id": "js_009",
+    "category": "javascript",
+    "difficulty": "medium",
+    "question_text": "Which keyword defines a class in ES6?",
+    "options": [
+      "class",
+      "Class",
+      "object",
+      "constructor"
+    ],
+    "correct_answer": 0,
+    "explanation": "The 'class' keyword in ES6 provides a more convenient and clearer syntax for creating objects and dealing with inheritance.",
+    "tags": [
+      "javascript",
+      "es6",
+      "class",
+      "object-oriented"
+    ]
+  },
+  {
+    "id": "js_010",
+    "category": "javascript",
+    "difficulty": "hard",
+    "question_text": "What is the purpose of Promise in ES6?",
+    "options": [
+      "Handle asynchronous operations",
+      "Create synchronous functions",
+      "Define constants",
+      "Handle errors"
+    ],
+    "correct_answer": 0,
+    "explanation": "Promise represents the eventual completion (or failure) of an asynchronous operation and its resulting value.",
+    "tags": [
+      "javascript",
+      "es6",
+      "promise",
+      "asynchronous"
+    ]
+  },
+  {
+    "id": "js_001",
+    "category": "javascript",
+    "difficulty": "easy",
+    "question_text": "Which keyword declares a block-scoped variable in ES6?",
+    "options": [
+      "var",
+      "let",
+      "const",
+      "block"
+    ],
+    "correct_answer": 1,
+    "explanation": "The 'let' keyword declares block-scoped variables in ES6, unlike 'var' which is function-scoped.",
+    "tags": [
+      "javascript",
+      "es6",
+      "let",
+      "block-scope"
+    ]
+  },
+  {
+    "id": "js_002",
+    "category": "javascript",
+    "difficulty": "easy",
+    "question_text": "What is the purpose of arrow functions in ES6?",
+    "options": [
+      "Shorter syntax for function expressions",
+      "Create classes",
+      "Define modules",
+      "Handle events"
+    ],
+    "correct_answer": 0,
+    "explanation": "Arrow functions provide a shorter syntax for writing function expressions and lexically bind the 'this' value.",
+    "tags": [
+      "javascript",
+      "es6",
+      "arrow-functions",
+      "syntax"
+    ]
+  },
+  {
+    "id": "js_003",
+    "category": "javascript",
+    "difficulty": "easy",
+    "question_text": "Which method creates a new array from an iterable object?",
+    "options": [
+      "Array.from()",
+      "Array.create()",
+      "Array.new()",
+      "Array.make()"
+    ],
+    "correct_answer": 0,
+    "explanation": "Array.from() creates a new array instance from an array-like or iterable object.",
+    "tags": [
+      "javascript",
+      "array",
+      "es6",
+      "array-from"
+    ]
+  },
+  {
+    "id": "js_004",
+    "category": "javascript",
+    "difficulty": "easy",
+    "question_text": "What is template literal in ES6?",
+    "options": [
+      "String with backticks",
+      "String with quotes",
+      "String with double quotes",
+      "String with single quotes"
+    ],
+    "correct_answer": 0,
+    "explanation": "Template literals are string literals allowing embedded expressions, denoted by backticks (`) instead of quotes.",
+    "tags": [
+      "javascript",
+      "es6",
+      "template-literals",
+      "strings"
+    ]
+  },
+  {
+    "id": "js_005",
+    "category": "javascript",
+    "difficulty": "easy",
+    "question_text": "Which keyword declares a constant in ES6?",
+    "options": [
+      "var",
+      "let",
+      "const",
+      "final"
+    ],
+    "correct_answer": 2,
+    "explanation": "The 'const' keyword declares a constant reference to a value that cannot be reassigned in ES6.",
+    "tags": [
+      "javascript",
+      "es6",
+      "const",
+      "constant"
+    ]
+  },
+  {
+    "id": "js_006",
+    "category": "javascript",
+    "difficulty": "medium",
+    "question_text": "What is destructuring assignment?",
+    "options": [
+      "Extract values from arrays/objects",
+      "Create new objects",
+      "Delete object properties",
+      "Merge objects"
+    ],
+    "correct_answer": 0,
+    "explanation": "Destructuring assignment extracts values from arrays or objects into distinct variables using a concise syntax.",
+    "tags": [
+      "javascript",
+      "es6",
+      "destructuring",
+      "assignment"
+    ]
+  },
+  {
+    "id": "js_007",
+    "category": "javascript",
+    "difficulty": "medium",
+    "question_text": "Which feature allows default parameter values in ES6?",
+    "options": [
+      "Default parameters",
+      "Optional parameters",
+      "Null parameters",
+      "Undefined parameters"
+    ],
+    "correct_answer": 0,
+    "explanation": "ES6 allows default parameter values, which are used when arguments are not provided or are undefined.",
+    "tags": [
+      "javascript",
+      "es6",
+      "default-parameters",
+      "functions"
+    ]
+  },
+  {
+    "id": "js_008",
+    "category": "javascript",
+    "difficulty": "medium",
+    "question_text": "What is the spread operator in ES6?",
+    "options": [
+      "Expands iterable into elements",
+      "Compresses array elements",
+      "Creates new array",
+      "Removes duplicates"
+    ],
+    "correct_answer": 0,
+    "explanation": "The spread operator (...) expands an iterable (like an array) into individual elements where zero or more arguments are expected.",
+    "tags": [
+      "javascript",
+      "es6",
+      "spread-operator",
+      "syntax"
+    ]
+  },
+  {
+    "id": "js_009",
+    "category": "javascript",
+    "difficulty": "medium",
+    "question_text": "Which keyword defines a class in ES6?",
+    "options": [
+      "class",
+      "Class",
+      "object",
+      "constructor"
+    ],
+    "correct_answer": 0,
+    "explanation": "The 'class' keyword in ES6 provides a more convenient and clearer syntax for creating objects and dealing with inheritance.",
+    "tags": [
+      "javascript",
+      "es6",
+      "class",
+      "object-oriented"
+    ]
+  },
+  {
+    "id": "js_010",
+    "category": "javascript",
+    "difficulty": "hard",
+    "question_text": "What is the purpose of Promise in ES6?",
+    "options": [
+      "Handle asynchronous operations",
+      "Create synchronous functions",
+      "Define constants",
+      "Handle errors"
+    ],
+    "correct_answer": 0,
+    "explanation": "Promise represents the eventual completion (or failure) of an asynchronous operation and its resulting value.",
+    "tags": [
+      "javascript",
+      "es6",
+      "promise",
+      "asynchronous"
+    ]
+  },
+  {
+    "id": "cpp_001",
+    "category": "cpp",
+    "difficulty": "easy",
+    "question_text": "What is STL in C++?",
+    "options": [
+      "Standard Template Library",
+      "Standard Testing Library",
+      "Simple Template Library",
+      "System Template Library"
+    ],
+    "correct_answer": 0,
+    "explanation": "STL stands for Standard Template Library, which provides a collection of template classes and functions for data structures and algorithms.",
+    "tags": [
+      "stl",
+      "cpp",
+      "template"
+    ]
+  },
+  {
+    "id": "cpp_002",
+    "category": "cpp",
+    "difficulty": "easy",
+    "question_text": "Which STL container provides dynamic array?",
+    "options": [
+      "vector",
+      "list",
+      "deque",
+      "array"
+    ],
+    "correct_answer": 0,
+    "explanation": "std::vector is a dynamic array container that can grow or shrink in size, providing random access to elements.",
+    "tags": [
+      "stl",
+      "vector",
+      "container"
+    ]
+  },
+  {
+    "id": "cpp_003",
+    "category": "cpp",
+    "difficulty": "easy",
+    "question_text": "What is the purpose of std::map?",
+    "options": [
+      "Key-value pairs",
+      "Single values",
+      "Stack operations",
+      "Queue operations"
+    ],
+    "correct_answer": 0,
+    "explanation": "std::map is an associative container that stores elements in key-value pairs, allowing efficient lookup based on keys.",
+    "tags": [
+      "stl",
+      "map",
+      "container"
+    ]
+  },
+  {
+    "id": "cpp_004",
+    "category": "cpp",
+    "difficulty": "medium",
+    "question_text": "Which iterator provides bidirectional access?",
+    "options": [
+      "bidirectional_iterator",
+      "forward_iterator",
+      "random_access_iterator",
+      "input_iterator"
+    ],
+    "correct_answer": 0,
+    "explanation": "bidirectional_iterator provides movement in both forward and backward directions, but not random access.",
+    "tags": [
+      "stl",
+      "iterator",
+      "cpp"
+    ]
+  },
+  {
+    "id": "cpp_005",
+    "category": "cpp",
+    "difficulty": "easy",
+    "question_text": "What is std::vector?",
+    "options": [
+      "Dynamic array",
+      "Linked list",
+      "Stack",
+      "Queue"
+    ],
+    "correct_answer": 0,
+    "explanation": "std::vector is a dynamic array that can automatically resize when elements are added or removed.",
+    "tags": [
+      "stl",
+      "vector",
+      "dynamic-array"
+    ]
+  },
+  {
+    "id": "cpp_006",
+    "category": "cpp",
+    "difficulty": "easy",
+    "question_text": "Which algorithm sorts elements in STL?",
+    "options": [
+      "std::sort",
+      "std::order",
+      "std::arrange",
+      "std::organize"
+    ],
+    "correct_answer": 0,
+    "explanation": "std::sort is the standard STL algorithm for sorting elements in a range using quicksort or introsort.",
+    "tags": [
+      "stl",
+      "algorithm",
+      "sorting"
+    ]
+  },
+  {
+    "id": "cpp_007",
+    "category": "cpp",
+    "difficulty": "medium",
+    "question_text": "What does std::list provide?",
+    "options": [
+      "Doubly linked list",
+      "Singly linked list",
+      "Circular linked list",
+      "Dynamic array"
+    ],
+    "correct_answer": 0,
+    "explanation": "std::list is a doubly linked list container that allows constant time insertion and deletion from both ends.",
+    "tags": [
+      "stl",
+      "list",
+      "linked-list"
+    ]
+  },
+  {
+    "id": "cpp_008",
+    "category": "cpp",
+    "difficulty": "medium",
+    "question_text": "Which container follows LIFO principle?",
+    "options": [
+      "stack",
+      "queue",
+      "priority_queue",
+      "deque"
+    ],
+    "correct_answer": 0,
+    "explanation": "std::stack follows Last In First Out (LIFO) principle where the last element added is the first to be removed.",
+    "tags": [
+      "stl",
+      "stack",
+      "lifo"
+    ]
+  },
+  {
+    "id": "cpp_009",
+    "category": "cpp",
+    "difficulty": "medium",
+    "question_text": "What is std::queue?",
+    "options": [
+      "FIFO container",
+      "LIFO container",
+      "Priority container",
+      "Sorted container"
+    ],
+    "correct_answer": 0,
+    "explanation": "std::queue follows First In First Out (FIFO) principle where the first element added is the first to be removed.",
+    "tags": [
+      "stl",
+      "queue",
+      "fifo"
+    ]
+  },
+  {
+    "id": "cpp_010",
+    "category": "cpp",
+    "difficulty": "hard",
+    "question_text": "Which iterator provides random access?",
+    "options": [
+      "random_access_iterator",
+      "bidirectional_iterator",
+      "forward_iterator",
+      "input_iterator"
+    ],
+    "correct_answer": 0,
+    "explanation": "random_access_iterator provides constant time access to any element in the container and supports arithmetic operations on iterators.",
+    "tags": [
+      "stl",
+      "iterator",
+      "random-access"
+    ]
+  },
+  {
+    "id": "cpp_001",
+    "category": "cpp",
+    "difficulty": "easy",
+    "question_text": "What is STL in C++?",
+    "options": [
+      "Standard Template Library",
+      "Standard Testing Library",
+      "Simple Template Library",
+      "System Template Library"
+    ],
+    "correct_answer": 0,
+    "explanation": "STL stands for Standard Template Library, which provides a collection of template classes and functions for data structures and algorithms.",
+    "tags": [
+      "stl",
+      "cpp",
+      "template"
+    ]
+  },
+  {
+    "id": "cpp_002",
+    "category": "cpp",
+    "difficulty": "easy",
+    "question_text": "Which STL container provides dynamic array?",
+    "options": [
+      "vector",
+      "list",
+      "deque",
+      "array"
+    ],
+    "correct_answer": 0,
+    "explanation": "std::vector is a dynamic array container that can grow or shrink in size, providing random access to elements.",
+    "tags": [
+      "stl",
+      "vector",
+      "container"
+    ]
+  },
+  {
+    "id": "cpp_003",
+    "category": "cpp",
+    "difficulty": "easy",
+    "question_text": "What is the purpose of std::map?",
+    "options": [
+      "Key-value pairs",
+      "Single values",
+      "Stack operations",
+      "Queue operations"
+    ],
+    "correct_answer": 0,
+    "explanation": "std::map is an associative container that stores elements in key-value pairs, allowing efficient lookup based on keys.",
+    "tags": [
+      "stl",
+      "map",
+      "container"
+    ]
+  },
+  {
+    "id": "cpp_004",
+    "category": "cpp",
+    "difficulty": "medium",
+    "question_text": "Which iterator provides bidirectional access?",
+    "options": [
+      "bidirectional_iterator",
+      "forward_iterator",
+      "random_access_iterator",
+      "input_iterator"
+    ],
+    "correct_answer": 0,
+    "explanation": "bidirectional_iterator provides movement in both forward and backward directions, but not random access.",
+    "tags": [
+      "stl",
+      "iterator",
+      "cpp"
+    ]
+  },
+  {
+    "id": "cpp_005",
+    "category": "cpp",
+    "difficulty": "easy",
+    "question_text": "What is std::vector?",
+    "options": [
+      "Dynamic array",
+      "Linked list",
+      "Stack",
+      "Queue"
+    ],
+    "correct_answer": 0,
+    "explanation": "std::vector is a dynamic array that can automatically resize when elements are added or removed.",
+    "tags": [
+      "stl",
+      "vector",
+      "dynamic-array"
+    ]
+  },
+  {
+    "id": "cpp_006",
+    "category": "cpp",
+    "difficulty": "easy",
+    "question_text": "Which algorithm sorts elements in STL?",
+    "options": [
+      "std::sort",
+      "std::order",
+      "std::arrange",
+      "std::organize"
+    ],
+    "correct_answer": 0,
+    "explanation": "std::sort is the standard STL algorithm for sorting elements in a range using quicksort or introsort.",
+    "tags": [
+      "stl",
+      "algorithm",
+      "sorting"
+    ]
+  },
+  {
+    "id": "cpp_007",
+    "category": "cpp",
+    "difficulty": "medium",
+    "question_text": "What does std::list provide?",
+    "options": [
+      "Doubly linked list",
+      "Singly linked list",
+      "Circular linked list",
+      "Dynamic array"
+    ],
+    "correct_answer": 0,
+    "explanation": "std::list is a doubly linked list container that allows constant time insertion and deletion from both ends.",
+    "tags": [
+      "stl",
+      "list",
+      "linked-list"
+    ]
+  },
+  {
+    "id": "cpp_008",
+    "category": "cpp",
+    "difficulty": "medium",
+    "question_text": "Which container follows LIFO principle?",
+    "options": [
+      "stack",
+      "queue",
+      "priority_queue",
+      "deque"
+    ],
+    "correct_answer": 0,
+    "explanation": "std::stack follows Last In First Out (LIFO) principle where the last element added is the first to be removed.",
+    "tags": [
+      "stl",
+      "stack",
+      "lifo"
+    ]
+  },
+  {
+    "id": "cpp_009",
+    "category": "cpp",
+    "difficulty": "medium",
+    "question_text": "What is std::queue?",
+    "options": [
+      "FIFO container",
+      "LIFO container",
+      "Priority container",
+      "Sorted container"
+    ],
+    "correct_answer": 0,
+    "explanation": "std::queue follows First In First Out (FIFO) principle where the first element added is the first to be removed.",
+    "tags": [
+      "stl",
+      "queue",
+      "fifo"
+    ]
+  },
+  {
+    "id": "cpp_010",
+    "category": "cpp",
+    "difficulty": "hard",
+    "question_text": "Which iterator provides random access?",
+    "options": [
+      "random_access_iterator",
+      "bidirectional_iterator",
+      "forward_iterator",
+      "input_iterator"
+    ],
+    "correct_answer": 0,
+    "explanation": "random_access_iterator provides constant time access to any element in the container and supports arithmetic operations on iterators.",
+    "tags": [
+      "stl",
+      "iterator",
+      "random-access"
+    ]
+  }
+]

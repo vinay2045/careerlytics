@@ -1,0 +1,157 @@
+{% extends 'admins/admin_base.html' %}
+{% load static %}
+{% load custom_filters %}
+
+{% block title %}Outcome Registry{% endblock %}
+{% block header_title %}Registry{% endblock %}
+
+{% block content %}
+<div class="space-y-6 animate-fade-in">
+    <!-- Header -->
+    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div>
+            <div class="flex items-center gap-3 mb-1">
+                <span class="material-symbols-outlined text-blue-500 text-2xl">verified_user</span>
+                <h1 class="text-xl font-bold text-gray-900 dark:text-white">Placement Outcome Registry</h1>
+            </div>
+            <p class="text-gray-500 dark:text-gray-400 text-sm">Real-time tracking of student application statuses, interview rounds, and placement outcomes</p>
+        </div>
+        
+        <!-- Actions -->
+        <div class="flex flex-wrap items-center gap-3">
+            <select id="statusFilter" class="px-4 py-2 text-sm rounded-lg border border-gray-200 dark:border-dark-border bg-white dark:bg-dark-card text-gray-900 dark:text-white focus:ring-1 focus:ring-brand-blue focus:border-brand-blue">
+                <option value="">All Statuses</option>
+                <option value="round_1">Round 1</option>
+                <option value="round_2">Round 2</option>
+                <option value="round_3">Round 3</option>
+                <option value="hr_round">HR Round</option>
+                <option value="shortlisted">Shortlisted</option>
+                <option value="placed">Placed</option>
+                <option value="rejected">Rejected</option>
+            </select>
+            <div class="relative">
+                <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 text-sm">search</span>
+                <input type="text" id="registrySearch" placeholder="Search registry..." class="pl-9 pr-4 py-2 text-sm rounded-lg border border-gray-200 dark:border-dark-border bg-white dark:bg-dark-card text-gray-900 dark:text-white focus:ring-1 focus:ring-brand-blue focus:border-brand-blue w-64">
+            </div>
+            <button class="flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-dark-card border border-gray-200 dark:border-dark-border rounded-lg hover:bg-gray-50 dark:hover:bg-dark-sidebar transition-colors">
+                <span class="material-symbols-outlined text-lg">download</span>
+                Export CSV
+            </button>
+        </div>
+    </div>
+
+    <!-- Registry Table -->
+    <div class="bg-white dark:bg-dark-card border border-gray-200 dark:border-dark-border rounded-xl overflow-hidden shadow-sm">
+        <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse">
+                <thead>
+                    <tr class="bg-gray-50/50 dark:bg-dark-sidebar/50 border-b border-gray-200 dark:border-dark-border">
+                        <th class="px-6 py-4 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Student Identity</th>
+                        <th class="px-6 py-4 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Hiring Company</th>
+                        <th class="px-6 py-4 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Status</th>
+                        <th class="px-6 py-4 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Designation</th>
+                        <th class="px-6 py-4 w-10"></th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-200 dark:divide-dark-border">
+                    {% for placement in placements %}
+                    <tr class="group hover:bg-gray-50 dark:hover:bg-dark-sidebar/30 transition-colors">
+                        <td class="px-6 py-4">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-full bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center text-blue-600 dark:text-blue-400 font-bold text-sm border border-blue-200 dark:border-blue-500/20">
+                                    {{ placement.student.name|slice:":2"|upper }}
+                                </div>
+                                <div>
+                                    <h4 class="text-sm font-semibold text-gray-900 dark:text-white">{{ placement.student.name }}</h4>
+                                    <div class="flex items-center gap-1.5 mt-0.5">
+                                        <span class="w-1.5 h-1.5 rounded-full {% if placement.status == 'placed' %}bg-green-500{% elif placement.status == 'rejected' %}bg-red-500{% else %}bg-blue-500{% endif %}"></span>
+                                        <span class="text-xs text-gray-500 dark:text-gray-400">Updated: {{ placement.updated_at|date:"M d, Y" }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="px-6 py-4">
+                            <span class="text-sm font-medium text-gray-900 dark:text-white">{{ placement.company_name }}</span>
+                        </td>
+                        <td class="px-6 py-4">
+                            <span class="px-2 py-1 text-[10px] font-bold uppercase tracking-wider rounded-md
+                                {% if placement.status == 'placed' %}bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400
+                                {% elif placement.status == 'rejected' %}bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400
+                                {% elif placement.status == 'shortlisted' %}bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-400
+                                {% elif 'round' in placement.status or 'hr' in placement.status %}bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400
+                                {% else %}bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-400{% endif %}">
+                                {{ placement.status|replace_underscore|title }}
+                            </span>
+                        </td>
+                        <td class="px-6 py-4">
+                            <span class="text-sm text-gray-500 dark:text-gray-400">{{ placement.job_role }}</span>
+                        </td>
+                        <td class="px-6 py-4 text-right">
+                            <button class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors">
+                                <span class="material-symbols-outlined text-xl">chevron_right</span>
+                            </button>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr id="emptyState">
+                        <td colspan="5" class="px-6 py-12 text-center">
+                            <div class="flex flex-col items-center justify-center gap-3">
+                                <div class="w-12 h-12 rounded-full bg-gray-100 dark:bg-dark-sidebar flex items-center justify-center text-gray-400">
+                                    <span class="material-symbols-outlined text-2xl">folder_off</span>
+                                </div>
+                                <p class="text-gray-500 dark:text-gray-400">No registry entries found (placements or interview rounds).</p>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        
+        <!-- Footer -->
+        <div class="px-6 py-4 border-t border-gray-200 dark:border-dark-border bg-gray-50/50 dark:bg-dark-sidebar/30 flex justify-center">
+            <a href="#" class="text-xs font-medium text-gray-500 dark:text-gray-400 hover:text-brand-blue dark:hover:text-brand-blue transition-colors flex items-center gap-1">
+                VIEW COMPLETE REGISTRY
+                <span class="material-symbols-outlined text-sm">arrow_forward</span>
+            </a>
+        </div>
+    </div>
+</div>
+
+<script>
+ document.addEventListener('DOMContentLoaded', function() {
+     const searchInput = document.getElementById('registrySearch');
+     const statusFilter = document.getElementById('statusFilter');
+     const tableRows = document.querySelectorAll('tbody tr:not(#emptyState)');
+     const emptyState = document.getElementById('emptyState');
+ 
+     function filterTable() {
+         const searchTerm = searchInput.value.toLowerCase();
+         const statusTerm = statusFilter.value.toLowerCase().replace('_', ' ');
+         let visibleCount = 0;
+ 
+         tableRows.forEach(row => {
+             const text = row.innerText.toLowerCase();
+             const statusCell = row.querySelector('td:nth-child(3)').innerText.toLowerCase();
+             
+             const matchesSearch = text.includes(searchTerm);
+             const matchesStatus = statusTerm === '' || statusCell.includes(statusTerm);
+ 
+             if (matchesSearch && matchesStatus) {
+                 row.style.display = '';
+                 visibleCount++;
+             } else {
+                 row.style.display = 'none';
+             }
+         });
+ 
+         if (emptyState) {
+             emptyState.style.display = visibleCount === 0 ? '' : 'none';
+         }
+     }
+ 
+     searchInput.addEventListener('input', filterTable);
+     statusFilter.addEventListener('change', filterTable);
+ });
+ </script>
+{% endblock %}

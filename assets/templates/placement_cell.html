@@ -1,0 +1,1003 @@
+{% load static %}
+<!DOCTYPE html>
+<html class="scroll-smooth" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Placement Cell Portal | Careerlytics</title>
+
+    <link href="https://fonts.googleapis.com" rel="preconnect"/>
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Lexend:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography,container-queries"></script>
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#2563EB",
+                        secondary: "#6366F1",
+                    },
+                    fontFamily: {
+                        display: ["Lexend", "sans-serif"],
+                        sans: ["Inter", "sans-serif"],
+                    },
+                    borderRadius: {
+                        DEFAULT: "0.75rem",
+                        xl: "1rem",
+                        "2xl": "1.5rem",
+                    },
+                },
+            },
+        };
+
+        // Theme Toggle Functionality
+        function toggleTheme() {
+            const html = document.documentElement;
+            const themeToggle = document.getElementById('theme-toggle');
+            const knob = document.getElementById('knob');
+            const stars = document.getElementById('stars');
+            
+            if (html.classList.contains('dark')) {
+                html.classList.remove('dark');
+                localStorage.setItem('theme', 'light');
+                themeToggle.classList.remove('active');
+                knob.classList.remove('moon');
+                knob.innerHTML = "";
+                document.querySelectorAll(".star").forEach(s=>s.style.opacity=0);
+                document.querySelectorAll(".cloud").forEach(c=>c.style.opacity=1);
+            } else {
+                html.classList.add('dark');
+                localStorage.setItem('theme', 'dark');
+                themeToggle.classList.add('active');
+                knob.classList.add('moon');
+                knob.innerHTML = '<div class="moon-shadow"></div>';
+                document.querySelectorAll(".star").forEach(s=>s.style.opacity=1);
+                document.querySelectorAll(".cloud").forEach(c=>c.style.opacity=0);
+            }
+        }
+
+        // Initialize theme on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            const savedTheme = localStorage.getItem('theme');
+            const themeToggle = document.getElementById('theme-toggle');
+            const knob = document.getElementById('knob');
+            const stars = document.getElementById('stars');
+            
+            // Create stars
+            for(let i = 0; i < 30; i++) {
+                let s = document.createElement('div');
+                s.className = 'star';
+                s.style.left = Math.random() * 100 + '%';
+                s.style.top = Math.random() * 100 + '%';
+                s.style.animationDelay = Math.random() * 2 + 's';
+                stars.appendChild(s);
+            }
+            
+            if (savedTheme === 'dark') {
+                document.documentElement.classList.add('dark');
+                themeToggle.classList.add('active');
+                knob.classList.add('moon');
+                knob.innerHTML = '<div class="moon-shadow"></div>';
+                document.querySelectorAll('.star').forEach(s=>s.style.opacity=1);
+                document.querySelectorAll('.cloud').forEach(c=>c.style.opacity=0);
+            }
+        });
+
+        // Tab switching functionality
+        function showLoginTab() {
+            // Hide register form with fade out
+            const registerForm = document.getElementById('register-form');
+            registerForm.style.opacity = '0';
+            registerForm.style.transform = 'translateX(20px)';
+            
+            setTimeout(() => {
+                registerForm.classList.add('hidden');
+                registerForm.style.opacity = '';
+                registerForm.style.transform = '';
+                
+                // Show login form with fade in
+                const loginForm = document.getElementById('login-form');
+                loginForm.classList.remove('hidden');
+                loginForm.style.opacity = '0';
+                loginForm.style.transform = 'translateX(-20px)';
+                
+                setTimeout(() => {
+                    loginForm.style.transition = 'all 0.3s ease-in-out';
+                    loginForm.style.opacity = '1';
+                    loginForm.style.transform = 'translateX(0)';
+                }, 50);
+            }, 300);
+            
+            // Update tab buttons
+            document.getElementById('login-tab').classList.add('bg-primary', 'text-white', 'shadow-lg', 'active');
+            document.getElementById('login-tab').classList.remove('bg-white', 'dark:bg-gray-800', 'text-slate-700', 'dark:text-slate-300');
+            document.getElementById('register-tab').classList.remove('bg-primary', 'text-white', 'shadow-lg', 'active');
+            document.getElementById('register-tab').classList.add('bg-white', 'dark:bg-gray-800', 'text-slate-700', 'dark:text-slate-300');
+            
+            // Show/hide navigation links
+            document.getElementById('login-register-link').classList.remove('hidden');
+            document.getElementById('register-login-link').classList.add('hidden');
+        }
+
+        function showRegisterTab() {
+            // Hide login form with fade out
+            const loginForm = document.getElementById('login-form');
+            loginForm.style.opacity = '0';
+            loginForm.style.transform = 'translateX(-20px)';
+            
+            setTimeout(() => {
+                loginForm.classList.add('hidden');
+                loginForm.style.opacity = '';
+                loginForm.style.transform = '';
+                
+                // Show register form with fade in
+                const registerForm = document.getElementById('register-form');
+                registerForm.classList.remove('hidden');
+                registerForm.style.opacity = '0';
+                registerForm.style.transform = 'translateX(20px)';
+                
+                setTimeout(() => {
+                    registerForm.style.transition = 'all 0.3s ease-in-out';
+                    registerForm.style.opacity = '1';
+                    registerForm.style.transform = 'translateX(0)';
+                }, 50);
+            }, 300);
+            
+            // Update tab buttons
+            document.getElementById('register-tab').classList.add('bg-primary', 'text-white', 'shadow-lg', 'active');
+            document.getElementById('register-tab').classList.remove('bg-white', 'dark:bg-gray-800', 'text-slate-700', 'dark:text-slate-300');
+            document.getElementById('login-tab').classList.remove('bg-primary', 'text-white', 'shadow-lg', 'active');
+            document.getElementById('login-tab').classList.add('bg-white', 'dark:bg-gray-800', 'text-slate-700', 'dark:text-slate-300');
+            
+            // Show/hide navigation links
+            document.getElementById('register-login-link').classList.remove('hidden');
+            document.getElementById('login-register-link').classList.add('hidden');
+        }
+
+        function togglePassword() {
+            const passwordInput = document.getElementById('login-password');
+            const eyeIcon = document.getElementById('eye-icon');
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                eyeIcon.textContent = 'visibility_off';
+            } else {
+                passwordInput.type = 'password';
+                eyeIcon.textContent = 'visibility';
+            }
+        }
+
+        function toggleConfirmPassword() {
+            const passwordInput = document.getElementById('register-confirm-password');
+            const eyeIcon = document.getElementById('confirm-eye-icon');
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                eyeIcon.textContent = 'visibility_off';
+            } else {
+                passwordInput.type = 'password';
+                eyeIcon.textContent = 'visibility';
+            }
+        }
+
+        function toggleRegisterPassword() {
+            const passwordInput = document.getElementById('register-password');
+            const eyeIcon = document.getElementById('register-eye-icon');
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                eyeIcon.textContent = 'visibility_off';
+            } else {
+                passwordInput.type = 'password';
+                eyeIcon.textContent = 'visibility';
+            }
+        }
+
+        // Form validation
+        function validateLoginForm() {
+            const username = document.getElementById('login-username').value;
+            const password = document.getElementById('login-password').value;
+            
+            if (username === "") {
+                alert("Please enter Placement Cell ID or Email");
+                document.getElementById('login-username').focus();
+                return false;
+            }
+            
+            if (password === "") {
+                alert("Please enter password");
+                document.getElementById('login-password').focus();
+                return false;
+            }
+            
+            return true;
+        }
+
+        function validateRegisterForm() {
+            const username = document.getElementById('register-username').value;
+            const email = document.getElementById('register-email').value;
+            const password = document.getElementById('register-password').value;
+            const confirmPassword = document.getElementById('register-confirm-password').value;
+            const institution = document.getElementById('register-institution').value;
+            
+            if (username === "") {
+                alert("Please enter Placement Cell ID");
+                document.getElementById('register-username').focus();
+                return false;
+            }
+            
+            if (email === "") {
+                alert("Please enter email address");
+                document.getElementById('register-email').focus();
+                return false;
+            }
+            
+            if (password === "") {
+                alert("Please enter password");
+                document.getElementById('register-password').focus();
+                return false;
+            }
+            
+            if (confirmPassword === "") {
+                alert("Please confirm password");
+                document.getElementById('register-confirm-password').focus();
+                return false;
+            }
+            
+            if (password !== confirmPassword) {
+                alert("Passwords do not match");
+                document.getElementById('register-confirm-password').focus();
+                return false;
+            }
+            
+            if (institution === "") {
+                alert("Please enter institution name");
+                document.getElementById('register-institution').focus();
+                return false;
+            }
+            
+            return true;
+        }
+    </script>
+    <style type="text/css">
+        /* Glass Toggle Styles */
+        .toggle-wrapper {
+            width: 80px;
+            height: 40px;
+            border-radius: 60px;
+            background: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .dark .toggle-wrapper {
+            background: rgba(30, 41, 59, 0.25);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .sky {
+            position: absolute;
+            inset: 0;
+            border-radius: 70px;
+            transition: 1s;
+            background: linear-gradient(135deg, #7fc8ff, #cceeff);
+        }
+
+        .dark .sky {
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+        }
+
+        .cloud {
+            position: absolute;
+            width: 30px;
+            height: 12px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 40px;
+            top: 8px;
+            animation: cloudMove 18s linear infinite;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: opacity 0.5s ease;
+        }
+
+        .cloud::before,
+        .cloud::after {
+            content: '';
+            position: absolute;
+            background: rgba(255, 255, 255, 0.95);
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            top: -7px;
+        }
+
+        .cloud::before { left: 4px; }
+        .cloud::after { left: 15px; }
+
+        @keyframes cloudMove {
+            from { left: -40px; }
+            to { left: 90px; }
+        }
+
+        .star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: white;
+            border-radius: 50%;
+            opacity: 0;
+            animation: twinkle 2s infinite alternate;
+            transition: opacity 0.5s ease;
+        }
+
+        @keyframes twinkle{
+            from{opacity:.3;}
+            to{opacity:1;}
+        }
+
+        /* Knob */
+        .knob{
+            position:absolute;
+            top:3px;
+            left:3px;
+            width:32px;
+            height:32px;
+            border-radius:50%;
+            background:linear-gradient(135deg,#FFD700,#FF8C00);
+            box-shadow:0 0 8px #FFD700, 0 3px 8px rgba(0,0,0,0.12);
+            transition:0.9s cubic-bezier(0.4,0,0.2,1);
+            z-index:5;
+        }
+
+        /* Moon */
+        .moon{
+            background:linear-gradient(135deg,#eee,#aaa);
+            box-shadow:inset -3px -3px 0 rgba(0,0,0,0.2),
+                 0 0 6px #aaa;
+        }
+
+        /* Moon shadow */
+        .moon-shadow{
+            position:absolute;
+            width:8px;
+            height:8px;
+            background:rgba(0,0,0,0.25);
+            border-radius:50%;
+            top:7px;
+            left:7px;
+        }
+
+        /* Night Mode */
+        .toggle-wrapper.active .knob{
+            transform:translateX(52px) rotate(360deg);
+        }
+        .toggle-wrapper.active .sky{
+            background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+        }
+
+        .dot-pattern {
+            background-image: radial-gradient(circle, #e5e7eb 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+
+        .glass {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .dark .glass {
+            background: rgba(30, 41, 59, 0.95);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Form transition styles */
+        .form-transition {
+            transition: all 0.3s ease-in-out;
+        }
+
+        /* Enhanced form styles */
+        .form-container {
+            max-width: 450px;
+            margin: 0 auto;
+        }
+
+        .form-field {
+            margin-bottom: 1.75rem;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 1rem 1rem 1rem 3rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 0.75rem;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        .dark .form-input {
+            background: #374151;
+            border-color: #4b5563;
+            color: white;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #2563EB;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+            transform: translateY(-1px);
+        }
+
+        .dark .form-input:focus {
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+
+        .form-input::placeholder {
+            color: #94a3b8;
+        }
+
+        .dark .form-input::placeholder {
+            color: #9ca3af;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            color: #475569;
+            margin-bottom: 0.5rem;
+        }
+
+        .dark .form-label {
+            color: #e2e8f0;
+        }
+
+        .input-icon {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #94a3b8;
+            z-index: 10;
+        }
+
+        .dark .input-icon {
+            color: #9ca3af;
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #94a3b8;
+            cursor: pointer;
+            padding: 0.25rem;
+            border-radius: 0.25rem;
+            transition: all 0.2s ease;
+        }
+
+        .password-toggle:hover {
+            color: #2563EB;
+            background: rgba(37, 99, 235, 0.1);
+        }
+
+        .dark .password-toggle:hover {
+            color: #3b82f6;
+            background: rgba(59, 130, 246, 0.1);
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .btn-primary {
+            flex: 1;
+            background: linear-gradient(135deg, #2563EB 0%, #1d4ed8 100%);
+            color: white;
+            padding: 0.875rem 1.5rem;
+            border-radius: 0.75rem;
+            font-weight: 700;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 14px 0 rgba(37, 99, 235, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px 0 rgba(37, 99, 235, 0.3);
+        }
+
+        .btn-primary:active {
+            transform: translateY(0);
+        }
+
+        .btn-secondary {
+            flex: 1;
+            background: white;
+            color: #475569;
+            padding: 0.875rem 1.5rem;
+            border-radius: 0.75rem;
+            font-weight: 700;
+            border: 2px solid #e2e8f0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .dark .btn-secondary {
+            background: #374151;
+            color: #e2e8f0;
+            border-color: #4b5563;
+        }
+
+        .btn-secondary:hover {
+            border-color: #cbd5e1;
+            transform: translateY(-2px);
+        }
+
+        .dark .btn-secondary:hover {
+            border-color: #6b7280;
+        }
+
+        .checkbox-wrapper {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            margin: 1.5rem 0;
+        }
+
+        .checkbox-input {
+            width: 1.25rem;
+            height: 1.25rem;
+            border-radius: 0.375rem;
+            border: 2px solid #e2e8f0;
+            cursor: pointer;
+            margin-top: 0.125rem;
+        }
+
+        .dark .checkbox-input {
+            border-color: #4b5563;
+        }
+
+        .checkbox-label {
+            font-size: 0.875rem;
+            color: #64748b;
+            line-height: 1.5;
+        }
+
+        .dark .checkbox-label {
+            color: #94a3b8;
+        }
+
+        .checkbox-label a {
+            color: #2563EB;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .checkbox-label a:hover {
+            text-decoration: underline;
+        }
+
+        .dark .checkbox-label a {
+            color: #3b82f6;
+        }
+
+        /* Tab button transitions */
+        .tab-button {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .tab-button:hover {
+            transform: translateY(-1px);
+        }
+
+        .tab-button.active {
+            transform: scale(1.05);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body class="bg-slate-50 dark:bg-gray-900 dot-pattern text-slate-900 dark:text-slate-100 font-sans min-h-screen">
+    <!-- Header Navigation -->
+    <nav class="sticky top-0 z-50 glass border-b border-slate-200/60 dark:border-gray-700/60">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-20 items-center">
+                <div class="flex items-center gap-3">
+                    <img src="{% static 'images/logo.png' %}" alt="Careerlytics Logo" class="h-12 w-auto">
+                    <span class="text-2xl font-display font-bold text-slate-900 dark:text-white tracking-tight">Careerlytics</span>
+                </div>
+
+                <div class="flex items-center gap-4">
+                    <!-- Glass Theme Toggle Button -->
+                    <div class="toggle-wrapper" id="theme-toggle" onclick="toggleTheme()">
+                        <div class="sky">
+                            <div class="cloud" style="animation-delay: 0s"></div>
+                            <div class="cloud" style="top: 20px; animation-delay: 7s"></div>
+                            <div id="stars"></div>
+                        </div>
+                        <div class="knob" id="knob"></div>
+                    </div>
+                    <a href="{% url 'home' %}" class="hidden sm:inline-flex items-center justify-center px-3 sm:px-5 py-2.5 text-xs sm:text-sm font-bold text-white bg-primary hover:bg-opacity-90 rounded-lg shadow-md shadow-primary/10 transition-all active:scale-95 whitespace-nowrap">
+                        Home
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="flex-grow flex items-center justify-center p-4">
+        <div class="w-full max-w-4xl">
+            <div class="glass rounded-2xl shadow-2xl p-8">
+                <!-- Header -->
+                <div class="text-center mb-8">
+                    <h1 class="text-4xl font-display font-extrabold text-slate-900 dark:text-white mb-2">Careerlytics Portal</h1>
+                    <p class="text-slate-600 dark:text-slate-400">Manage your institution's placement activities</p>
+                </div>
+
+                <!-- Tab Navigation -->
+                <div class="flex mb-8 bg-slate-100 dark:bg-gray-700 rounded-full p-1 max-w-md mx-auto">
+                    <button 
+                        id="login-tab"
+                        onclick="showLoginTab()"
+                        class="tab-button active flex-1 py-3 px-6 rounded-full font-semibold bg-primary text-white shadow-lg text-base"
+                    >
+                        <span class="flex items-center justify-center gap-2">
+                            <span class="material-symbols-outlined text-lg">login</span>
+                            Login
+                        </span>
+                    </button>
+                    <button 
+                        id="register-tab"
+                        onclick="showRegisterTab()"
+                        class="tab-button flex-1 py-3 px-6 rounded-full font-semibold bg-white dark:bg-gray-800 text-slate-700 dark:text-slate-300 text-base"
+                    >
+                        <span class="flex items-center justify-center gap-2">
+                            <span class="material-symbols-outlined text-lg">person_add</span>
+                            Register
+                        </span>
+                    </button>
+                </div>
+
+                <!-- Switch to Login Link (for register form) -->
+                <div id="register-login-link" class="hidden text-center mb-6">
+                    <p class="text-sm text-slate-600 dark:text-slate-400">
+                        Already have an account? 
+                        <button 
+                            onclick="showLoginTab()" 
+                            class="text-primary dark:text-blue-400 hover:underline font-semibold transition-colors"
+                        >
+                            Sign in here
+                        </button>
+                    </p>
+                </div>
+
+                <!-- Switch to Register Link (for login form) -->
+                <div id="login-register-link" class="hidden text-center mb-6">
+                    <p class="text-sm text-slate-600 dark:text-slate-400">
+                        Don't have an account? 
+                        <button 
+                            onclick="showRegisterTab()" 
+                            class="text-primary dark:text-blue-400 hover:underline font-semibold transition-colors"
+                        >
+                            Register here
+                        </button>
+                    </p>
+                </div>
+
+                <!-- Messages -->
+                {% if messages %}
+                    {% for message in messages %}
+                        <div id="message-{{ forloop.counter }}" class="mb-6 p-4 {% if 'success' in message.tags %}bg-green-50 dark:bg-green-900/30 border border-green-200 dark:border-green-800{% elif 'error' in message.tags %}bg-red-50 dark:bg-red-900/30 border border-red-200 dark:border-red-800{% else %}bg-blue-50 dark:bg-blue-900/30 border border-blue-200 dark:border-blue-800{% endif %} rounded-lg message-container">
+                            <p class="{% if 'success' in message.tags %}text-green-600 dark:text-green-400{% elif 'error' in message.tags %}text-red-600 dark:text-red-400{% else %}text-blue-600 dark:text-blue-400{% endif %} text-sm">{{ message }}</p>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+
+                <!-- Login Form -->
+                <div id="login-form" class="form-transition space-y-6">
+                    <form action="{% url 'placement_cell_login' %}" method="post" onSubmit="return validateLoginForm()">
+                        {% csrf_token %}
+                        
+                        <!-- Email/Username Field -->
+                        <div class="mb-6">
+                            <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wide mb-2">
+                                PLACEMENT CELL ID OR EMAIL <span class="text-primary dark:text-blue-400">*</span>
+                            </label>
+                            <div class="relative">
+                                <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                                    <span class="material-symbols-outlined text-slate-400 dark:text-slate-300">person</span>
+                                </div>
+                                <input 
+                                    type="text" 
+                                    id="login-username" 
+                                    name="username" 
+                                    placeholder="Enter Placement Cell ID or Email"
+                                    class="w-full pl-12 pr-4 py-3.5 border border-slate-200 dark:border-gray-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 bg-white dark:bg-gray-700"
+                                    required
+                                />
+                            </div>
+                        </div>
+
+                        <!-- Password Field -->
+                        <div class="mb-6">
+                            <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wide mb-2">
+                                PASSWORD <span class="text-primary dark:text-blue-400">*</span>
+                            </label>
+                            <div class="relative">
+                                <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                                    <span class="material-symbols-outlined text-slate-400 dark:text-slate-300">lock</span>
+                                </div>
+                                <input 
+                                    type="password" 
+                                    id="login-password" 
+                                    name="password" 
+                                    placeholder="Enter password"
+                                    class="w-full pl-12 pr-12 py-3.5 border border-slate-200 dark:border-gray-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 bg-white dark:bg-gray-700"
+                                    required
+                                />
+                                <button 
+                                    type="button" 
+                                    onclick="togglePassword()"
+                                    class="absolute inset-y-0 right-0 pr-4 flex items-center text-slate-400 dark:text-slate-300 hover:text-primary dark:hover:text-blue-400 transition-colors"
+                                >
+                                    <span id="eye-icon" class="material-symbols-outlined">visibility</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Action Buttons -->
+                        <div class="flex flex-col sm:flex-row gap-4">
+                            <button 
+                                type="submit"
+                                class="flex-1 bg-primary hover:bg-opacity-90 text-white px-6 py-3.5 rounded-xl font-bold transition-all shadow-lg shadow-primary/20 flex items-center justify-center gap-2"
+                            >
+                                Login
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M14 5l7 7m0 0l-7 7m7-7H3" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+                                </svg>
+                            </button>
+                            <button 
+                                type="reset"
+                                class="flex-1 bg-white dark:bg-gray-800 border-2 border-slate-200 dark:border-gray-600 text-slate-700 dark:text-slate-200 px-4 py-3.5 rounded-xl font-bold transition-all hover:border-slate-300 dark:hover:border-gray-500 flex items-center justify-center gap-2"
+                            >
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+                                </svg>
+                                Reset
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Register Form -->
+                <div id="register-form" class="form-transition space-y-6 hidden">
+                    <form action="{% url 'placement_cell_register' %}" method="post" onSubmit="return validateRegisterForm()">
+                        {% csrf_token %}
+                        
+                        <!-- Placement Cell ID Field -->
+                        <div class="mb-6">
+                            <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wide mb-2">
+                                PLACEMENT CELL ID <span class="text-primary dark:text-blue-400">*</span>
+                            </label>
+                            <div class="relative">
+                                <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                                    <span class="material-symbols-outlined text-slate-400 dark:text-slate-300">business</span>
+                                </div>
+                                <input 
+                                    type="text" 
+                                    id="register-username" 
+                                    name="username" 
+                                    placeholder="Enter Placement Cell ID"
+                                    class="w-full pl-12 pr-4 py-3.5 border border-slate-200 dark:border-gray-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 bg-white dark:bg-gray-700"
+                                    required
+                                />
+                            </div>
+                        </div>
+
+                        <!-- Email Field -->
+                        <div class="mb-6">
+                            <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wide mb-2">
+                                EMAIL ADDRESS <span class="text-primary dark:text-blue-400">*</span>
+                            </label>
+                            <div class="relative">
+                                <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                                    <span class="material-symbols-outlined text-slate-400 dark:text-slate-300">email</span>
+                                </div>
+                                <input 
+                                    type="email" 
+                                    id="register-email" 
+                                    name="email" 
+                                    placeholder="Enter email address"
+                                    class="w-full pl-12 pr-4 py-3.5 border border-slate-200 dark:border-gray-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 bg-white dark:bg-gray-700"
+                                    required
+                                />
+                            </div>
+                        </div>
+
+                        <!-- Institution Field -->
+                        <div class="mb-6">
+                            <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wide mb-2">
+                                INSTITUTION NAME <span class="text-primary dark:text-blue-400">*</span>
+                            </label>
+                            <div class="relative">
+                                <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                                    <span class="material-symbols-outlined text-slate-400 dark:text-slate-300">school</span>
+                                </div>
+                                <select 
+                                    id="register-institution" 
+                                    name="institution_name" 
+                                    class="w-full pl-12 pr-4 py-3.5 border border-slate-200 dark:border-gray-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-slate-900 dark:text-slate-100 bg-white dark:bg-gray-700 appearance-none"
+                                    required
+                                >
+                                    <option value="">Select Institution</option>
+                                    <option value="SCCE">SCCE - SREE CHAITANYA COLLEGE OF ENGINEERING</option>
+                                    <option value="SCIT">SCIT - SREE CHAITANYA INSTITUTE OF TECHNOLOGICAL SCIENCES</option>
+                                </select>
+                                <div class="absolute inset-y-0 right-0 pr-4 flex items-center pointer-events-none">
+                                    <span class="material-symbols-outlined text-slate-400 dark:text-slate-300">expand_more</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Password Field -->
+                        <div class="mb-6">
+                            <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wide mb-2">
+                                PASSWORD <span class="text-primary dark:text-blue-400">*</span>
+                            </label>
+                            <div class="relative">
+                                <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                                    <span class="material-symbols-outlined text-slate-400 dark:text-slate-300">lock</span>
+                                </div>
+                                <input 
+                                    type="password" 
+                                    id="register-password" 
+                                    name="password" 
+                                    placeholder="Enter password"
+                                    class="w-full pl-12 pr-12 py-3.5 border border-slate-200 dark:border-gray-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 bg-white dark:bg-gray-700"
+                                    required
+                                />
+                                <button 
+                                    type="button" 
+                                    onclick="toggleRegisterPassword()"
+                                    class="absolute inset-y-0 right-0 pr-4 flex items-center text-slate-400 dark:text-slate-300 hover:text-primary dark:hover:text-blue-400 transition-colors"
+                                >
+                                    <span id="register-eye-icon" class="material-symbols-outlined">visibility</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Confirm Password Field -->
+                        <div class="mb-6">
+                            <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wide mb-2">
+                                CONFIRM PASSWORD <span class="text-primary dark:text-blue-400">*</span>
+                            </label>
+                            <div class="relative">
+                                <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                                    <span class="material-symbols-outlined text-slate-400 dark:text-slate-300">lock</span>
+                                </div>
+                                <input 
+                                    type="password" 
+                                    id="register-confirm-password" 
+                                    name="confirm_password" 
+                                    placeholder="Confirm password"
+                                    class="w-full pl-12 pr-12 py-3.5 border border-slate-200 dark:border-gray-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 bg-white dark:bg-gray-700"
+                                    required
+                                />
+                                <button 
+                                    type="button" 
+                                    onclick="toggleConfirmPassword()"
+                                    class="absolute inset-y-0 right-0 pr-4 flex items-center text-slate-400 dark:text-slate-300 hover:text-primary dark:hover:text-blue-400 transition-colors"
+                                >
+                                    <span id="confirm-eye-icon" class="material-symbols-outlined">visibility</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Terms Checkbox -->
+                        <div class="mb-6">
+                            <label class="flex items-start cursor-pointer">
+                                <input 
+                                    type="checkbox" 
+                                    class="w-5 h-5 rounded border-slate-300 dark:border-gray-600 text-primary dark:text-blue-400 focus:ring-primary dark:focus:ring-blue-400 focus:ring-2 cursor-pointer mt-1"
+                                    name="terms" 
+                                    required
+                                />
+                                <span class="ml-3 text-sm text-slate-600 dark:text-slate-400">
+                                    I agree to the <a href="#" class="text-primary dark:text-blue-400 hover:underline">Terms of Service</a> and <a href="#" class="text-primary dark:text-blue-400 hover:underline">Privacy Policy</a>
+                                </span>
+                            </label>
+                        </div>
+
+                        <div class="flex flex-col sm:flex-row gap-4">
+                            <button 
+                                type="submit"
+                                class="flex-1 bg-primary hover:bg-opacity-90 text-white px-6 py-3.5 rounded-xl font-bold transition-all shadow-lg shadow-primary/20 flex items-center justify-center gap-2"
+                            >
+                                Create Account
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M14 5l7 7m0 0l-7 7m7-7H3" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+                                </svg>
+                            </button>
+                            <button 
+                                type="reset"
+                                class="flex-1 bg-white dark:bg-gray-800 border-2 border-slate-200 dark:border-gray-600 text-slate-700 dark:text-slate-200 px-4 py-3.5 rounded-xl font-bold transition-all hover:border-slate-300 dark:hover:border-gray-500 flex items-center justify-center gap-2"
+                            >
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+                                </svg>
+                                Reset
+                            </button>
+                        </div>
+
+                        <!-- Registration Prompt -->
+                        <div class="text-center pt-4 border-t border-slate-100 dark:border-gray-700">
+                            <p class="text-slate-600 dark:text-slate-400 text-sm">
+                                Already have an account? 
+                                <button 
+                                    onclick="showLoginTab()" 
+                                    class="text-primary dark:text-blue-400 font-semibold hover:underline transition-colors"
+                                >
+                                    Sign in here
+                                </button>
+                            </p>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Footer -->
+                <div class="text-center pt-6 border-t border-slate-100 dark:border-gray-700 mt-8">
+                    <div class="flex items-center justify-center gap-2 text-slate-400 dark:text-slate-500 text-sm">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+                        </svg>
+                        <span class="uppercase tracking-wider font-semibold">SECURE CONNECTION</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Auto-dismiss messages after 20 seconds
+        document.addEventListener('DOMContentLoaded', function() {
+            const messageContainers = document.querySelectorAll('.message-container');
+            
+            messageContainers.forEach(function(container) {
+                setTimeout(function() {
+                    // Add fade out effect
+                    container.style.transition = 'opacity 0.5s ease-out';
+                    container.style.opacity = '0';
+                    
+                    // Remove element after fade out
+                    setTimeout(function() {
+                        container.remove();
+                    }, 500);
+                }, 20000); // 20 seconds
+            });
+        });
+    </script>
+</body>
+</html>

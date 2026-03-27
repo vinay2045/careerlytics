@@ -1,0 +1,245 @@
+{% extends "users/user_tailwind_base.html" %}
+{% load static %}
+
+{% block contents %}
+<div class="min-h-screen bg-[#f8fafc] dark:bg-slate-950 py-6 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-6xl mx-auto">
+        <!-- Header Section -->
+        <div class="mb-10 flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+            <div>
+                <h1 class="text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">Readiness Test Result</h1>
+                <p class="mt-2 text-slate-600 dark:text-slate-400">Detailed performance analysis and placement readiness report.</p>
+            </div>
+            <div class="flex items-center gap-3">
+                <button onclick="window.print()" class="inline-flex items-center px-4 py-2 border border-slate-300 dark:border-slate-700 rounded-lg shadow-sm text-sm font-medium text-slate-700 dark:text-slate-300 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors">
+                    <span class="material-symbols-outlined mr-2 text-lg">print</span>
+                    Print Report
+                </button>
+                <a href="{% url 'users:campus_drives' %}" class="inline-flex items-center px-4 py-2 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 transition-colors">
+                    Back to Dashboard
+                </a>
+            </div>
+        </div>
+
+        <!-- Main Score Dashboard -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-10">
+            <!-- Score Radial Card -->
+            <div class="lg:col-span-1 bg-white dark:bg-slate-900 rounded-3xl shadow-xl shadow-slate-200/50 dark:shadow-none p-8 flex flex-col items-center justify-center border border-slate-100 dark:border-slate-800">
+                <div class="relative w-48 h-48 mb-6">
+                    <svg class="w-full h-full transform -rotate-90">
+                        <circle cx="96" cy="96" r="88" stroke="currentColor" stroke-width="12" fill="transparent" class="text-slate-100 dark:text-slate-800" />
+                        <circle cx="96" cy="96" r="88" stroke="currentColor" stroke-width="12" fill="transparent" stroke-dasharray="552.92" stroke-dashoffset="{{ 552.92|add:result.percentage_offset }}" class="{% if result.percentage >= 70 %}text-emerald-500{% elif result.percentage >= 40 %}text-amber-500{% else %}text-rose-500{% endif %} transition-all duration-1000 ease-out" />
+                    </svg>
+                    <div class="absolute inset-0 flex flex-col items-center justify-center">
+                        <span class="text-5xl font-black text-slate-900 dark:text-white">{{ result.percentage|floatformat:0 }}%</span>
+                        <span class="text-sm font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest">Overall Score</span>
+                    </div>
+                </div>
+                <div class="text-center">
+                    <div class="inline-flex items-center px-4 py-1.5 rounded-full text-sm font-bold uppercase tracking-wider mb-4 
+                        {% if result.classification == 'placement_ready' %}bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400
+                        {% elif result.classification == 'needs_improvement' %}bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400
+                        {% else %}bg-rose-100 text-rose-700 dark:bg-rose-900/30 dark:text-rose-400{% endif %}">
+                        {{ result.get_classification_display }}
+                    </div>
+                    <p class="text-sm text-slate-500 dark:text-slate-400 px-4">
+                        {% if result.classification == 'placement_ready' %}
+                        Excellent! You are well-prepared for upcoming campus recruitment drives.
+                        {% elif result.classification == 'needs_improvement' %}
+                        Good effort. Focus on your weak areas to improve your placement chances.
+                        {% else %}
+                        More practice needed. Focus on core concepts and aptitude fundamentals.
+                        {% endif %}
+                    </p>
+                </div>
+            </div>
+
+            <!-- Stats Grid -->
+            <div class="lg:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-6">
+                <!-- Aptitude Card -->
+                <div class="bg-white dark:bg-slate-900 rounded-2xl p-6 border border-slate-100 dark:border-slate-800 shadow-sm">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="w-10 h-10 bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 rounded-xl flex items-center justify-center">
+                            <span class="material-symbols-outlined">calculate</span>
+                        </div>
+                        <span class="text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-tighter">Aptitude</span>
+                    </div>
+                    <div class="flex items-baseline gap-2 mb-2">
+                        <span class="text-3xl font-bold text-slate-900 dark:text-white">{{ result.aptitude_score }}</span>
+                        <span class="text-slate-400 dark:text-slate-500 text-sm">/ 9 Correct</span>
+                    </div>
+                    <div class="w-full bg-slate-100 dark:bg-slate-800 rounded-full h-2">
+                        <div class="bg-blue-500 h-2 rounded-full" style="width: {% widthratio result.aptitude_score 9 100 %}%"></div>
+                    </div>
+                </div>
+
+                <!-- Reasoning Card -->
+                <div class="bg-white dark:bg-slate-900 rounded-2xl p-6 border border-slate-100 dark:border-slate-800 shadow-sm">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="w-10 h-10 bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 rounded-xl flex items-center justify-center">
+                            <span class="material-symbols-outlined">psychology</span>
+                        </div>
+                        <span class="text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-tighter">Reasoning</span>
+                    </div>
+                    <div class="flex items-baseline gap-2 mb-2">
+                        <span class="text-3xl font-bold text-slate-900 dark:text-white">{{ result.reasoning_score }}</span>
+                        <span class="text-slate-400 dark:text-slate-500 text-sm">/ 9 Correct</span>
+                    </div>
+                    <div class="w-full bg-slate-100 dark:bg-slate-800 rounded-full h-2">
+                        <div class="bg-purple-500 h-2 rounded-full" style="width: {% widthratio result.reasoning_score 9 100 %}%"></div>
+                    </div>
+                </div>
+
+                <!-- English Card -->
+                <div class="bg-white dark:bg-slate-900 rounded-2xl p-6 border border-slate-100 dark:border-slate-800 shadow-sm">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="w-10 h-10 bg-amber-100 dark:bg-amber-900/30 text-amber-600 dark:text-amber-400 rounded-xl flex items-center justify-center">
+                            <span class="material-symbols-outlined">translate</span>
+                        </div>
+                        <span class="text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-tighter">English</span>
+                    </div>
+                    <div class="flex items-baseline gap-2 mb-2">
+                        <span class="text-3xl font-bold text-slate-900 dark:text-white">{{ result.english_score }}</span>
+                        <span class="text-slate-400 dark:text-slate-500 text-sm">/ 6 Correct</span>
+                    </div>
+                    <div class="w-full bg-slate-100 dark:bg-slate-800 rounded-full h-2">
+                        <div class="bg-amber-500 h-2 rounded-full" style="width: {% widthratio result.english_score 6 100 %}%"></div>
+                    </div>
+                </div>
+
+                <!-- Core Card -->
+                <div class="bg-white dark:bg-slate-900 rounded-2xl p-6 border border-slate-100 dark:border-slate-800 shadow-sm">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="w-10 h-10 bg-emerald-100 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400 rounded-xl flex items-center justify-center">
+                            <span class="material-symbols-outlined">terminal</span>
+                        </div>
+                        <span class="text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-tighter">Core Subject</span>
+                    </div>
+                    <div class="flex items-baseline gap-2 mb-2">
+                        <span class="text-3xl font-bold text-slate-900 dark:text-white">{{ result.core_score }}</span>
+                        <span class="text-slate-400 dark:text-slate-500 text-sm">/ 36 Correct</span>
+                    </div>
+                    <div class="w-full bg-slate-100 dark:bg-slate-800 rounded-full h-2">
+                        <div class="bg-emerald-500 h-2 rounded-full" style="width: {% widthratio result.core_score 36 100 %}%"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Details Section -->
+        <div class="bg-white dark:bg-slate-900 rounded-3xl border border-slate-100 dark:border-slate-800 overflow-hidden shadow-sm mb-10">
+            <div class="p-6 border-bottom border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/50 flex items-center justify-between">
+                <h3 class="font-bold text-slate-900 dark:text-white">Test Information</h3>
+                <span class="text-xs font-medium text-slate-400 dark:text-slate-500 uppercase tracking-widest">Completed: {{ result.completed_at|date:"M d, Y H:i" }}</span>
+            </div>
+            <div class="p-8">
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-8 text-center sm:text-left">
+                    <div>
+                        <p class="text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-2">Total Questions</p>
+                        <p class="text-lg font-bold text-slate-900 dark:text-white">{{ result.total_questions }}</p>
+                    </div>
+                    <div>
+                        <p class="text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-2">Correct Answers</p>
+                        <p class="text-lg font-bold text-slate-900 dark:text-white">{{ result.total_correct }}</p>
+                    </div>
+                    <div>
+                        <p class="text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-2">Time Taken</p>
+                        <p class="text-lg font-bold text-slate-900 dark:text-white">{{ result.time_taken }} Minutes</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Detailed Review Section -->
+        <div class="space-y-6">
+            <div class="flex items-center justify-between">
+                <h2 class="text-2xl font-bold text-slate-900 dark:text-white">Detailed Review</h2>
+                <div class="flex gap-4">
+                    <span class="flex items-center gap-1.5 text-xs font-bold text-emerald-600 dark:text-emerald-400 uppercase tracking-wider bg-emerald-50 dark:bg-emerald-900/20 px-3 py-1 rounded-full">
+                        <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                        Correct
+                    </span>
+                    <span class="flex items-center gap-1.5 text-xs font-bold text-rose-600 dark:text-rose-400 uppercase tracking-wider bg-rose-50 dark:bg-rose-900/20 px-3 py-1 rounded-full">
+                        <span class="w-2 h-2 rounded-full bg-rose-500"></span>
+                        Incorrect
+                    </span>
+                </div>
+            </div>
+
+            <div class="space-y-4">
+                {% for answer in result.answers %}
+                <div class="bg-white dark:bg-slate-900 rounded-2xl border {% if answer.is_correct %}border-emerald-100 dark:border-emerald-900/30{% else %}border-rose-100 dark:border-rose-900/30{% endif %} overflow-hidden shadow-sm transition-all hover:shadow-md">
+                    <div class="p-6">
+                        <div class="flex items-start justify-between gap-4 mb-4">
+                            <div class="flex-1">
+                                <div class="flex items-center gap-2 mb-2">
+                                    <span class="text-[10px] font-black uppercase tracking-widest px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400">
+                                        Question {{ forloop.counter }} • {{ answer.category|title }}
+                                    </span>
+                                    {% if answer.is_correct %}
+                                    <span class="material-symbols-outlined text-emerald-500 text-lg">check_circle</span>
+                                    {% else %}
+                                    <span class="material-symbols-outlined text-rose-500 text-lg">cancel</span>
+                                    {% endif %}
+                                </div>
+                                <h4 class="text-lg font-semibold text-slate-900 dark:text-white leading-relaxed">
+                                    {% firstof answer.question_text answer.text %}
+                                </h4>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
+                            {% for option in answer.options %}
+                            <div class="flex items-center p-4 rounded-xl border text-sm transition-all
+                                {% if forloop.counter0|slugify == answer.correct_index|slugify %}
+                                    bg-emerald-50 dark:bg-emerald-900/20 border-emerald-200 dark:border-emerald-800/50 text-emerald-900 dark:text-emerald-100 font-bold
+                                {% elif forloop.counter0|slugify == answer.selected_index|slugify and not answer.is_correct %}
+                                    bg-rose-50 dark:bg-rose-900/20 border-rose-200 dark:border-rose-800/50 text-rose-900 dark:text-rose-100 font-bold
+                                {% else %}
+                                    bg-slate-50 dark:bg-slate-800/30 border-slate-100 dark:border-slate-800 text-slate-600 dark:text-slate-400
+                                {% endif %}">
+                                <span class="w-6 h-6 rounded-lg flex items-center justify-center mr-3 text-xs font-bold
+                                    {% if forloop.counter0|slugify == answer.correct_index|slugify %}
+                                        bg-emerald-500 text-white
+                                    {% elif forloop.counter0|slugify == answer.selected_index|slugify and not answer.is_correct %}
+                                        bg-rose-500 text-white
+                                    {% else %}
+                                        bg-slate-200 dark:bg-slate-700 text-slate-500 dark:text-slate-400
+                                    {% endif %}">
+                                    {% if forloop.counter0 == 0 %}A{% elif forloop.counter0 == 1 %}B{% elif forloop.counter0 == 2 %}C{% elif forloop.counter0 == 3 %}D{% endif %}
+                                </span>
+                                {{ option }}
+                                
+                                {% if forloop.counter0|slugify == answer.correct_index|slugify %}
+                                    <span class="ml-auto text-[10px] uppercase font-black tracking-widest text-emerald-600 dark:text-emerald-400">Correct Answer</span>
+                                {% elif forloop.counter0|slugify == answer.selected_index|slugify %}
+                                    <span class="ml-auto text-[10px] uppercase font-black tracking-widest text-rose-600 dark:text-rose-400">Your Answer</span>
+                                {% endif %}
+                            </div>
+                            {% endfor %}
+                        </div>
+                        
+                        {% if not answer.is_correct and answer.selected_index == null %}
+                        <div class="mt-4 p-3 bg-amber-50 dark:bg-amber-900/10 border border-amber-100 dark:border-amber-900/30 rounded-lg text-amber-700 dark:text-amber-400 text-xs font-medium flex items-center gap-2">
+                            <span class="material-symbols-outlined text-sm">warning</span>
+                            This question was left unanswered.
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    @media print {
+        .bg-[#f8fafc] { background-color: white !important; }
+        .no-print { display: none !important; }
+        .shadow-xl, .shadow-sm { box-shadow: none !important; }
+        .rounded-3xl, .rounded-2xl { border-radius: 8px !important; }
+        .dark { color: black !important; }
+    }
+</style>
+{% endblock contents %}

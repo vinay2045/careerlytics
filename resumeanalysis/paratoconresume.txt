@@ -1,0 +1,159 @@
+Resume Content Validation Function (is_valid_resume):
+Resume Indicators: Checks for resume-specific keywords like:
+Education: education, university, degree, bachelor, master, phd
+Experience: experience, work, employment, job, company, professional
+Skills: skills, technical, programming, software, technologies
+Structure: summary, objective, profile, achievements
+Non-Resume Detection: Identifies and rejects documents containing:
+Business documents: invoice, receipt, contract, agreement
+Academic papers: research paper, thesis, abstract, methodology
+Legal documents: privacy policy, terms of service, legal notice
+Financial documents: balance sheet, tax return, invoice
+Medical records: medical record, prescription, diagnosis
+Strong Pattern Rejection: Immediately rejects documents with:
+ISBN numbers (books)
+DOI identifiers (academic papers)
+Academic volume/issue numbers
+Research methodology sections
+Structural Validation:
+Minimum Requirements: At least 100 characters and 3 resume indicators
+Contact Information: Phone number or email address presence
+Date References: Years or months indicating work/education timeline
+Enhanced Scoring: More indicators needed if contact info/dates are missing
+User-Friendly Error Messages:
+Clear Error Display: Shows detailed error messages in the upload form
+Helpful Guidance: Provides specific requirements for valid resumes
+Visual Feedback: Uses color-coded alerts with appropriate icons
+
+
+
+
+Scoring Methodology 
+
+
+
+use this scoreing methodology
+
+
+🧠 1️⃣ Quiz Score (What the user can actually do)
+
+The quiz score is not just marks.
+It is a skill signal.
+
+It is calculated using your 30–30–40 model:
+
+Layer	Weight	What it tells
+General Ability	30%	How fast you can learn
+Tech Fundamentals	30%	How strong your core CS is
+Role Skills	40%	How job-ready you are
+
+So:
+
+Quiz Score =
+(General × 0.30) +
+(Tech × 0.30) +
+(Role × 0.40)
+
+
+Example:
+
+General = 80%
+Tech = 60%
+Role = 50%
+
+Quiz Score = 24 + 18 + 20 = 62%
+
+
+This means:
+
+The user is 62% ready to work in this role today
+
+🧬 2️⃣ Resume Match Score (What the user claims)
+
+This comes from your resume AI.
+
+It checks:
+
+Skills listed
+
+Tools used
+
+Projects
+
+Years of exposure
+
+For each role it outputs:
+
+Resume Match %
+
+
+Example:
+
+Frontend → 75%
+Backend → 45%
+Full Stack → 60%
+
+
+This means:
+
+According to resume, user looks most like a Frontend dev.
+
+But resumes lie — so we combine with quiz.
+
+🎯 3️⃣ Role Likeliness Score (Final Truth)
+
+This is what you show on dashboard.
+
+Formula:
+
+Role Likeliness =
+(Resume Match × 0.40) + (Quiz Score × 0.60)
+
+
+Because:
+
+Resume shows exposure
+
+Quiz shows ability
+
+Example (Frontend):
+
+Resume = 75%
+Quiz = 62%
+
+Role Likelihood = (75×0.4) + (62×0.6)
+= 30 + 37.2
+= 67.2%
+
+
+This means:
+
+User has 67% probability of succeeding as a Frontend developer
+
+🧠 4️⃣ Risk Level
+
+Based on Role Likelihood:
+
+Likelihood	Meaning
+75–100	Low Risk – job ready
+55–75	Medium Risk – trainable
+<55	High Risk – career mismatch
+
+So 67% = Medium Risk
+
+🧭 5️⃣ Recommended Roles
+
+You calculate this for every role, even if user selected only one.
+
+Example:
+
+Role	Resume	Quiz	Final
+Frontend	75%	62%	67% ⭐
+Backend	40%	50%	46%
+Full Stack	60%	58%	59%
+Data Analyst	30%	45%	39%
+
+You show:
+
+Best fit: Frontend (67%)
+Also good: Full Stack (59%)

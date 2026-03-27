@@ -1,0 +1,289 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Mock Test Center - Careerlytics{% endblock %}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+    <style>
+        :root {
+          --sidebar-light: #1e293b;
+          --sidebar-dark: #0f172a;
+          --sidebar-accent: #3730a3;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+        }
+        .card {
+            background-color: #ffffff;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+        .dark .card {
+            background-color: #1f2937;
+        }
+        .btn-primary {
+            background-color: #2563eb;
+            color: #ffffff;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            font-weight: 500;
+            transition: background-color 0.2s;
+        }
+        .btn-primary:hover {
+            background-color: #1e40af;
+        }
+        .sidebar-icon {
+            font-size: 28px;
+            color: #a0aec0;
+        }
+        .sidebar-item.active .sidebar-icon,
+        .sidebar-item:hover .sidebar-icon {
+            color: #ffffff;
+        }
+        /* Glass Day Night Toggle */
+        .toggle-wrapper{
+            width:90px;
+            height:38px;
+            border-radius:21px;
+            background:rgba(255,255,255,0.25);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border:1px solid rgba(255,255,255,0.4);
+            box-shadow:0 6px 15px rgba(0,0,0,0.05);
+            position:relative;
+            overflow:hidden;
+            cursor:pointer;
+            flex-shrink:0;
+        }
+        .sky{
+            position:absolute;
+            inset:0;
+            border-radius:21px;
+            transition:1s;
+            background:linear-gradient(135deg,#7fc8ff,#cceeff);
+        }
+        .cloud{
+            position:absolute;
+            width:38px;
+            height:14px;
+            background:rgba(255,255,255,0.95);
+            border-radius:14px;
+            top:11px;
+            animation:cloudMove 18s linear infinite;
+            box-shadow:0 1px 4px rgba(0,0,0,0.03);
+        }
+        @keyframes cloudMove{
+            from{left:-45px;}
+            to{left:95px;}
+        }
+        .star{
+            position:absolute;
+            width:0.8px;
+            height:0.8px;
+            background:white;
+            border-radius:50%;
+            opacity:0;
+            animation:twinkle 2s infinite alternate;
+        }
+        @keyframes twinkle{
+            from{opacity:.3;}
+            to{opacity:1;}
+        }
+        .knob{
+            position:absolute;
+            top:3px;
+            left:3px;
+            width:32px;
+            height:32px;
+            border-radius:50%;
+            background:linear-gradient(135deg,#FFD700,#FF8C00);
+            box-shadow:0 0 8px #FFD700, 0 3px 8px rgba(0,0,0,0.12);
+            transition:0.9s cubic-bezier(0.4,0,0.2,1);
+            z-index:5;
+        }
+        .moon{
+            background:linear-gradient(135deg,#eee,#aaa);
+            box-shadow:inset -3px -3px 0 rgba(0,0,0,0.2), 0 0 6px #aaa;
+        }
+        .moon-shadow{
+            position:absolute;
+            width:8px;
+            height:8px;
+            background:rgba(0,0,0,0.25);
+            border-radius:50%;
+            top:7px;
+            left:7px;
+        }
+        .toggle-wrapper.active .knob{
+            transform:translateX(52px) rotate(360deg);
+        }
+        .toggle-wrapper.active .sky{
+            background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+        }
+        .sidebar-item::after {
+            content: attr(title);
+            position: absolute;
+            left: 100%;
+            top: 50%;
+            transform: translateY(-50%);
+            margin-left: 12px;
+            background-color: #1f2937;
+            color: white;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 500;
+            white-space: nowrap;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s, visibility 0.3s;
+            z-index: 1000;
+            pointer-events: none;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        .sidebar-item:hover::after {
+            opacity: 1;
+            visibility: visible;
+        }
+    </style>
+    {% block extra_css %}{% endblock %}
+</head>
+<body class="bg-slate-50 dark:bg-gray-900 min-h-screen flex">
+    <!-- Sidebar -->
+    <aside class="hidden sm:flex w-16 md:w-20 bg-blue-700 dark:bg-gradient-to-b dark:from-[var(--sidebar-dark)] dark:to-[var(--sidebar-accent)] flex-col items-center py-4 md:py-6 fixed h-full shadow-lg z-50">
+        <div class="mb-6 md:mb-10">
+            <div class="w-12 h-12 md:w-16 md:h-16 flex items-center justify-center">
+                <img src="{% static 'images/logo.png' %}" alt="Logo" class="w-full h-full object-contain">
+            </div>
+        </div>
+        <nav class="flex flex-col space-y-4 md:space-y-6">
+            <a href="{% url 'users:UserHome' %}" class="sidebar-item flex justify-center p-2 md:p-3 rounded-xl hover:bg-white/20 transition-colors" title="Dashboard">
+                <span class="material-symbols-outlined sidebar-icon text-white text-xl md:text-2xl">apps</span>
+            </a>
+            <a href="{% url 'upload' %}" class="sidebar-item flex justify-center p-2 md:p-3 rounded-xl hover:bg-white/20 transition-colors" title="Resume Analysis">
+                <span class="material-symbols-outlined sidebar-icon text-white text-xl md:text-2xl">analytics</span>
+            </a>
+            <a href="{% url 'users:my_resumes' %}" class="sidebar-item flex justify-center p-2 md:p-3 rounded-xl hover:bg-white/20 transition-colors" title="My Resume">
+                <span class="material-symbols-outlined sidebar-icon text-white text-xl md:text-2xl">description</span>
+            </a>
+            <a href="{% url 'mock_test' %}" class="sidebar-item flex justify-center p-2 md:p-3 rounded-xl bg-white/20 active" title="Mock Test">
+                <span class="material-symbols-outlined sidebar-icon text-white text-xl md:text-2xl">science</span>
+            </a>
+            <a href="{% url 'personalizedplan:dashboard' %}" class="sidebar-item flex justify-center p-2 md:p-3 rounded-xl hover:bg-white/20 transition-colors" title="Personalized Plan">
+                <span class="material-symbols-outlined sidebar-icon text-white text-xl md:text-2xl">school</span>
+            </a>
+            {% if user.user_type == 'student' %}
+            <a href="{% url 'users:campus_drives' %}" class="sidebar-item flex justify-center p-2 md:p-3 rounded-xl hover:bg-white/20 transition-colors" title="Campus Drives">
+                <span class="material-symbols-outlined sidebar-icon text-white text-xl md:text-2xl">business_center</span>
+            </a>
+            {% endif %}
+        </nav>
+        <div class="mt-auto">
+            <a href="{% url 'users:UserLogout' %}" class="sidebar-item flex justify-center p-2 md:p-3 rounded-xl hover:bg-red-600 transition-colors" title="Logout">
+                <span class="material-symbols-outlined sidebar-icon text-white text-xl md:text-2xl">logout</span>
+            </a>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="flex-1 ml-0 sm:ml-16 md:ml-20 mb-20 sm:mb-0">
+        <!-- Header -->
+        <header class="h-16 border-b border-slate-200 dark:border-slate-700 bg-white dark:bg-gray-800 flex flex-shrink-0 items-center justify-between px-4 md:px-8 sticky top-0 z-40">
+            <div class="flex items-center gap-4 md:gap-6">
+                <h1 class="font-bold text-[10px] md:text-[11px] uppercase tracking-widest text-slate-400 dark:text-slate-300 truncate max-w-[100px] xs:max-w-none">Careerlytics</h1>
+            </div>
+            <div class="flex items-center gap-3 md:gap-6">
+                <div class="scale-75 md:scale-100 origin-right">
+                    <div class="toggle-wrapper" id="theme-toggle">
+                        <div class="sky">
+                            <div class="cloud" style="animation-delay:0s"></div>
+                            <div class="cloud" style="top:60px;animation-delay:7s"></div>
+                            <div id="stars"></div>
+                        </div>
+                        <div class="knob" id="knob"></div>
+                    </div>
+                </div>
+                <div class="relative group">
+                    <div class="flex items-center gap-3 sm:border-l sm:border-slate-100 sm:pl-5 cursor-pointer transition-all hover:bg-blue-50 dark:hover:bg-gray-700 rounded-lg px-2 py-2 -mx-2">
+                        <div class="text-right hidden md:block">
+                            <p class="text-[8px] font-black text-slate-500 uppercase tracking-widest mb-1">PROFILE</p>
+                            <p class="text-xs text-slate-900 dark:text-slate-100 font-bold font-mono uppercase tracking-wide truncate max-w-[80px]">{{ user.userid|default:"user" }}</p>
+                        </div>
+                        {% if user.pic %}
+                        <div class="w-8 h-8 md:w-9 md:h-9 rounded-lg border border-slate-200 p-0.5 bg-white shadow-sm overflow-hidden group-hover:border-blue-300 dark:group-hover:border-blue-400 transition-colors">
+                            <img alt="User" class="w-full h-full object-cover rounded-[6px]" src="{{ user.pic.url }}"/>
+                        </div>
+                        {% else %}
+                        <div class="w-8 h-8 md:w-9 md:h-9 rounded-lg border border-slate-200 p-0.5 bg-white shadow-sm overflow-hidden flex items-center justify-center group-hover:border-blue-300 dark:group-hover:border-blue-400 transition-colors">
+                            <span class="material-symbols-outlined text-slate-400 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">person</span>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        {% block content %}{% endblock %}
+    </main>
+
+    <script>
+    function toggleTheme() {
+      const html = document.documentElement;
+      const themeToggle = document.getElementById('theme-toggle');
+      const knob = document.getElementById('knob');
+      
+      if (html.classList.contains('dark')) {
+        html.classList.remove('dark');
+        localStorage.setItem('theme', 'light');
+        themeToggle.classList.remove('active');
+        knob.classList.remove('moon');
+        knob.innerHTML = "";
+        document.querySelectorAll(".star").forEach(s=>s.style.opacity=0);
+        document.querySelectorAll(".cloud").forEach(c=>c.style.opacity=1);
+      } else {
+        html.classList.add('dark');
+        localStorage.setItem('theme', 'dark');
+        themeToggle.classList.add('active');
+        knob.classList.add('moon');
+        knob.innerHTML="<div class='moon-shadow'></div>";
+        document.querySelectorAll(".star").forEach(s=>s.style.opacity=1);
+        document.querySelectorAll(".cloud").forEach(c=>c.style.opacity=0);
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+      const savedTheme = localStorage.getItem('theme') || 'light';
+      const html = document.documentElement;
+      const themeToggle = document.getElementById('theme-toggle');
+      const knob = document.getElementById('knob');
+      const starsContainer = document.getElementById('stars');
+      
+      for(let i=0;i<40;i++){
+        let s=document.createElement("div");
+        s.className="star";
+        s.style.left=Math.random()*100+"%";
+        s.style.top=Math.random()*100+"%";
+        s.style.animationDelay=Math.random()*2+"s";
+        starsContainer.appendChild(s);
+      }
+      
+      if (savedTheme === 'dark') {
+        html.classList.add('dark');
+        themeToggle.classList.add('active');
+        knob.classList.add('moon');
+        knob.innerHTML="<div class='moon-shadow'></div>";
+        document.querySelectorAll(".star").forEach(s=>s.style.opacity=1);
+        document.querySelectorAll(".cloud").forEach(c=>c.style.opacity=0);
+      }
+      
+      themeToggle.addEventListener('click', toggleTheme);
+    });
+    </script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

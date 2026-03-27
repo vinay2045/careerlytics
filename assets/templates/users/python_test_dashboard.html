@@ -1,0 +1,157 @@
+{% extends 'users/user_tailwind_base.html' %}
+{% load static %}
+
+{% block title %}Python Programming Test{% endblock %}
+
+{% block contents %}
+<div class="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-900 dark:to-gray-800 py-12 px-4">
+    <div class="max-w-6xl mx-auto">
+        <!-- Header -->
+        <div class="text-center mb-12">
+            <div class="w-20 h-20 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-full flex items-center justify-center mx-auto mb-6 shadow-2xl">
+                <span class="material-symbols-outlined text-white text-3xl">code</span>
+            </div>
+            <h1 class="text-4xl font-bold text-gray-900 dark:text-white mb-4">
+                Python Programming Test
+            </h1>
+            <p class="text-lg text-gray-600 dark:text-gray-300 mb-8">
+                Test your Python programming knowledge with our comprehensive assessment
+            </p>
+        </div>
+
+        <!-- Test Information Cards -->
+        <div class="grid md:grid-cols-3 gap-6 mb-12">
+            <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 text-center">
+                <div class="w-12 h-12 bg-blue-100 dark:bg-blue-900/30 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <span class="material-symbols-outlined text-blue-600 dark:text-blue-400 text-xl">quiz</span>
+                </div>
+                <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-2">50 Questions</h3>
+                <p class="text-gray-600 dark:text-gray-300">Carefully selected Python questions</p>
+            </div>
+
+            <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 text-center">
+                <div class="w-12 h-12 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <span class="material-symbols-outlined text-green-600 dark:text-green-400 text-xl">timer</span>
+                </div>
+                <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-2">45 Minutes</h3>
+                <p class="text-gray-600 dark:text-gray-300">Complete the test within time limit</p>
+            </div>
+
+            <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 text-center">
+                <div class="w-12 h-12 bg-purple-100 dark:bg-purple-900/30 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <span class="material-symbols-outlined text-purple-600 dark:text-purple-400 text-xl">score</span>
+                </div>
+                <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-2">Instant Results</h3>
+                <p class="text-gray-600 dark:text-gray-300">Get your score immediately after completion</p>
+            </div>
+        </div>
+
+        <!-- Test Instructions -->
+        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8 mb-8">
+            <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-6 flex items-center">
+                <span class="material-symbols-outlined text-blue-600 dark:text-blue-400 mr-3">info</span>
+                Test Instructions
+            </h2>
+            
+            <div class="grid md:grid-cols-2 gap-6">
+                <div class="space-y-4">
+                    <div class="flex items-start">
+                        <span class="material-symbols-outlined text-green-600 dark:text-green-400 mr-3 mt-1">check_circle</span>
+                        <p class="text-gray-700 dark:text-gray-300">Test contains 50 multiple-choice questions</p>
+                    </div>
+                    <div class="flex items-start">
+                        <span class="material-symbols-outlined text-green-600 dark:text-green-400 mr-3 mt-1">check_circle</span>
+                        <p class="text-gray-700 dark:text-gray-300">Time limit: 45 minutes (no pause)</p>
+                    </div>
+                    <div class="flex items-start">
+                        <span class="material-symbols-outlined text-green-600 dark:text-green-400 mr-3 mt-1">check_circle</span>
+                        <p class="text-gray-700 dark:text-gray-300">Questions may have 2, 3, or 4 options</p>
+                    </div>
+                    <div class="flex items-start">
+                        <span class="material-symbols-outlined text-green-600 dark:text-green-400 mr-3 mt-1">check_circle</span>
+                        <p class="text-gray-700 dark:text-gray-300">Select one answer per question</p>
+                    </div>
+                </div>
+                
+                <div class="space-y-4">
+                    <div class="flex items-start">
+                        <span class="material-symbols-outlined text-green-600 dark:text-green-400 mr-3 mt-1">check_circle</span>
+                        <p class="text-gray-700 dark:text-gray-300">Navigate between questions freely</p>
+                    </div>
+                    <div class="flex items-start">
+                        <span class="material-symbols-outlined text-green-600 dark:text-green-400 mr-3 mt-1">check_circle</span>
+                        <p class="text-gray-700 dark:text-gray-300">Mark questions for review if needed</p>
+                    </div>
+                    <div class="flex items-start">
+                        <span class="material-symbols-outlined text-green-600 dark:text-green-400 mr-3 mt-1">check_circle</span>
+                        <p class="text-gray-700 dark:text-gray-300">Results shown immediately after submission</p>
+                    </div>
+                    <div class="flex items-start">
+                        <span class="material-symbols-outlined text-green-600 dark:text-green-400 mr-3 mt-1">check_circle</span>
+                        <p class="text-gray-700 dark:text-gray-300">No negative marking</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Important Notice -->
+        <div class="bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-xl p-6 mb-8">
+            <div class="flex items-center mb-3">
+                <span class="material-symbols-outlined text-yellow-600 dark:text-yellow-400 mr-3">warning</span>
+                <h3 class="text-lg font-semibold text-yellow-800 dark:text-yellow-200">Important Notice</h3>
+            </div>
+            <ul class="space-y-2 text-yellow-700 dark:text-yellow-300">
+                <li>• Once started, the test timer cannot be paused</li>
+                <li>• Make sure you have a stable internet connection</li>
+                <li>• Close other applications to avoid distractions</li>
+                <li>• The test will automatically submit when time expires</li>
+            </ul>
+        </div>
+
+        <!-- Start Test Button -->
+        <div class="text-center">
+            <button onclick="startPythonTest()" class="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-bold py-4 px-12 rounded-xl text-lg shadow-xl transform hover:scale-105 transition-all duration-200 flex items-center mx-auto">
+                <span class="material-symbols-outlined mr-3">play_arrow</span>
+                Start Python Test
+            </button>
+            <p class="text-sm text-gray-500 dark:text-gray-400 mt-4">
+                By clicking "Start Python Test", you agree to the test terms and conditions
+            </p>
+        </div>
+    </div>
+</div>
+
+<script>
+function startPythonTest() {
+    // Show loading state
+    const button = event.target;
+    const originalText = button.innerHTML;
+    button.innerHTML = '<span class="material-symbols-outlined mr-3 animate-spin">refresh</span>Loading Questions...';
+    button.disabled = true;
+    
+    // Load questions and then redirect to test page
+    fetch('/users/load-python-questions/')
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'success') {
+                // Store questions in sessionStorage
+                sessionStorage.setItem('pythonTestQuestions', JSON.stringify(data.questions));
+                sessionStorage.setItem('pythonTestStartTime', Date.now());
+                
+                // Redirect to test page
+                window.location.href = '/users/python-test/';
+            } else {
+                alert('Failed to load questions: ' + data.message);
+                button.innerHTML = originalText;
+                button.disabled = false;
+            }
+        })
+        .catch(error => {
+            console.error('Error loading questions:', error);
+            alert('Failed to load questions. Please try again.');
+            button.innerHTML = originalText;
+            button.disabled = false;
+        });
+}
+</script>
+{% endblock %}

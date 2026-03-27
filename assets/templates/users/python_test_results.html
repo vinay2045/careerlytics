@@ -1,0 +1,201 @@
+{% extends 'users/user_tailwind_base.html' %}
+{% load static %}
+
+{% block title %}Python Test Results{% endblock %}
+
+{% block contents %}
+<div class="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-900 dark:to-gray-800 py-12 px-4">
+    <div class="max-w-6xl mx-auto">
+        <!-- Header -->
+        <div class="text-center mb-8">
+            {% if auto_submitted %}
+            <div class="w-20 h-20 bg-gradient-to-br from-orange-400 to-red-600 rounded-full flex items-center justify-center mx-auto mb-6 shadow-2xl">
+                <span class="material-symbols-outlined text-white text-3xl">warning</span>
+            </div>
+            <div class="bg-orange-100 border border-orange-300 text-orange-800 px-4 py-3 rounded-lg mb-4">
+                <p class="font-semibold">Test Auto-Submitted</p>
+                <p class="text-sm mt-1">You exited the test page, so your test was automatically submitted.</p>
+            </div>
+            {% else %}
+            <div class="w-20 h-20 bg-gradient-to-br from-green-400 to-green-600 rounded-full flex items-center justify-center mx-auto mb-6 shadow-2xl">
+                <span class="material-symbols-outlined text-white text-3xl">emoji_events</span>
+            </div>
+            {% endif %}
+            <h1 class="text-4xl font-bold text-gray-900 dark:text-white mb-4">
+                Test Results
+            </h1>
+            <p class="text-lg text-gray-600 dark:text-gray-300">
+                Your Python Programming Test Performance
+            </p>
+        </div>
+
+        <!-- Results Summary -->
+        <div id="results-summary" class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8 mb-8">
+            <!-- Results will be loaded here -->
+            <div class="text-center py-8">
+                <div class="animate-pulse">
+                    <span class="material-symbols-outlined text-4xl text-blue-600">refresh</span>
+                </div>
+                <p class="text-gray-600 mt-4">Loading your results...</p>
+            </div>
+        </div>
+
+        <!-- Detailed Results -->
+        <div id="detailed-results" class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8 mb-8">
+            <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-6">Detailed Answers</h2>
+            <div id="answers-container">
+                <!-- Answers will be loaded here -->
+            </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="text-center">
+            <button onclick="retakeTest()" class="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-bold py-3 px-8 rounded-xl mr-4">
+                <span class="material-symbols-outlined mr-2">refresh</span>
+                Retake Test
+            </button>
+            <button onclick="backToDashboard()" class="bg-gray-600 hover:bg-gray-700 text-white font-bold py-3 px-8 rounded-xl">
+                <span class="material-symbols-outlined mr-2">dashboard</span>
+                Back to Dashboard
+            </button>
+        </div>
+    </div>
+</div>
+
+<script>
+// Load results from sessionStorage or API
+document.addEventListener('DOMContentLoaded', function() {
+    loadResults();
+});
+
+function loadResults() {
+    const storedResults = sessionStorage.getItem('testResults');
+    
+    if (storedResults) {
+        const results = JSON.parse(storedResults);
+        displayResults(results);
+    } else {
+        // If no stored results, show a message
+        document.getElementById('results-summary').innerHTML = `
+            <div class="text-center py-8">
+                <span class="material-symbols-outlined text-4xl text-gray-400">info</span>
+                <p class="text-gray-600 mt-4">No test results found. Please complete the test first.</p>
+            </div>
+        `;
+    }
+}
+
+function displayResults(results) {
+    // Display summary
+    const summaryHtml = `
+        <div class="text-center mb-8">
+            <div class="text-6xl font-bold text-blue-600 mb-4">${results.percentage}%</div>
+            <div class="inline-flex items-center px-4 py-2 bg-${getPerformanceColor(results.performance_level)}-100 dark:bg-${getPerformanceColor(results.performance_level)}-900/30 text-${getPerformanceColor(results.performance_level)}-800 dark:text-${getPerformanceColor(results.performance_level)}-200 rounded-full text-lg font-medium mb-4">
+                ${results.performance_level}
+            </div>
+            <p class="text-gray-600 dark:text-gray-300 text-lg">${results.message}</p>
+        </div>
+        
+        <div class="grid md:grid-cols-4 gap-6">
+            <div class="text-center p-6 bg-green-50 dark:bg-green-900/20 rounded-xl">
+                <div class="text-3xl font-bold text-green-600 dark:text-green-400">${results.correct_answers}</div>
+                <div class="text-sm text-gray-600 dark:text-gray-400 mt-1">Correct Answers</div>
+            </div>
+            <div class="text-center p-6 bg-red-50 dark:bg-red-900/20 rounded-xl">
+                <div class="text-3xl font-bold text-red-600 dark:text-red-400">${results.wrong_answers}</div>
+                <div class="text-sm text-gray-600 dark:text-gray-400 mt-1">Wrong Answers</div>
+            </div>
+            <div class="text-center p-6 bg-blue-50 dark:bg-blue-900/20 rounded-xl">
+                <div class="text-3xl font-bold text-blue-600 dark:text-blue-400">${results.total_questions}</div>
+                <div class="text-sm text-gray-600 dark:text-gray-400 mt-1">Total Questions</div>
+            </div>
+            <div class="text-center p-6 bg-purple-50 dark:bg-purple-900/20 rounded-xl">
+                <div class="text-3xl font-bold text-purple-600 dark:text-purple-400">${Math.round(results.percentage)}%</div>
+                <div class="text-sm text-gray-600 dark:text-gray-400 mt-1">Success Rate</div>
+            </div>
+        </div>
+    `;
+    
+    document.getElementById('results-summary').innerHTML = summaryHtml;
+    
+    // Display detailed answers
+    const answersContainer = document.getElementById('answers-container');
+    answersContainer.innerHTML = '';
+    
+    results.detailed_results.forEach((result, index) => {
+        const answerCard = document.createElement('div');
+        answerCard.className = `mb-6 p-6 rounded-xl border-2 ${result.is_correct ? 'bg-green-50 border-green-200' : 'bg-red-50 border-red-200'}`;
+        
+        const correctAnswerText = result.correct_answer !== null ? String.fromCharCode(65 + result.correct_answer) : 'N/A';
+        const userAnswerText = result.user_answer !== null ? String.fromCharCode(65 + result.user_answer) : 'Not Answered';
+        
+        answerCard.innerHTML = `
+            <div class="flex items-start justify-between mb-4">
+                <div class="flex items-center">
+                    <span class="text-lg font-semibold text-gray-900 dark:text-white mr-3">Q${result.question_number}</span>
+                    ${result.is_correct ? 
+                        '<span class="material-symbols-outlined text-green-600">check_circle</span>' : 
+                        '<span class="material-symbols-outlined text-red-600">cancel</span>'
+                    }
+                </div>
+                <span class="text-sm ${result.is_correct ? 'text-green-600' : 'text-red-600'} font-medium">
+                    ${result.is_correct ? 'Correct' : 'Incorrect'}
+                </span>
+            </div>
+            
+            <div class="mb-4">
+                <p class="text-gray-900 dark:text-white font-medium mb-3">${result.question}</p>
+                
+                <div class="space-y-2">
+                    ${result.options.map((option, i) => `
+                        <div class="flex items-center p-2 rounded ${i === result.correct_answer ? 'bg-green-100 dark:bg-green-900/30' : ''} ${i === result.user_answer && !result.is_correct ? 'bg-red-100 dark:bg-red-900/30' : ''}">
+                            <span class="text-sm font-medium ${i === result.correct_answer ? 'text-green-700 dark:text-green-300' : 'text-gray-600 dark:text-gray-400'}">
+                                ${String.fromCharCode(65 + i)}.
+                            </span>
+                            <span class="text-sm ${i === result.correct_answer ? 'text-green-700 dark:text-green-300 font-medium' : 'text-gray-700 dark:text-gray-300'}">
+                                ${option}
+                            </span>
+                            ${i === result.correct_answer ? '<span class="ml-2 text-xs text-green-600 font-medium">(Correct Answer)</span>' : ''}
+                            ${i === result.user_answer && !result.is_correct ? '<span class="ml-2 text-xs text-red-600 font-medium">(Your Answer)</span>' : ''}
+                        </div>
+                    `).join('')}
+                </div>
+            </div>
+            
+            <div class="flex items-center justify-between text-sm">
+                <div>
+                    <span class="text-gray-600 dark:text-gray-400">Your Answer: </span>
+                    <span class="font-medium ${result.is_correct ? 'text-green-600' : 'text-red-600'}">${userAnswerText}</span>
+                </div>
+                <div>
+                    <span class="text-gray-600 dark:text-gray-400">Correct Answer: </span>
+                    <span class="font-medium text-green-600">${correctAnswerText}</span>
+                </div>
+            </div>
+        `;
+        
+        answersContainer.appendChild(answerCard);
+    });
+}
+
+function getPerformanceColor(level) {
+    switch(level.toLowerCase()) {
+        case 'excellent': return 'green';
+        case 'good': return 'blue';
+        case 'average': return 'yellow';
+        case 'needs improvement': return 'red';
+        default: return 'gray';
+    }
+}
+
+function retakeTest() {
+    sessionStorage.clear();
+    window.location.href = '/users/python-test-dashboard/';
+}
+
+function backToDashboard() {
+    sessionStorage.clear();
+    window.location.href = '/users/UserHome/';
+}
+</script>
+{% endblock %}

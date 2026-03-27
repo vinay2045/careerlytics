@@ -1,0 +1,90 @@
+{% extends 'users/user_tailwind_base.html' %}
+{% load static %}
+
+{% block page_title %}Mock Test Languages{% endblock %}
+
+{% block contents %}
+<div class="max-w-7xl mx-auto px-6 md:px-8 lg:px-10 py-6 md:py-8">
+    <!-- Navigation -->
+    <div class="flex items-center justify-between mb-8 md:mb-10">
+        <div class="flex items-center gap-2 text-sm font-medium text-slate-500 dark:text-slate-400">
+            <span class="text-slate-900 dark:text-white">Mock Test</span>
+            <span class="material-symbols-outlined text-base">chevron_right</span>
+            <span class="text-blue-600 dark:text-blue-400">Languages</span>
+        </div>
+        <a href="{% url 'users:UserHome' %}" class="group flex items-center gap-2 px-5 py-2.5 bg-white dark:bg-gray-800 text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 rounded-xl hover:shadow-lg hover:ring-1 hover:ring-blue-100 dark:hover:ring-blue-900 transition-all duration-300 font-bold text-sm shadow-sm border border-slate-200 dark:border-slate-700">
+            <span class="material-symbols-outlined text-lg transition-transform group-hover:-translate-x-1">arrow_back</span>
+            Return
+        </a>
+    </div>
+
+    <!-- Title Box -->
+    <div class="bg-white dark:bg-gray-800 rounded-3xl p-6 md:p-8 shadow-sm border border-slate-100 dark:border-slate-700 mb-8 w-full transition-all duration-300 hover:shadow-xl hover:-translate-y-1 hover:border-blue-100 dark:hover:border-blue-900 group">
+        <h1 class="text-2xl md:text-4xl font-extrabold text-slate-900 dark:text-white leading-tight mb-3 md:mb-4 transition-all duration-300 cursor-default">
+            Select Programming <span class="text-blue-600">Language</span>
+        </h1>
+        <p class="text-slate-500 dark:text-slate-400 font-medium text-sm md:text-lg">
+            Master your coding skills with language-specific mock tests. Deep dive into syntax, libraries, and best practices.
+        </p>
+    </div>
+
+    <!-- Tabs Navigation -->
+    <div class="flex items-center gap-2 mb-8 border-b border-slate-100 dark:border-slate-800 overflow-x-auto no-scrollbar">
+        <a href="{% url 'role_selection' %}" class="flex items-center gap-2 px-6 py-4 text-sm font-semibold text-slate-500 dark:text-slate-400 hover:text-blue-600 transition-all border-b-2 border-transparent hover:border-blue-200 whitespace-nowrap">
+            <span class="material-symbols-outlined text-xl">work</span>
+            Roles
+        </a>
+        <a href="{% url 'language_selection' %}" class="flex items-center gap-2 px-6 py-4 text-sm font-bold border-b-2 border-blue-600 text-blue-600 transition-all whitespace-nowrap">
+            <span class="material-symbols-outlined text-xl">code</span>
+            Languages
+        </a>
+        <a href="{% url 'users:campus_drives' %}" class="flex items-center gap-2 px-6 py-4 text-sm font-semibold text-slate-500 dark:text-slate-400 hover:text-blue-600 transition-all border-b-2 border-transparent hover:border-blue-200 whitespace-nowrap">
+            <span class="material-symbols-outlined text-xl">business_center</span>
+            Campus Drive
+        </a>
+    </div>
+
+    <!-- Languages Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        {% for language in languages %}
+        <div class="relative overflow-hidden border border-gray-100 rounded-[2.5rem] p-8 group cursor-pointer transition-all duration-300 hover:-translate-y-1 hover:shadow-xl
+            {% if language.color == 'blue' %}bg-blue-50 dark:bg-blue-900/20{% endif %}
+            {% if language.color == 'green' %}bg-green-50 dark:bg-green-900/20{% endif %}
+            {% if language.color == 'purple' %}bg-purple-50 dark:bg-purple-900/20{% endif %}
+            {% if language.color == 'orange' %}bg-orange-50 dark:bg-orange-900/20{% endif %}
+            {% if language.color == 'red' %}bg-red-50 dark:bg-red-900/20{% endif %}
+            {% if language.color == 'yellow' %}bg-yellow-50 dark:bg-yellow-900/20{% endif %}
+            " onclick="window.location.href='{% url 'language_test_list' language.key %}'">
+            
+            <div class="w-12 h-12 bg-white dark:bg-gray-800 rounded-2xl flex items-center justify-center shadow-sm mb-6 transition-transform group-hover:scale-110
+                {% if language.color == 'blue' %}text-blue-600 dark:text-blue-400{% endif %}
+                {% if language.color == 'green' %}text-emerald-600 dark:text-emerald-400{% endif %}
+                {% if language.color == 'purple' %}text-purple-600 dark:text-purple-400{% endif %}
+                {% if language.color == 'orange' %}text-orange-600 dark:text-orange-400{% endif %}
+                {% if language.color == 'red' %}text-red-600 dark:text-red-400{% endif %}
+                {% if language.color == 'yellow' %}text-yellow-600 dark:text-yellow-400{% endif %}
+                ">
+                <span class="material-symbols-outlined text-2xl">{{ language.icon }}</span>
+            </div>
+            
+            <h3 class="text-xl font-bold text-slate-800 dark:text-white">{{ language.name }}</h3>
+            <p class="text-xs text-slate-500 dark:text-slate-400 mt-2 font-semibold">{{ language.description }}</p>
+            
+            <div class="mt-8 flex items-center justify-between">
+                <span class="text-xs font-bold px-3 py-1 rounded-full
+                    {% if language.color == 'blue' %}text-blue-600 dark:text-blue-400 bg-blue-100/50 dark:bg-blue-900/50{% endif %}
+                    {% if language.color == 'green' %}text-emerald-600 dark:text-emerald-400 bg-emerald-100/50 dark:bg-emerald-900/50{% endif %}
+                    {% if language.color == 'purple' %}text-purple-600 dark:text-purple-400 bg-purple-100/50 dark:bg-purple-900/50{% endif %}
+                    {% if language.color == 'orange' %}text-orange-600 dark:text-orange-400 bg-orange-100/50 dark:bg-orange-900/50{% endif %}
+                    {% if language.color == 'red' %}text-red-600 dark:text-red-400 bg-red-100/50 dark:bg-red-900/50{% endif %}
+                    {% if language.color == 'yellow' %}text-yellow-600 dark:text-yellow-400 bg-yellow-100/50 dark:bg-yellow-900/50{% endif %}
+                    ">
+                    {{ language.count }} Tests
+                </span>
+                <span class="material-symbols-outlined text-slate-400 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">arrow_forward</span>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

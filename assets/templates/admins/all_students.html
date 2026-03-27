@@ -1,0 +1,319 @@
+{% extends 'admins/admin_base.html' %}
+{% load static %}
+
+{% block title %}Students Management{% endblock %}
+
+{% block content %}
+<div class="space-y-6 animate-fade-in">
+    <!-- Header -->
+    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div>
+            <h1 class="text-2xl font-bold text-gray-900 dark:text-white">Students Management</h1>
+            <p class="text-gray-500 dark:text-gray-400 mt-1">Manage student access and placement status</p>
+        </div>
+        <!-- Search -->
+        <div class="relative">
+            <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">search</span>
+            <input type="text" id="studentSearch" placeholder="Search students..." class="pl-10 pr-4 py-2 rounded-xl border border-gray-200 dark:border-dark-border bg-white dark:bg-dark-card text-gray-900 dark:text-white focus:ring-2 focus:ring-brand-blue focus:border-transparent w-full md:w-64">
+        </div>
+    </div>
+
+    <!-- Stats Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="bg-white dark:bg-dark-card rounded-2xl p-6 border border-gray-200 dark:border-dark-border shadow-sm">
+            <div class="flex items-center justify-between mb-4">
+                <div class="w-12 h-12 rounded-xl bg-blue-50 dark:bg-blue-900/20 flex items-center justify-center text-blue-600 dark:text-blue-400">
+                    <span class="material-symbols-outlined">group</span>
+                </div>
+                <span class="text-xs font-medium text-green-600 bg-green-50 dark:bg-green-900/20 px-2 py-1 rounded-lg">+{{ total_students }}</span>
+            </div>
+            <h3 class="text-gray-500 dark:text-gray-400 text-sm font-medium">Total Students</h3>
+            <p class="text-2xl font-bold text-gray-900 dark:text-white mt-1">{{ total_students }}</p>
+        </div>
+
+        <div class="bg-white dark:bg-dark-card rounded-2xl p-6 border border-gray-200 dark:border-dark-border shadow-sm">
+            <div class="flex items-center justify-between mb-4">
+                <div class="w-12 h-12 rounded-xl bg-green-50 dark:bg-green-900/20 flex items-center justify-center text-green-600 dark:text-green-400">
+                    <span class="material-symbols-outlined">verified_user</span>
+                </div>
+            </div>
+            <h3 class="text-gray-500 dark:text-gray-400 text-sm font-medium">Active Students</h3>
+            <p class="text-2xl font-bold text-gray-900 dark:text-white mt-1">{{ active_students }}</p>
+        </div>
+
+        <div class="bg-white dark:bg-dark-card rounded-2xl p-6 border border-gray-200 dark:border-dark-border shadow-sm">
+            <div class="flex items-center justify-between mb-4">
+                <div class="w-12 h-12 rounded-xl bg-red-50 dark:bg-red-900/20 flex items-center justify-center text-red-600 dark:text-red-400">
+                    <span class="material-symbols-outlined">person_off</span>
+                </div>
+            </div>
+            <h3 class="text-gray-500 dark:text-gray-400 text-sm font-medium">Inactive Students</h3>
+            <p class="text-2xl font-bold text-gray-900 dark:text-white mt-1">{{ inactive_students }}</p>
+        </div>
+    </div>
+
+    <!-- Students Table -->
+    <div class="bg-white dark:bg-dark-card rounded-2xl border border-gray-200 dark:border-dark-border overflow-hidden shadow-sm">
+        <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse">
+                <thead>
+                    <tr class="bg-gray-50 dark:bg-dark-sidebar border-b border-gray-200 dark:border-dark-border">
+                        <th class="p-4 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Student</th>
+                        <th class="p-4 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Department</th>
+                        <th class="p-4 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Year</th>
+                        <th class="p-4 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Marks (%)</th>
+                        <th class="p-4 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Backlogs</th>
+                        <th class="p-4 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Status</th>
+                        <th class="p-4 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider text-right">Actions</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-200 dark:divide-dark-border">
+                    {% for student in students %}
+                    <tr class="hover:bg-gray-50 dark:hover:bg-dark-sidebar/50 transition-colors">
+                        <td class="p-4">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-full bg-brand-blue/10 flex items-center justify-center text-brand-blue font-bold text-sm">
+                                    {{ student.name|slice:":2"|upper }}
+                                </div>
+                                <div>
+                          <h4 class="text-sm font-semibold text-gray-900 dark:text-white">{{ student.name }}</h4>
+                        </div>
+                            </div>
+                        </td>
+                        <td class="p-4 text-sm text-gray-600 dark:text-gray-300">{{ student.department }}</td>
+                        <td class="p-4 text-sm text-gray-600 dark:text-gray-300">{{ student.year }}</td>
+                        <td class="p-4">
+                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300">
+                                {{ student.marks_percentage }}
+                            </span>
+                        </td>
+                        <td class="p-4">
+                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium {% if student.backlog == 0 %}bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300{% else %}bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-300{% endif %}">
+                                {{ student.backlog }}
+                            </span>
+                        </td>
+                        <td class="p-4">
+                            {% if student.is_active %}
+                            <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300">
+                                <span class="w-1.5 h-1.5 rounded-full bg-green-500"></span>
+                                Active
+                            </span>
+                            {% else %}
+                            <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-300">
+                                <span class="w-1.5 h-1.5 rounded-full bg-red-500"></span>
+                                Inactive
+                            </span>
+                            {% endif %}
+                        </td>
+                        <td class="p-4 text-right">
+                            <div class="flex items-center justify-end gap-2">
+                                <button onclick="openEditModal({{ student.id }}, '{{ student.name|escapejs }}', {{ student.marks_percentage }}, {{ student.backlog }}, {{ student.year }})" class="p-2 rounded-lg text-blue-600 hover:text-blue-700 hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-colors" title="Edit Student">
+                                    <span class="material-symbols-outlined text-xl">edit</span>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="7" class="p-8 text-center text-gray-500 dark:text-gray-400">
+                            No students found.
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        
+        <!-- Pagination (Optional) -->
+        {% if students.has_other_pages %}
+        <div class="p-4 border-t border-gray-200 dark:border-dark-border flex items-center justify-between">
+            <div class="text-sm text-gray-500 dark:text-gray-400">
+                Showing {{ students.start_index }} to {{ students.end_index }} of {{ students.paginator.count }} results
+            </div>
+            <div class="flex gap-2">
+                {% if students.has_previous %}
+                <a href="?page={{ students.previous_page_number }}" class="px-3 py-1 rounded-lg border border-gray-200 dark:border-dark-border text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-dark-sidebar transition-colors">Previous</a>
+                {% endif %}
+                {% if students.has_next %}
+                <a href="?page={{ students.next_page_number }}" class="px-3 py-1 rounded-lg border border-gray-200 dark:border-dark-border text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-dark-sidebar transition-colors">Next</a>
+                {% endif %}
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+<!-- Edit Student Modal -->
+<div id="editStudentModal" class="fixed inset-0 z-50 hidden">
+    <div class="absolute inset-0 bg-black/50 backdrop-blur-sm transition-opacity opacity-0" id="editModalBackdrop"></div>
+    
+    <div class="relative min-h-screen flex items-center justify-center p-4">
+        <div class="bg-white dark:bg-dark-card rounded-2xl shadow-2xl w-full max-w-md transform scale-95 opacity-0 transition-all duration-300" id="editModalContent">
+            <div class="p-6">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="text-xl font-bold text-gray-900 dark:text-white">Edit Student Details</h3>
+                    <button onclick="closeEditModal()" class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300">
+                        <span class="material-symbols-outlined">close</span>
+                    </button>
+                </div>
+                
+                <form id="editStudentForm" method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" id="studentId" name="student_id">
+                    
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Student Name</label>
+                        <input type="text" id="studentName" readonly class="w-full px-3 py-2 border border-gray-300 dark:border-dark-border rounded-lg bg-gray-100 dark:bg-gray-800 text-gray-500">
+                    </div>
+                    
+                    <div class="mb-4">
+                        <label for="studentYear" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Academic Year</label>
+                        <select id="studentYear" name="year" required class="w-full px-3 py-2 border border-gray-300 dark:border-dark-border rounded-lg bg-white dark:bg-dark-card text-gray-900 dark:text-white focus:ring-2 focus:ring-brand-blue focus:border-transparent">
+                            <option value="1">1st Year</option>
+                            <option value="2">2nd Year</option>
+                            <option value="3">3rd Year</option>
+                            <option value="4">4th Year</option>
+                        </select>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <label for="studentMarks" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Marks (%)</label>
+                        <input type="number" id="studentMarks" name="marks_percentage" step="0.01" min="0" max="100" required class="w-full px-3 py-2 border border-gray-300 dark:border-dark-border rounded-lg bg-white dark:bg-dark-card text-gray-900 dark:text-white focus:ring-2 focus:ring-brand-blue focus:border-transparent">
+                    </div>
+                    
+                    <div class="mb-6">
+                        <label for="studentBacklog" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Number of Backlogs</label>
+                        <input type="number" id="studentBacklog" name="backlog" min="0" required class="w-full px-3 py-2 border border-gray-300 dark:border-dark-border rounded-lg bg-white dark:bg-dark-card text-gray-900 dark:text-white focus:ring-2 focus:ring-brand-blue focus:border-transparent">
+                    </div>
+                    
+                    <div class="flex gap-3 justify-end">
+                        <button type="button" onclick="closeEditModal()" class="px-5 py-2.5 rounded-xl border border-gray-200 dark:border-dark-border text-gray-700 dark:text-gray-300 font-medium hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
+                            Cancel
+                        </button>
+                        <button type="submit" class="px-5 py-2.5 rounded-xl bg-brand-blue hover:bg-brand-blueHover text-white font-medium shadow-lg shadow-blue-900/20 transition-all">
+                            Save Changes
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const searchInput = document.getElementById('studentSearch');
+    const tableRows = document.querySelectorAll('tbody tr');
+    
+    searchInput.addEventListener('input', function() {
+        const searchTerm = this.value.toLowerCase();
+        
+        tableRows.forEach(row => {
+            const studentName = row.querySelector('h4')?.textContent.toLowerCase() || '';
+            const department = row.cells[1]?.textContent.toLowerCase() || '';
+            const year = row.cells[2]?.textContent.toLowerCase() || '';
+            const cgpa = row.cells[3]?.textContent.toLowerCase() || '';
+            const backlog = row.cells[4]?.textContent.toLowerCase() || '';
+            const status = row.cells[5]?.textContent.toLowerCase() || '';
+            
+            const searchableText = studentName + ' ' + department + ' ' + year + ' ' + cgpa + ' ' + backlog + ' ' + status;
+            
+            if (searchableText.includes(searchTerm)) {
+                row.style.display = '';
+            } else {
+                row.style.display = 'none';
+            }
+        });
+        
+        // Show/hide "no results" message
+        const visibleRows = Array.from(tableRows).filter(row => row.style.display !== 'none');
+        const emptyRow = document.querySelector('tbody tr td[colspan="6"]');
+        
+        if (visibleRows.length === 0 && searchTerm !== '') {
+            if (emptyRow) {
+                emptyRow.textContent = 'No students found matching your search.';
+                emptyRow.parentElement.style.display = '';
+            }
+        } else if (emptyRow) {
+            emptyRow.parentElement.style.display = 'none';
+        }
+    });
+    
+    // Handle form submission
+    const editForm = document.getElementById('editStudentForm');
+    if (editForm) {
+        editForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(this);
+            const studentId = formData.get('student_id');
+            const marks = formData.get('marks_percentage');
+            const backlog = formData.get('backlog');
+            const year = formData.get('year');
+            
+            // Send AJAX request to update student
+            fetch(`/placement-drives/student/update/${studentId}/`, {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': formData.get('csrfmiddlewaretoken'),
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: `marks_percentage=${marks}&backlog=${backlog}&year=${year}&csrfmiddlewaretoken=${formData.get('csrfmiddlewaretoken')}`
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Close modal and refresh page
+                    closeEditModal();
+                    location.reload();
+                } else {
+                    alert('Error updating student: ' + data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Error updating student');
+            });
+        });
+    }
+});
+
+function openEditModal(studentId, studentName, marksPercentage, backlog, year) {
+    const modal = document.getElementById('editStudentModal');
+    const backdrop = document.getElementById('editModalBackdrop');
+    const content = document.getElementById('editModalContent');
+    
+    // Set form values
+    document.getElementById('studentId').value = studentId;
+    document.getElementById('studentName').value = studentName;
+    document.getElementById('studentYear').value = year;
+    document.getElementById('studentMarks').value = marksPercentage;
+    document.getElementById('studentBacklog').value = backlog;
+    
+    // Show modal
+    modal.classList.remove('hidden');
+    setTimeout(() => {
+        backdrop.classList.remove('opacity-0');
+        content.classList.remove('scale-95', 'opacity-0');
+        content.classList.add('scale-100', 'opacity-100');
+    }, 10);
+}
+
+function closeEditModal() {
+    const modal = document.getElementById('editStudentModal');
+    const backdrop = document.getElementById('editModalBackdrop');
+    const content = document.getElementById('editModalContent');
+    
+    backdrop.classList.add('opacity-0');
+    content.classList.remove('scale-100', 'opacity-100');
+    content.classList.add('scale-95', 'opacity-0');
+    
+    setTimeout(() => {
+        modal.classList.add('hidden');
+    }, 300);
+}
+
+// Close on backdrop click
+document.getElementById('editModalBackdrop').addEventListener('click', closeEditModal);
+</script>
+{% endblock %}

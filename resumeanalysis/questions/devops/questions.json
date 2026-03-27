@@ -1,0 +1,435 @@
+[
+  {
+    "id": "dev_001",
+    "category": "devops",
+    "difficulty": "easy",
+    "question_text": "What is the primary purpose of Docker containers?",
+    "options": [
+      "Virtual machines",
+      "Packaging applications with dependencies",
+      "Database management",
+      "Network security"
+    ],
+    "correct_answer": 1,
+    "explanation": "Docker containers package applications with all their dependencies, ensuring consistent environments across development, testing, and production.",
+    "tags": [
+      "docker",
+      "containers",
+      "packaging"
+    ]
+  },
+  {
+    "id": "dev_002",
+    "category": "devops",
+    "difficulty": "medium",
+    "question_text": "What does CI/CD stand for?",
+    "options": [
+      "Continuous Integration/Continuous Deployment",
+      "Code Integration/Code Development",
+      "Cloud Integration/Cloud Deployment",
+      "Continuous Integration/Continuous Delivery"
+    ],
+    "correct_answer": 3,
+    "explanation": "CI/CD stands for Continuous Integration/Continuous Delivery, automating the process of integrating and deploying code changes.",
+    "tags": [
+      "cicd",
+      "automation",
+      "deployment"
+    ]
+  },
+  {
+    "id": "dev_003",
+    "category": "devops",
+    "difficulty": "medium",
+    "question_text": "What is the main purpose of Kubernetes?",
+    "options": [
+      "Code compilation",
+      "Container orchestration",
+      "Database management",
+      "Network security"
+    ],
+    "correct_answer": 1,
+    "explanation": "Kubernetes is a container orchestration platform that automates deployment, scaling, and management of containerized applications.",
+    "tags": [
+      "kubernetes",
+      "containers",
+      "orchestration"
+    ]
+  },
+  {
+    "id": "dev_004",
+    "category": "devops",
+    "difficulty": "hard",
+    "question_text": "What is Infrastructure as Code (IaC)?",
+    "options": [
+      "Writing code in infrastructure",
+      "Managing and provisioning infrastructure through code",
+      "Code documentation for infrastructure",
+      "Testing infrastructure manually"
+    ],
+    "correct_answer": 1,
+    "explanation": "Infrastructure as Code is the practice of managing and provisioning infrastructure through machine-readable definition files, rather than physical hardware configuration.",
+    "tags": [
+      "iac",
+      "terraform",
+      "automation"
+    ]
+  },
+  {
+    "id": "dev_005",
+    "category": "devops",
+    "difficulty": "medium",
+    "question_text": "What is the purpose of load balancers?",
+    "options": [
+      "Data backup",
+      "Distributing network traffic across multiple servers",
+      "Security monitoring",
+      "Code compilation"
+    ],
+    "correct_answer": 1,
+    "explanation": "Load balancers distribute incoming network traffic across multiple servers to ensure no single server becomes overwhelmed.",
+    "tags": [
+      "load-balancing",
+      "networking",
+      "scalability"
+    ]
+  },
+  {
+    "id": "dev_006",
+    "category": "devops",
+    "difficulty": "easy",
+    "question_text": "Which tool is commonly used for configuration management?",
+    "options": [
+      "Git",
+      "Docker",
+      "Ansible",
+      "Jenkins"
+    ],
+    "correct_answer": 2,
+    "explanation": "Ansible is a popular configuration management tool that automates software provisioning, configuration management, and application deployment.",
+    "tags": [
+      "ansible",
+      "configuration-management",
+      "automation"
+    ]
+  },
+  {
+    "id": "dev_007",
+    "category": "devops",
+    "difficulty": "medium",
+    "question_text": "What is the purpose of monitoring in DevOps?",
+    "options": [
+      "Code review",
+      "Tracking system performance and health",
+      "Database backup",
+      "User authentication"
+    ],
+    "correct_answer": 1,
+    "explanation": "Monitoring in DevOps involves tracking system performance, health, and availability to ensure optimal operation and quick issue detection.",
+    "tags": [
+      "monitoring",
+      "observability",
+      "performance"
+    ]
+  },
+  {
+    "id": "dev_008",
+    "category": "devops",
+    "difficulty": "hard",
+    "question_text": "What is the purpose of blue-green deployment?",
+    "options": [
+      "Color-coded environments",
+      "Zero-downtime deployment strategy",
+      "Database migration technique",
+      "Security testing method"
+    ],
+    "correct_answer": 1,
+    "explanation": "Blue-green deployment maintains two identical production environments, allowing instant rollback and zero-downtime deployments.",
+    "tags": [
+      "deployment",
+      "blue-green",
+      "strategy"
+    ]
+  },
+  {
+    "id": "dev_009",
+    "category": "devops",
+    "difficulty": "medium",
+    "question_text": "What is the main purpose of Terraform?",
+    "options": [
+      "Container management",
+      "Infrastructure provisioning",
+      "CI/CD pipeline",
+      "Monitoring"
+    ],
+    "correct_answer": 1,
+    "explanation": "Terraform is an Infrastructure as Code tool that allows building, changing, and versioning infrastructure safely and efficiently.",
+    "tags": [
+      "terraform",
+      "iac",
+      "infrastructure"
+    ]
+  },
+  {
+    "id": "dev_010",
+    "category": "devops",
+    "difficulty": "medium",
+    "question_text": "What is the purpose of a reverse proxy?",
+    "options": [
+      "Client-side routing",
+      "Server-side load balancing and routing",
+      "Database connection",
+      "Code compilation"
+    ],
+    "correct_answer": 1,
+    "explanation": "A reverse proxy sits in front of web servers and forwards client requests to appropriate servers, providing load balancing and security.",
+    "tags": [
+      "reverse-proxy",
+      "nginx",
+      "load-balancing"
+    ]
+  },
+  {
+    "id": "dev_011",
+    "category": "devops",
+    "difficulty": "hard",
+    "question_text": "What is the purpose of the Circuit Breaker pattern?",
+    "options": [
+      "Electrical circuit protection",
+      "Preventing cascade failures in distributed systems",
+      "Network routing",
+      "Database optimization"
+    ],
+    "correct_answer": 1,
+    "explanation": "The Circuit Breaker pattern prevents cascade failures in distributed systems by stopping requests to failing services temporarily.",
+    "tags": [
+      "circuit-breaker",
+      "microservices",
+      "resilience"
+    ]
+  },
+  {
+    "id": "dev_012",
+    "category": "devops",
+    "difficulty": "medium",
+    "question_text": "What is the purpose of logging in production systems?",
+    "options": [
+      "Code documentation",
+      "Debugging and troubleshooting",
+      "User interface",
+      "Data storage"
+    ],
+    "correct_answer": 1,
+    "explanation": "Logging in production systems provides essential information for debugging, troubleshooting, and monitoring application behavior.",
+    "tags": [
+      "logging",
+      "monitoring",
+      "troubleshooting"
+    ]
+  },
+  {
+    "id": "docker_001",
+    "category": "devops",
+    "difficulty": "easy",
+    "question_text": "What is Docker?",
+    "options": [
+      "Virtual machine software",
+      "Containerization platform",
+      "Cloud provider",
+      "Database system"
+    ],
+    "correct_answer": 1,
+    "explanation": "Docker is a containerization platform that enables developers to package applications into containers for consistent deployment across environments.",
+    "tags": [
+      "devops",
+      "docker",
+      "containerization",
+      "platform"
+    ]
+  },
+  {
+    "id": "docker_002",
+    "category": "devops",
+    "difficulty": "easy",
+    "question_text": "What command builds a Docker image?",
+    "options": [
+      "docker build",
+      "docker create",
+      "docker make",
+      "docker compile"
+    ],
+    "correct_answer": 0,
+    "explanation": "The 'docker build' command builds Docker images from a Dockerfile and a context directory.",
+    "tags": [
+      "devops",
+      "docker",
+      "build",
+      "image",
+      "command"
+    ]
+  },
+  {
+    "id": "docker_003",
+    "category": "devops",
+    "difficulty": "easy",
+    "question_text": "What is a Docker container?",
+    "options": [
+      "Virtual machine",
+      "Isolated application environment",
+      "Database instance",
+      "Network configuration"
+    ],
+    "correct_answer": 1,
+    "explanation": "A Docker container is a lightweight, isolated application environment that runs applications with their dependencies bundled together.",
+    "tags": [
+      "devops",
+      "docker",
+      "container",
+      "isolation"
+    ]
+  },
+  {
+    "id": "docker_004",
+    "category": "devops",
+    "difficulty": "easy",
+    "question_text": "Which file defines Docker container configuration?",
+    "options": [
+      "docker.yml",
+      "Dockerfile",
+      "container.json",
+      "docker.conf"
+    ],
+    "correct_answer": 1,
+    "explanation": "A Dockerfile is a text document that contains all the commands to assemble a Docker image.",
+    "tags": [
+      "devops",
+      "docker",
+      "dockerfile",
+      "configuration"
+    ]
+  },
+  {
+    "id": "docker_005",
+    "category": "devops",
+    "difficulty": "easy",
+    "question_text": "What command runs a Docker container?",
+    "options": [
+      "docker start",
+      "docker run",
+      "docker execute",
+      "docker launch"
+    ],
+    "correct_answer": 1,
+    "explanation": "The 'docker run' command creates and starts a new container from a specified image.",
+    "tags": [
+      "devops",
+      "docker",
+      "run",
+      "container",
+      "command"
+    ]
+  },
+  {
+    "id": "docker_006",
+    "category": "devops",
+    "difficulty": "medium",
+    "question_text": "What is Docker Hub?",
+    "options": [
+      "Container registry",
+      "Virtual machine marketplace",
+      "Cloud storage service",
+      "Code repository"
+    ],
+    "correct_answer": 0,
+    "explanation": "Docker Hub is a cloud-based container registry service where users can store and share container images.",
+    "tags": [
+      "devops",
+      "docker",
+      "docker-hub",
+      "registry"
+    ]
+  },
+  {
+    "id": "docker_007",
+    "category": "devops",
+    "difficulty": "medium",
+    "question_text": "What is the purpose of docker-compose?",
+    "options": [
+      "Build Docker images",
+      "Manage multi-container applications",
+      "Monitor containers",
+      "Backup containers"
+    ],
+    "correct_answer": 1,
+    "explanation": "Docker Compose is a tool for defining and running multi-container Docker applications using a YAML file.",
+    "tags": [
+      "devops",
+      "docker",
+      "docker-compose",
+      "multi-container"
+    ]
+  },
+  {
+    "id": "docker_008",
+    "category": "devops",
+    "difficulty": "medium",
+    "question_text": "What command lists running containers?",
+    "options": [
+      "docker list",
+      "docker ps",
+      "docker show",
+      "docker containers"
+    ],
+    "correct_answer": 1,
+    "explanation": "The 'docker ps' command lists all running containers, showing their container ID, image, and status.",
+    "tags": [
+      "devops",
+      "docker",
+      "ps",
+      "containers",
+      "command"
+    ]
+  },
+  {
+    "id": "docker_009",
+    "category": "devops",
+    "difficulty": "medium",
+    "question_text": "What is a Docker volume?",
+    "options": [
+      "Container image",
+      "Persistent data storage",
+      "Network configuration",
+      "Security policy"
+    ],
+    "correct_answer": 1,
+    "explanation": "Docker volumes provide persistent data storage that exists independently of containers, allowing data to persist after container removal.",
+    "tags": [
+      "devops",
+      "docker",
+      "volume",
+      "storage",
+      "persistence"
+    ]
+  },
+  {
+    "id": "docker_010",
+    "category": "devops",
+    "difficulty": "hard",
+    "question_text": "What is the difference between COPY and ADD in Dockerfile?",
+    "options": [
+      "No difference",
+      "ADD can handle remote URLs and auto-extraction",
+      "COPY is faster than ADD",
+      "ADD only works with local files"
+    ],
+    "correct_answer": 1,
+    "explanation": "ADD can handle remote URLs and automatically extract compressed files, while COPY only copies local files. COPY is preferred for simplicity.",
+    "tags": [
+      "devops",
+      "docker",
+      "dockerfile",
+      "copy",
+      "add"
+    ]
+  }
+]

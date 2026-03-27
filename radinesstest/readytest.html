@@ -1,0 +1,1033 @@
+<!DOCTYPE html>
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Mock Test - Refined Interface</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,typography,container-queries"></script>
+<script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              primary: "#6366f1",
+              "background-light": "#f8fafc",
+              "background-dark": "#0f172a",
+              "accent-green": "#22c55e",
+              "accent-orange": "#f97316",
+              "accent-red": "#ef4444",
+            },
+            fontFamily: {
+              display: ["Plus Jakarta Sans", "sans-serif"],
+            },
+            borderRadius: {
+              DEFAULT: "1rem",
+              'xl': '1.5rem',
+              '2xl': '2rem',
+              '3xl': '2.5rem',
+            },
+          },
+        },
+      };
+    </script>
+<style type="text/tailwindcss">
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            vertical-align: middle;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #e2e8f0;
+            border-radius: 10px;
+        }
+        .dark .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #334155;
+        }
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        .dark .glass-panel {
+            background: rgba(30, 41, 59, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .theme-toggle-btn {
+            @apply flex items-center justify-center bg-slate-100 dark:bg-slate-800 rounded-full w-10 h-10 cursor-pointer transition-all hover:ring-2 hover:ring-indigo-400 dark:hover:ring-indigo-600;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-800 dark:text-slate-100 h-screen overflow-hidden flex flex-col transition-colors duration-300">
+
+<!-- Start Exam Overlay -->
+<div id="start-exam-overlay" class="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/95 backdrop-blur-sm transition-opacity duration-500">
+    <div class="text-center space-y-8 p-8 max-w-md w-full">
+        <div class="w-20 h-20 bg-indigo-600 rounded-2xl flex items-center justify-center mx-auto shadow-2xl shadow-indigo-500/20 mb-6">
+            <span class="material-symbols-outlined text-4xl text-white">school</span>
+        </div>
+        <div class="space-y-2">
+            <h2 class="text-3xl font-black text-white tracking-tight">Ready to Begin?</h2>
+            <p class="text-slate-400 font-medium">The exam will run in fullscreen mode.</p>
+        </div>
+        <button onclick="enterExamFullscreen()" class="w-full py-4 px-8 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white font-bold rounded-2xl shadow-xl shadow-indigo-500/20 transform hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center justify-center gap-3 group">
+            <span>Start Exam</span>
+            <span class="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_forward</span>
+        </button>
+    </div>
+</div>
+
+<header class="glass-panel border-b border-slate-200 dark:border-slate-800 px-4 lg:px-6 py-2 lg:py-3">
+<div class="flex items-center justify-between">
+        <div class="flex items-center gap-3 lg:gap-4">
+            <button class="w-10 h-10 lg:w-12 lg:h-12 rounded-xl lg:rounded-2xl bg-gradient-to-br from-indigo-500 to-purple-600 text-white flex items-center justify-center shadow-lg">
+                <svg class="w-5 h-5 lg:w-6 lg:h-6" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222" stroke-linecap="round" stroke-linejoin="round"></path>
+                </svg>
+            </button>
+            <div>
+                <h1 class="font-extrabold text-lg lg:text-xl tracking-tight" id="exam-title">Mock Test</h1>
+                <p class="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider" id="exam-section">Assessment Section</p>
+            </div>
+        </div>
+<div class="hidden sm:flex items-center gap-6 lg:gap-8">
+    <div class="flex flex-col items-center">
+        <div class="flex items-center gap-2">
+            <svg class="w-3 h-3 md:w-4 md:h-4 text-indigo-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round"></path>
+            </svg>
+            <span class="text-[8px] md:text-[10px] uppercase font-bold text-slate-400">Time Remaining</span>
+        </div>
+        <div class="flex items-center gap-2 text-base md:text-lg lg:text-xl font-black font-mono text-slate-700 dark:text-slate-200" id="timer-display">
+            00:49:52
+        </div>
+    </div>
+</div>
+        <div class="flex items-center gap-2 lg:gap-3">
+            <button onclick="toggleSidebar()" class="lg:hidden p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800" title="Question Palette">
+                <span class="material-symbols-outlined text-slate-600 dark:text-slate-400">grid_view</span>
+            </button>
+            <button class="theme-toggle-btn" onclick="toggleTheme()">
+<svg class="w-5 h-5 text-amber-500 dark:hidden" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zM2 13h2c.55 0 1-.45 1-1s-.45-1-1-1H2c-.55 0-1 .45-1 1s.45 1 1 1zm18 0h2c.55 0 1-.45 1-1s-.45-1-1-1h-2c-.55 0-1 .45-1 1s.45 1 1 1zM11 2v2c0 .55.45 1 1 1s1-.45 1-1V2c0-.55-.45-1-1-1s-1 .45-1 1zm0 18v2c0 .55.45 1 1 1s1-.45 1-1v-2c0-.55-.45-1-1-1s-1 .45-1 1zM5.99 4.58c-.39-.39-1.03-.39-1.41 0-.39.39-.39 1.03 0 1.41l1.06 1.06c.39.39 1.03.39 1.41 0s.39-1.03 0-1.41L5.99 4.58zm12.37 12.37c-.39-.39-1.03-.39-1.41 0-.39.39-.39 1.03 0 1.41l1.06 1.06c.39.39 1.03.39 1.41 0 .39-.39.39-1.03 0-1.41l1.06-1.06zm1.06-10.96c.39-.39.39-1.03 0-1.41-.39-.39-1.03-.39-1.41 0l-1.06 1.06c.39.39 1.03.39 1.41 0 .39-.39.39-1.03 0-1.41l1.06-1.06zm7.05 18.36c.39-.39.39-1.03 0-1.41-.39-.39-1.03-.39-1.41 0l-1.06 1.06c.39.39 1.03.39 1.41 0s1.03.39 1.41 0l1.06-1.06z"></path>
+</svg>
+<svg class="w-5 h-5 text-indigo-400 hidden dark:block" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9c0-.46-.04-.92-.1-1.36-.98 1.37-2.58 2.26-4.4 2.26-2.98 0-5.4-2.42-5.4-5.4 0-1.81.89-3.42 2.26-4.4-.44-.06-.9-.1-1.36-.1z"></path>
+</svg>
+</button>
+        <button class="hidden sm:flex px-5 py-2.5 rounded-full border border-slate-200 dark:border-slate-700 font-bold text-sm hover:bg-slate-50 dark:hover:bg-slate-800 transition-all items-center gap-2 group" onclick="exitFullscreen()">
+            <span class="material-symbols-outlined text-slate-500 group-hover:text-primary transition-colors">fullscreen_exit</span>
+            <span>Exit Fullscreen</span>
+        </button>
+    </div>
+</header>
+<main class="flex-1 flex flex-col lg:flex-row overflow-hidden">
+<aside class="w-full lg:w-20 border-b lg:border-r border-slate-200 dark:border-slate-800 flex flex-row lg:flex-col items-center py-3 lg:py-6 px-4 lg:px-0 gap-4 lg:gap-6 bg-white dark:bg-slate-900 overflow-x-auto lg:overflow-x-hidden no-scrollbar">
+<button class="w-10 h-10 lg:w-12 lg:h-12 rounded-xl lg:rounded-2xl bg-indigo-50 dark:bg-indigo-900/30 text-primary flex items-center justify-center relative group flex-shrink-0" title="Cognitive">
+<span class="material-symbols-outlined text-2xl">psychology</span>
+<span class="absolute left-full ml-4 px-2 py-1 bg-slate-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none z-50">Cognitive Ability</span>
+<div class="hidden lg:block absolute -left-0 top-1/2 -translate-y-1/2 w-1 h-6 bg-primary rounded-r-full"></div>
+<div class="lg:hidden absolute bottom-0 left-1/2 -translate-x-1/2 w-6 h-1 bg-primary rounded-t-full"></div>
+</button>
+<button class="w-10 h-10 lg:w-12 lg:h-12 rounded-xl lg:rounded-2xl text-slate-400 dark:text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800 flex items-center justify-center relative group flex-shrink-0" title="Verbal">
+<span class="material-symbols-outlined text-2xl">translate</span>
+</button>
+<button class="w-10 h-10 lg:w-12 lg:h-12 rounded-xl lg:rounded-2xl text-slate-400 dark:text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800 flex items-center justify-center relative group flex-shrink-0" title="Quantitative">
+<span class="material-symbols-outlined text-2xl">calculate</span>
+</button>
+</aside>
+<section class="flex-1 overflow-y-auto no-scrollbar bg-slate-50 dark:bg-slate-950 p-2 lg:p-4">
+<div class="max-w-7xl mx-auto space-y-4 mb-4">
+<div class="w-full bg-white dark:bg-slate-900 p-3 lg:p-4 rounded-xl lg:rounded-2xl shadow-sm border border-slate-200 dark:border-slate-800">
+<div class="flex items-end justify-between mb-4">
+<div>
+<div class="flex items-center gap-2 mb-1">
+<span id="question-number" class="text-xs font-bold text-slate-400 uppercase tracking-widest">Question 14 of 49</span>
+<span class="w-1 h-1 bg-slate-300 rounded-full"></span>
+<span class="text-[10px] font-bold text-indigo-500 uppercase tracking-widest">Cognitive Section</span>
+</div>
+</div>
+<div class="text-right">
+<div class="flex items-baseline gap-1 justify-end">
+<span id="completion-percentage" class="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-blue-700">28</span>
+<span class="text-sm font-bold text-slate-400">%</span>
+</div>
+<div id="status-text" class="text-[10px] font-semibold text-slate-400 uppercase tracking-tight">Completion Status</div>
+</div>
+</div>
+<div class="relative h-10 w-full flex items-center select-none group/timeline">
+<div class="absolute w-full h-1.5 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
+<div class="absolute inset-0 opacity-20" style="background-image: repeating-linear-gradient(45deg, transparent, transparent 5px, #94a3b8 5px, #94a3b8 6px);"></div>
+</div>
+<div class="absolute left-0 h-2.5 bg-gradient-to-r from-blue-400 via-blue-500 to-blue-600 rounded-full shadow-lg shadow-blue-500/20 transition-all duration-700 ease-out w-full" id="progress-bar-fill">
+<div class="absolute inset-0 bg-white/20 blur-sm rounded-full"></div>
+</div>
+<div id="status-dots" class="absolute inset-0 flex items-center justify-between px-1">
+<!-- Status dots will be dynamically generated here -->
+</div>
+<div id="progress-indicator" class="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-1/2 z-30">
+<div class="w-5 h-5 bg-white dark:bg-slate-900 border-[3px] border-blue-600 rounded-full shadow-md flex items-center justify-center">
+<div class="w-1.5 h-1.5 bg-blue-600 rounded-full animate-pulse"></div>
+</div>
+<div class="absolute bottom-full mb-2 left-1/2 -translate-x-1/2 bg-slate-800 text-white text-[10px] font-bold px-2 py-1 rounded opacity-0 group-hover/timeline:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
+    <span id="current-question-tooltip">Current: Q14</span>
+</div>
+</div>
+</div>
+<div class="absolute left-[35%] top-1/2 -translate-y-1/2 w-1 h-1 bg-slate-300 dark:bg-slate-700 rounded-full z-10"></div>
+<div class="absolute left-[45%] top-1/2 -translate-y-1/2 w-1 h-1 bg-slate-300 dark:bg-slate-700 rounded-full z-10"></div>
+<div class="absolute left-[55%] top-1/2 -translate-y-1/2 w-1 h-1 bg-slate-300 dark:bg-slate-700 rounded-full z-10"></div>
+</div>
+</div>
+<div class="bg-white dark:bg-slate-900 rounded-xl lg:rounded-2xl shadow-xl shadow-slate-200/50 dark:shadow-none border border-slate-100 dark:border-slate-800 p-4 lg:p-6 relative overflow-hidden group">
+<div class="absolute top-0 left-0 w-2 h-full bg-primary opacity-0 group-hover:opacity-100 transition-opacity"></div>
+<div class="flex flex-col lg:flex-row lg:items-center gap-2 lg:gap-4 mb-4">
+</div>
+<div class="space-y-4 mt-4 lg:mt-6">
+            <div id="question-number-top" class="text-[10px] md:text-xs font-bold text-slate-400 uppercase tracking-widest mb-2 md:mb-3">Question 14 of 49</div>
+            <div id="question-text" class="text-base md:text-lg lg:text-xl font-bold text-slate-700 dark:text-slate-200 mb-6 md:mb-8 lg:mb-10 leading-relaxed">
+                <!-- Question text will be dynamically inserted here -->
+            </div>
+            <div id="options-container" class="space-y-3 md:space-y-4">
+                <!-- Options will be dynamically inserted here -->
+            </div>
+        </div>
+</div>
+<div class="flex flex-col sm:flex-row items-center justify-between pt-4 pb-4 gap-4">
+<button class="w-full sm:w-auto px-6 lg:px-8 py-3.5 rounded-2xl border-2 border-slate-200 dark:border-slate-800 text-slate-500 dark:text-slate-400 font-bold hover:bg-slate-100 dark:hover:bg-slate-800 transition-all active:scale-95" onclick="clearResponse()">
+                    Clear Response
+                </button>
+<div class="flex flex-col sm:flex-row gap-3 lg:gap-4 w-full sm:w-auto">
+<button class="w-full sm:w-auto px-6 lg:px-8 py-3.5 rounded-2xl border-2 border-indigo-200 dark:border-indigo-900 text-primary font-bold hover:bg-indigo-50 dark:hover:bg-indigo-950 transition-all active:scale-95" onclick="markForReview()">
+                        Mark for Review
+                    </button>
+<button class="w-full sm:w-auto px-8 lg:px-10 py-3.5 rounded-2xl bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-bold shadow-xl shadow-indigo-200 dark:shadow-none hover:shadow-indigo-300 transition-all hover:scale-105 active:scale-95 flex items-center justify-center gap-2" onclick="saveAndNext()">
+                        Save &amp; Next
+                        <span class="material-symbols-outlined">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+</section>
+<aside class="fixed lg:relative w-80 bg-white dark:bg-slate-900 border-l border-slate-200 dark:border-slate-800 flex flex-col transform translate-x-full lg:translate-x-0 transition-transform duration-300 z-40 h-screen lg:h-auto" id="sidebar">
+        <div class="p-4 border-b border-slate-100 dark:border-slate-800">
+            <div class="flex items-center justify-between mb-4">
+                <h3 class="font-bold text-lg">Question Palette</h3>
+                <div class="flex items-center gap-2">
+<svg class="w-6 h-6 text-slate-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+<button onclick="toggleSidebar()" class="lg:hidden p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800">
+<svg class="w-5 h-5 text-slate-600 dark:text-slate-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+<path d="M6 18L18 6M6 6l12 12" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+</button>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-3">
+<div class="p-3 bg-slate-50 dark:bg-slate-800/50 rounded-xl flex items-center gap-2">
+<div class="w-3 h-3 rounded-full bg-accent-green"></div>
+<span id="solved-count" class="text-[10px] font-bold uppercase text-slate-500">Solved: 0</span>
+</div>
+<div class="p-3 bg-slate-50 dark:bg-slate-800/50 rounded-xl flex items-center gap-2">
+<div class="w-3 h-3 rounded-full bg-accent-orange"></div>
+<span id="flagged-count" class="text-[10px] font-bold uppercase text-slate-500">Flagged: 0</span>
+</div>
+</div>
+</div>
+<div class="flex-1 overflow-y-auto p-4 no-scrollbar">
+<div class="grid grid-cols-5 gap-3" id="question-palette">
+    <!-- Buttons will be dynamically generated here -->
+</div>
+</div>
+<div class="p-4 border-t border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-900">
+<button class="w-full py-4 rounded-2xl bg-slate-900 dark:bg-slate-100 text-white dark:text-slate-900 font-bold shadow-lg flex items-center justify-center gap-2 hover:opacity-90 transition-opacity" onclick="submitAllSections()">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+                Submit Test
+            </button>
+</div>
+</aside>
+</main>
+<script>
+    // Exam Variables
+    let currentExam = 'python';
+    let currentQuestion = 0;
+    let examTimer = null;
+    let timeRemaining = 0; // Will be calculated based on number of questions
+    let userAnswers = [];
+    let examQuestions = [];
+    let currentSelection = null; // Track current selection before saving
+    let flaggedQuestions = []; // Track flagged questions (resets on refresh)
+    let isSubmitting = false; // Flag to prevent multiple submissions
+
+    // Add fullscreen change listener
+    document.addEventListener('fullscreenchange', handleFullscreenExit);
+    document.addEventListener('webkitfullscreenchange', handleFullscreenExit);
+    document.addEventListener('mozfullscreenchange', handleFullscreenExit);
+    document.addEventListener('MSFullscreenChange', handleFullscreenExit);
+
+    function handleFullscreenExit() {
+        if (!document.fullscreenElement && !document.webkitFullscreenElement && !document.mozFullScreenElement && !document.msFullscreenElement) {
+            // Check if we are still on the exam page and not already submitting
+            const overlay = document.getElementById('start-exam-overlay');
+            if (overlay && overlay.style.display === 'none' && !isSubmitting) {
+                console.log('User exited fullscreen. Auto-submitting exam...');
+                alert('You have exited fullscreen mode. The exam will be automatically submitted.');
+                autoSubmitExam();
+            }
+        }
+    }
+
+    function autoSubmitExam() {
+        if (isSubmitting) return;
+        isSubmitting = true;
+        
+        clearInterval(examTimer);
+        
+        // Prepare data for submission (same as submitAllSections but without confirm)
+        fetch('/mock-test/submit/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': getCookie('csrftoken')
+            },
+            body: JSON.stringify({
+                answers: userAnswers,
+                questions: examQuestions
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'success') {
+                sessionStorage.setItem('testResults', JSON.stringify(data.results));
+                sessionStorage.removeItem('currentTest');
+                window.location.href = '/mock-test/results/';
+            } else {
+                console.error('Failed to auto-submit test:', data.message);
+                window.location.href = '/mock-test/';
+            }
+        })
+        .catch(error => {
+            console.error('Error auto-submitting test:', error);
+            window.location.href = '/mock-test/';
+        });
+    }
+
+    // Load questions from mock test backend
+    async function loadQuestionsFromBackend() {
+        try {
+            // Get test data from sessionStorage (set by the test selection page)
+            const storedTest = sessionStorage.getItem('currentTest');
+            if (!storedTest) {
+                console.error('No test data found in sessionStorage');
+                return [];
+            }
+            
+            const testData = JSON.parse(storedTest);
+            return testData.questions || [];
+        } catch (error) {
+            console.error('Error loading questions from backend:', error);
+            return [];
+        }
+    }
+
+    // Parse questions from text file
+    function parseQuestions(text) {
+        const lines = text.split('\n');
+        const parsedQuestions = [];
+        let currentQuestion = null;
+        
+        for (let i = 0; i < lines.length; i++) {
+            const line = lines[i].trim();
+            
+            if (line.match(/^\d+\./)) {
+                // New question
+                if (currentQuestion) {
+                    parsedQuestions.push(currentQuestion);
+                }
+                currentQuestion = {
+                    question: line.replace(/^\d+\.\s*/, ''),
+                    options: [],
+                    correct: null
+                };
+            } else if (line.match(/^[A-D]\)/)) {
+                // Option
+                if (currentQuestion) {
+                    const option = line.replace(/^[A-D]\)\s*/, '');
+                    currentQuestion.options.push(option);
+                }
+            } else if (line.match(/Correct Answer:/)) {
+                // Correct answer
+                if (currentQuestion) {
+                    const correctLetter = line.replace(/.*Correct Answer:\s*([A-D]).*/, '$1');
+                    currentQuestion.correct = correctLetter.charCodeAt(0) - 65; // A=0, B=1, C=2, D=3
+                }
+            }
+        }
+        
+        if (currentQuestion) {
+            parsedQuestions.push(currentQuestion);
+        }
+        
+        return parsedQuestions;
+    }
+
+    // Shuffle array
+    function shuffleArray(array) {
+        const shuffled = [...array];
+        for (let i = shuffled.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+        }
+        return shuffled;
+    }
+
+    // Load question
+    function loadQuestion() {
+        if (currentQuestion >= examQuestions.length) {
+            submitExam();
+            return;
+        }
+        
+        const question = examQuestions[currentQuestion];
+        console.log('Loading question:', question);
+        
+        // Reset current selection to saved answer (discarding any unsaved changes if we navigated away)
+        currentSelection = userAnswers[currentQuestion];
+        
+        // Update question number dynamically
+        const questionNumberElement = document.getElementById('question-number');
+        const questionNumberTopElement = document.getElementById('question-number-top');
+        const questionText = `Question ${currentQuestion + 1} of ${examQuestions.length}`;
+        
+        if (questionNumberElement) {
+            questionNumberElement.textContent = questionText;
+            console.log('Question number updated:', questionText);
+        } else {
+            console.error('Question number element not found');
+        }
+        
+        if (questionNumberTopElement) {
+            questionNumberTopElement.textContent = questionText;
+            console.log('Top question number updated:', questionText);
+        } else {
+            console.error('Top question number element not found');
+        }
+        
+        // Update progress bar current question indicator
+        const currentQuestionTooltip = document.getElementById('current-question-tooltip');
+        const progressIndicator = document.getElementById('progress-indicator');
+        const progressBarFill = document.getElementById('progress-bar-fill');
+        
+        if (currentQuestionTooltip) {
+            currentQuestionTooltip.textContent = `Current: Q${currentQuestion + 1}`;
+            console.log('Progress bar tooltip updated:', `Current: Q${currentQuestion + 1}`);
+        } else {
+            console.error('Current question tooltip not found');
+        }
+        
+        // Update progress indicator position
+        if (progressIndicator && examQuestions.length > 1) {
+            const progressPercentage = (currentQuestion / (examQuestions.length - 1)) * 100;
+            progressIndicator.style.left = `${progressPercentage}%`;
+            console.log('Progress indicator position updated:', `${progressPercentage}%`);
+        }
+        
+        // Update progress bar fill
+        if (progressBarFill) {
+            const fillPercentage = ((currentQuestion + 1) / examQuestions.length) * 100;
+            progressBarFill.style.width = `${fillPercentage}%`;
+            console.log('Progress bar fill updated:', `${fillPercentage}%`);
+        } else {
+            console.error('Progress bar fill element not found');
+        }
+        
+        // Update question text display
+        const questionTextElement = document.getElementById('question-text');
+        if (questionTextElement) {
+            questionTextElement.textContent = question.question;
+            console.log('Question text set:', question.question);
+        } else {
+            console.error('Question text element not found');
+        }
+        
+        // Update options (no shuffling for mock tests - use original order)
+        const optionsContainer = document.getElementById('options-container');
+        if (optionsContainer) {
+            optionsContainer.innerHTML = '';
+            
+            question.options.forEach((option, index) => {
+                const optionLabel = document.createElement('label');
+                optionLabel.className = 'option-card group/opt flex items-center p-5 rounded-2xl border-2 border-slate-100 dark:border-slate-800 hover:border-indigo-500 dark:hover:border-indigo-400 hover:bg-indigo-50/50 dark:hover:bg-indigo-900/10 cursor-pointer transition-all mb-4';
+                optionLabel.innerHTML = `
+                    <input class="hidden peer" name="answer" type="radio" value="${index}" onchange="handleOptionChange(${index}, ${index})" />
+                    <div class="w-8 h-8 rounded-full border-2 border-slate-300 dark:border-slate-700 flex items-center justify-center mr-4 transition-all peer-checked:bg-indigo-600 peer-checked:border-indigo-600">
+                        <div class="w-3 h-3 rounded-full bg-white opacity-0 peer-checked:opacity-100 transition-all"></div>
+                    </div>
+                    <span class="text-lg font-medium text-slate-700 dark:text-slate-200 group-hover/opt:text-indigo-700 dark:group-hover/opt:text-indigo-300">${String.fromCharCode(65 + index)}. ${option}</span>
+                `;
+                
+                optionsContainer.appendChild(optionLabel);
+            });
+            
+            // Check if there's a saved answer
+            if (currentSelection !== null) {
+                const inputs = optionsContainer.querySelectorAll('input[name="answer"]');
+                inputs.forEach(input => {
+                    if (parseInt(input.value) === currentSelection) {
+                        input.checked = true;
+                        
+                        // Apply visual styles
+                        const label = input.closest('label');
+                        const circle = label.querySelector('.w-8.h-8');
+                        const tick = circle.querySelector('div');
+                        
+                        label.classList.add('border-indigo-500', 'bg-indigo-50/50', 'dark:bg-indigo-900/10');
+                        circle.classList.add('bg-indigo-600', 'border-indigo-600');
+                        if (tick) {
+                            tick.classList.add('opacity-100');
+                        }
+                    }
+                });
+            }
+        } else {
+            console.error('Options container not found');
+        }
+        
+        // Update progress
+        updateProgress();
+        updateQuestionPalette();
+        updateStatusDots(); // Update status dots
+    }
+
+    // Toggle sidebar
+    function toggleSidebar() {
+        const sidebar = document.getElementById('sidebar');
+        sidebar.classList.toggle('translate-x-full');
+    }
+
+    // Handle option change
+    function handleOptionChange(displayIndex, originalIndex) {
+        currentSelection = originalIndex;
+        
+        // Update visual states for all options
+        const optionLabels = document.querySelectorAll('.option-card');
+        optionLabels.forEach(label => {
+            const radio = label.querySelector('input');
+            const circle = label.querySelector('.w-8.h-8');
+            const tick = circle.querySelector('div');
+            
+            if (radio.checked) {
+                label.classList.add('border-indigo-500', 'bg-indigo-50/50', 'dark:bg-indigo-900/10');
+                circle.classList.add('bg-indigo-600', 'border-indigo-600');
+                if (tick) {
+                    tick.classList.add('opacity-100');
+                }
+            } else {
+                label.classList.remove('border-indigo-500', 'bg-indigo-50/50', 'dark:bg-indigo-900/10');
+                circle.classList.remove('bg-indigo-600', 'border-indigo-600');
+                if (tick) {
+                    tick.classList.remove('opacity-100');
+                }
+            }
+        });
+
+        updateQuestionPalette();
+        updateStatusDots(); // Update status dots
+        
+        console.log(`Selected option ${displayIndex} for question ${currentQuestion}`);
+    }
+
+    // Select answer (kept for compatibility)
+    function selectAnswer(displayIndex, originalIndex) {
+        handleOptionChange(displayIndex, originalIndex);
+    }
+
+    // Update progress
+    function updateProgress() {
+        // Calculate progress based on solved questions count
+        let solvedCount = 0;
+        userAnswers.forEach(answer => {
+            if (answer !== null) solvedCount++;
+        });
+        
+        const progress = (solvedCount / examQuestions.length) * 100;
+        const progressText = document.getElementById('completion-percentage');
+        const progressBar = document.getElementById('progress-bar-fill');
+        
+        if (progressText) progressText.textContent = Math.round(progress);
+        if (progressBar) progressBar.style.width = `${progress}%`;
+    }
+
+    // Initialize question palette
+    function initializeQuestionPalette() {
+        const paletteContainer = document.getElementById('question-palette');
+        if (!paletteContainer) return;
+        
+        paletteContainer.innerHTML = '';
+        
+        examQuestions.forEach((_, index) => {
+            const btn = document.createElement('button');
+            btn.className = "w-12 h-12 rounded-full bg-slate-50 dark:bg-slate-800/60 text-slate-500 dark:text-slate-400 font-bold hover:bg-slate-100 dark:hover:bg-slate-700 transition-all flex items-center justify-center text-base border border-slate-100 dark:border-slate-800";
+            btn.innerText = index + 1;
+            btn.onclick = () => goToQuestion(index);
+            paletteContainer.appendChild(btn);
+        });
+        
+        updateQuestionPalette();
+    }
+
+    // Update question palette
+    function updateQuestionPalette() {
+        const buttons = document.querySelectorAll('#question-palette button');
+        // flaggedQuestions is now a global variable
+        
+        let solvedCount = 0;
+        
+        buttons.forEach((button, index) => {
+            // Count solved questions (increment for any answered question, regardless of flag status)
+            if (userAnswers[index] !== null) {
+                solvedCount++;
+            }
+
+            // Reset classes
+            button.className = 'w-12 h-12 rounded-full bg-slate-50 dark:bg-slate-800/60 text-slate-500 dark:text-slate-400 font-bold hover:bg-slate-100 dark:hover:bg-slate-700 transition-all flex items-center justify-center text-base border border-slate-100 dark:border-slate-800';
+            
+            // Current question
+            if (index === currentQuestion) {
+                button.classList.remove('bg-slate-50', 'dark:bg-slate-800/60', 'text-slate-500', 'dark:text-slate-400');
+                button.classList.add('bg-primary', 'text-white', 'ring-2', 'ring-indigo-200', 'dark:ring-indigo-900/50');
+                button.innerText = index + 1;
+            } 
+            // Flagged questions
+            else if (flaggedQuestions.includes(index)) {
+                button.classList.remove('bg-slate-50', 'dark:bg-slate-800/60', 'text-slate-500', 'dark:text-slate-400');
+                button.classList.add('bg-accent-orange', 'text-white');
+                button.innerHTML = '<span class="material-symbols-outlined text-lg">flag</span>';
+            }
+            // Answered questions
+            else if (userAnswers[index] !== null) {
+                button.classList.remove('bg-slate-50', 'dark:bg-slate-800/60', 'text-slate-500', 'dark:text-slate-400');
+                button.classList.add('bg-accent-green', 'text-white');
+                button.innerHTML = '<span class="material-symbols-outlined text-lg">check</span>';
+            } else {
+                 button.innerText = index + 1;
+            }
+        });
+        
+        // Update counts
+        const solvedCountElement = document.getElementById('solved-count');
+        const flaggedCountElement = document.getElementById('flagged-count');
+        
+        if (solvedCountElement) {
+            solvedCountElement.textContent = `Solved: ${solvedCount}`;
+        }
+        
+        if (flaggedCountElement) {
+            flaggedCountElement.textContent = `Flagged: ${flaggedQuestions.length}`;
+        }
+        
+        updateStatusDots(); // Also update status dots
+    }
+
+    // Navigate to question
+    function goToQuestion(index) {
+        if (index >= 0 && index < examQuestions.length) {
+            currentQuestion = index;
+            loadQuestion();
+        }
+    }
+
+    // Previous question
+    function previousQuestion() {
+        if (currentQuestion > 0) {
+            currentQuestion--;
+            loadQuestion();
+        }
+    }
+
+    // Next question
+    function nextQuestion() {
+        if (currentQuestion < examQuestions.length - 1) {
+            currentQuestion++;
+            loadQuestion();
+        }
+    }
+
+    // Clear response
+    function clearResponse() {
+        userAnswers[currentQuestion] = null;
+        currentSelection = null;
+        
+        // Clear radio buttons
+        const radioButtons = document.querySelectorAll('input[name="answer"]');
+        radioButtons.forEach(button => button.checked = false);
+        
+        // Clear visual states
+        const optionLabels = document.querySelectorAll('.option-card');
+        optionLabels.forEach(label => {
+            const radio = label.querySelector('input');
+            const circle = label.querySelector('.w-8.h-8');
+            const tick = circle.querySelector('div');
+            
+            if (radio.checked) {
+                label.classList.add('border-indigo-500', 'bg-indigo-50/50', 'dark:bg-indigo-900/10');
+                circle.classList.add('bg-indigo-600', 'border-indigo-600');
+                if (tick) {
+                    tick.classList.add('opacity-100');
+                }
+            } else {
+                label.classList.remove('border-indigo-500', 'bg-indigo-50/50', 'dark:bg-indigo-900/10');
+                circle.classList.remove('bg-indigo-600', 'border-indigo-600');
+                if (tick) {
+                    tick.classList.remove('opacity-100');
+                }
+            }
+        });
+        
+        updateQuestionPalette();
+        updateProgress(); // Update progress bar
+        console.log(`Cleared response for question ${currentQuestion}`);
+    }
+
+    // Mark for review
+    function markForReview() {
+        // Toggle review flag for current question
+        // flaggedQuestions is global
+        if (!flaggedQuestions.includes(currentQuestion)) {
+            flaggedQuestions.push(currentQuestion);
+            // No sessionStorage
+            
+            // If the question was previously answered (saved), consider it unsolved now
+            if (userAnswers[currentQuestion] !== null) {
+                userAnswers[currentQuestion] = null;
+                // Also clear the visual selection since it's now "unsolved"
+                currentSelection = null;
+                const radioButtons = document.querySelectorAll('input[name="answer"]');
+                radioButtons.forEach(button => button.checked = false);
+                const optionLabels = document.querySelectorAll('.option-card');
+                optionLabels.forEach(label => {
+                    label.classList.remove('ring-2', 'ring-indigo-500', 'bg-indigo-50', 'dark:bg-indigo-900/20');
+                    label.classList.add('hover:bg-slate-50', 'dark:hover:bg-slate-800');
+                });
+            }
+
+            // Update status bar
+            console.log(`Question ${currentQuestion + 1} marked for review`);
+        }
+        
+        updateQuestionPalette();
+        updateStatusDots(); // Ensure dots are updated
+        updateProgress(); // Update progress bar
+        
+        // Move to next question
+        nextQuestion();
+        
+        console.log(`Marked question ${currentQuestion} for review`);
+    }
+
+    // Initialize status dots
+    function initializeStatusDots() {
+        const statusDotsContainer = document.getElementById('status-dots');
+        if (!statusDotsContainer || examQuestions.length === 0) return;
+        
+        statusDotsContainer.innerHTML = '';
+        
+        for (let i = 0; i < examQuestions.length; i++) {
+            const dot = document.createElement('button');
+            dot.className = 'w-1 h-1 rounded-full bg-slate-300 dark:bg-slate-700 hover:bg-slate-400 dark:hover:bg-slate-600 transition-all cursor-pointer z-20 relative';
+            dot.title = `Go to question ${i + 1}`;
+            dot.style.position = 'absolute';
+            dot.style.left = `${(i / (examQuestions.length - 1)) * 100}%`;
+            dot.style.top = '50%';
+            dot.style.transform = 'translate(-50%, -50%)';
+            dot.onclick = () => goToQuestion(i);
+            
+            statusDotsContainer.appendChild(dot);
+        }
+        
+        updateStatusDots();
+    }
+
+    // Update status dots
+    function updateStatusDots() {
+        const dots = document.querySelectorAll('#status-dots button');
+        // flaggedQuestions is global
+        
+        dots.forEach((dot, index) => {
+            // Reset classes
+            dot.className = 'w-1 h-1 rounded-full transition-all cursor-pointer z-20 relative';
+            dot.style.position = 'absolute';
+            dot.style.left = `${(index / (examQuestions.length - 1)) * 100}%`;
+            dot.style.top = '50%';
+            dot.style.transform = 'translate(-50%, -50%)';
+            
+            // Current question
+            if (index === currentQuestion) {
+                dot.className += ' bg-blue-500 dark:bg-blue-400';
+            } 
+            // Flagged questions - special progress bar styling
+            else if (flaggedQuestions.includes(index)) {
+                dot.className += ' bg-accent-orange ring-1 ring-accent-orange/30';
+            }
+            // Answered questions
+            else if (userAnswers[index] !== null) {
+                dot.className += ' bg-accent-green';
+            }
+            // Unanswered questions
+            else {
+                dot.className += ' bg-slate-300 dark:bg-slate-700 hover:bg-slate-400 dark:hover:bg-slate-600';
+            }
+        });
+    }
+
+    // Save & Next
+    function saveAndNext() {
+        // Save current answer and move to next
+        if (currentSelection !== null) {
+            userAnswers[currentQuestion] = currentSelection;
+
+            // Remove from flagged questions if present (since we are saving/committing)
+            flaggedQuestions = flaggedQuestions.filter(q => q !== currentQuestion);
+            // No sessionStorage
+
+            updateQuestionPalette(); // Update palette to show green check
+            updateStatusDots(); // Update dots
+            updateProgress(); // Update progress bar
+            
+            nextQuestion();
+            console.log(`Saved answer for question ${currentQuestion} and moved to next`);
+        } else {
+            alert('Please select an answer before saving and proceeding to next question.');
+        }
+    }
+
+    // Exit fullscreen
+    function exitFullscreen() {
+        if (confirm('Are you sure you want to exit the exam? Your progress will be saved.')) {
+            const elem = document;
+            if (elem.exitFullscreen) {
+                elem.exitFullscreen().catch(err => console.log(err));
+            } else if (elem.webkitExitFullscreen) { /* Safari */
+                elem.webkitExitFullscreen();
+            } else if (elem.msExitFullscreen) { /* IE11 */
+                elem.msExitFullscreen();
+            }
+            window.location.href = '/mock-test/';
+        }
+    }
+
+    // Theme toggle
+    function toggleTheme() {
+        document.documentElement.classList.toggle('dark');
+    }
+
+    // Start timer
+    function startTimer() {
+        console.log('Starting timer with timeRemaining:', timeRemaining);
+        if (examTimer) clearInterval(examTimer);
+        
+        examTimer = setInterval(() => {
+            timeRemaining--;
+            console.log('Timer tick:', timeRemaining);
+            updateTimerDisplay();
+            
+            if (timeRemaining <= 0) {
+                clearInterval(examTimer);
+                submitExam();
+            }
+        }, 1000);
+    }
+
+    // Update timer display
+    function updateTimerDisplay() {
+        const minutes = Math.floor(timeRemaining / 60);
+        const seconds = timeRemaining % 60;
+        const timeString = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        const timerContainer = document.getElementById('timer-display');
+        
+        // Update only the time text
+        if (timerContainer) {
+            timerContainer.textContent = timeString;
+            console.log('Timer display updated:', timeString);
+        } else {
+            console.error('Timer container not found!');
+        }
+    }
+
+    // Update test information dynamically
+    function updateTestInfo(testInfo) {
+        // Update test title
+        const titleElement = document.querySelector('h1');
+        if (titleElement && testInfo.name) {
+            titleElement.textContent = testInfo.name;
+        }
+        
+        // Update section name
+        const sectionElement = document.querySelector('p.text-xs.font-semibold');
+        if (sectionElement) {
+            const sectionName = testInfo.name || 'Mock Test';
+            sectionElement.textContent = sectionName.toUpperCase();
+        }
+        
+        // Update overlay title
+        const overlayTitle = document.querySelector('#start-exam-overlay h2');
+        if (overlayTitle && testInfo.name) {
+            overlayTitle.textContent = 'Ready to Begin?';
+        }
+        
+        // Update overlay description
+        const overlayDesc = document.querySelector('#start-exam-overlay p');
+        if (overlayDesc) {
+            overlayDesc.textContent = `The ${testInfo.name || 'test'} will run in fullscreen mode.`;
+        }
+    }
+
+    // Submit all sections and redirect to results
+    function submitAllSections() {
+        if (isSubmitting) return;
+        
+        // Confirm submission
+        const unansweredCount = userAnswers.filter(answer => answer === null).length;
+        let confirmMessage = 'Are you sure you want to submit the test?';
+        
+        if (unansweredCount > 0) {
+            confirmMessage = `You have ${unansweredCount} unanswered questions. Are you sure you want to submit?`;
+        }
+        
+        if (!confirm(confirmMessage)) {
+            return;
+        }
+        
+        isSubmitting = true;
+        // Submit to backend for scoring
+        clearInterval(examTimer);
+        
+        fetch('/mock-test/submit/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': getCookie('csrftoken')
+            },
+            body: JSON.stringify({
+                answers: userAnswers,
+                questions: examQuestions
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'success') {
+                // Store results in sessionStorage
+                sessionStorage.setItem('testResults', JSON.stringify(data.results));
+                
+                // Clear current test data
+                sessionStorage.removeItem('currentTest');
+                
+                // Redirect to results page
+                window.location.href = '/mock-test/results/';
+            } else {
+                alert('Failed to submit test: ' + data.message);
+            }
+        })
+        .catch(error => {
+            console.error('Error submitting test:', error);
+            alert('Failed to submit test. Please try again.');
+        });
+    }
+
+    // Submit exam and redirect to results (called when timer expires or exam ends)
+    function submitExam() {
+        submitAllSections();
+    }
+
+    // Get CSRF token
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+
+    // Enter Fullscreen and Start
+    function enterExamFullscreen() {
+        const elem = document.documentElement;
+        if (elem.requestFullscreen) {
+            elem.requestFullscreen().catch(err => {
+                console.log(`Error attempting to enable fullscreen: ${err.message}`);
+            });
+        } else if (elem.webkitRequestFullscreen) { /* Safari */
+            elem.webkitRequestFullscreen();
+        } else if (elem.msRequestFullscreen) { /* IE11 */
+            elem.msRequestFullscreen();
+        }
+
+        // Hide overlay
+        const overlay = document.getElementById('start-exam-overlay');
+        overlay.style.opacity = '0';
+        setTimeout(() => {
+            overlay.style.display = 'none';
+        }, 500);
+
+        // Start timer
+        startTimer();
+    }
+
+    // Initialize exam
+    document.addEventListener('DOMContentLoaded', async function() {
+        const questions = await loadQuestionsFromBackend();
+        if (questions.length > 0) {
+            examQuestions = questions;
+            userAnswers = new Array(questions.length).fill(null);
+            
+            // Get test info from sessionStorage
+            const storedTest = sessionStorage.getItem('currentTest');
+            const testData = storedTest ? JSON.parse(storedTest) : {};
+            const testInfo = testData.testInfo || {};
+            
+            // Calculate time based on test info or default to 1 minute per question
+            timeRemaining = (testInfo.time || questions.length) * 60; // seconds
+            console.log(`Timer set to ${testInfo.time || questions.length} minutes (${timeRemaining} seconds) for ${questions.length} questions`);
+            
+            // Update test title and section
+            updateTestInfo(testInfo);
+            
+            // Initialize status dots
+            initializeStatusDots();
+
+            // Initialize question palette
+            initializeQuestionPalette();
+            updateProgress(); // Initialize progress bar
+            
+            loadQuestion();
+            // Timer will be started by enterExamFullscreen()
+        } else {
+            alert('Failed to load questions. Please start the test from the beginning.');
+            window.location.href = '/mock-test/';
+        }
+    });
+</script>
+</body></html>

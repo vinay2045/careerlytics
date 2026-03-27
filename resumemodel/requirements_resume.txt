@@ -1,0 +1,24 @@
+# AI Resume Analyzer Dependencies
+
+# Core Django
+django>=4.0.0
+
+# PDF Processing
+PyPDF2>=3.0.0
+pdfplumber>=0.7.0
+
+# DOCX Processing  
+python-docx>=0.8.11
+
+# NLP and Text Processing
+nltk>=3.8.0
+
+# Machine Learning
+scikit-learn>=1.1.0
+numpy>=1.21.0
+
+# Image Processing
+Pillow>=8.3.0
+
+# Additional utilities
+python-decouple>=3.6

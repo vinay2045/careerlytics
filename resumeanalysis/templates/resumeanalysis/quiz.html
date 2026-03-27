@@ -1,0 +1,768 @@
+{% load static %}
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>{{ quiz.target_role|title }} Assessment - Careerlytics</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography,container-queries"></script>
+    <script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              primary: "#6366f1",
+              "background-light": "#f8fafc",
+              "background-dark": "#0f172a",
+              "accent-green": "#22c55e",
+              "accent-orange": "#f97316",
+              "accent-red": "#ef4444",
+            },
+            fontFamily: {
+              display: ["Plus Jakarta Sans", "sans-serif"],
+            },
+            borderRadius: {
+              DEFAULT: "1rem",
+              'xl': '1.5rem',
+              '2xl': '2rem',
+              '3xl': '2.5rem',
+            },
+          },
+        },
+      };
+    </script>
+    <style type="text/tailwindcss">
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            vertical-align: middle;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #e2e8f0;
+            border-radius: 10px;
+        }
+        .dark .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #334155;
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        .dark .glass-panel {
+            background: rgba(30, 41, 59, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .theme-toggle-btn {
+            @apply flex items-center justify-center bg-slate-100 dark:bg-slate-800 rounded-full w-10 h-10 cursor-pointer transition-all hover:ring-2 hover:ring-indigo-400 dark:hover:ring-indigo-600;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-800 dark:text-slate-100 h-screen overflow-hidden flex flex-col transition-colors duration-300">
+
+<!-- Inject Django Data -->
+{{ quiz_data|json_script:"quiz-data-json" }}
+
+<!-- Start Exam Overlay -->
+<div id="start-exam-overlay" class="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/95 backdrop-blur-sm transition-opacity duration-500">
+    <div class="text-center space-y-8 p-8 max-w-md w-full">
+        <div class="w-20 h-20 bg-indigo-600 rounded-2xl flex items-center justify-center mx-auto shadow-2xl shadow-indigo-500/20 mb-6">
+            <span class="material-symbols-outlined text-4xl text-white">school</span>
+        </div>
+        <div class="space-y-2">
+            <h2 class="text-3xl font-black text-white tracking-tight">Ready to Begin?</h2>
+            <p class="text-slate-400 font-medium">The {{ quiz.target_role|title }} assessment will run in fullscreen mode.</p>
+            <div class="bg-slate-800/50 rounded-lg p-4 mt-4">
+                <h3 class="text-sm font-semibold text-white mb-2">Scoring Breakdown:</h3>
+                <div class="space-y-2 text-xs">
+                    <div class="flex justify-between">
+                        <span class="text-slate-300">General Ability (30%)</span>
+                        <span class="text-blue-400 font-semibold">How fast you can learn</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-slate-300">Tech Fundamentals (30%)</span>
+                        <span class="text-green-400 font-semibold">Core CS strength</span>
+                    </div>
+                    {% if quiz.target_role == 'frontend' %}
+                    <div class="flex justify-between">
+                        <span class="text-slate-300">Frontend Skills (40%)</span>
+                        <span class="text-purple-400 font-semibold">UI/UX readiness</span>
+                    </div>
+                    {% elif quiz.target_role == 'backend' %}
+                    <div class="flex justify-between">
+                        <span class="text-slate-300">Backend Skills (40%)</span>
+                        <span class="text-purple-400 font-semibold">Server-side expertise</span>
+                    </div>
+                    {% elif quiz.target_role == 'devops' %}
+                    <div class="flex justify-between">
+                        <span class="text-slate-300">DevOps Skills (40%)</span>
+                        <span class="text-purple-400 font-semibold">Infrastructure readiness</span>
+                    </div>
+                    {% elif quiz.target_role == 'datascience' %}
+                    <div class="flex justify-between">
+                        <span class="text-slate-300">Data Science Skills (40%)</span>
+                        <span class="text-purple-400 font-semibold">Analytics readiness</span>
+                    </div>
+                    {% else %}
+                    <div class="flex justify-between">
+                        <span class="text-slate-300">Role Skills (40%)</span>
+                        <span class="text-purple-400 font-semibold">Job readiness</span>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <button onclick="enterExamFullscreen()" class="w-full py-4 px-8 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white font-bold rounded-2xl shadow-xl shadow-indigo-500/20 transform hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center justify-center gap-3 group">
+            <span>Start Assessment</span>
+            <span class="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_forward</span>
+        </button>
+    </div>
+</div>
+
+<header class="h-20 flex-none border-b border-slate-200 dark:border-slate-800 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md sticky top-0 z-50 px-6 flex items-center justify-between">
+    <div class="flex items-center gap-4">
+        <div class="w-10 h-10 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-xl flex items-center justify-center text-white shadow-lg shadow-indigo-200 dark:shadow-none">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 14l9-5-9-5-9 5 9 5z" stroke-linecap="round" stroke-linejoin="round"></path>
+                <path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" stroke-linecap="round" stroke-linejoin="round"></path>
+                <path d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222" stroke-linecap="round" stroke-linejoin="round"></path>
+            </svg>
+        </div>
+        <div>
+            <h1 class="font-extrabold text-xl tracking-tight">{{ quiz.target_role|title }} Assessment</h1>
+            <p class="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">{{ quiz.user.first_name }} {{ quiz.user.last_name }}</p>
+        </div>
+    </div>
+    <div class="hidden md:flex items-center gap-8">
+        <div class="flex flex-col items-center">
+            <span class="text-[10px] uppercase font-bold text-slate-400">Time Remaining</span>
+            <div class="flex items-center gap-2 text-xl font-black font-mono text-slate-700 dark:text-slate-200" id="timer-display">
+                <svg class="w-5 h-5 text-indigo-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round"></path>
+                </svg>
+                <span id="timer-text">00:00:00</span>
+            </div>
+        </div>
+    </div>
+    <div class="flex items-center gap-3">
+        <button class="theme-toggle-btn" onclick="document.documentElement.classList.toggle('dark')">
+            <svg class="w-5 h-5 text-amber-500 dark:hidden" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M6.343 6.343l-.707-.707M12 8a4 4 0 100 8 4 4 0 000-8z" stroke-linecap="round" stroke-linejoin="round"></path>
+            </svg>
+            <svg class="w-5 h-5 text-indigo-400 hidden dark:block" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" stroke-linecap="round" stroke-linejoin="round"></path>
+            </svg>
+        </button>
+        <button onclick="exitFullscreen()" class="px-5 py-2.5 rounded-full border border-slate-200 dark:border-slate-700 font-bold text-sm hover:bg-slate-50 dark:hover:bg-slate-800 transition-all flex items-center gap-2 group">
+            <svg class="w-5 h-5 text-slate-500 group-hover:text-primary transition-colors" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M9 20l-5-5m0 0v4m0-4h4m11 5l5-5m0 0v4m0-4h-4M9 4L4 9m0 0V5m0 4h4m11-5l5 5m0 0V5m0 4h-4" stroke-linecap="round" stroke-linejoin="round"></path>
+            </svg>
+            <span>Exit Fullscreen</span>
+        </button>
+        <button onclick="submitAllSections()" class="px-6 py-2.5 rounded-full bg-gradient-to-r from-accent-green to-emerald-600 text-white font-bold text-sm shadow-lg shadow-emerald-200 dark:shadow-none hover:scale-105 transition-transform active:scale-95 flex items-center gap-2">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z" stroke-linecap="round" stroke-linejoin="round"></path>
+            </svg>
+            Finish Assessment
+        </button>
+    </div>
+</header>
+<main class="flex-1 flex overflow-hidden">
+    <aside class="w-20 border-r border-slate-200 dark:border-slate-800 flex flex-col items-center py-6 gap-6 bg-white dark:bg-slate-900">
+        <button class="w-12 h-12 rounded-2xl bg-indigo-50 dark:bg-indigo-900/30 text-primary flex items-center justify-center relative group" title="Assessment">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z" stroke-linecap="round" stroke-linejoin="round"></path>
+                <polyline points="13 2 13 9 20 9"></polyline>
+            </svg>
+            <span class="absolute left-full ml-4 px-2 py-1 bg-slate-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">{{ quiz.target_role|title }}</span>
+            <div class="absolute -left-0 top-1/2 -translate-y-1/2 w-1 h-6 bg-primary rounded-r-full"></div>
+        </button>
+    </aside>
+    <section class="flex-1 overflow-y-auto custom-scrollbar bg-slate-50 dark:bg-slate-950 p-6 lg:p-10">
+        <div class="max-w-4xl mx-auto space-y-8">
+            <div class="bg-white dark:bg-slate-900 p-6 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-800">
+                <div class="flex items-center justify-between mb-2">
+                    <div class="flex items-center gap-3">
+                        <span id="question-number" class="px-3 py-1 bg-indigo-100 dark:bg-indigo-900/40 text-indigo-600 dark:text-indigo-400 rounded-full text-xs font-bold uppercase tracking-widest">Question 1 of 10</span>
+                    </div>
+                    <button class="flex items-center gap-2 text-slate-400 hover:text-red-500 font-bold text-sm transition-colors group">
+                        <svg class="w-5 h-5 group-hover:fill-red-50" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z" stroke-linecap="round" stroke-linejoin="round"></path>
+                            <line x1="4" x2="4" y1="22" y2="15"></line>
+                        </svg>
+                        Report
+                    </button>
+                </div>
+                <div class="relative w-full h-1 bg-slate-200 dark:bg-slate-800 rounded-full mt-6 mb-4">
+                    <div id="progress-bar-fill" class="absolute top-0 left-0 h-full bg-emerald-500 rounded-full transition-all duration-500" style="width: 0%;">
+                        <div class="absolute right-0 top-1/2 -translate-y-[28px] translate-x-1/2 flex flex-col items-center">
+                            <div id="progress-percentage" class="bg-emerald-500 text-white text-[10px] font-bold py-0.5 px-2 rounded-md shadow-sm whitespace-nowrap">0%</div>
+                            <div class="w-0 h-0 border-l-[4px] border-l-transparent border-r-[4px] border-r-transparent border-t-[4px] border-t-emerald-500 -mt-[1px]"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-white dark:bg-slate-900 rounded-3xl shadow-xl shadow-slate-200/50 dark:shadow-none border border-slate-100 dark:border-slate-800 p-8 lg:p-12 relative overflow-hidden group">
+                <div class="absolute top-0 left-0 w-2 h-full bg-primary opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                <div id="question-text" class="text-xl text-slate-600 dark:text-slate-300 mb-10 leading-relaxed">
+                    <!-- Dynamic Question Text -->
+                </div>
+                <div id="options-container" class="space-y-4">
+                    <!-- Dynamic Options -->
+                </div>
+            </div>
+            <div class="flex items-center justify-between pt-4 pb-12">
+                <button onclick="clearResponse()" class="px-8 py-3.5 rounded-2xl border-2 border-slate-200 dark:border-slate-800 text-slate-500 dark:text-slate-400 font-bold hover:bg-slate-100 dark:hover:bg-slate-800 transition-all active:scale-95">
+                    Clear Response
+                </button>
+                <div class="flex gap-4">
+                    <button onclick="markForReview()" class="px-8 py-3.5 rounded-2xl border-2 border-indigo-200 dark:border-indigo-900 text-primary font-bold hover:bg-indigo-50 dark:hover:bg-indigo-950 transition-all active:scale-95">
+                        Mark for Review
+                    </button>
+                    <button onclick="saveAndNext()" class="px-10 py-3.5 rounded-2xl bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-bold shadow-xl shadow-indigo-200 dark:shadow-none hover:shadow-indigo-300 transition-all hover:scale-105 active:scale-95 flex items-center gap-2">
+                        Save & Next
+                        <span class="material-symbols-outlined">chevron_right</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+    <aside class="w-80 bg-white dark:bg-slate-900 border-l border-slate-200 dark:border-slate-800 flex flex-col">
+        <div class="p-6 border-b border-slate-100 dark:border-slate-800">
+            <div class="flex items-center justify-between mb-6">
+                <h3 class="font-bold text-lg">Question Palette</h3>
+                <svg class="w-6 h-6 text-slate-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" stroke-linecap="round" stroke-linejoin="round"></path>
+                </svg>
+            </div>
+            <div class="grid grid-cols-2 gap-3 mb-6">
+                <div class="p-3 bg-slate-50 dark:bg-slate-800/50 rounded-xl flex items-center gap-2">
+                    <div class="w-3 h-3 rounded-full bg-accent-green"></div>
+                    <span id="solved-count" class="text-[10px] font-bold uppercase text-slate-500">Solved: 0</span>
+                </div>
+                <div class="p-3 bg-slate-50 dark:bg-slate-800/50 rounded-xl flex items-center gap-2">
+                    <div class="w-3 h-3 rounded-full bg-accent-orange"></div>
+                    <span id="flagged-count" class="text-[10px] font-bold uppercase text-slate-500">Flagged: 0</span>
+                </div>
+            </div>
+        </div>
+        <div class="flex-1 overflow-y-auto p-5 custom-scrollbar">
+            <div id="question-palette" class="grid grid-cols-5 gap-3">
+                <!-- Buttons will be dynamically generated here -->
+            </div>
+        </div>
+        <div class="p-6 border-t border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-900">
+            <button onclick="submitAllSections()" class="w-full py-4 rounded-2xl bg-slate-900 dark:bg-slate-100 text-white dark:text-slate-900 font-bold shadow-lg flex items-center justify-center gap-2 hover:opacity-90 transition-opacity">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" stroke-linecap="round" stroke-linejoin="round"></path>
+                </svg>
+                Submit Assessment
+            </button>
+        </div>
+    </aside>
+</main>
+
+<script>
+    console.log("Quiz script initializing...");
+    
+    // Initialize Django variables
+    let quizDataFromDjango = {};
+    try {
+        const el = document.getElementById('quiz-data-json');
+        if (el) quizDataFromDjango = JSON.parse(el.textContent);
+    } catch (e) { 
+        console.error("Error parsing quiz data", e); 
+    }
+    
+    const quizId = "{{ quiz.id }}";
+    const submitUrl = "{% url 'resumeanalysis:submit_answer' quiz.id %}";
+    const dashboardUrl = "{% url 'users:UserHome' %}";
+    const resultsUrl = "{% url 'resumeanalysis:quiz_results' quiz.id %}";
+
+    // Exam Variables
+    let currentQuestion = 0;
+    let examTimer = null;
+    let timeRemaining = 0; 
+    let userAnswers = [];
+    let examQuestions = [];
+    let currentSelection = null; 
+    let flaggedQuestions = []; 
+    let isSubmitting = false; // Flag to prevent multiple submissions
+
+    // Add fullscreen change listener
+    document.addEventListener('fullscreenchange', handleFullscreenExit);
+    document.addEventListener('webkitfullscreenchange', handleFullscreenExit);
+    document.addEventListener('mozfullscreenchange', handleFullscreenExit);
+    document.addEventListener('MSFullscreenChange', handleFullscreenExit);
+
+    function handleFullscreenExit() {
+        if (!document.fullscreenElement && !document.webkitFullscreenElement && !document.mozFullScreenElement && !document.msFullscreenElement) {
+            // Check if we are still on the exam page and not already submitting
+            const overlay = document.getElementById('start-exam-overlay');
+            if (overlay && overlay.style.display === 'none' && !isSubmitting) {
+                console.log('User exited fullscreen. Auto-submitting assessment...');
+                alert('You have exited fullscreen mode. The assessment will be automatically submitted.');
+                autoSubmitExam();
+            }
+        }
+    }
+
+    function autoSubmitExam() {
+        if (isSubmitting) return;
+        isSubmitting = true;
+        
+        clearInterval(examTimer);
+        
+        const formData = new FormData();
+        formData.append('answers', JSON.stringify(userAnswers));
+        
+        fetch(submitUrl, {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': getCookie('csrftoken')
+            },
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'success') {
+                const redirectUrl = data.redirect_url || resultsUrl;
+                window.location.href = redirectUrl;
+            } else {
+                console.error('Failed to auto-submit assessment:', data.message);
+                window.location.href = dashboardUrl;
+            }
+        })
+        .catch(error => {
+            console.error('Error auto-submitting assessment:', error);
+            window.location.href = dashboardUrl;
+        });
+    }
+
+    // Define functions globally before usage
+    
+    // Enter Fullscreen and Start
+    function enterExamFullscreen() {
+        console.log("Entering fullscreen...");
+        const elem = document.documentElement;
+        if (elem.requestFullscreen) {
+            elem.requestFullscreen().catch(err => {
+                console.log(`Error attempting to enable fullscreen: ${err.message}`);
+            });
+        } else if (elem.webkitRequestFullscreen) { 
+            elem.webkitRequestFullscreen();
+        } else if (elem.msRequestFullscreen) { 
+            elem.msRequestFullscreen();
+        }
+
+        // Hide overlay
+        const overlay = document.getElementById('start-exam-overlay');
+        if (overlay) {
+            overlay.style.opacity = '0';
+            setTimeout(() => {
+                overlay.style.display = 'none';
+            }, 500);
+        }
+
+        // Start timer
+        startTimer();
+    }
+
+    // Load questions from Django data
+    async function loadQuestionsFromBackend() {
+        if (quizDataFromDjango && quizDataFromDjango.questions) {
+            return quizDataFromDjango.questions;
+        }
+        return [];
+    }
+
+    // Load question
+    function loadQuestion() {
+        if (currentQuestion >= examQuestions.length) {
+            submitExam();
+            return;
+        }
+        
+        const question = examQuestions[currentQuestion];
+        console.log('Loading question:', question);
+        
+        // Reset current selection to saved answer
+        currentSelection = userAnswers[currentQuestion];
+        
+        // Update question number dynamically
+        const questionNumberElement = document.getElementById('question-number');
+        const questionText = `Question ${currentQuestion + 1} of ${examQuestions.length}`;
+        
+        if (questionNumberElement) {
+            questionNumberElement.textContent = questionText;
+        }
+        
+        // Update progress bar
+        const progressBarFill = document.getElementById('progress-bar-fill');
+        const progressPercentage = document.getElementById('progress-percentage');
+        
+        if (progressBarFill && progressPercentage) {
+            const fillPercentage = Math.round(((currentQuestion + 1) / examQuestions.length) * 100);
+            progressBarFill.style.width = `${fillPercentage}%`;
+            progressPercentage.textContent = `${fillPercentage}%`;
+        }
+        
+        // Update question text display
+        const questionTextElement = document.getElementById('question-text');
+        if (questionTextElement) {
+            questionTextElement.textContent = question.question_text || question.question;
+        }
+        
+        // Update options
+        const optionsContainer = document.getElementById('options-container');
+        if (optionsContainer) {
+            optionsContainer.innerHTML = '';
+            
+            question.options.forEach((option, index) => {
+                const optionLabel = document.createElement('label');
+                optionLabel.className = 'group/opt flex items-center p-5 rounded-2xl border-2 border-slate-100 dark:border-slate-800 hover:border-indigo-500 dark:hover:border-indigo-400 hover:bg-indigo-50/50 dark:hover:bg-indigo-900/10 cursor-pointer transition-all option-card';
+                optionLabel.innerHTML = `
+                    <input class="hidden peer" name="answer" type="radio" value="${index}" onchange="handleOptionChange(${index}, ${index})" />
+                    <div class="w-8 h-8 rounded-full border-2 border-slate-300 dark:border-slate-700 flex items-center justify-center mr-4 peer-checked:bg-primary peer-checked:border-primary transition-colors">
+                        <div class="w-2 h-2 rounded-full bg-white opacity-0 peer-checked:opacity-100 transition-all"></div>
+                    </div>
+                    <span class="text-lg font-medium text-slate-700 dark:text-slate-200 group-hover/opt:text-indigo-700 dark:group-hover/opt:text-indigo-300">${String.fromCharCode(65 + index)}. ${option}</span>
+                `;
+                
+                optionsContainer.appendChild(optionLabel);
+            });
+            
+            // Check if there's a saved answer
+            if (currentSelection !== null) {
+                const inputs = optionsContainer.querySelectorAll('input[name="answer"]');
+                inputs.forEach(input => {
+                    if (parseInt(input.value) === currentSelection) {
+                        input.checked = true;
+                        
+                        // Apply visual styles
+                        const label = input.closest('label');
+                        label.classList.add('border-indigo-500', 'bg-indigo-50/50', 'dark:bg-indigo-900/10');
+                        const circle = label.querySelector('.w-8.h-8');
+                        circle.classList.add('bg-primary', 'border-primary');
+                        circle.classList.remove('border-slate-300', 'dark:border-slate-700');
+                        const tick = circle.querySelector('div');
+                        tick.classList.remove('opacity-0');
+                    }
+                });
+            }
+        }
+        
+        updateQuestionPalette();
+    }
+
+    // Handle option change
+    function handleOptionChange(displayIndex, originalIndex) {
+        currentSelection = originalIndex;
+        
+        // Update visual states for all options
+        const optionLabels = document.querySelectorAll('.option-card');
+        optionLabels.forEach(label => {
+            const radio = label.querySelector('input');
+            const circle = label.querySelector('.w-8.h-8');
+            const tick = circle.querySelector('.w-2.h-2');
+            
+            if (radio.checked) {
+                label.classList.add('border-indigo-500', 'bg-indigo-50/50', 'dark:bg-indigo-900/10');
+                circle.classList.add('bg-primary', 'border-primary');
+                circle.classList.remove('border-slate-300', 'dark:border-slate-700');
+                tick.classList.remove('opacity-0');
+            } else {
+                label.classList.remove('border-indigo-500', 'bg-indigo-50/50', 'dark:bg-indigo-900/10');
+                circle.classList.remove('bg-primary', 'border-primary');
+                circle.classList.add('border-slate-300', 'dark:border-slate-700');
+                tick.classList.add('opacity-0');
+            }
+        });
+
+        updateQuestionPalette();
+        console.log(`Selected option ${displayIndex} for question ${currentQuestion}`);
+    }
+
+    // Initialize question palette
+    function initializeQuestionPalette() {
+        const paletteContainer = document.getElementById('question-palette');
+        if (!paletteContainer) return;
+        
+        paletteContainer.innerHTML = '';
+        
+        examQuestions.forEach((_, index) => {
+            const btn = document.createElement('button');
+            btn.className = "w-9 h-9 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold hover:bg-slate-200 dark:hover:bg-slate-700 transition-all flex items-center justify-center text-xs border border-slate-200 dark:border-slate-700";
+            btn.innerText = index + 1;
+            btn.onclick = () => goToQuestion(index);
+            paletteContainer.appendChild(btn);
+        });
+        
+        updateQuestionPalette();
+    }
+
+    // Update question palette
+    function updateQuestionPalette() {
+        const buttons = document.querySelectorAll('#question-palette button');
+        
+        let solvedCount = 0;
+        
+        buttons.forEach((button, index) => {
+            if (userAnswers[index] !== null) {
+                solvedCount++;
+            }
+
+            button.className = "w-9 h-9 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold hover:bg-slate-200 dark:hover:bg-slate-700 transition-all flex items-center justify-center text-xs border border-slate-200 dark:border-slate-700";
+            
+            // Current question
+            if (index === currentQuestion) {
+                button.className = "w-9 h-9 rounded-full bg-primary text-white font-bold ring-2 ring-indigo-200 dark:ring-indigo-900/50 flex items-center justify-center text-xs";
+                button.innerText = index + 1;
+            } 
+            // Flagged questions
+            else if (flaggedQuestions.includes(index)) {
+                button.className = "w-9 h-9 rounded-full bg-accent-orange text-white font-bold flex items-center justify-center shadow-md shadow-orange-100 dark:shadow-none";
+                button.innerHTML = '<span class="material-symbols-outlined text-xs">flag</span>';
+            }
+            // Answered questions
+            else if (userAnswers[index] !== null) {
+                button.className = "w-9 h-9 rounded-full bg-accent-green text-white font-bold flex items-center justify-center shadow-md shadow-emerald-100 dark:shadow-none";
+                button.innerHTML = '<span class="material-symbols-outlined text-xs">check</span>';
+            } else {
+                 button.innerText = index + 1;
+            }
+        });
+        
+        // Update counts
+        const solvedCountElement = document.getElementById('solved-count');
+        const flaggedCountElement = document.getElementById('flagged-count');
+        
+        if (solvedCountElement) {
+            solvedCountElement.textContent = `Solved: ${solvedCount}`;
+        }
+        
+        if (flaggedCountElement) {
+            flaggedCountElement.textContent = `Flagged: ${flaggedQuestions.length}`;
+        }
+    }
+
+    // Navigate to question
+    function goToQuestion(index) {
+        if (index >= 0 && index < examQuestions.length) {
+            currentQuestion = index;
+            loadQuestion();
+        }
+    }
+
+    // Next question
+    function nextQuestion() {
+        if (currentQuestion < examQuestions.length - 1) {
+            currentQuestion++;
+            loadQuestion();
+        }
+    }
+
+    // Clear response
+    function clearResponse() {
+        userAnswers[currentQuestion] = null;
+        currentSelection = null;
+        
+        const radioButtons = document.querySelectorAll('input[name="answer"]');
+        radioButtons.forEach(button => button.checked = false);
+        
+        // Reset styles
+        const optionLabels = document.querySelectorAll('.option-card');
+        optionLabels.forEach(label => {
+            label.classList.remove('border-indigo-500', 'bg-indigo-50/50', 'dark:bg-indigo-900/10');
+            const circle = label.querySelector('.w-8.h-8');
+            circle.classList.remove('bg-primary', 'border-primary');
+            circle.classList.add('border-slate-300', 'dark:border-slate-700');
+            const tick = circle.querySelector('.w-2.h-2');
+            tick.classList.add('opacity-0');
+        });
+        
+        updateQuestionPalette();
+    }
+
+    // Mark for review
+    function markForReview() {
+        if (!flaggedQuestions.includes(currentQuestion)) {
+            flaggedQuestions.push(currentQuestion);
+            
+            // Clear answer if any (logic from quiz.html)
+            if (userAnswers[currentQuestion] !== null) {
+                userAnswers[currentQuestion] = null;
+                currentSelection = null;
+                const radioButtons = document.querySelectorAll('input[name="answer"]');
+                radioButtons.forEach(button => button.checked = false);
+                // Reset styles
+                 const optionLabels = document.querySelectorAll('.option-card');
+                optionLabels.forEach(label => {
+                    label.classList.remove('border-indigo-500', 'bg-indigo-50/50', 'dark:bg-indigo-900/10');
+                    const circle = label.querySelector('.w-8.h-8');
+                    circle.classList.remove('bg-primary', 'border-primary');
+                    circle.classList.add('border-slate-300', 'dark:border-slate-700');
+                    const tick = circle.querySelector('.w-2.h-2');
+                    tick.classList.add('opacity-0');
+                });
+            }
+        }
+        
+        updateQuestionPalette();
+        nextQuestion();
+    }
+
+    // Save & Next
+    function saveAndNext() {
+        if (currentSelection !== null) {
+            userAnswers[currentQuestion] = currentSelection;
+            flaggedQuestions = flaggedQuestions.filter(q => q !== currentQuestion);
+            updateQuestionPalette(); 
+            nextQuestion();
+        } else {
+            alert('Please select an answer before saving and proceeding to next question.');
+        }
+    }
+
+    // Exit fullscreen
+    function exitFullscreen() {
+        if (confirm('Are you sure you want to exit the assessment? Your progress will be lost.')) {
+            const elem = document;
+            if (elem.exitFullscreen) {
+                elem.exitFullscreen().catch(err => console.log(err));
+            } else if (elem.webkitExitFullscreen) { 
+                elem.webkitExitFullscreen();
+            } else if (elem.msExitFullscreen) { 
+                elem.msExitFullscreen();
+            }
+            window.location.href = dashboardUrl;
+        }
+    }
+
+    // Start timer
+    function startTimer() {
+        if (examTimer) clearInterval(examTimer);
+        
+        examTimer = setInterval(() => {
+            timeRemaining--;
+            updateTimerDisplay();
+            
+            if (timeRemaining <= 0) {
+                clearInterval(examTimer);
+                submitExam();
+            }
+        }, 1000);
+    }
+
+    // Update timer display
+    function updateTimerDisplay() {
+        const minutes = Math.floor(timeRemaining / 60);
+        const seconds = timeRemaining % 60;
+        const timeString = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        
+        const timerText = document.getElementById('timer-text');
+        if (timerText) {
+             timerText.textContent = timeString;
+        }
+    }
+
+    // Submit all sections
+    function submitAllSections() {
+        if (isSubmitting) return;
+
+        const unansweredCount = userAnswers.filter(answer => answer === null).length;
+        let confirmMessage = 'Are you sure you want to submit the assessment?';
+        
+        if (unansweredCount > 0) {
+            confirmMessage = `You have ${unansweredCount} unanswered question${unansweredCount > 1 ? 's' : ''}. Are you sure you want to submit?`;
+        }
+        
+        if (!confirm(confirmMessage)) {
+            return;
+        }
+        
+        isSubmitting = true;
+        clearInterval(examTimer);
+        
+        const formData = new FormData();
+        formData.append('answers', JSON.stringify(userAnswers));
+        
+        fetch(submitUrl, {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': getCookie('csrftoken')
+            },
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'success') {
+                // Use redirect URL from server response if available
+                const redirectUrl = data.redirect_url || resultsUrl;
+                window.location.href = redirectUrl;
+            } else {
+                alert('Failed to submit assessment: ' + data.message);
+            }
+        })
+        .catch(error => {
+            console.error('Error submitting assessment:', error);
+            alert('Failed to submit assessment. Please try again.');
+        });
+    }
+
+    function submitExam() {
+        submitAllSections();
+    }
+
+    // Get CSRF token
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+
+    // Initialize exam
+    document.addEventListener('DOMContentLoaded', async function() {
+        console.log("DOM loaded, initializing quiz...");
+        const questions = await loadQuestionsFromBackend();
+        if (questions.length > 0) {
+            examQuestions = questions;
+            userAnswers = new Array(questions.length).fill(null);
+            
+            // Set time
+            if (quizDataFromDjango.metadata && quizDataFromDjango.metadata.time_limit) {
+                 timeRemaining = quizDataFromDjango.metadata.time_limit;
+            } else {
+                 timeRemaining = questions.length * 60; 
+            }
+            
+            initializeQuestionPalette();
+            
+            loadQuestion();
+        } else {
+            console.error("No questions loaded");
+            alert('Failed to load questions. Please try again.');
+            window.location.href = dashboardUrl;
+        }
+    });
+</script>
+</body>
+</html>

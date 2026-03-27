@@ -1,0 +1,742 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mock Test - AI Resume Analyzer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#2563eb",
+                        secondary: "#1e40af",
+                        background: "#f8fafc",
+                    }
+                },
+            },
+        };
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --sidebar-light: #1e293b;
+            --sidebar-dark: #0f172a;
+            --sidebar-accent: #3730a3;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+        }
+        .card {
+            background-color: #ffffff;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+        .dark .card {
+            background-color: #1f2937;
+        }
+        .btn-primary {
+            background-color: #2563eb;
+            color: #ffffff;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            font-weight: 500;
+            transition: background-color 0.2s;
+        }
+        .btn-primary:hover {
+            background-color: #1e40af;
+        }
+        .text-blue-dashboard {
+            color: #2563eb;
+        }
+        .dark .text-blue-dashboard {
+            color: #60a5fa;
+        }
+        .text-dark-dashboard {
+            color: #1a202c;
+        }
+        .dark .text-dark-dashboard {
+            color: #e2e8f0;
+        }
+        .border-light {
+            border-color: #e2e8f0;
+        }
+        .dark .border-light {
+            border-color: #475569;
+        }
+        .sidebar-icon {
+            font-size: 28px;
+            color: #a0aec0;
+        }
+        .sidebar-item.active .sidebar-icon,
+        .sidebar-item:hover .sidebar-icon {
+            color: #ffffff;
+        }
+        .pulse-indicator {
+            box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7);
+            animation: pulse-ring 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+        @keyframes pulse-ring {
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7); }
+            70% { transform: scale(1); box-shadow: 0 0 0 8px rgba(34, 197, 94, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); }
+        }
+        .glow-effect {
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+        @keyframes glow {
+            from { box-shadow: 0 0 10px #3b82f6; }
+            to { box-shadow: 0 0 20px #3b82f6, 0 0 30px #3b82f6; }
+        }
+        /* Custom Tooltip Styling */
+        .sidebar-item {
+            position: relative;
+        }
+        
+        /* Glass Day Night Toggle */
+        .toggle-wrapper{
+            width:90px;
+            height:38px;
+            border-radius:21px;
+            background:rgba(255,255,255,0.25);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border:1px solid rgba(255,255,255,0.4);
+            box-shadow:0 6px 15px rgba(0,0,0,0.05);
+            position:relative;
+            overflow:hidden;
+            cursor:pointer;
+            flex-shrink:0;
+        }
+
+        /* Inner sky */
+        .sky{
+            position:absolute;
+            inset:0;
+            border-radius:21px;
+            transition:1s;
+            background:linear-gradient(135deg,#7fc8ff,#cceeff);
+        }
+
+        /* Clouds */
+        .cloud{
+            position:absolute;
+            width:38px;
+            height:14px;
+            background:rgba(255,255,255,0.95);
+            border-radius:14px;
+            top:11px;
+            animation:cloudMove 18s linear infinite;
+            box-shadow:0 1px 4px rgba(0,0,0,0.03);
+        }
+        .cloud::before,
+        .cloud::after{
+            content:'';
+            position:absolute;
+            background:rgba(255,255,255,0.95);
+            width:15px;
+            height:15px;
+            border-radius:50%;
+            top:-8px;
+        }
+        .cloud::before{left:5px;}
+        .cloud::after{left:19px;}
+
+        @keyframes cloudMove{
+            from{left:-45px;}
+            to{left:95px;}
+        }
+
+        /* Stars */
+        .star{
+            position:absolute;
+            width:0.8px;
+            height:0.8px;
+            background:white;
+            border-radius:50%;
+            opacity:0;
+            animation:twinkle 2s infinite alternate;
+        }
+        @keyframes twinkle{
+            0%{opacity:0}
+            100%{opacity:1}
+        }
+
+        /* Knob */
+        .knob{
+            position:absolute;
+            width:20px;
+            height:20px;
+            background:linear-gradient(135deg,#fbbf24,#f59e0b);
+            border-radius:50%;
+            top:3px;
+            left:3px;
+            transition:0.3s;
+            box-shadow:0 2px 4px rgba(0,0,0,0.2);
+            z-index:10;
+        }
+
+        .knob.moon{
+            background:linear-gradient(135deg,#e5e7eb,#9ca3af);
+            animation:slideMoon 0.3s forwards;
+        }
+
+        @keyframes slideMoon{
+            to{left:27px}
+        }
+
+        .moon-shadow{
+            position:absolute;
+            width:16px;
+            height:16px;
+            background:linear-gradient(135deg,#6b7280,#4b5563);
+            border-radius:50%;
+            top:2px;
+            left:2px;
+        }
+
+        .toggle-wrapper.active{
+            background:linear-gradient(135deg,#1f2937,#111827);
+        }
+        
+        .toggle-wrapper.active .sky{
+            background:linear-gradient(135deg,#1e293b,#0f172a);
+        }
+        
+        .toggle-wrapper.active .cloud{
+            opacity:0;
+        }
+        
+        .toggle-wrapper.active .star{
+            opacity:1;
+        }
+
+        /* Mock Test Styles */
+        .test-card {
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .test-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+        }
+        .test-status {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+        .test-status.pending {
+            background-color: #fef3c7;
+            color: #92400e;
+        }
+        .test-status.running {
+            background-color: #dbeafe;
+            color: #1e40af;
+        }
+        .test-status.success {
+            background-color: #d1fae5;
+            color: #065f46;
+        }
+        .test-status.error {
+            background-color: #fee2e2;
+            color: #991b1b;
+        }
+        .fullscreen-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 9999;
+            display: none;
+        }
+        .fullscreen-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            border-radius: 1rem;
+            padding: 2rem;
+            max-width: 90%;
+            max-height: 90%;
+            overflow-y: auto;
+        }
+        .dark .fullscreen-content {
+            background: #1f2937;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 dark:bg-gray-900 min-h-screen flex">
+    <!-- Sidebar -->
+    <aside class="w-20 bg-blue-700 dark:bg-gradient-to-b dark:from-[var(--sidebar-dark)] dark:to-[var(--sidebar-accent)] flex flex-col items-center py-6 fixed h-full shadow-lg">
+        <div class="mb-10">
+            <div class="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center">
+                <span class="material-symbols-outlined text-white text-xl">security</span>
+            </div>
+        </div>
+        <nav class="flex flex-col space-y-6">
+            <a href="http://127.0.0.1:8000/UserHome/" class="sidebar-item flex justify-center p-3 rounded-xl hover:bg-white/20 transition-colors" title="Dashboard">
+                <span class="material-symbols-outlined sidebar-icon text-white">apps</span>
+            </a>
+            <a href="http://127.0.0.1:8000/UserProfile/" class="sidebar-item flex justify-center p-3 rounded-xl hover:bg-white/20 transition-colors" title="Profile">
+                <span class="material-symbols-outlined sidebar-icon text-white">person</span>
+            </a>
+            <a href="http://127.0.0.1:8000/my-resumes/" class="sidebar-item flex justify-center p-3 rounded-xl hover:bg-white/20 transition-colors" title="My Resumes">
+                <span class="material-symbols-outlined sidebar-icon text-white">description</span>
+            </a>
+            <a href="#" onclick="openMockTest()" class="sidebar-item flex justify-center p-3 rounded-xl hover:bg-white/20 transition-colors" title="Mock Test">
+                <span class="material-symbols-outlined sidebar-icon text-white">science</span>
+            </a>
+            <a href="http://127.0.0.1:8000/UserSearchDocuments/" class="sidebar-item flex justify-center p-3 rounded-xl hover:bg-white/20 transition-colors" title="Search & Stats">
+                <span class="material-symbols-outlined sidebar-icon text-white">bar_chart</span>
+            </a>
+            <a href="http://127.0.0.1:8000/UserViewDocs/" class="sidebar-item flex justify-center p-3 rounded-xl hover:bg-white/20 transition-colors" title="Access Documents">
+                <span class="material-symbols-outlined sidebar-icon text-white">folder_shared</span>
+            </a>
+        </nav>
+        <div class="mt-auto">
+            <a href="http://127.0.0.1:8000/UserLogout/" class="sidebar-item flex justify-center p-3 rounded-xl hover:bg-red-600 transition-colors" title="Logout">
+                <span class="material-symbols-outlined sidebar-icon text-white">logout</span>
+            </a>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="flex-1 ml-20">
+        <!-- Header -->
+        <header class="h-16 border-b border-slate-200 dark:border-slate-700 bg-white dark:bg-gray-800 flex flex-shrink-0 items-center justify-between px-8 z-10">
+            <div class="flex items-center gap-6">
+                <div class="flex items-center gap-2.5">
+                    <span class="w-2 h-2 rounded-full bg-green-500 pulse-indicator"></span>
+                    <span class="text-[10px] font-extrabold uppercase tracking-[0.2em] text-green-600 dark:text-green-400">System Live</span>
+                </div>
+                <div class="h-4 w-px bg-slate-200 dark:bg-slate-600"></div>
+                <h1 class="font-bold text-[11px] uppercase tracking-[0.15em] text-slate-400 dark:text-slate-300">Careerlytics Mock Test Portal</h1>
+            </div>
+            <div class="flex items-center gap-6">
+                <div class="flex items-center gap-5">
+                    <div class="toggle-wrapper" id="theme-toggle">
+                        <div class="sky">
+                            <div class="cloud" style="animation-delay:0s"></div>
+                            <div class="cloud" style="top:60px;animation-delay:7s"></div>
+                            <div id="stars"></div>
+                        </div>
+                        <div class="knob" id="knob"></div>
+                    </div>
+                    <button class="p-2 text-slate-400 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors relative">
+                        <span class="material-symbols-outlined text-[24px]">notifications</span>
+                        <span class="absolute top-2 right-2 w-2 h-2 bg-red-500 rounded-full border-2 border-white dark:border-gray-900"></span>
+                    </button>
+                    <div class="flex items-center gap-3 border-l border-slate-100 pl-5">
+                        <div class="text-right hidden sm:block">
+                            <p class="text-[9px] font-black text-slate-400 uppercase tracking-tighter">PROFILE ACCESS</p>
+                            <p class="text-xs text-slate-800 dark:text-slate-200 font-bold font-mono uppercase">User</p>
+                        </div>
+                        <div class="w-9 h-9 rounded-lg border border-slate-200 p-0.5 bg-white shadow-sm overflow-hidden">
+                            <img alt="User" class="w-full h-full object-cover rounded-[6px]" src="https://via.placeholder.com/150" />
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="h-8 w-px bg-slate-200"></div>
+                <a href="http://127.0.0.1:8000/UserLogout/" class="flex items-center gap-2 text-slate-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-all px-2.5 py-2.5">
+                    <span class="text-xs font-bold uppercase tracking-widest hidden lg:block">Logout</span>
+                    <span class="material-symbols-outlined text-[24px]">logout</span>
+                </a>
+            </div>
+        </header>
+
+        <!-- Mock Test Content -->
+        <div class="max-w-7xl mx-auto px-0 -mx-12 py-8">
+            <div class="space-y-8">
+                <!-- Page Title -->
+                <div>
+                    <h2 class="text-4xl font-black text-gray-900 dark:text-white tracking-tight">Python Mock Test <span class="text-blue-600 dark:text-blue-400">Environment</span></h2>
+                    <p class="text-gray-500 dark:text-gray-400 font-mono text-sm mt-2 uppercase tracking-widest">COMPREHENSIVE TESTING & DEBUGGING TOOLS</p>
+                </div>
+
+                <!-- Mock Test Cards -->
+                <div class="grid md:grid-cols-3 gap-6">
+                    <!-- Resume Analysis Test -->
+                    <div class="card p-6 test-card" onclick="startPythonTest('resume_analysis')">
+                        <div class="flex items-center mb-4">
+                            <div class="bg-blue-100 dark:bg-blue-900/30 rounded-full p-2 mr-3">
+                                <span class="material-symbols-outlined text-blue-600 dark:text-blue-400">description</span>
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Resume Analysis Test</h3>
+                                <p class="text-sm text-gray-500 dark:text-gray-400">Test resume parsing and analysis functionality</p>
+                            </div>
+                        </div>
+                        <div class="mt-4">
+                            <div class="flex items-center justify-between">
+                                <span class="test-status pending" id="resume-analysis-status">Ready</span>
+                                <button class="btn-primary">
+                                    Start Test
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- AI Model Test -->
+                    <div class="card p-6 test-card" onclick="startPythonTest('ai_model')">
+                        <div class="flex items-center mb-4">
+                            <div class="bg-green-100 dark:bg-green-900/30 rounded-full p-2 mr-3">
+                                <span class="material-symbols-outlined text-green-600 dark:text-green-400">psychology</span>
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-semibold text-gray-900 dark:text-white">AI Model Test</h3>
+                                <p class="text-sm text-gray-500 dark:text-gray-400">Test AI model scoring and evaluation</p>
+                            </div>
+                        </div>
+                        <div class="mt-4">
+                            <div class="flex items-center justify-between">
+                                <span class="test-status pending" id="ai-model-status">Ready</span>
+                                <button class="btn-primary">
+                                    Start Test
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Database Test -->
+                    <div class="card p-6 test-card" onclick="startPythonTest('database')">
+                        <div class="flex items-center mb-4">
+                            <div class="bg-purple-100 dark:bg-purple-900/30 rounded-full p-2 mr-3">
+                                <span class="material-symbols-outlined text-purple-600 dark:text-purple-400">storage</span>
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Database Test</h3>
+                                <p class="text-sm text-gray-500 dark:text-gray-400">Test database connectivity and CRUD operations</p>
+                            </div>
+                        </div>
+                        <div class="mt-4">
+                            <div class="flex items-center justify-between">
+                                <span class="test-status pending" id="database-status">Ready</span>
+                                <button class="btn-primary">
+                                    Start Test
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- API Test -->
+                    <div class="card p-6 test-card" onclick="startPythonTest('api')">
+                        <div class="flex items-center mb-4">
+                            <div class="bg-orange-100 dark:bg-orange-900/30 rounded-full p-2 mr-3">
+                                <span class="material-symbols-outlined text-orange-600 dark:text-orange-400">api</span>
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-semibold text-gray-900 dark:text-white">API Test</h3>
+                                <p class="text-sm text-gray-500 dark:text-gray-400">Test API endpoints and responses</p>
+                            </div>
+                        </div>
+                        <div class="mt-4">
+                            <div class="flex items-center justify-between">
+                                <span class="test-status pending" id="api-status">Ready</span>
+                                <button class="btn-primary">
+                                    Start Test
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Performance Test -->
+                    <div class="card p-6 test-card" onclick="startPythonTest('performance')">
+                        <div class="flex items-center mb-4">
+                            <div class="bg-red-100 dark:bg-red-900/30 rounded-full p-2 mr-3">
+                                <span class="material-symbols-outlined text-red-600 dark:text-red-400">speed</span>
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Performance Test</h3>
+                                <p class="text-sm text-gray-500 dark:text-gray-400">Test system performance and load testing</p>
+                            </div>
+                        </div>
+                        <div class="mt-4">
+                            <div class="flex items-center justify-between">
+                                <span class="test-status pending" id="performance-status">Ready</span>
+                                <button class="btn-primary">
+                                    Start Test
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Security Test -->
+                    <div class="card p-6 test-card" onclick="startPythonTest('security')">
+                        <div class="flex items-center mb-4">
+                            <div class="bg-yellow-100 dark:bg-yellow-900/30 rounded-full p-2 mr-3">
+                                <span class="material-symbols-outlined text-yellow-600 dark:text-yellow-400">security</span>
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Security Test</h3>
+                                <p class="text-sm text-gray-500 dark:text-gray-400">Test security vulnerabilities and authentication</p>
+                            </div>
+                        </div>
+                        <div class="mt-4">
+                            <div class="flex items-center justify-between">
+                                <span class="test-status pending" id="security-status">Ready</span>
+                                <button class="btn-primary">
+                                    Start Test
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Test Results Section -->
+                <div class="card p-6" id="test-results" style="display: none;">
+                    <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Test Results</h3>
+                    <div id="test-output" class="space-y-4">
+                        <!-- Test results will be displayed here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Fullscreen Overlay -->
+    <div class="fullscreen-overlay" id="fullscreen-overlay">
+        <div class="fullscreen-content">
+            <div class="flex items-center justify-between mb-4">
+                <h3 class="text-xl font-semibold text-gray-900 dark:text-white">Test Running...</h3>
+                <button onclick="closeFullscreen()" class="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200">
+                    <span class="material-symbols-outlined">close</span>
+                </button>
+            </div>
+            <div id="fullscreen-content">
+                <!-- Fullscreen test content will be displayed here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Theme Toggle Functionality
+        function toggleTheme() {
+            const html = document.documentElement;
+            const themeToggle = document.getElementById('theme-toggle');
+            const knob = document.getElementById('knob');
+            const stars = document.getElementById('stars');
+            
+            if (html.classList.contains('dark')) {
+                html.classList.remove('dark');
+                localStorage.setItem('theme', 'light');
+                themeToggle.classList.remove('active');
+                knob.classList.remove('moon');
+                knob.innerHTML = "";
+                document.querySelectorAll(".star").forEach(s=>s.style.opacity=0);
+                document.querySelectorAll(".cloud").forEach(c=>c.style.opacity=1);
+            } else {
+                html.classList.add('dark');
+                localStorage.setItem('theme', 'dark');
+                themeToggle.classList.add('active');
+                knob.classList.add('moon');
+                knob.innerHTML="<div class='moon-shadow'></div>";
+                document.querySelectorAll(".star").forEach(s=>s.style.opacity=1);
+                document.querySelectorAll(".cloud").forEach(c=>c.style.opacity=0);
+            }
+        }
+
+        // Initialize theme on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            const html = document.documentElement;
+            const themeToggle = document.getElementById('theme-toggle');
+            const knob = document.getElementById('knob');
+            const stars = document.getElementById('stars');
+            
+            // Create stars
+            for(let i=0;i<40;i++){
+                let s=document.createElement("div");
+                s.className="star";
+                s.style.left=Math.random()*100+"%";
+                s.style.top=Math.random()*100+"%";
+                s.style.animationDelay=Math.random()*2+"s";
+                stars.appendChild(s);
+            }
+            
+            // Set initial theme state
+            let night = savedTheme === 'dark';
+            if (night) {
+                html.classList.add('dark');
+                themeToggle.classList.add('active');
+                knob.classList.add('moon');
+                knob.innerHTML="<div class='moon-shadow'></div>";
+                document.querySelectorAll(".star").forEach(s=>s.style.opacity=1);
+                document.querySelectorAll(".cloud").forEach(c=>c.style.opacity=0);
+            } else {
+                document.querySelectorAll(".star").forEach(s=>s.style.opacity=0);
+                document.querySelectorAll(".cloud").forEach(c=>c.style.opacity=1);
+            }
+            
+            // Add click event listener
+            themeToggle.addEventListener('click', () => {
+                night = !night;
+                themeToggle.classList.toggle('active');
+                
+                if(night){
+                    html.classList.add('dark');
+                    localStorage.setItem('theme', 'dark');
+                    knob.classList.add('moon');
+                    knob.innerHTML="<div class='moon-shadow'></div>";
+                    document.querySelectorAll(".star").forEach(s=>s.style.opacity=1);
+                    document.querySelectorAll(".cloud").forEach(c=>c.style.opacity=0);
+                }else{
+                    html.classList.remove('dark');
+                    localStorage.setItem('theme', 'light');
+                    knob.classList.remove('moon');
+                    knob.innerHTML="";
+                    document.querySelectorAll(".star").forEach(s=>s.style.opacity=0);
+                    document.querySelectorAll(".cloud").forEach(c=>c.style.opacity=1);
+                }
+            });
+        });
+
+        // Mock Test Functions
+        function openMockTest() {
+            alert('Mock Test functionality would be implemented here!');
+        }
+
+        function startPythonTest(testType) {
+            // Update status
+            const statusElement = document.getElementById(`${testType}-status`);
+            statusElement.className = 'test-status running';
+            statusElement.textContent = 'Running...';
+            
+            // Show fullscreen
+            showFullscreen(testType);
+            
+            // Simulate test execution
+            setTimeout(() => {
+                executePythonTest(testType);
+            }, 1000);
+        }
+
+        function showFullscreen(testType) {
+            const overlay = document.getElementById('fullscreen-overlay');
+            const content = document.getElementById('fullscreen-content');
+            
+            // Set content based on test type
+            content.innerHTML = `
+                <div class="text-center">
+                    <div class="mb-6">
+                        <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
+                    </div>
+                    <h4 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">Running ${testType.replace('_', ' ').toUpperCase()} Test</h4>
+                    <p class="text-gray-600 dark:text-gray-400">Executing Python test scripts...</p>
+                    <div class="mt-4">
+                        <div class="bg-gray-200 dark:bg-gray-700 rounded-full h-2 w-64 mx-auto">
+                            <div class="bg-blue-600 h-2 rounded-full" style="width: 0%; transition: width 2s ease-in-out;" id="progress-bar"></div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            overlay.style.display = 'block';
+            
+            // Simulate progress
+            let progress = 0;
+            const progressBar = document.getElementById('progress-bar');
+            const progressInterval = setInterval(() => {
+                progress += Math.random() * 20;
+                if (progress >= 100) {
+                    progress = 100;
+                    clearInterval(progressInterval);
+                    setTimeout(() => {
+                        closeFullscreen();
+                        showTestResults(testType);
+                    }, 500);
+                }
+                progressBar.style.width = progress + '%';
+            }, 300);
+        }
+
+        function closeFullscreen() {
+            const overlay = document.getElementById('fullscreen-overlay');
+            overlay.style.display = 'none';
+        }
+
+        function executePythonTest(testType) {
+            // This would call the actual Python test backend
+            console.log(`Executing Python test: ${testType}`);
+            
+            // For now, simulate test results
+            const testResults = {
+                resume_analysis: {
+                    status: 'success',
+                    message: 'Resume analysis test completed successfully',
+                    details: ['Text parsing: ✓', 'Skill extraction: ✓', 'Score calculation: ✓', 'Database storage: ✓']
+                },
+                ai_model: {
+                    status: 'success',
+                    message: 'AI model test completed successfully',
+                    details: ['Model loading: ✓', 'Prediction accuracy: ✓', 'Response time: ✓', 'Error handling: ✓']
+                },
+                database: {
+                    status: 'success',
+                    message: 'Database test completed successfully',
+                    details: ['Connection: ✓', 'CRUD operations: ✓', 'Data integrity: ✓', 'Performance: ✓']
+                },
+                api: {
+                    status: 'success',
+                    message: 'API test completed successfully',
+                    details: ['GET requests: ✓', 'POST requests: ✓', 'Authentication: ✓', 'Error handling: ✓']
+                },
+                performance: {
+                    status: 'success',
+                    message: 'Performance test completed successfully',
+                    details: ['Load testing: ✓', 'Response time: ✓', 'Memory usage: ✓', 'CPU usage: ✓']
+                },
+                security: {
+                    status: 'success',
+                    message: 'Security test completed successfully',
+                    details: ['Authentication: ✓', 'Authorization: ✓', 'SQL injection: ✓', 'XSS protection: ✓']
+                }
+            };
+            
+            return testResults[testType] || { status: 'error', message: 'Unknown test type' };
+        }
+
+        function showTestResults(testType) {
+            const results = executePythonTest(testType);
+            const statusElement = document.getElementById(`${testType}-status`);
+            const resultsSection = document.getElementById('test-results');
+            const outputElement = document.getElementById('test-output');
+            
+            // Update status
+            statusElement.className = `test-status ${results.status}`;
+            statusElement.textContent = results.status === 'success' ? 'Success' : 'Error';
+            
+            // Show results section
+            resultsSection.style.display = 'block';
+            
+            // Add test result
+            const resultHtml = `
+                <div class="border-l-4 border-${results.status === 'success' ? 'green' : 'red'}-500 pl-4">
+                    <div class="flex items-center mb-2">
+                        <span class="material-symbols-outlined text-${results.status === 'success' ? 'green' : 'red'}-600 mr-2">
+                            ${results.status === 'success' ? 'check_circle' : 'error'}
+                        </span>
+                        <h4 class="text-lg font-semibold text-gray-900 dark:text-white">${testType.replace('_', ' ').toUpperCase()} Test</h4>
+                    </div>
+                    <p class="text-gray-600 dark:text-gray-400 mb-2">${results.message}</p>
+                    <ul class="list-disc list-inside text-gray-600 dark:text-gray-400">
+                        ${results.details.map(detail => `<li>${detail}</li>`).join('')}
+                    </ul>
+                </div>
+            `;
+            
+            outputElement.insertAdjacentHTML('afterbegin', resultHtml);
+        }
+    </script>
+</body>
+</html>

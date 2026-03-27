@@ -1,0 +1,128 @@
+{% extends 'users/user_tailwind_base.html' %}
+{% load static %}
+
+{% block title %}Java Tests - Mock Test Center{% endblock %}
+
+{% block page_title %}Java Programming Tests{% endblock %}
+
+{% block contents %}
+<div class="space-y-8">
+    <!-- Breadcrumb Navigation -->
+    <div class="flex items-center gap-2 text-sm text-slate-500">
+        <a href="/mock-test/" class="hover:text-slate-700">Mock Test Center</a>
+        <span class="material-symbols-outlined text-base">chevron_right</span>
+        <a href="/mock-test/languages/" class="hover:text-slate-700">Language-Based Tests</a>
+        <span class="material-symbols-outlined text-base">chevron_right</span>
+        <span class="text-slate-800">{{ language.name }}</span>
+    </div>
+
+    <!-- Header -->
+    <div class="enterprise-card rounded-xl p-6">
+        <div class="flex items-center mb-4">
+            <div class="w-16 h-16 bg-gradient-to-br from-{{ language.color }}-500 to-{{ language.color }}-600 rounded-xl flex items-center justify-center mr-4">
+                <span class="material-symbols-outlined text-white text-2xl">{{ language.icon }}</span>
+            </div>
+            <div>
+                <h2 class="text-2xl font-bold text-slate-800">{{ language.name }} Tests</h2>
+                <p class="text-slate-500 mt-1">Choose a test to assess your {{ language.name }} programming skills</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Test Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {% for test in tests %}
+        <div onclick="startTest('{{ forloop.counter0 }}')" class="enterprise-card rounded-xl p-6 cursor-pointer hover:border-{{ language.color }}-300 group">
+            <div class="flex items-start justify-between mb-4">
+                <div class="flex-1">
+                    <h3 class="text-xl font-bold text-slate-800 mb-2">{{ test.name }}</h3>
+                    <p class="text-slate-600 text-sm mb-4">{{ test.description }}</p>
+                </div>
+                <div class="ml-4">
+                    <span class="px-3 py-1 bg-{{ language.color }}-100 text-{{ language.color }}-700 rounded-full text-xs font-medium">
+                        {{ test.difficulty }}
+                    </span>
+                </div>
+            </div>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 mb-4">
+                <div class="text-center p-3 bg-slate-50 dark:bg-slate-700/50 rounded-lg">
+                    <div class="flex items-center justify-center mb-1">
+                        <span class="material-symbols-outlined text-slate-600 dark:text-slate-400">quiz</span>
+                    </div>
+                    <div class="text-[10px] text-slate-500 dark:text-slate-400">Questions</div>
+                    <div class="font-bold text-slate-800 dark:text-slate-200 text-sm md:text-base">{{ test.question_count }}</div>
+                </div>
+                <div class="text-center p-3 bg-slate-50 dark:bg-slate-700/50 rounded-lg">
+                    <div class="flex items-center justify-center mb-1">
+                        <span class="material-symbols-outlined text-slate-600 dark:text-slate-400">schedule</span>
+                    </div>
+                    <div class="text-[10px] text-slate-500 dark:text-slate-400">Duration</div>
+                    <div class="font-bold text-slate-800 dark:text-slate-200 text-sm md:text-base">{{ test.duration }}</div>
+                </div>
+                <div class="text-center p-3 bg-slate-50 dark:bg-slate-700/50 rounded-lg">
+                    <div class="flex items-center justify-center mb-1">
+                        <span class="material-symbols-outlined text-slate-600 dark:text-slate-400">trending_up</span>
+                    </div>
+                    <div class="text-[10px] text-slate-500 dark:text-slate-400">Level</div>
+                    <div class="font-bold text-slate-800 dark:text-slate-200 text-sm md:text-base">{{ test.level }}</div>
+                </div>
+            </div>
+            
+            <div class="flex items-center justify-between">
+                <div class="flex items-center gap-2">
+                    <span class="material-symbols-outlined text-{{ language.color }}-600">stars</span>
+                    <span class="text-sm text-slate-600">{{ test.points }} points</span>
+                </div>
+                <button class="px-4 py-2 bg-{{ language.color }}-600 text-white rounded-lg hover:bg-{{ language.color }}-700 transition-colors text-sm font-medium">
+                    Start Test
+                </button>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- Instructions -->
+    <div class="enterprise-card rounded-xl p-6">
+        <h3 class="text-lg font-bold text-slate-800 mb-4">Test Instructions</h3>
+        <div class="space-y-3 text-sm text-slate-600">
+            <div class="flex items-start gap-3">
+                <span class="material-symbols-outlined text-{{ language.color }}-600 mt-0.5">check_circle</span>
+                <p>Each test consists of multiple-choice and coding questions</p>
+            </div>
+            <div class="flex items-start gap-3">
+                <span class="material-symbols-outlined text-{{ language.color }}-600 mt-0.5">check_circle</span>
+                <p>Read each question carefully before selecting your answer</p>
+            </div>
+            <div class="flex items-start gap-3">
+                <span class="material-symbols-outlined text-{{ language.color }}-600 mt-0.5">check_circle</span>
+                <p>You can navigate between questions using the previous/next buttons</p>
+            </div>
+            <div class="flex items-start gap-3">
+                <span class="material-symbols-outlined text-{{ language.color }}-600 mt-0.5">check_circle</span>
+                <p>Your results will be displayed immediately after completion</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+function startTest(testIndex) {
+    // Redirect to the test page with the selected test index
+    window.location.href = `/mock-test/test/java/${testIndex}/`;
+}
+
+// Add hover effects and animations
+document.addEventListener('DOMContentLoaded', function() {
+    const testCards = document.querySelectorAll('.enterprise-card');
+    testCards.forEach(card => {
+        card.addEventListener('mouseenter', function() {
+            this.style.transform = 'translateY(-2px)';
+        });
+        card.addEventListener('mouseleave', function() {
+            this.style.transform = 'translateY(0)';
+        });
+    });
+});
+</script>
+{% endblock %}

@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html class="scroll-smooth" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Register Portal | Careerlytics</title>
+
+    <link href="https://fonts.googleapis.com" rel="preconnect"/>
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Lexend:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography,container-queries"></script>
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#2563EB",
+                        secondary: "#6366F1",
+                    },
+                    fontFamily: {
+                        display: ["Lexend", "sans-serif"],
+                        sans: ["Inter", "sans-serif"],
+                    },
+                    borderRadius: {
+                        DEFAULT: "0.75rem",
+                        xl: "1rem",
+                        "2xl": "1.5rem",
+                    },
+                },
+            },
+        };
+
+        // Theme Toggle Functionality
+        function toggleTheme() {
+            const html = document.documentElement;
+            const themeToggle = document.getElementById('theme-toggle');
+            const knob = document.getElementById('knob');
+            const stars = document.getElementById('stars');
+            
+            if (html.classList.contains('dark')) {
+                html.classList.remove('dark');
+                localStorage.setItem('theme', 'light');
+                themeToggle.classList.remove('active');
+                knob.classList.remove('moon');
+                knob.innerHTML = "";
+                document.querySelectorAll(".star").forEach(s=>s.style.opacity=0);
+                document.querySelectorAll(".cloud").forEach(c=>c.style.opacity=1);
+            } else {
+                html.classList.add('dark');
+                localStorage.setItem('theme', 'dark');
+                themeToggle.classList.add('active');
+                knob.classList.add('moon');
+                knob.innerHTML = '<div class="moon-shadow"></div>';
+                document.querySelectorAll(".star").forEach(s=>s.style.opacity=1);
+                document.querySelectorAll(".cloud").forEach(c=>c.style.opacity=0);
+            }
+        }
+
+        // Initialize theme on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            const savedTheme = localStorage.getItem('theme');
+            const themeToggle = document.getElementById('theme-toggle');
+            const knob = document.getElementById('knob');
+            const stars = document.getElementById('stars');
+            
+            // Create stars
+            for(let i = 0; i < 30; i++) {
+                let s = document.createElement('div');
+                s.className = 'star';
+                s.style.left = Math.random() * 100 + '%';
+                s.style.top = Math.random() * 100 + '%';
+                s.style.animationDelay = Math.random() * 2 + 's';
+                stars.appendChild(s);
+            }
+            
+            if (savedTheme === 'dark') {
+                document.documentElement.classList.add('dark');
+                themeToggle.classList.add('active');
+                knob.classList.add('moon');
+                knob.innerHTML = '<div class="moon-shadow"></div>';
+                document.querySelectorAll('.star').forEach(s=>s.style.opacity=1);
+                document.querySelectorAll('.cloud').forEach(c=>c.style.opacity=0);
+            }
+        });
+
+        // Google Sign-Up Function
+        function signUpWithGoogle() {
+            window.location.href = '{% url "google_register" %}';
+        }
+    </script>
+</head>
+<body class="bg-slate-50 dark:bg-gray-900 dot-pattern text-slate-900 dark:text-slate-100 font-sans min-h-screen">
+    <!-- Header Navigation -->
+    <nav class="sticky top-0 z-50 glass border-b border-slate-200/60 dark:border-gray-700/60">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-20 items-center">
+                <div class="flex items-center gap-3">
+                    <img src="{% static 'images/logo.png' %}" alt="Careerlytics Logo" class="h-12 w-auto">
+                    <span class="text-2xl font-display font-bold text-slate-900 dark:text-white tracking-tight">Careerlytics</span>
+                </div>
+
+                <div class="flex items-center gap-4">
+                    <!-- Glass Theme Toggle Button -->
+                    <div class="toggle-wrapper" id="theme-toggle" onclick="toggleTheme()">
+                        <div class="sky">
+                            <div class="cloud" style="animation-delay: 0s"></div>
+                            <div class="cloud" style="top: 20px; animation-delay: 7s"></div>
+                            <div id="stars"></div>
+                        </div>
+                        <div class="knob" id="knob"></div>
+                    </div>
+                    <a href="{% url 'home' %}" class="hidden sm:inline-flex items-center justify-center px-3 sm:px-5 py-2.5 text-xs sm:text-sm font-bold text-white bg-primary hover:bg-opacity-90 rounded-lg shadow-md shadow-primary/10 transition-all active:scale-95 whitespace-nowrap">
+                        Home
+                    </a>
+                    <a href="{% url 'unified_login' %}" class="hidden sm:inline-flex items-center justify-center px-3 sm:px-5 py-2.5 text-xs sm:text-sm font-bold text-white bg-primary hover:bg-opacity-90 rounded-lg shadow-md shadow-primary/10 transition-all active:scale-95 whitespace-nowrap">
+                        Login
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="flex-grow flex items-center justify-center p-4">
+        <div class="w-full max-w-4xl">
+            <div class="glass rounded-2xl shadow-2xl p-8">
+                <!-- Registration Type Toggle -->
+                <div class="flex justify-center mb-8">
+                    <div class="bg-slate-100 dark:bg-gray-800 rounded-full p-1 flex">
+                        <button 
+                            id="student-toggle"
+                            onclick="switchRegistrationType('student')"
+                            class="px-6 py-2 rounded-full bg-primary text-white font-medium transition-all duration-300"
+                        >
+                            Student Registration
+                        </button>
+                        <button 
+                            id="placement-toggle"
+                            onclick="switchRegistrationType('placement')"
+                            class="px-6 py-2 rounded-full bg-slate-100 text-slate-700 font-medium transition-all duration-300"
+                        >
+                            Placement Cell Registration
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Student Registration Section -->
+                <div id="student-registration-section">
+                    <div class="text-center mb-8">
+                        <h1 class="text-4xl font-display font-extrabold text-slate-900 dark:text-white mb-2">Student Registration</h1>
+                        <p class="text-slate-600 dark:text-slate-400">Create your student account to start your placement journey</p>
+                    </div>
+
+                    <!-- Google Sign-Up Button -->
+                    <div class="mb-8">
+                        <button 
+                            type="button"
+                            onclick="signUpWithGoogle()"
+                            class="w-full flex items-center justify-center gap-3 px-6 py-3.5 border border-slate-200 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-800 hover:bg-slate-50 dark:hover:bg-gray-700 transition-all group"
+                        >
+                            <svg class="w-5 h-5" viewBox="0 0 24 24">
+                                <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                                <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                                <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+                                <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+                            </svg>
+                            <span class="text-slate-700 dark:text-slate-200 font-medium group-hover:text-primary dark:group-hover:text-blue-400 transition-colors">Sign up with Google</span>
+                        </button>
+                    </div>
+
+                    <!-- Divider -->
+                    <div class="relative mb-8">
+                        <div class="absolute inset-0 flex items-center">
+                            <div class="w-full border-t border-slate-200 dark:border-gray-600"></div>
+                        </div>
+                        <div class="relative flex justify-center text-sm">
+                            <span class="px-2 bg-white dark:bg-gray-800 text-slate-500 dark:text-slate-400">or continue with</span>
+                        </div>
+                    </div>
+
+                    <!-- Student Registration Form -->
+                    <form name="student_register" action="{% url 'UserRegisterAction' %}" method="post" onSubmit="return validateStudentForm()" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        
+                        <!-- Student ID Field -->
+                        <div class="mb-6">
+                            <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">
+                                Student ID <span class="text-primary dark:text-blue-400">*</span>
+                            </label>
+                            <div class="relative">
+                                <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                                    <span class="material-symbols-outlined text-slate-400 dark:text-slate-300">school</span>
+                                </div>
+                                <input 
+                                    type="text" 
+                                    id="student_userid" 
+                                    name="userid" 
+                                    placeholder="Enter your Student ID"
+                                    class="w-full pl-12 pr-4 py-3.5 border border-slate-200 dark:border-gray-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 bg-white dark:bg-gray-700"
+                                    required
+                                />
+                            </div>
+                        </div>
+
+                        <!-- Email Field -->
+                        <div class="mb-6">
+                            <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">
+                                Email Address <span class="text-primary dark:text-blue-400">*</span>
+                            </label>
+                            <div class="relative">
+                                <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                                    <span class="material-symbols-outlined text-slate-400 dark:text-slate-300">email</span>
+                                </div>
+                                <input 
+                                    type="email" 
+                                    id="student_email" 
+                                    name="email" 
+                                    placeholder="Enter your email address"
+                                    class="w-full pl-12 pr-4 py-3.5 border border-slate-200 dark:border-gray-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 bg-white dark:bg-gray-700"
+                                    required
+                                />
+                            </div>
+                        </div>
+
+                        <!-- Password Field -->
+                        <div class="mb-6">
+                            <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">
+                                Password <span class="text-primary dark:text-blue-400">*</span>
+                            </label>
+                            <div class="relative">
+                                <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                                    <span class="material-symbols-outlined text-slate-400 dark:text-slate-300">lock</span>
+                                </div>
+                                <input 
+                                    type="password" 
+                                    id="student_password" 
+                                    name="pass" 
+                                    placeholder="Enter your password"
+                                    class="w-full pl-12 pr-4 py-3.5 border border-slate-200 dark:border-gray-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 bg-white dark:bg-gray-700"
+                                    required
+                                />
+                            </div>
+                        </div>
+
+                        <!-- Mobile Field -->
+                        <div class="mb-6">
+                            <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">
+                                Mobile Number <span class="text-primary dark:text-blue-400">*</span>
+                            </label>
+                            <div class="relative">
+                                <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                                    <span class="material-symbols-outlined text-slate-400 dark:text-slate-300">phone</span>
+                                </div>
+                                <input 
+                                    type="tel" 
+                                    id="student_mobile" 
+                                    name="mobile" 
+                                    placeholder="Enter your mobile number"
+                                    class="w-full pl-12 pr-4 py-3.5 border border-slate-200 dark:border-gray-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 bg-white dark:bg-gray-700"
+                                    required
+                                />
+                            </div>
+                        </div>
+
+                        <!-- Address Field -->
+                        <div class="mb-6">
+                            <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">
+                                Address <span class="text-primary dark:text-blue-400">*</span>
+                            </label>
+                            <div class="relative">
+                                <div class="absolute top-3.5 left-4 flex items-start pointer-events-none">
+                                    <span class="material-symbols-outlined text-slate-400 dark:text-slate-300">location_on</span>
+                                </div>
+                                <textarea 
+                                    id="student_address" 
+                                    name="address" 
+                                    placeholder="Enter your full address"
+                                    rows="3"
+                                    class="w-full pl-12 pr-4 py-3.5 border border-slate-200 dark:border-gray-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 bg-white dark:bg-gray-700 resize-none"
+                                    required
+                                ></textarea>
+                            </div>
+                        </div>
+
+                        <!-- Date of Birth Field -->
+                        <div class="mb-6">
+                            <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">
+                                Date of Birth <span class="text-primary dark:text-blue-400">*</span>
+                            </label>
+                            <div class="relative">
+                                <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                                    <span class="material-symbols-outlined text-slate-400 dark:text-slate-300">cake</span>
+                                </div>
+                                <input 
+                                    type="date" 
+                                    id="student_dob" 
+                                    name="dob" 
+                                    class="w-full pl-12 pr-4 py-3.5 border border-slate-200 dark:border-gray-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-slate-900 dark:text-slate-100 bg-white dark:bg-gray-700"
+                                    required
+                                />
+                            </div>
+                        </div>
+
+                        <!-- Gender Field -->
+                        <div class="mb-6">
+                            <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">
+                                Gender <span class="text-primary dark:text-blue-400">*</span>
+                            </label>
+                            <div class="relative">
+                                <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                                    <span class="material-symbols-outlined text-slate-400 dark:text-slate-300">person</span>
+                                </div>
+                                <select 
+                                    id="student_gender" 
+                                    name="gender" 
+                                    class="w-full pl-12 pr-4 py-3.5 border border-slate-200 dark:border-gray-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-slate-900 dark:text-slate-100 bg-white dark:bg-gray-700 appearance-none cursor-pointer"
+                                    required
+                                >
+                                    <option value="">Select Gender</option>
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Profile Picture Field -->
+                        <div class="mb-6">
+                            <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">
+                                Profile Picture (Optional)
+                            </label>
+                            <div class="relative">
+                                <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                                    <span class="material-symbols-outlined text-slate-400 dark:text-slate-300">photo_camera</span>
+                                </div>
+                                <input 
+                                    type="file" 
+                                    id="student_pic" 
+                                    name="pic" 
+                                    accept="image/*"
+                                    class="w-full pl-12 pr-4 py-3.5 border border-slate-200 dark:border-gray-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-slate-900 dark:text-slate-100 bg-white dark:bg-gray-700 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-primary file:text-white hover:file:bg-primary/90"
+                                />
+                            </div>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <button 
+                            type="submit" 
+                            class="w-full flex items-center justify-center gap-2 px-6 py-3.5 bg-primary hover:bg-blue-700 text-white font-bold rounded-xl shadow-lg shadow-primary/20 transition-all duration-300 transform hover:scale-[1.02] active:scale-[0.98]"
+                        >
+                            <span class="material-symbols-outlined">person_add</span>
+                            Create Student Account
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Placement Cell Registration Section -->
+                <div id="placement-registration-section" class="hidden">
+                    <div class="text-center mb-8">
+                        <h1 class="text-4xl font-display font-extrabold text-slate-900 dark:text-white mb-2">Placement Cell Registration</h1>
+                        <p class="text-slate-600 dark:text-slate-400">Create your Placement Cell account to manage student placements</p>
+                    </div>
+
+                    <!-- Placement Cell Registration Form -->
+                    <form name="placement_register" action="{% url 'AdminRegisterAction' %}" method="post" onSubmit="return validatePlacementForm()">
+                        {% csrf_token %}
+                        
+                        <!-- Placement Cell ID Field -->
+                        <div class="mb-6">
+                            <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">
+                                Placement Cell ID <span class="text-primary dark:text-blue-400">*</span>
+                            </label>
+                            <div class="relative">
+                                <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                                    <span class="material-symbols-outlined text-slate-400 dark:text-slate-300">business</span>
+                                </div>
+                                <input 
+                                    type="text" 
+                                    id="placement_userid" 
+                                    name="username" 
+                                    placeholder="Enter your Placement Cell ID"
+                                    class="w-full pl-12 pr-4 py-3.5 border border-slate-200 dark:border-gray-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 bg-white dark:bg-gray-700"
+                                    required
+                                />
+                            </div>
+                        </div>
+
+                        <!-- Email Field -->
+                        <div class="mb-6">
+                            <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">
+                                Email Address <span class="text-primary dark:text-blue-400">*</span>
+                            </label>
+                            <div class="relative">
+                                <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                                    <span class="material-symbols-outlined text-slate-400 dark:text-slate-300">email</span>
+                                </div>
+                                <input 
+                                    type="email" 
+                                    id="placement_email" 
+                                    name="email" 
+                                    placeholder="Enter your email address"
+                                    class="w-full pl-12 pr-4 py-3.5 border border-slate-200 dark:border-gray-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 bg-white dark:bg-gray-700"
+                                    required
+                                />
+                            </div>
+                        </div>
+
+                        <!-- Institution Name Field -->
+                        <div class="mb-6">
+                            <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">
+                                Institution Name <span class="text-primary dark:text-blue-400">*</span>
+                            </label>
+                            <div class="relative">
+                                <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                                    <span class="material-symbols-outlined text-slate-400 dark:text-slate-300">apartment</span>
+                                </div>
+                                <input 
+                                    type="text" 
+                                    id="institution_name" 
+                                    name="institution_name" 
+                                    placeholder="Enter your institution name"
+                                    class="w-full pl-12 pr-4 py-3.5 border border-slate-200 dark:border-gray-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 bg-white dark:bg-gray-700"
+                                    required
+                                />
+                            </div>
+                        </div>
+
+                        <!-- Password Field -->
+                        <div class="mb-6">
+                            <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">
+                                Password <span class="text-primary dark:text-blue-400">*</span>
+                            </label>
+                            <div class="relative">
+                                <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                                    <span class="material-symbols-outlined text-slate-400 dark:text-slate-300">lock</span>
+                                </div>
+                                <input 
+                                    type="password" 
+                                    id="placement_password" 
+                                    name="password" 
+                                    placeholder="Create a strong password"
+                                    class="w-full pl-12 pr-12 py-3.5 border border-slate-200 dark:border-gray-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 bg-white dark:bg-gray-700"
+                                    required
+                                />
+                                <button 
+                                    type="button" 
+                                    onclick="togglePassword('placement_password', 'placement_password_toggle')"
+                                    class="absolute inset-y-0 right-0 pr-4 flex items-center"
+                                >
+                                    <span id="placement_password_toggle" class="material-symbols-outlined text-slate-400 dark:text-slate-300 cursor-pointer hover:text-primary dark:hover:text-blue-400">visibility</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Confirm Password Field -->
+                        <div class="mb-6">
+                            <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">
+                                Confirm Password <span class="text-primary dark:text-blue-400">*</span>
+                            </label>
+                            <div class="relative">
+                                <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                                    <span class="material-symbols-outlined text-slate-400 dark:text-slate-300">lock</span>
+                                </div>
+                                <input 
+                                    type="password" 
+                                    id="placement_confirm_password" 
+                                    name="confirm_password" 
+                                    placeholder="Confirm your password"
+                                    class="w-full pl-12 pr-12 py-3.5 border border-slate-200 dark:border-gray-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 bg-white dark:bg-gray-700"
+                                    required
+                                />
+                                <button 
+                                    type="button" 
+                                    onclick="togglePassword('placement_confirm_password', 'placement_confirm_password_toggle')"
+                                    class="absolute inset-y-0 right-0 pr-4 flex items-center"
+                                >
+                                    <span id="placement_confirm_password_toggle" class="material-symbols-outlined text-slate-400 dark:text-slate-300 cursor-pointer hover:text-primary dark:hover:text-blue-400">visibility</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Terms Checkbox -->
+                        <div class="mb-6">
+                            <label class="flex items-center">
+                                <input type="checkbox" name="terms" required class="mr-2">
+                                <span class="text-sm text-slate-600 dark:text-slate-400">
+                                    I agree to the <a href="#" class="text-primary dark:text-blue-400 hover:underline">Terms and Conditions</a>
+                                </span>
+                            </label>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <div class="mb-6">
+                            <button type="submit" class="w-full bg-primary dark:bg-dark-primary text-white py-3 rounded-lg hover:bg-blue-700 dark:hover:bg-dark-secondary transition font-semibold">
+                                Create Placement Cell Account
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Login Link -->
+                <div class="text-center mt-8">
+                    <p class="text-sm text-slate-600 dark:text-slate-400">
+                        Already have an account? 
+                        <a href="{% url 'unified_login' %}" class="text-primary dark:text-blue-400 hover:underline font-medium">Sign in</a>
+                    </p>
+                </div>
+
+                <!-- Error Messages -->
+                {% if messages %}
+                    <div class="mt-4">
+                        {% for message in messages %}
+                            <div class="p-3 rounded-lg {% if message.tags == 'error' %}bg-red-100 text-red-700 dark:bg-red-900/20 dark:text-red-400{% else %}bg-green-100 text-green-700 dark:bg-green-900/20 dark:text-green-400{% endif %}">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </main>
+
+    <!-- Glass CSS Styles -->
+    <style>
+        .dot-pattern {
+            background-image: radial-gradient(circle, #e5e7eb 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+
+        .glass {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .dark .glass {
+            background: rgba(30, 41, 59, 0.95);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        /* Glass Toggle Styles */
+        .toggle-wrapper {
+            width: 80px;
+            height: 40px;
+            border-radius: 60px;
+            background: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .dark .toggle-wrapper {
+            background: rgba(30, 41, 59, 0.25);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .sky {
+            position: absolute;
+            inset: 0;
+            border-radius: 70px;
+            transition: 1s;
+            background: linear-gradient(135deg, #7fc8ff, #cceeff);
+        }
+
+        .dark .sky {
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+        }
+
+        .cloud {
+            position: absolute;
+            width: 30px;
+            height: 12px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 40px;
+            top: 8px;
+            animation: cloudMove 18s linear infinite;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: opacity 0.5s ease;
+        }
+
+        .cloud::before,
+        .cloud::after {
+            content: '';
+            position: absolute;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 40px;
+        }
+
+        .cloud::before {
+            width: 14px;
+            height: 14px;
+            top: -7px;
+            left: 6px;
+        }
+
+        .cloud::after {
+            width: 12px;
+            height: 12px;
+            top: -5px;
+            right: 6px;
+        }
+
+        .star {
+            position: absolute;
+            background: white;
+            clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+            width: 3px;
+            height: 3px;
+            opacity: 0;
+            animation: twinkle 2s infinite alternate;
+            transition: opacity 0.5s ease;
+        }
+
+        @keyframes twinkle{
+            from{opacity:.3;}
+            to{opacity:1;}
+        }
+
+        /* Knob */
+        .knob{
+            position:absolute;
+            top:3px;
+            left:3px;
+            width:32px;
+            height:32px;
+            border-radius:50%;
+            background:linear-gradient(135deg,#FFD700,#FF8C00);
+            box-shadow:0 0 8px #FFD700, 0 3px 8px rgba(0,0,0,0.12);
+            transition:0.9s cubic-bezier(0.4,0,0.2,1);
+            z-index:5;
+        }
+
+        /* Moon */
+        .moon{
+            background:linear-gradient(135deg,#eee,#aaa);
+            box-shadow:inset -3px -3px 0 rgba(0,0,0,0.2),
+                 0 0 6px #aaa;
+        }
+
+        /* Moon shadow */
+        .moon-shadow{
+            position:absolute;
+            width:6px;
+            height:6px;
+            background:rgba(0,0,0,0.2);
+            border-radius:50%;
+            top:50%;
+            left:50%;
+            transform:translate(-50%, -50%);
+        }
+
+        /* Night Mode */
+        .toggle-wrapper.active .knob{
+            transform:translateX(40px) rotate(360deg);
+        }
+        .toggle-wrapper.active .sky{
+            background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+        }
+
+        @keyframes cloudMove{
+            from{left:-30px;}
+            to{left:100%;}
+        }
+    </style>
+
+    <!-- JavaScript -->
+    <script>
+        function switchRegistrationType(type) {
+            const studentSection = document.getElementById('student-registration-section');
+            const placementSection = document.getElementById('placement-registration-section');
+            const studentToggle = document.getElementById('student-toggle');
+            const placementToggle = document.getElementById('placement-toggle');
+            
+            if (type === 'student') {
+                studentSection.classList.remove('hidden');
+                placementSection.classList.add('hidden');
+                
+                studentToggle.className = 'px-6 py-2 rounded-full bg-primary text-white font-medium transition-all duration-300';
+                placementToggle.className = 'px-6 py-2 rounded-full bg-slate-100 text-slate-700 font-medium transition-all duration-300';
+            } else {
+                placementSection.classList.remove('hidden');
+                studentSection.classList.add('hidden');
+                
+                placementToggle.className = 'px-6 py-2 rounded-full bg-primary text-white font-medium transition-all duration-300';
+                studentToggle.className = 'px-6 py-2 rounded-full bg-slate-100 text-slate-700 font-medium transition-all duration-300';
+            }
+        }
+        
+        function togglePassword(inputId, toggleId) {
+            const input = document.getElementById(inputId);
+            const toggle = document.getElementById(toggleId);
+            
+            if (input.type === 'password') {
+                input.type = 'text';
+                toggle.textContent = 'visibility_off';
+            } else {
+                input.type = 'password';
+                toggle.textContent = 'visibility';
+            }
+        }
+        
+        function validateStudentForm() {
+            const userid = document.getElementById('student_userid').value;
+            const email = document.getElementById('student_email').value;
+            const password = document.getElementById('student_password').value;
+            const confirmPassword = document.getElementById('student_confirm_password').value;
+            
+            if (!userid || !email || !password || !confirmPassword) {
+                alert('Please fill in all required fields.');
+                return false;
+            }
+            
+            if (password !== confirmPassword) {
+                alert('Passwords do not match.');
+                return false;
+            }
+            
+            if (password.length < 6) {
+                alert('Password must be at least 6 characters long.');
+                return false;
+            }
+            
+            return true;
+        }
+        
+        function validatePlacementForm() {
+            const userid = document.getElementById('placement_userid').value;
+            const email = document.getElementById('placement_email').value;
+            const institution = document.getElementById('institution_name').value;
+            const password = document.getElementById('placement_password').value;
+            const confirmPassword = document.getElementById('placement_confirm_password').value;
+            const terms = document.querySelector('input[name="terms"]').checked;
+            
+            if (!userid || !email || !institution || !password || !confirmPassword) {
+                alert('Please fill in all required fields.');
+                return false;
+            }
+            
+            if (password !== confirmPassword) {
+                alert('Passwords do not match.');
+                return false;
+            }
+            
+            if (password.length < 6) {
+                alert('Password must be at least 6 characters long.');
+                return false;
+            }
+            
+            if (!terms) {
+                alert('Please agree to the Terms and Conditions.');
+                return false;
+            }
+            
+            return true;
+        }
+    </script>
+</body>
+</html>

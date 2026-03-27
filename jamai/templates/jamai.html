@@ -1,0 +1,650 @@
+{% extends 'users/user_tailwind_base.html' %}
+{% load static %}
+
+{% block contents %}
+<style>
+    :root {
+        --jam-bg: transparent;
+        --jam-text: #0f172a;
+        --jam-border: #e2e8f0;
+        --jam-card-bg: #ffffff;
+        --jam-accent: #2563eb;
+        --jam-accent-hover: #1e40af;
+        --jam-muted: #64748b;
+        --jam-glow: rgba(37, 99, 235, 0.1);
+    }
+
+    .dark {
+        --jam-bg: transparent;
+        --jam-text: #f8fafc;
+        --jam-border: #1e293b;
+        --jam-card-bg: #1e293b;
+        --jam-accent: #60a5fa;
+        --jam-accent-hover: #93c5fd;
+        --jam-muted: #94a3b8;
+        --jam-glow: rgba(96, 165, 250, 0.1);
+    }
+
+    .glass {
+        background: var(--jam-card-bg);
+        border: 1px solid var(--jam-border);
+        backdrop-filter: blur(12px);
+    }
+
+    .glass-hover:hover {
+        background: var(--jam-bg);
+        border: 1px solid var(--jam-accent);
+    }
+
+    .gradient-text {
+        color: var(--jam-accent);
+    }
+
+    .gradient-border {
+        position: relative;
+        border-radius: 1.5rem;
+        padding: 1px;
+        background: var(--jam-border);
+        transition: background 0.3s ease;
+    }
+
+    .gradient-border:focus-within, .gradient-border:hover {
+        background: var(--jam-accent);
+    }
+
+    .ai-glow {
+        box-shadow: 0 0 20px var(--jam-glow);
+    }
+
+    @keyframes float {
+        0%, 100% { transform: translateY(0px); }
+        50% { transform: translateY(-10px); }
+    }
+
+    .float-anim {
+        animation: float 4s ease-in-out infinite;
+    }
+
+    .pulse-ring {
+        animation: pulse-ring 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    }
+
+    @keyframes pulse-ring {
+        0% { transform: scale(0.95); box-shadow: 0 0 0 0 var(--jam-accent); }
+        70% { transform: scale(1); box-shadow: 0 0 0 15px rgba(0, 0, 0, 0); }
+        100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(0, 0, 0, 0); }
+    }
+
+    .wave-bar {
+        width: 4px;
+        background: var(--jam-accent);
+        border-radius: 2px;
+        transition: height 0.1s ease;
+    }
+
+    /* Custom Scrollbar */
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+    .jam-badge {
+        background: var(--jam-accent);
+        color: #ffffff;
+    }
+
+    .jam-container {
+        font-family: 'Plus Jakarta Sans', sans-serif;
+        color: var(--jam-text);
+    }
+
+    .record-btn-active {
+        background: #ef4444 !important;
+        box-shadow: 0 0 25px rgba(239, 68, 68, 0.4) !important;
+    }
+</style>
+
+<div class="jam-container min-h-screen overflow-x-hidden pb-20">
+    <!-- Main Content Area (Header removed as requested) -->
+    <div class="max-w-7xl mx-auto px-6 pt-8">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+            
+            <!-- Left Column: Assessment Engine -->
+            <div class="lg:col-span-7 space-y-8">
+                <!-- Assessment Card -->
+                <div class="gradient-border ai-glow">
+                    <div class="bg-white dark:bg-gray-800 rounded-[1.45rem] p-8">
+                        <div class="flex items-center justify-between mb-8">
+                            <span class="px-4 py-1.5 bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-slate-100 rounded-full text-xs font-bold border border-slate-200 dark:border-slate-700 uppercase tracking-widest">
+                                Live JAM Session
+                            </span>
+                            <div class="flex space-x-1" id="audioVisualizer">
+                                <div class="wave-bar h-4"></div>
+                                <div class="wave-bar h-6"></div>
+                                <div class="wave-bar h-4"></div>
+                                <div class="wave-bar h-8"></div>
+                                <div class="wave-bar h-5"></div>
+                            </div>
+                        </div>
+
+                        <div class="space-y-6 mb-12">
+                            <h2 class="text-slate-500 dark:text-slate-400 font-bold uppercase tracking-widest text-xs">Current Challenge</h2>
+                            <p id="questionText" class="text-2xl md:text-3xl font-bold leading-tight text-slate-900 dark:text-white italic">
+                                "{{ question }}"
+                            </p>
+                        </div>
+
+                        <div class="flex flex-col items-center justify-center py-10 space-y-8">
+                            <!-- Mic Button -->
+                            <div class="relative">
+                                <button id="recordBtn" class="w-32 h-32 bg-blue-600 dark:bg-blue-500 rounded-full flex items-center justify-center text-white shadow-xl transition-all hover:scale-105 active:scale-95 group z-10 relative">
+                                    <span class="material-symbols-outlined text-4xl" id="micIcon">mic</span>
+                                </button>
+                                <div id="pulseRing" class="absolute inset-0 rounded-full bg-blue-600/10 dark:bg-blue-500/10 opacity-0 pointer-events-none"></div>
+                            </div>
+
+                            <div id="status" class="text-center">
+                                <p class="text-slate-500 dark:text-slate-400 text-sm font-medium">Click the microphone to begin your response</p>
+                            </div>
+
+                            <div id="timer" class="hidden">
+                                <div class="px-6 py-2 bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-full font-mono text-2xl font-bold text-slate-900 dark:text-white">
+                                    01:00
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Parameters Info -->
+                        <div class="grid grid-cols-3 gap-4 pt-8 border-t border-slate-200 dark:border-slate-800">
+                            <div class="text-center">
+                                <p class="text-[10px] text-slate-500 font-bold uppercase mb-1">Target</p>
+                                <p class="text-xs font-semibold text-slate-700 dark:text-slate-300">Clarity & Confidence</p>
+                            </div>
+                            <div class="text-center">
+                                <p class="text-[10px] text-slate-500 font-bold uppercase mb-1">Duration</p>
+                                <p class="text-xs font-semibold text-slate-700 dark:text-slate-300">Fixed 60 Seconds</p>
+                            </div>
+                            <div class="text-center">
+                                <p class="text-[10px] text-slate-500 font-bold uppercase mb-1">AI Engine</p>
+                                <p class="text-xs font-semibold text-slate-700 dark:text-slate-300">JAM-V2 Analysis</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Analysis Guide -->
+                <div class="glass rounded-3xl p-6">
+                    <h3 class="text-sm font-bold uppercase tracking-widest text-slate-500 dark:text-slate-400 mb-4 flex items-center">
+                        <span class="material-symbols-outlined mr-2 text-slate-900 dark:text-white text-lg">info</span> Analysis Parameters
+                    </h3>
+                    <div class="grid grid-cols-2 md:grid-cols-5 gap-3">
+                        <div class="p-3 bg-slate-100 dark:bg-slate-800/50 rounded-2xl border border-slate-200 dark:border-slate-700 text-center">
+                            <p class="text-[9px] text-slate-500 font-bold uppercase mb-1">Voice</p>
+                            <p class="text-[10px] text-slate-900 dark:text-white font-bold">30%</p>
+                        </div>
+                        <div class="p-3 bg-slate-100 dark:bg-slate-800/50 rounded-2xl border border-slate-200 dark:border-slate-700 text-center">
+                            <p class="text-[9px] text-slate-500 font-bold uppercase mb-1">Fluency</p>
+                            <p class="text-[10px] text-slate-900 dark:text-white font-bold">25%</p>
+                        </div>
+                        <div class="p-3 bg-slate-100 dark:bg-slate-800/50 rounded-2xl border border-slate-200 dark:border-slate-700 text-center">
+                            <p class="text-[9px] text-slate-500 font-bold uppercase mb-1">Content</p>
+                            <p class="text-[10px] text-slate-900 dark:text-white font-bold">20%</p>
+                        </div>
+                        <div class="p-3 bg-slate-100 dark:bg-slate-800/50 rounded-2xl border border-slate-200 dark:border-slate-700 text-center">
+                            <p class="text-[9px] text-slate-500 font-bold uppercase mb-1">Confid.</p>
+                            <p class="text-[10px] text-slate-900 dark:text-white font-bold">15%</p>
+                        </div>
+                        <div class="p-3 bg-slate-100 dark:bg-slate-800/50 rounded-2xl border border-slate-200 dark:border-slate-700 text-center">
+                            <p class="text-[9px] text-slate-500 font-bold uppercase mb-1">Skills</p>
+                            <p class="text-[10px] text-slate-900 dark:text-white font-bold">10%</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column: Results & History -->
+            <div class="lg:col-span-5 space-y-6">
+                <div class="flex items-center justify-between mb-2">
+                    <h2 class="text-xl font-bold text-slate-900 dark:text-white">Performance History</h2>
+                    <span id="recordingCount" class="px-3 py-1 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 rounded-full text-[10px] font-bold uppercase tracking-widest border border-slate-200 dark:border-slate-700">
+                        {{ total_recordings }} Sessions
+                    </span>
+                </div>
+
+                <div id="recordingsList" class="space-y-4 max-h-[700px] overflow-y-auto pr-2 no-scrollbar">
+                    {% if recordings %}
+                        {% for recording in recordings %}
+                        <div class="glass-hover glass rounded-[1.5rem] p-5 transition-all duration-300 group" data-id="{{ recording.id }}">
+                            <div class="flex items-start justify-between mb-4">
+                                <div class="flex items-center space-x-3">
+                                    <div class="w-10 h-10 bg-slate-100 dark:bg-slate-800 rounded-xl flex items-center justify-center border border-slate-200 dark:border-slate-700">
+                                        <span class="material-symbols-outlined text-slate-900 dark:text-white text-sm">play_arrow</span>
+                                    </div>
+                                    <div>
+                                        <h3 class="text-sm font-bold text-slate-800 dark:text-slate-200 line-clamp-1">{{ recording.title }}</h3>
+                                        <p class="text-[10px] text-slate-500 font-medium">{{ recording.created_at|date:"M d, Y • H:i" }}</p>
+                                    </div>
+                                </div>
+                                {% if recording.jam_score %}
+                                <div class="text-right">
+                                    <div class="jam-badge px-3 py-1 rounded-lg shadow-sm">
+                                        <span class="text-[10px] opacity-70 font-bold block leading-none mb-1">JAM SCORE</span>
+                                        <span class="text-sm font-extrabold">{{ recording.jam_score }}</span>
+                                    </div>
+                                </div>
+                                {% endif %}
+                            </div>
+
+                            <div class="mb-4">
+                                <p class="text-[11px] text-slate-500 dark:text-slate-400 italic line-clamp-2 leading-relaxed">"{{ recording.question_asked|default:"JAM Evaluation" }}"</p>
+                            </div>
+
+                            {% if recording.feedback %}
+                            <div class="mb-4 p-3 bg-slate-50 dark:bg-slate-800/50 rounded-xl border border-slate-100 dark:border-slate-700">
+                                <p class="text-[10px] text-slate-600 dark:text-slate-400 leading-relaxed">{{ recording.feedback }}</p>
+                            </div>
+                            {% endif %}
+
+                            {% if recording.jam_score %}
+                            <div class="grid grid-cols-5 gap-1 mb-5">
+                                <div class="space-y-1">
+                                    <div class="h-1 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
+                                        <div class="h-full bg-blue-600 dark:bg-blue-400" style="width: {{ recording.voice_score }}%"></div>
+                                    </div>
+                                    <p class="text-[7px] text-slate-500 font-bold text-center uppercase">Voice</p>
+                                </div>
+                                <div class="space-y-1">
+                                    <div class="h-1 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
+                                        <div class="h-full bg-blue-600 dark:bg-blue-400" style="width: {{ recording.fluency_score }}%"></div>
+                                    </div>
+                                    <p class="text-[7px] text-slate-500 font-bold text-center uppercase">Fluency</p>
+                                </div>
+                                <div class="space-y-1">
+                                    <div class="h-1 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
+                                        <div class="h-full bg-blue-600 dark:bg-blue-400" style="width: {{ recording.content_score }}%"></div>
+                                    </div>
+                                    <p class="text-[7px] text-slate-500 font-bold text-center uppercase">Content</p>
+                                </div>
+                                <div class="space-y-1">
+                                    <div class="h-1 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
+                                        <div class="h-full bg-blue-600 dark:bg-blue-400" style="width: {{ recording.confidence_score }}%"></div>
+                                    </div>
+                                    <p class="text-[7px] text-slate-500 font-bold text-center uppercase">Confid.</p>
+                                </div>
+                                <div class="space-y-1">
+                                    <div class="h-1 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
+                                        <div class="h-full bg-blue-600 dark:bg-blue-400" style="width: {{ recording.soft_skills_score }}%"></div>
+                                    </div>
+                                    <p class="text-[7px] text-slate-500 font-bold text-center uppercase">Skills</p>
+                                </div>
+                            </div>
+                            {% endif %}
+
+                            <div class="flex items-center justify-between pt-4 border-t border-slate-200 dark:border-slate-800/50">
+                                <div class="flex items-center space-x-2">
+                                    <audio src="{{ recording.audio_file.url }}" id="audio-{{ recording.id }}" class="hidden"></audio>
+                                    <button onclick="toggleAudio('{{ recording.id }}')" class="text-[10px] font-bold text-slate-900 dark:text-white hover:opacity-70 transition-colors uppercase tracking-widest flex items-center">
+                                        <span class="material-symbols-outlined mr-2 text-sm">volume_up</span> Play Back
+                                    </button>
+                                </div>
+                                <div class="flex items-center space-x-4">
+                                    <span class="text-[10px] text-slate-500 font-bold uppercase">{{ recording.duration_formatted }}</span>
+                                    <button onclick="deleteRecording({{ recording.id }})" class="text-slate-400 hover:text-red-500 transition-colors">
+                                        <span class="material-symbols-outlined text-xs">delete</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    {% else %}
+                        <div id="emptyState" class="text-center py-20 glass rounded-[2rem]">
+                            <div class="w-16 h-16 bg-slate-100 dark:bg-slate-800 rounded-2xl flex items-center justify-center mx-auto mb-4 border border-slate-200 dark:border-slate-700">
+                                <span class="material-symbols-outlined text-slate-400 text-2xl">mic_off</span>
+                            </div>
+                            <h3 class="text-slate-700 dark:text-slate-300 font-bold">No Sessions Yet</h3>
+                            <p class="text-slate-500 text-xs mt-2">Start your first AI assessment to see results</p>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Notification -->
+<div id="notificationContainer" class="fixed bottom-6 right-6 z-[100] space-y-3"></div>
+
+<!-- CSRF Token -->
+{% csrf_token %}
+
+<script>
+    const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+    
+    class VoiceRecorder {
+        constructor() {
+            this.mediaRecorder = null;
+            this.audioChunks = [];
+            this.isRecording = false;
+            this.startTime = null;
+            this.timerInterval = null;
+            this.visualizerInterval = null;
+            this.autoStopTimeout = null;
+            
+            this.initializeElements();
+            this.setupEventListeners();
+        }
+
+        initializeElements() {
+            this.recordBtn = document.getElementById('recordBtn');
+            this.micIcon = document.getElementById('micIcon');
+            this.pulseRing = document.getElementById('pulseRing');
+            this.status = document.getElementById('status');
+            this.timer = document.getElementById('timer');
+            this.timerDisplay = this.timer.querySelector('div');
+            this.recordingsList = document.getElementById('recordingsList');
+            this.emptyState = document.getElementById('emptyState');
+            this.recordingCount = document.getElementById('recordingCount');
+            this.visualizer = document.getElementById('audioVisualizer');
+            this.waveBars = this.visualizer.querySelectorAll('.wave-bar');
+        }
+
+        setupEventListeners() {
+            this.recordBtn.addEventListener('click', () => {
+                if (!this.isRecording) {
+                    this.startRecording();
+                }
+            });
+        }
+
+        async startRecording() {
+            if (!window.isSecureContext) {
+                this.showNotification('Security Error: Requires HTTPS or Localhost', 'error');
+                return;
+            }
+
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                this.mediaRecorder = new MediaRecorder(stream);
+                this.audioChunks = [];
+
+                this.mediaRecorder.ondataavailable = (event) => {
+                    this.audioChunks.push(event.data);
+                };
+
+                this.mediaRecorder.onstop = () => {
+                    const audioBlob = new Blob(this.audioChunks, { type: 'audio/wav' });
+                    this.saveRecording(audioBlob);
+                };
+
+                this.mediaRecorder.start();
+                this.isRecording = true;
+                this.startTime = Date.now();
+                this.updateUI(true);
+                this.startTimer();
+                this.startVisualizer();
+
+                // Set 1 minute auto-stop
+                this.autoStopTimeout = setTimeout(() => {
+                    if (this.isRecording) {
+                        this.stopRecording();
+                        this.showNotification('Time limit reached: Auto-stopping', 'success');
+                    }
+                }, 60000);
+
+            } catch (err) {
+                console.error('Error accessing microphone:', err);
+                this.showNotification('Microphone access denied', 'error');
+            }
+        }
+
+        stopRecording() {
+            if (this.mediaRecorder && this.isRecording) {
+                this.mediaRecorder.stop();
+                this.mediaRecorder.stream.getTracks().forEach(track => track.stop());
+                this.isRecording = false;
+                this.updateUI(false);
+                this.stopTimer();
+                this.stopVisualizer();
+                if (this.autoStopTimeout) clearTimeout(this.autoStopTimeout);
+            }
+        }
+
+        updateUI(isRecording) {
+            if (isRecording) {
+                this.recordBtn.classList.add('pulse-ring', 'cursor-not-allowed', 'record-btn-active');
+                this.recordBtn.classList.remove('hover:scale-105', 'active:scale-95');
+                this.micIcon.textContent = 'graphic_eq';
+                this.pulseRing.classList.add('opacity-100');
+                this.status.innerHTML = '<p class="text-red-500 font-bold animate-pulse">RECORDING IN PROGRESS...</p>';
+                this.timer.classList.remove('hidden');
+            } else {
+                this.recordBtn.classList.remove('pulse-ring', 'cursor-not-allowed', 'record-btn-active');
+                this.recordBtn.classList.add('hover:scale-105', 'active:scale-95');
+                this.micIcon.textContent = 'mic';
+                this.pulseRing.classList.remove('opacity-100');
+                this.status.innerHTML = '<p class="text-slate-500 dark:text-slate-400 text-sm font-medium">Click the microphone to begin your response</p>';
+                this.timer.classList.add('hidden');
+            }
+        }
+
+        startTimer() {
+            let timeLeft = 60;
+            this.timerDisplay.textContent = '01:00';
+            
+            this.timerInterval = setInterval(() => {
+                timeLeft--;
+                const minutes = Math.floor(timeLeft / 60);
+                const seconds = timeLeft % 60;
+                this.timerDisplay.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                
+                if (timeLeft <= 0) {
+                    this.stopTimer();
+                }
+            }, 1000);
+        }
+
+        stopTimer() {
+            if (this.timerInterval) clearInterval(this.timerInterval);
+        }
+
+        startVisualizer() {
+            this.visualizerInterval = setInterval(() => {
+                this.waveBars.forEach(bar => {
+                    const height = Math.floor(Math.random() * 20) + 10;
+                    bar.style.height = `${height}px`;
+                });
+            }, 100);
+        }
+
+        stopVisualizer() {
+            if (this.visualizerInterval) clearInterval(this.visualizerInterval);
+            this.waveBars.forEach((bar, index) => {
+                const heights = [16, 24, 16, 32, 20];
+                bar.style.height = `${heights[index]}px`;
+            });
+        }
+
+        async saveRecording(audioBlob) {
+            const formData = new FormData();
+            formData.append('audio_data', audioBlob);
+            formData.append('question', document.getElementById('questionText').textContent.trim().replace(/^"|"$/g, ''));
+
+            this.showNotification('Analyzing your JAM session...', 'info');
+
+            try {
+                const response = await fetch('{% url "softskills:save_recording" %}', {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRFToken': csrftoken
+                    },
+                    body: formData
+                });
+
+                const data = await response.json();
+                if (data.status === 'success') {
+                    this.showNotification('Analysis complete!', 'success');
+                    this.addRecordingToList(data.recording);
+                    if (this.emptyState) this.emptyState.classList.add('hidden');
+                    
+                    // Reload after a short delay to refresh scores
+                    setTimeout(() => window.location.reload(), 1500);
+                } else {
+                    this.showNotification(data.message || 'Error saving recording', 'error');
+                }
+            } catch (err) {
+                console.error('Error saving recording:', err);
+                this.showNotification('Connection error', 'error');
+            }
+        }
+
+        addRecordingToList(rec) {
+            const html = `
+                <div class="glass-hover glass rounded-[1.5rem] p-5 transition-all duration-300 group" data-id="${rec.id}">
+                    <div class="flex items-start justify-between mb-4">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-10 h-10 bg-slate-100 dark:bg-slate-800 rounded-xl flex items-center justify-center border border-slate-200 dark:border-slate-700">
+                                <span class="material-symbols-outlined text-slate-900 dark:text-white text-sm">play_arrow</span>
+                            </div>
+                            <div>
+                                <h3 class="text-sm font-bold text-slate-800 dark:text-slate-200 line-clamp-1">${rec.title}</h3>
+                                <p class="text-[10px] text-slate-500 font-medium">Just now</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between pt-4 border-t border-slate-200 dark:border-slate-800/50">
+                        <div class="flex items-center space-x-2">
+                            <audio src="${rec.audio_url}" id="audio-${rec.id}" class="hidden"></audio>
+                            <button onclick="toggleAudio('${rec.id}')" class="text-[10px] font-bold text-slate-900 dark:text-white hover:opacity-70 transition-colors uppercase tracking-widest flex items-center">
+                                <span class="material-symbols-outlined mr-2 text-sm">volume_up</span> Play Back
+                            </button>
+                        </div>
+                        <div class="flex items-center space-x-4">
+                            <span class="text-[10px] text-slate-500 font-bold uppercase">${rec.duration}s</span>
+                            <button onclick="deleteRecording(${rec.id})" class="text-slate-400 hover:text-red-500 transition-colors">
+                                <span class="material-symbols-outlined text-xs">delete</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+            this.recordingsList.insertAdjacentHTML('afterbegin', html);
+        }
+
+        showNotification(message, type = 'info') {
+            const container = document.getElementById('notificationContainer');
+            const id = Date.now();
+            
+            const colors = {
+                success: 'border-green-500 text-green-600 dark:text-green-400 bg-green-500/10',
+                error: 'border-red-500 text-red-600 dark:text-red-400 bg-red-500/10',
+                info: 'border-slate-900 dark:border-white text-slate-900 dark:text-white bg-slate-900/10 dark:bg-white/10'
+            };
+
+            const icons = {
+                success: 'check_circle',
+                error: 'error',
+                info: 'info'
+            };
+
+            const html = `
+                <div id="notif-${id}" class="flex items-center p-4 rounded-2xl border ${colors[type]} backdrop-blur-xl animate-slide-in shadow-2xl min-w-[300px]">
+                    <span class="material-symbols-outlined mr-3">${icons[type]}</span>
+                    <p class="text-xs font-bold uppercase tracking-widest">${message}</p>
+                </div>
+            `;
+
+            container.insertAdjacentHTML('beforeend', html);
+            setTimeout(() => {
+                const el = document.getElementById(`notif-${id}`);
+                if (el) {
+                    el.classList.add('animate-slide-out');
+                    setTimeout(() => el.remove(), 300);
+                }
+            }, 4000);
+        }
+    }
+
+    // Global Functions
+    function toggleAudio(id) {
+        const audio = document.getElementById(`audio-${id}`);
+        const btn = event.currentTarget;
+        const icon = btn.querySelector('.material-symbols-outlined');
+
+        if (audio.paused) {
+            // Stop all other audio
+            document.querySelectorAll('audio').forEach(a => {
+                if (a.id !== `audio-${id}`) {
+                    a.pause();
+                    a.currentTime = 0;
+                    const otherBtn = document.querySelector(`button[onclick="toggleAudio('${a.id.split('-')[1]}')"]`);
+                    if (otherBtn) otherBtn.querySelector('.material-symbols-outlined').textContent = 'volume_up';
+                }
+            });
+            audio.play();
+            icon.textContent = 'pause';
+        } else {
+            audio.pause();
+            icon.textContent = 'volume_up';
+        }
+
+        audio.onended = () => {
+            icon.textContent = 'volume_up';
+        };
+    }
+
+    async function deleteRecording(id) {
+        if (!confirm('Are you sure you want to delete this session?')) return;
+
+        try {
+            const response = await fetch(`/softskills/delete/${id}/`, {
+                method: 'DELETE',
+                headers: {
+                    'X-CSRFToken': csrftoken
+                }
+            });
+
+            const data = await response.json();
+            if (data.status === 'success') {
+                const element = document.querySelector(`[data-id="${id}"]`);
+                if (element) {
+                    element.classList.add('scale-95', 'opacity-0');
+                    setTimeout(() => {
+                        element.remove();
+                        if (document.getElementById('recordingsList').children.length === 0) {
+                            window.location.reload();
+                        }
+                    }, 300);
+                }
+                showNotification('Session deleted successfully', 'success');
+            } else {
+                showNotification(data.message || 'Error deleting session', 'error');
+            }
+        } catch (err) {
+            console.error('Error deleting recording:', err);
+            showNotification('Connection error', 'error');
+        }
+    }
+
+    function showNotification(message, type = 'info') {
+        if (window.recorder) {
+            window.recorder.showNotification(message, type);
+        }
+    }
+
+    // Initialize
+    document.addEventListener('DOMContentLoaded', () => {
+        window.recorder = new VoiceRecorder();
+    });
+</script>
+
+<style>
+    @keyframes slide-in {
+        from { transform: translateX(100%); opacity: 0; }
+        to { transform: translateX(0); opacity: 1; }
+    }
+    @keyframes slide-out {
+        from { transform: translateX(0); opacity: 1; }
+        to { transform: translateX(100%); opacity: 0; }
+    }
+    .animate-slide-in { animation: slide-in 0.3s ease-out forwards; }
+    .animate-slide-out { animation: slide-out 0.3s ease-in forwards; }
+</style>
+{% endblock %}

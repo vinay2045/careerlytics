@@ -1,0 +1,298 @@
+{% extends 'users/user_tailwind_base.html' %}
+{% load static %}
+
+{% block title %}AI Mock Interview{% endblock %}
+{% block contents %}
+<div class="relative">
+  <div class="absolute inset-0 -z-10 bg-gradient-to-b from-blue-50 via-indigo-50 to-white dark:from-gray-900 dark:via-gray-900 dark:to-gray-900"></div>
+  <div class="p-4 md:p-6 lg:p-10 max-w-6xl mx-auto space-y-8">
+    <div class="rounded-3xl p-8 bg-white/70 dark:bg-gray-800/70 backdrop-blur-xl border border-slate-200 dark:border-gray-700 shadow-2xl">
+      <div class="flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-blue-500 to-indigo-600 text-white flex items-center justify-center">
+            <span class="material-symbols-outlined text-2xl">record_voice_over</span>
+          </div>
+          <div>
+            <div class="text-[10px] font-black uppercase tracking-[0.2em] text-blue-600 dark:text-blue-400">AI Mock Interview</div>
+            <h2 class="text-2xl md:text-3xl font-black text-slate-900 dark:text-white tracking-tight">Setup & Controls</h2>
+          </div>
+        </div>
+        <div class="hidden md:flex items-center gap-3">
+          <div class="px-3 py-1.5 rounded-full bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-300 text-xs font-bold">Phase: <span id="phaseBadge">Idle</span></div>
+        </div>
+      </div>
+      <div class="mt-8 grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="space-y-2">
+          <div class="text-[11px] font-black uppercase tracking-wider text-slate-500 dark:text-slate-300">Role</div>
+          <input id="role" type="text" class="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-slate-900 dark:text-slate-100" placeholder="e.g., Backend Engineer">
+          <div id="roleError" class="hidden text-xs text-red-600 mt-1">Role is required</div>
+        </div>
+        <div class="space-y-2">
+          <div class="text-[11px] font-black uppercase tracking-wider text-slate-500 dark:text-slate-300">Experience (years)</div>
+          <input id="experience" type="number" min="0" class="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-slate-900 dark:text-slate-100" placeholder="e.g., 3">
+          <div id="experienceError" class="hidden text-xs text-red-600 mt-1">Enter a valid number</div>
+        </div>
+        <div class="space-y-2">
+          <div class="text-[11px] font-black uppercase tracking-wider text-slate-500 dark:text-slate-300">Session ID</div>
+          <input id="sessionId" type="text" class="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-slate-900 dark:text-slate-100" placeholder="auto" readonly>
+        </div>
+      </div>
+      <div class="mt-6 space-y-2">
+        <div class="text-[11px] font-black uppercase tracking-wider text-slate-500 dark:text-slate-300">Job Description</div>
+        <textarea id="jobDescription" rows="6" class="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-slate-900 dark:text-slate-100" placeholder="Paste JD here"></textarea>
+        <div id="jdError" class="hidden text-xs text-red-600 mt-1">Job description is required</div>
+      </div>
+      <div class="mt-8 flex flex-wrap gap-3">
+        <button id="startBtn" class="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-black shadow-lg hover:opacity-90 active:scale-95">
+          <span class="material-symbols-outlined">play_arrow</span> Start Interview
+        </button>
+        <div class="md:hidden flex items-center gap-3 ml-auto">
+          <div class="px-3 py-1.5 rounded-full bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-300 text-xs font-bold">Phase: <span id="phaseBadge_mobile">Idle</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="rounded-3xl p-8 bg-white/70 dark:bg-gray-800/70 backdrop-blur-xl border border-slate-200 dark:border-gray-700 shadow-xl">
+      <div class="flex items-center justify-between mb-6">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-blue-100 text-blue-600 dark:bg-blue-900/30 dark:text-blue-300 flex items-center justify-center">
+            <span class="material-symbols-outlined">chat</span>
+          </div>
+          <h3 class="text-lg font-semibold text-slate-900 dark:text-slate-100">Questions</h3>
+        </div>
+        <div class="flex items-center gap-4">
+          <div class="flex items-center gap-2">
+            <div class="px-3 py-1.5 rounded-lg bg-blue-600 text-white text-xs font-bold">
+              <span id="sessionTime">00:00</span>
+            </div>
+            <div class="text-[10px] font-black uppercase tracking-widest text-slate-500 dark:text-slate-400">Time Remaining</div>
+          </div>
+          <div class="flex items-center gap-2">
+            <span class="inline-block w-2.5 h-2.5 rounded-full bg-red-500 animate-pulse"></span>
+            <span id="ttsStatus" class="text-xs font-semibold text-red-600 dark:text-red-400">AI Recruiter Recording</span>
+          </div>
+          <audio id="questionAudio" controls class="hidden"></audio>
+        </div>
+      </div>
+      <div class="rounded-2xl overflow-hidden">
+        <div class="bg-gradient-to-br from-blue-700 to-indigo-700 p-8 text-white">
+          <div class="text-center space-y-3">
+            <div class="text-xl font-extrabold">Aria is listening...</div>
+            <div id="questionText" class="text-base md:text-lg max-w-3xl mx-auto">...</div>
+            <div class="flex items-end justify-center gap-1 pt-4">
+              <div class="w-1.5 h-5 bg-white/70 rounded animate-pulse"></div>
+              <div class="w-1.5 h-7 bg-white/80 rounded animate-pulse"></div>
+              <div class="w-1.5 h-4 bg-white/60 rounded animate-pulse"></div>
+              <div class="w-1.5 h-8 bg-white rounded animate-pulse"></div>
+              <div class="w-1.5 h-6 bg-white/70 rounded animate-pulse"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="space-y-3">
+          <div class="grid grid-cols-2 gap-3">
+            <button id="micBtn" disabled class="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-slate-900 text-white dark:bg-white dark:text-slate-900 font-semibold shadow-lg hover:opacity-90 active:scale-95 opacity-50 cursor-not-allowed">
+              <span class="material-symbols-outlined">play_arrow</span> Start Responding
+            </button>
+            <button id="nextBtn" class="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-slate-200 text-slate-900 dark:bg-slate-700 dark:text-white font-semibold shadow-lg hover:opacity-90 active:scale-95">
+              <span class="material-symbols-outlined">skip_next</span> Next
+            </button>
+          </div>
+          <div id="sttStatus" class="text-xs text-slate-500 dark:text-slate-400">Speech recognition off</div>
+        </div>
+        <div class="space-y-3">
+          <textarea id="answerText" rows="6" class="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-slate-900 dark:text-slate-100" placeholder="Transcribed or typed answer"></textarea>
+          <button id="submitAnswerBtn" class="w-full inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-emerald-600 text-white font-semibold shadow-lg hover:opacity-90 active:scale-95">
+            <span class="material-symbols-outlined">send</span> Submit Answer
+          </button>
+          <div id="progressInfo" class="text-xs text-slate-500 dark:text-slate-400"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="rounded-3xl p-8 bg-white/70 dark:bg-gray-800/70 backdrop-blur-xl border border-slate-200 dark:border-gray-700 shadow-xl">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-600 dark:bg-emerald-900/30 dark:text-emerald-300 flex items-center justify-center">
+          <span class="material-symbols-outlined">insights</span>
+        </div>
+        <h3 class="text-lg font-semibold text-slate-900 dark:text-slate-100">Reports</h3>
+      </div>
+      <div id="reportContainer" class="mt-6 space-y-4"></div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+let running=false
+let phase='idle'
+let phaseStart=0
+let behaviorSeconds=5*60
+let technicalSeconds=25*60
+let elapsed=0
+let timerHandle=null
+let history=[]
+let currentQuestion=null
+let sessionId=null
+let answering=false
+let recognition=null
+const totalSeconds=30*60
+let totalDeadline=0
+const maxQuestions=10
+let answerBuffer=''
+
+function now(){return Math.floor(Date.now()/1000)}
+function formatTime(s){const m=Math.floor(s/60).toString().padStart(2,'0');const sec=(s%60).toString().padStart(2,'0');return `${m}:${sec}`}
+function setPhase(p){phase=p;document.getElementById('phaseBadge').textContent=p==='behavior'?'Behavior':'Technical'}
+function updateTimer(){
+  if(!running)return
+  elapsed=now()-phaseStart
+  const remainingTotal=Math.max(0, totalDeadline - now())
+  const st=document.getElementById('sessionTime'); if(st){st.textContent=formatTime(remainingTotal)}
+  if(phase==='behavior'&&elapsed>=behaviorSeconds){setPhase('technical');phaseStart=now();nextQuestion()}
+  if(phase==='technical'&&elapsed>=technicalSeconds){/* per previous behavior-phase logic, keep */ }
+  if(remainingTotal<=0){running=false;clearInterval(timerHandle);finishInterview()}
+}
+
+function startInterview(){
+  if(running)return
+  const role=document.getElementById('role').value.trim()
+  const experience=parseFloat(document.getElementById('experience').value||'0')
+  const jd=document.getElementById('jobDescription').value.trim()
+  let valid=true
+  const roleEl=document.getElementById('role'), roleErr=document.getElementById('roleError')
+  const expEl=document.getElementById('experience'), expErr=document.getElementById('experienceError')
+  const jdEl=document.getElementById('jobDescription'), jdErr=document.getElementById('jdError')
+  if(!role){roleErr.classList.remove('hidden'); roleEl.classList.add('border-red-500'); valid=false}else{roleErr.classList.add('hidden'); roleEl.classList.remove('border-red-500')}
+  if(isNaN(experience) || document.getElementById('experience').value===''){expErr.classList.remove('hidden'); expEl.classList.add('border-red-500'); valid=false}else{expErr.classList.add('hidden'); expEl.classList.remove('border-red-500')}
+  if(!jd){jdErr.classList.remove('hidden'); jdEl.classList.add('border-red-500'); valid=false}else{jdErr.classList.add('hidden'); jdEl.classList.remove('border-red-500')}
+  if(!valid){return}
+  sessionId=`sess_${Math.random().toString(36).slice(2)}_${Date.now()}`
+  document.getElementById('sessionId').value=sessionId
+  history=[]
+  running=true
+  const mic=document.getElementById('micBtn'); if(mic){mic.disabled=false; mic.classList.remove('opacity-50','cursor-not-allowed')}
+  setPhase('behavior')
+  phaseStart=now()
+  totalDeadline=now()+totalSeconds
+  timerHandle=setInterval(updateTimer,500)
+  nextQuestion({role,experience,jd})
+}
+
+async function nextQuestion(initCtx){
+  if(history.length>=maxQuestions){running=false;clearInterval(timerHandle);finishInterview();return}
+  const role=document.getElementById('role').value.trim()
+  const experience=parseFloat(document.getElementById('experience').value||'0')
+  const jd=document.getElementById('jobDescription').value.trim()
+  const payload={role,experience,jd,history,phase,sessionId}
+  let data=null
+  try{
+    const res=await fetch('{% url "users:ai_interview_generate_question" %}',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)})
+    if(!res.ok){currentQuestion="Please introduce yourself."; throw new Error('net')}
+    data=await res.json()
+    currentQuestion=(data&&data.question)||"Tell me about a time you overcame a challenging problem."
+  }catch(_){
+    currentQuestion="Tell me about a time you overcame a challenging problem."
+  }
+  document.getElementById('questionText').textContent=currentQuestion
+  const answered = history.filter(h => h.a && h.a.length>0).length
+  document.getElementById('progressInfo').textContent=`Answered: ${answered} / ${history.length}`
+  let ttsData={}
+  try{
+    const tts=await fetch('{% url "users:ai_interview_tts" %}',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({text:currentQuestion, voice_id: '{{ eleven_voice_id }}'})})
+    ttsData=await tts.json()
+  }catch(_){ttsData={}}
+  const audioEl=document.getElementById('questionAudio')
+  const ttsStatus=document.getElementById('ttsStatus')
+  if(ttsData.data_url){
+    audioEl.pause()
+    audioEl.src=''
+    audioEl.src=ttsData.data_url
+    audioEl.load()
+    audioEl.classList.remove('hidden')
+    audioEl.play().catch(()=>{})
+    ttsStatus.textContent=`AI voice: ElevenLabs`
+  }
+  else {
+    ttsStatus.textContent='AI Recruiter Recording'
+    try {
+      const utter = new SpeechSynthesisUtterance(currentQuestion)
+      utter.lang = 'en-US'
+      window.speechSynthesis.cancel()
+      window.speechSynthesis.speak(utter)
+    } catch(e){}
+  }
+}
+
+async function submitAnswer(){
+  if(!currentQuestion)return
+  const answer=answerBuffer.trim()
+  try{ if(answering && recognition){recognition.stop(); answering=false} }catch(e){}
+  history.push({q:currentQuestion,a:answer,phase,skipped: !answer})
+  answerBuffer=''
+  document.getElementById('answerText').value=''
+  if(history.length>=maxQuestions){running=false;clearInterval(timerHandle);finishInterview();return}
+  nextQuestion()
+}
+
+function setupSTT(){
+  const status=document.getElementById('sttStatus')
+  const btn=document.getElementById('micBtn')
+  const AnswerEl=document.getElementById('answerText')
+  const SR=window.SpeechRecognition||window.webkitSpeechRecognition
+  if(!SR){status.textContent='Speech recognition unavailable';btn.disabled=true;btn.classList.add('opacity-50','cursor-not-allowed');return}
+  recognition=new SR()
+  recognition.lang='en-US'
+  recognition.continuous=true
+  recognition.interimResults=true
+  recognition.onresult=(e)=>{
+    let interim=''
+    for(let i=e.resultIndex;i<e.results.length;i++){
+      const t=e.results[i][0].transcript
+      if(e.results[i].isFinal){answerBuffer+=t+' '}
+      else{interim+=t}
+    }
+    AnswerEl.value=(answerBuffer+interim).trim()
+  }
+  recognition.onstart=()=>{status.textContent='Listening';btn.innerHTML='<span class="material-symbols-outlined">stop</span> Stop Responding'}
+  recognition.onend=()=>{status.textContent='Speech recognition off';btn.innerHTML='<span class="material-symbols-outlined">play_arrow</span> Start Responding'; answering=false}
+  recognition.onerror=(e)=>{status.textContent=`STT error: ${e.error || 'unknown'}`; try{recognition.stop()}catch(_){}; answering=false}
+  AnswerEl.addEventListener('input',()=>{answerBuffer=AnswerEl.value})
+  btn.addEventListener('click',()=>{
+    if(!recognition)return
+    if(!running){status.textContent='Start the interview first'; return}
+    if(answering){try{recognition.stop()}catch(_){ } answering=false}else{try{recognition.start()}catch(_){ } answering=true}
+  })
+}
+
+async function finishInterview(){
+  const role=document.getElementById('role').value.trim()
+  const experience=parseFloat(document.getElementById('experience').value||'0')
+  const jd=document.getElementById('jobDescription').value.trim()
+  const payload={role,experience,jd,history,sessionId}
+  const res=await fetch('{% url "users:ai_interview_evaluate" %}',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)})
+  const data=await res.json()
+  const c=document.getElementById('reportContainer')
+  c.innerHTML=''
+  const makeRow=(k,v)=>{const d=document.createElement('div');d.className='flex items-center justify-between';const l=document.createElement('div');l.className='text-sm text-slate-600 dark:text-slate-300';l.textContent=k;const r=document.createElement('div');r.className='font-semibold';r.textContent=v;d.appendChild(l);d.appendChild(r);return d}
+  c.appendChild(makeRow('Communication', data.communication))
+  c.appendChild(makeRow('Behavior', data.behavior))
+  c.appendChild(makeRow('Technical', data.technical))
+  c.appendChild(makeRow('Problem Solving', data.problem_solving))
+  c.appendChild(makeRow('Role Fit', data.role_fit))
+  c.appendChild(makeRow('Final Score', data.final_score))
+  if(data.summary){const s=document.createElement('div');s.className='mt-4 text-sm text-slate-700 dark:text-slate-200';s.textContent=data.summary;c.appendChild(s)}
+  localStorage.setItem(`ai_mock_${sessionId}`,JSON.stringify({meta:{role,experience,jd},history,report:data}))
+}
+
+document.addEventListener('DOMContentLoaded',()=>{
+  document.getElementById('startBtn').addEventListener('click',startInterview)
+  document.getElementById('submitAnswerBtn').addEventListener('click',submitAnswer)
+  const nb=document.getElementById('nextBtn'); if(nb){nb.addEventListener('click',()=>{document.getElementById('answerText').value=''; submitAnswer()})}
+  setupSTT()
+  window.addEventListener('beforeunload',()=>{try{if(recognition){recognition.stop()}}catch(_){}})
+})
+</script>
+{% endblock %}

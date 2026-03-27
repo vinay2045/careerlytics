@@ -1,0 +1,452 @@
+[
+    {
+        "id": "py_001",
+        "category": "python",
+        "difficulty": "easy",
+        "question_text": "What is the output of print(type(5))?",
+        "options": [
+            "<class 'int'>",
+            "<class 'number'>",
+            "<class 'integer'>",
+            "<type 'int'>"
+        ],
+        "correct_answer": 0,
+        "explanation": "In Python 3, the type() function returns the type of an object as a type object, which when printed shows '<class 'int'>'.",
+        "tags": ["python", "type", "int", "data-types"]
+    },
+    {
+        "id": "py_002",
+        "category": "python",
+        "difficulty": "easy",
+        "question_text": "Which of the following is a valid variable name in Python?",
+        "options": [
+            "1var",
+            "var_1",
+            "var-1",
+            "None"
+        ],
+        "correct_answer": 1,
+        "explanation": "Variable names in Python must start with a letter or underscore, and can contain letters, numbers, and underscores. 'var_1' follows these rules.",
+        "tags": ["python", "variables", "naming"]
+    },
+    {
+        "id": "py_003",
+        "category": "python",
+        "difficulty": "easy",
+        "question_text": "What does len([1,2,3]) return?",
+        "options": [
+            "2",
+            "3",
+            "4",
+            "Error"
+        ],
+        "correct_answer": 1,
+        "explanation": "The len() function returns the number of items in a list. The list [1,2,3] contains 3 elements.",
+        "tags": ["python", "len", "list", "functions"]
+    },
+    {
+        "id": "py_004",
+        "category": "python",
+        "difficulty": "easy",
+        "question_text": "Which keyword is used to define a function in Python?",
+        "options": [
+            "func",
+            "define",
+            "def",
+            "function"
+        ],
+        "correct_answer": 2,
+        "explanation": "The 'def' keyword is used to define a function in Python, followed by the function name and parentheses.",
+        "tags": ["python", "def", "functions", "keywords"]
+    },
+    {
+        "id": "py_005",
+        "category": "python",
+        "difficulty": "easy",
+        "question_text": "What is the correct file extension for Python files?",
+        "options": [
+            ".py",
+            ".python",
+            ".pyth",
+            ".pt"
+        ],
+        "correct_answer": 0,
+        "explanation": "Python files use the .py extension, which is the standard and recognized extension for Python source code.",
+        "tags": ["python", "file-extension", "files"]
+    },
+    {
+        "id": "py_006",
+        "category": "python",
+        "difficulty": "easy",
+        "question_text": "Which of the following is used to indicate a comment in Python?",
+        "options": [
+            "//",
+            "#",
+            "/*",
+            "--"
+        ],
+        "correct_answer": 1,
+        "explanation": "The hash symbol (#) is used to indicate a single-line comment in Python. Everything after # on that line is ignored.",
+        "tags": ["python", "comments", "syntax"]
+    },
+    {
+        "id": "py_007",
+        "category": "python",
+        "difficulty": "medium",
+        "question_text": "What is the output of print(2 ** 3)?",
+        "options": [
+            "6",
+            "8",
+            "9",
+            "Error"
+        ],
+        "correct_answer": 1,
+        "explanation": "The ** operator is used for exponentiation in Python. 2 ** 3 means 2 raised to the power of 3, which equals 8.",
+        "tags": ["python", "exponentiation", "operators", "**"]
+    },
+    {
+        "id": "py_008",
+        "category": "python",
+        "difficulty": "medium",
+        "question_text": "Which method is used to add an element to a list?",
+        "options": [
+            "add()",
+            "append()",
+            "insert()",
+            "push()"
+        ],
+        "correct_answer": 1,
+        "explanation": "The append() method adds a single element to the end of a list in Python.",
+        "tags": ["python", "list", "append", "methods"]
+    },
+    {
+        "id": "py_009",
+        "category": "python",
+        "difficulty": "medium",
+        "question_text": "What is the result of 'hello' + ' world'?",
+        "options": [
+            "hello world",
+            "hello + world",
+            "helloworld",
+            "Error"
+        ],
+        "correct_answer": 0,
+        "explanation": "The + operator concatenates strings in Python. 'hello' + ' world' results in 'hello world'.",
+        "tags": ["python", "strings", "concatenation", "+"]
+    },
+    {
+        "id": "py_010",
+        "category": "python",
+        "difficulty": "hard",
+        "question_text": "What is the purpose of the __init__ method?",
+        "options": [
+            "Initialize object attributes",
+            "Delete object",
+            "Compare objects",
+            "Convert object to string"
+        ],
+        "correct_answer": 0,
+        "explanation": "The __init__ method is a special method called when an object is created, used to initialize the object's attributes.",
+        "tags": ["python", "init", "constructor", "oop"]
+    },
+    {
+        "id": "py_011",
+        "category": "python",
+        "difficulty": "easy",
+        "question_text": "What is the output of print(bool(0))?",
+        "options": [
+            "True",
+            "False",
+            "Error",
+            "None"
+        ],
+        "correct_answer": 1,
+        "explanation": "In Python, 0 is considered falsy, so bool(0) returns False.",
+        "tags": ["python", "boolean", "truthiness", "type-conversion"]
+    },
+    {
+        "id": "py_012",
+        "category": "python",
+        "difficulty": "easy",
+        "question_text": "Which method removes the last element from a list?",
+        "options": [
+            "remove()",
+            "pop()",
+            "delete()",
+            "clear()"
+        ],
+        "correct_answer": 1,
+        "explanation": "The pop() method removes and returns the last element from a list when no index is specified.",
+        "tags": ["python", "list", "pop", "methods"]
+    },
+    {
+        "id": "py_013",
+        "category": "python",
+        "difficulty": "easy",
+        "question_text": "What is the result of 10 // 3?",
+        "options": [
+            "3.33",
+            "3",
+            "4",
+            "Error"
+        ],
+        "correct_answer": 1,
+        "explanation": "The // operator performs floor division, which returns the integer part of the division.",
+        "tags": ["python", "floor-division", "operators", "//"]
+    },
+    {
+        "id": "py_014",
+        "category": "python",
+        "difficulty": "easy",
+        "question_text": "Which keyword is used to handle exceptions?",
+        "options": [
+            "try",
+            "catch",
+            "except",
+            "handle"
+        ],
+        "correct_answer": 2,
+        "explanation": "The 'except' keyword is used to catch and handle exceptions in Python's try-except blocks.",
+        "tags": ["python", "exception-handling", "try-except", "keywords"]
+    },
+    {
+        "id": "py_015",
+        "category": "python",
+        "difficulty": "medium",
+        "question_text": "What is a lambda function?",
+        "options": [
+            "Regular function",
+            "Anonymous function",
+            "Recursive function",
+            "Class method"
+        ],
+        "correct_answer": 1,
+        "explanation": "A lambda function is a small anonymous function that can have any number of arguments but can only have one expression.",
+        "tags": ["python", "lambda", "anonymous-function", "functional-programming"]
+    },
+    {
+        "id": "py_016",
+        "category": "python",
+        "difficulty": "medium",
+        "question_text": "Which method returns the keys of a dictionary?",
+        "options": [
+            "keys()",
+            "get_keys()",
+            "list_keys()",
+            "key_list()"
+        ],
+        "correct_answer": 0,
+        "explanation": "The keys() method returns a view object that displays a list of all the keys in the dictionary.",
+        "tags": ["python", "dictionary", "keys", "methods"]
+    },
+    {
+        "id": "py_017",
+        "category": "python",
+        "difficulty": "medium",
+        "question_text": "What is the purpose of the 'self' parameter?",
+        "options": [
+            "Reference to the class",
+            "Reference to the instance",
+            "Reference to the method",
+            "Reference to the module"
+        ],
+        "correct_answer": 1,
+        "explanation": "The 'self' parameter refers to the instance of the class, allowing access to its attributes and methods.",
+        "tags": ["python", "self", "oop", "instance"]
+    },
+    {
+        "id": "py_018",
+        "category": "python",
+        "difficulty": "medium",
+        "question_text": "Which operator checks for membership in a sequence?",
+        "options": [
+            "in",
+            "has",
+            "contains",
+            "exists"
+        ],
+        "correct_answer": 0,
+        "explanation": "The 'in' operator checks if a value exists in a sequence like list, tuple, or string.",
+        "tags": ["python", "membership", "in-operator", "sequences"]
+    },
+    {
+        "id": "py_019",
+        "category": "python",
+        "difficulty": "medium",
+        "question_text": "What is the result of set([1,2,2,3])?",
+        "options": [
+            "[1,2,2,3]",
+            "{1,2,3}",
+            "[1,2,3]",
+            "Error"
+        ],
+        "correct_answer": 1,
+        "explanation": "Sets automatically remove duplicate elements, so set([1,2,2,3]) results in {1,2,3}.",
+        "tags": ["python", "set", "duplicates", "data-structures"]
+    },
+    {
+        "id": "py_020",
+        "category": "python",
+        "difficulty": "hard",
+        "question_text": "What is the Global Interpreter Lock (GIL)?",
+        "options": [
+            "Thread synchronization mechanism",
+            "Memory management system",
+            "Type checking system",
+            "Import system"
+        ],
+        "correct_answer": 0,
+        "explanation": "The GIL is a mutex that protects access to Python objects, preventing multiple threads from executing Python bytecode simultaneously.",
+        "tags": ["python", "gil", "threading", "concurrency"]
+    },
+    {
+        "id": "py_021",
+        "category": "python",
+        "difficulty": "hard",
+        "question_text": "What is a decorator in Python?",
+        "options": [
+            "Function that modifies another function",
+            "Class constructor",
+            "Variable annotation",
+            "Loop construct"
+        ],
+        "correct_answer": 0,
+        "explanation": "A decorator is a function that takes another function as input and extends or modifies its behavior without changing its source code.",
+        "tags": ["python", "decorator", "metaprogramming", "functions"]
+    },
+    {
+        "id": "py_022",
+        "category": "python",
+        "difficulty": "hard",
+        "question_text": "What is the purpose of __str__ method?",
+        "options": [
+            "String representation for users",
+            "String representation for developers",
+            "Type conversion",
+            "String validation"
+        ],
+        "correct_answer": 0,
+        "explanation": "The __str__ method returns a user-friendly string representation of an object, used by print() and str().",
+        "tags": ["python", "str", "dunder-methods", "oop"]
+    },
+    {
+        "id": "py_023",
+        "category": "python",
+        "difficulty": "hard",
+        "question_text": "What is the difference between list and tuple?",
+        "options": [
+            "Lists are mutable, tuples are immutable",
+            "Tuples are faster than lists",
+            "Lists can't contain tuples",
+            "No difference"
+        ],
+        "correct_answer": 0,
+        "explanation": "Lists are mutable (can be modified after creation) while tuples are immutable (cannot be modified after creation).",
+        "tags": ["python", "list", "tuple", "mutability", "data-structures"]
+    },
+    {
+        "id": "py_024",
+        "category": "python",
+        "difficulty": "hard",
+        "question_text": "What is the purpose of the 'with' statement?",
+        "options": [
+            "Exception handling",
+            "Resource management",
+            "Loop control",
+            "Function definition"
+        ],
+        "correct_answer": 1,
+        "explanation": "The 'with' statement ensures proper acquisition and release of resources, automatically handling cleanup operations.",
+        "tags": ["python", "with-statement", "resource-management", "context-manager"]
+    },
+    {
+        "id": "py_025",
+        "category": "python",
+        "difficulty": "medium",
+        "question_text": "Which function returns the type of an object?",
+        "options": [
+            "typeof()",
+            "type()",
+            "get_type()",
+            "class_type()"
+        ],
+        "correct_answer": 1,
+        "explanation": "The type() function returns the type of the specified object.",
+        "tags": ["python", "type", "introspection", "built-in-functions"]
+    },
+    {
+        "id": "py_026",
+        "category": "python",
+        "difficulty": "medium",
+        "question_text": "What is the result of 'Python'[2:4]?",
+        "options": [
+            "tho",
+            "th",
+            "hon",
+            "Pyt"
+        ],
+        "correct_answer": 0,
+        "explanation": "String slicing [2:4] extracts characters from index 2 up to (but not including) index 4, resulting in 'tho'.",
+        "tags": ["python", "slicing", "strings", "indexing"]
+    },
+    {
+        "id": "py_027",
+        "category": "python",
+        "difficulty": "medium",
+        "question_text": "Which method adds an element to a set?",
+        "options": [
+            "add()",
+            "append()",
+            "insert()",
+            "push()"
+        ],
+        "correct_answer": 0,
+        "explanation": "The add() method adds a single element to a set. If the element already exists, it's ignored.",
+        "tags": ["python", "set", "add", "methods"]
+    },
+    {
+        "id": "py_028",
+        "category": "python",
+        "difficulty": "easy",
+        "question_text": "What is the output of print(5 % 2)?",
+        "options": [
+            "2",
+            "1",
+            "0",
+            "2.5"
+        ],
+        "correct_answer": 1,
+        "explanation": "The % operator is the modulo operator, which returns the remainder of division. 5 % 2 = 1.",
+        "tags": ["python", "modulo", "operators", "arithmetic"]
+    },
+    {
+        "id": "py_029",
+        "category": "python",
+        "difficulty": "easy",
+        "question_text": "Which keyword defines a class in Python?",
+        "options": [
+            "class",
+            "Class",
+            "object",
+            "define"
+        ],
+        "correct_answer": 0,
+        "explanation": "The 'class' keyword is used to define a new class in Python.",
+        "tags": ["python", "class", "oop", "keywords"]
+    },
+    {
+        "id": "py_030",
+        "category": "python",
+        "difficulty": "medium",
+        "question_text": "What is the purpose of the 'pass' statement?",
+        "options": [
+            "Skip execution",
+            "Placeholder for empty code block",
+            "Exit loop",
+            "Return value"
+        ],
+        "correct_answer": 1,
+        "explanation": "The 'pass' statement is a null operation used as a placeholder when a statement is required syntactically.",
+        "tags": ["python", "pass", "placeholder", "syntax"]
+    }
+]

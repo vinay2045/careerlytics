@@ -1,0 +1,97 @@
+[
+    {
+        "question_text": "Choose the correct sentence: He ___ to the store yesterday.",
+        "options": ["go", "went", "gone", "going"],
+        "correct_answer": 1
+    },
+    {
+        "question_text": "Which sentence is grammatically correct?",
+        "options": ["Their going to the park", "They're going to the park", "There going to the park", "Thier going to the park"],
+        "correct_answer": 1
+    },
+    {
+        "question_text": "What is the past tense of 'think'?",
+        "options": ["Thinked", "Thought", "Thinking", "Thinks"],
+        "correct_answer": 1
+    },
+    {
+        "question_text": "Choose the correct pronoun: ___ is coming to the party.",
+        "options": ["Them", "They", "Their", "They're"],
+        "correct_answer": 1
+    },
+    {
+        "question_text": "Which word is spelled correctly?",
+        "options": ["Recieve", "Receive", "Recive", "Resieve"],
+        "correct_answer": 1
+    },
+    {
+        "question_text": "What punctuation should end this sentence: How are you today___",
+        "options": [".", ",", "!", "?"],
+        "correct_answer": 3
+    },
+    {
+        "question_text": "Choose the correct form: She has ___ homework to do.",
+        "options": ["much", "many", "some", "any"],
+        "correct_answer": 0
+    },
+    {
+        "question_text": "Which sentence uses the correct tense?",
+        "options": ["I will call you tomorrow", "I will calls you tomorrow", "I will called you tomorrow", "I will calling you tomorrow"],
+        "correct_answer": 0
+    },
+    {
+        "question_text": "What is the plural form of 'child'?",
+        "options": ["Childs", "Children", "Childrens", "Childes"],
+        "correct_answer": 1
+    },
+    {
+        "question_text": "Choose the correct preposition: The book is ___ the table.",
+        "options": ["on", "at", "in", "by"],
+        "correct_answer": 0
+    },
+    {
+        "question_text": "Which sentence is correct?",
+        "options": ["Between you and I", "Between you and me", "Between me and you", "Between I and you"],
+        "correct_answer": 1
+    },
+    {
+        "question_text": "What is the comparative form of 'good'?",
+        "options": ["Gooder", "Better", "Best", "Goodest"],
+        "correct_answer": 1
+    },
+    {
+        "question_text": "Choose the correct article: ___ apple a day keeps the doctor away.",
+        "options": ["A", "An", "The", "No article needed"],
+        "correct_answer": 1
+    },
+    {
+        "question_text": "Which word is the adverb in this sentence: She sings beautifully.",
+        "options": ["She", "sings", "beautifully", "None"],
+        "correct_answer": 2
+    },
+    {
+        "question_text": "What is the superlative form of 'bad'?",
+        "options": ["Badder", "Baddest", "Worse", "Worst"],
+        "correct_answer": 3
+    },
+    {
+        "question_text": "Choose the correct conjunction: I like tea ___ coffee.",
+        "options": ["but", "and", "or", "because"],
+        "correct_answer": 1
+    },
+    {
+        "question_text": "Which sentence uses the passive voice correctly?",
+        "options": ["The ball was thrown by John", "John threw the ball", "John throws the ball", "The ball throws John"],
+        "correct_answer": 0
+    },
+    {
+        "question_text": "What is the correct spelling?",
+        "options": ["Neccessary", "Necessary", "Necesary", "Neccesary"],
+        "correct_answer": 1
+    },
+    {
+        "question_text": "Choose the correct article: He is ___ honest man.",
+        "options": ["A", "An", "The", "No article needed"],
+        "correct_answer": 1
+    }
+]

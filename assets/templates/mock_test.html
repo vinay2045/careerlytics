@@ -1,0 +1,378 @@
+{% extends 'users/user_tailwind_base.html' %}
+{% load static %}
+
+{% block title %}Mock Test Center{% endblock %}
+
+{% block page_title %}Mock Test Center{% endblock %}
+
+{% block contents %}
+<div class="space-y-8">
+    <!-- Test Type Selection -->
+    <div class="enterprise-card rounded-xl p-6">
+        <div class="flex items-center justify-between mb-6">
+            <div>
+                <h2 class="text-2xl font-bold text-slate-800">Choose Test Type</h2>
+                <p class="text-slate-500 mt-1">Select between role-based or language-based assessments</p>
+            </div>
+            <div class="flex items-center gap-2">
+                <button id="role-tab" onclick="switchTestType('role')" class="px-4 py-2 bg-blue-600 text-white rounded-lg font-medium transition-all">
+                    Role-Based
+                </button>
+                <button id="language-tab" onclick="switchTestType('language')" class="px-4 py-2 bg-slate-200 text-slate-600 rounded-lg font-medium transition-all hover:bg-slate-300">
+                    Language-Based
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Role-Based Tests (Default) -->
+    <div id="role-tests" class="space-y-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <!-- Frontend Developer Role -->
+            <div onclick="startRoleTest('frontend')" class="enterprise-card rounded-xl p-6 cursor-pointer hover:border-blue-300 group">
+                <div class="w-16 h-16 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                    <span class="material-symbols-outlined text-white text-2xl">web</span>
+                </div>
+                <h3 class="text-xl font-bold text-slate-800 mb-2">Frontend Developer</h3>
+                <p class="text-slate-600 text-sm mb-4">HTML, CSS, JavaScript, React, Vue.js</p>
+                <div class="flex items-center justify-between text-sm text-slate-500">
+                    <span class="flex items-center gap-1">
+                        <span class="material-symbols-outlined text-base">quiz</span>
+                        45 Questions
+                    </span>
+                    <span class="flex items-center gap-1">
+                        <span class="material-symbols-outlined text-base">timer</span>
+                        60 Min
+                    </span>
+                </div>
+                <div class="mt-4 pt-4 border-t border-slate-200">
+                    <div class="flex items-center gap-2">
+                        <div class="w-2 h-2 bg-green-500 rounded-full"></div>
+                        <span class="text-xs text-slate-500">Available</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Backend Developer Role -->
+            <div onclick="startRoleTest('backend')" class="enterprise-card rounded-xl p-6 cursor-pointer hover:border-blue-300 group">
+                <div class="w-16 h-16 bg-gradient-to-br from-green-500 to-green-600 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                    <span class="material-symbols-outlined text-white text-2xl">dns</span>
+                </div>
+                <h3 class="text-xl font-bold text-slate-800 mb-2">Backend Developer</h3>
+                <p class="text-slate-600 text-sm mb-4">Python, Java, Node.js, Databases, APIs</p>
+                <div class="flex items-center justify-between text-sm text-slate-500">
+                    <span class="flex items-center gap-1">
+                        <span class="material-symbols-outlined text-base">quiz</span>
+                        50 Questions
+                    </span>
+                    <span class="flex items-center gap-1">
+                        <span class="material-symbols-outlined text-base">timer</span>
+                        75 Min
+                    </span>
+                </div>
+                <div class="mt-4 pt-4 border-t border-slate-200">
+                    <div class="flex items-center gap-2">
+                        <div class="w-2 h-2 bg-green-500 rounded-full"></div>
+                        <span class="text-xs text-slate-500">Available</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- DevOps Engineer Role -->
+            <div onclick="startRoleTest('devops')" class="enterprise-card rounded-xl p-6 cursor-pointer hover:border-blue-300 group">
+                <div class="w-16 h-16 bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                    <span class="material-symbols-outlined text-white text-2xl">cloud</span>
+                </div>
+                <h3 class="text-xl font-bold text-slate-800 mb-2">DevOps Engineer</h3>
+                <p class="text-slate-600 text-sm mb-4">Docker, Kubernetes, CI/CD, AWS, Azure</p>
+                <div class="flex items-center justify-between text-sm text-slate-500">
+                    <span class="flex items-center gap-1">
+                        <span class="material-symbols-outlined text-base">quiz</span>
+                        40 Questions
+                    </span>
+                    <span class="flex items-center gap-1">
+                        <span class="material-symbols-outlined text-base">timer</span>
+                        45 Min
+                    </span>
+                </div>
+                <div class="mt-4 pt-4 border-t border-slate-200">
+                    <div class="flex items-center gap-2">
+                        <div class="w-2 h-2 bg-green-500 rounded-full"></div>
+                        <span class="text-xs text-slate-500">Available</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Data Scientist Role -->
+            <div onclick="startRoleTest('datascience')" class="enterprise-card rounded-xl p-6 cursor-pointer hover:border-blue-300 group">
+                <div class="w-16 h-16 bg-gradient-to-br from-orange-500 to-orange-600 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                    <span class="material-symbols-outlined text-white text-2xl">analytics</span>
+                </div>
+                <h3 class="text-xl font-bold text-slate-800 mb-2">Data Scientist</h3>
+                <p class="text-slate-600 text-sm mb-4">Python, ML, Statistics, Data Analysis</p>
+                <div class="flex items-center justify-between text-sm text-slate-500">
+                    <span class="flex items-center gap-1">
+                        <span class="material-symbols-outlined text-base">quiz</span>
+                        45 Questions
+                    </span>
+                    <span class="flex items-center gap-1">
+                        <span class="material-symbols-outlined text-base">timer</span>
+                        60 Min
+                    </span>
+                </div>
+                <div class="mt-4 pt-4 border-t border-slate-200">
+                    <div class="flex items-center gap-2">
+                        <div class="w-2 h-2 bg-green-500 rounded-full"></div>
+                        <span class="text-xs text-slate-500">Available</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Language-Based Tests (Hidden by default) -->
+    <div id="language-tests" class="space-y-6 hidden">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <!-- Python Language -->
+            <div onclick="startLanguageTest('python')" class="enterprise-card rounded-xl p-6 cursor-pointer hover:border-blue-300 group">
+                <div class="w-16 h-16 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                    <span class="material-symbols-outlined text-white text-2xl">code</span>
+                </div>
+                <h3 class="text-xl font-bold text-slate-800 mb-2">Python</h3>
+                <p class="text-slate-600 text-sm mb-4">Core Python, Django, Flask, NumPy</p>
+                <div class="flex items-center justify-between text-sm text-slate-500">
+                    <span class="flex items-center gap-1">
+                        <span class="material-symbols-outlined text-base">quiz</span>
+                        50 Questions
+                    </span>
+                    <span class="flex items-center gap-1">
+                        <span class="material-symbols-outlined text-base">timer</span>
+                        45 Min
+                    </span>
+                </div>
+                <div class="mt-4 pt-4 border-t border-slate-200">
+                    <div class="flex items-center gap-2">
+                        <div class="w-2 h-2 bg-green-500 rounded-full"></div>
+                        <span class="text-xs text-slate-500">Available</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Java Language -->
+            <div onclick="startLanguageTest('java')" class="enterprise-card rounded-xl p-6 cursor-pointer hover:border-blue-300 group">
+                <div class="w-16 h-16 bg-gradient-to-br from-red-500 to-red-600 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                    <span class="material-symbols-outlined text-white text-2xl">coffee</span>
+                </div>
+                <h3 class="text-xl font-bold text-slate-800 mb-2">Java</h3>
+                <p class="text-slate-600 text-sm mb-4">Core Java, Spring, Hibernate, JUnit</p>
+                <div class="flex items-center justify-between text-sm text-slate-500">
+                    <span class="flex items-center gap-1">
+                        <span class="material-symbols-outlined text-base">quiz</span>
+                        50 Questions
+                    </span>
+                    <span class="flex items-center gap-1">
+                        <span class="material-symbols-outlined text-base">timer</span>
+                        50 Min
+                    </span>
+                </div>
+                <div class="mt-4 pt-4 border-t border-slate-200">
+                    <div class="flex items-center gap-2">
+                        <div class="w-2 h-2 bg-green-500 rounded-full"></div>
+                        <span class="text-xs text-slate-500">Available</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- JavaScript Language -->
+            <div onclick="startLanguageTest('javascript')" class="enterprise-card rounded-xl p-6 cursor-pointer hover:border-blue-300 group">
+                <div class="w-16 h-16 bg-gradient-to-br from-yellow-500 to-yellow-600 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                    <span class="material-symbols-outlined text-white text-2xl">javascript</span>
+                </div>
+                <h3 class="text-xl font-bold text-slate-800 mb-2">JavaScript</h3>
+                <p class="text-slate-600 text-sm mb-4">ES6+, Node.js, React, Vue.js, TypeScript</p>
+                <div class="flex items-center justify-between text-sm text-slate-500">
+                    <span class="flex items-center gap-1">
+                        <span class="material-symbols-outlined text-base">quiz</span>
+                        50 Questions
+                    </span>
+                    <span class="flex items-center gap-1">
+                        <span class="material-symbols-outlined text-base">timer</span>
+                        45 Min
+                    </span>
+                </div>
+                <div class="mt-4 pt-4 border-t border-slate-200">
+                    <div class="flex items-center gap-2">
+                        <div class="w-2 h-2 bg-green-500 rounded-full"></div>
+                        <span class="text-xs text-slate-500">Available</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- C++ Language -->
+            <div onclick="startLanguageTest('cpp')" class="enterprise-card rounded-xl p-6 cursor-pointer hover:border-blue-300 group">
+                <div class="w-16 h-16 bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                    <span class="material-symbols-outlined text-white text-2xl">memory</span>
+                </div>
+                <h3 class="text-xl font-bold text-slate-800 mb-2">C++</h3>
+                <p class="text-slate-600 text-sm mb-4">Core C++, STL, OOP, Memory Management</p>
+                <div class="flex items-center justify-between text-sm text-slate-500">
+                    <span class="flex items-center gap-1">
+                        <span class="material-symbols-outlined text-base">quiz</span>
+                        50 Questions
+                    </span>
+                    <span class="flex items-center gap-1">
+                        <span class="material-symbols-outlined text-base">timer</span>
+                        60 Min
+                    </span>
+                </div>
+                <div class="mt-4 pt-4 border-t border-slate-200">
+                    <div class="flex items-center gap-2">
+                        <div class="w-2 h-2 bg-green-500 rounded-full"></div>
+                        <span class="text-xs text-slate-500">Available</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Statistics Section -->
+    <div class="enterprise-card rounded-xl p-6">
+        <h3 class="text-xl font-bold text-slate-800 mb-6">Test Statistics</h3>
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+            <div class="text-center">
+                <div class="text-3xl font-bold text-blue-600 mb-2">8</div>
+                <div class="text-sm text-slate-500">Total Tests Available</div>
+            </div>
+            <div class="text-center">
+                <div class="text-3xl font-bold text-green-600 mb-2">400+</div>
+                <div class="text-sm text-slate-500">Questions in Bank</div>
+            </div>
+            <div class="text-center">
+                <div class="text-3xl font-bold text-purple-600 mb-2">45-75</div>
+                <div class="text-sm text-slate-500">Minutes Duration</div>
+            </div>
+            <div class="text-center">
+                <div class="text-3xl font-bold text-orange-600 mb-2">24/7</div>
+                <div class="text-sm text-slate-500">Available</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Recent Test History -->
+    <div class="enterprise-card rounded-xl p-6">
+        <div class="flex items-center justify-between mb-6">
+            <h3 class="text-xl font-bold text-slate-800">Recent Test History</h3>
+            <button class="text-blue-600 hover:text-blue-700 font-medium text-sm">View All</button>
+        </div>
+        <div class="space-y-4">
+            <div class="flex items-center justify-between p-4 bg-slate-50 rounded-lg">
+                <div class="flex items-center gap-4">
+                    <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
+                        <span class="material-symbols-outlined text-blue-600">code</span>
+                    </div>
+                    <div>
+                        <div class="font-medium text-slate-800">Python Programming</div>
+                        <div class="text-sm text-slate-500">Completed 2 days ago</div>
+                    </div>
+                </div>
+                <div class="text-right">
+                    <div class="text-lg font-bold text-green-600">85%</div>
+                    <div class="text-sm text-slate-500">Score</div>
+                </div>
+            </div>
+            <div class="flex items-center justify-between p-4 bg-slate-50 rounded-lg">
+                <div class="flex items-center gap-4">
+                    <div class="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
+                        <span class="material-symbols-outlined text-green-600">dns</span>
+                    </div>
+                    <div>
+                        <div class="font-medium text-slate-800">Backend Developer</div>
+                        <div class="text-sm text-slate-500">Completed 5 days ago</div>
+                    </div>
+                </div>
+                <div class="text-right">
+                    <div class="text-lg font-bold text-yellow-600">72%</div>
+                    <div class="text-sm text-slate-500">Score</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+function switchTestType(type) {
+    const roleTab = document.getElementById('role-tab');
+    const languageTab = document.getElementById('language-tab');
+    const roleTests = document.getElementById('role-tests');
+    const languageTests = document.getElementById('language-tests');
+    
+    if (type === 'role') {
+        // Show role-based tests
+        roleTab.className = 'px-4 py-2 bg-blue-600 text-white rounded-lg font-medium transition-all';
+        languageTab.className = 'px-4 py-2 bg-slate-200 text-slate-600 rounded-lg font-medium transition-all hover:bg-slate-300';
+        roleTests.classList.remove('hidden');
+        languageTests.classList.add('hidden');
+    } else {
+        // Show language-based tests
+        languageTab.className = 'px-4 py-2 bg-blue-600 text-white rounded-lg font-medium transition-all';
+        roleTab.className = 'px-4 py-2 bg-slate-200 text-slate-600 rounded-lg font-medium transition-all hover:bg-slate-300';
+        languageTests.classList.remove('hidden');
+        roleTests.classList.add('hidden');
+    }
+}
+
+function startRoleTest(role) {
+    // Store test type and redirect
+    sessionStorage.setItem('testType', 'role');
+    sessionStorage.setItem('testRole', role);
+    
+    // Redirect to appropriate test based on role
+    switch(role) {
+        case 'frontend':
+            window.location.href = '/users/python-test-dashboard/'; // For now, redirect to Python test
+            break;
+        case 'backend':
+            window.location.href = '/users/python-test-dashboard/';
+            break;
+        case 'devops':
+            window.location.href = '/users/python-test-dashboard/';
+            break;
+        case 'datascience':
+            window.location.href = '/users/python-test-dashboard/';
+            break;
+        default:
+            window.location.href = '/users/python-test-dashboard/';
+    }
+}
+
+function startLanguageTest(language) {
+    // Store test type and redirect
+    sessionStorage.setItem('testType', 'language');
+    sessionStorage.setItem('testLanguage', language);
+    
+    // Redirect to appropriate test based on language
+    switch(language) {
+        case 'python':
+            window.location.href = '/users/python-test-dashboard/';
+            break;
+        case 'java':
+            window.location.href = '/users/python-test-dashboard/';
+            break;
+        case 'javascript':
+            window.location.href = '/users/python-test-dashboard/';
+            break;
+        case 'cpp':
+            window.location.href = '/users/python-test-dashboard/';
+            break;
+        default:
+            window.location.href = '/users/python-test-dashboard/';
+    }
+}
+
+// Initialize page
+document.addEventListener('DOMContentLoaded', function() {
+    // Role-based tests are shown by default
+    switchTestType('role');
+});
+</script>
+{% endblock %}

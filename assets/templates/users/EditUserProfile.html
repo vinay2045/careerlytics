@@ -1,0 +1,132 @@
+{% extends 'users/user_tailwind_base.html' %}
+{% load static %}
+
+{% block title %}Careerlytics | Edit Profile{% endblock %}
+
+{% block contents %}
+<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div class="space-y-8">
+        <!-- Page Title -->
+        <div class="flex justify-between items-end">
+            <div>
+                <h2 class="text-4xl font-black text-gray-900 dark:text-white tracking-tight">Edit <span class="text-blue-600 dark:text-blue-400">Profile</span></h2>
+                <p class="text-gray-500 dark:text-gray-400 font-mono text-sm mt-2 uppercase tracking-widest">MODIFY ACCOUNT DETAILS</p>
+            </div>
+            <div class="flex space-x-4">
+                <a href="{% url 'users:UserProfile' %}" class="px-4 py-2 card rounded-lg flex items-center space-x-3 text-decoration-none">
+                    <span class="material-symbols-outlined text-gray-400 dark:text-gray-300 text-lg">arrow_back</span>
+                    <span class="text-xs font-mono font-bold text-gray-700 dark:text-gray-200">Back to Profile</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- Edit Form -->
+        <div class="card rounded-2xl p-8 bg-white dark:bg-gray-800 shadow-lg border border-slate-200 dark:border-gray-700">
+            <form method="POST" enctype="multipart/form-data" class="space-y-6">
+                {% csrf_token %}
+                
+                <!-- Profile Picture Section -->
+                <div class="flex items-center space-x-6 pb-6 border-b border-gray-200 dark:border-gray-600">
+                    <div class="relative">
+                        {% if user.pic %}
+                        <img src="{{ user.pic.url }}" alt="Profile" class="w-24 h-24 rounded-full border-4 border-gray-100 dark:border-gray-600 object-cover">
+                        {% else %}
+                        <div class="w-24 h-24 rounded-full border-4 border-gray-100 dark:border-gray-600 bg-gray-50 dark:bg-gray-700 flex items-center justify-center text-gray-400 dark:text-gray-300">
+                            <span class="material-symbols-outlined text-4xl">person</span>
+                        </div>
+                        {% endif %}
+                        <div class="absolute bottom-0 right-0 w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center border-2 border-white dark:border-gray-900">
+                            <span class="material-symbols-outlined text-white text-lg">camera_alt</span>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-1">Profile Picture</h3>
+                        <p class="text-sm text-gray-500 dark:text-gray-400 mb-3">Upload a new profile picture</p>
+                        <input type="file" name="pic" class="text-sm text-gray-500 dark:text-gray-400
+                            file:mr-4 file:py-2 file:px-4
+                            file:rounded-full file:border-0
+                            file:text-xs file:font-bold
+                            file:bg-blue-50 file:text-blue-700
+                            hover:file:bg-blue-100
+                            dark:file:bg-gray-700 dark:file:text-blue-400">
+                    </div>
+                </div>
+
+                <!-- Personal Info -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-6">
+                    <div class="space-y-2">
+                        <label class="text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-widest">Full Name</label>
+                        <input type="text" name="name" value="{{ user.name }}" class="w-full px-4 py-3 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-blue-500 dark:text-white">
+                    </div>
+                    <div class="space-y-2">
+                        <label class="text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-widest">Email Address</label>
+                        <input type="email" name="email" value="{{ user.email }}" class="w-full px-4 py-3 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-blue-500 dark:text-white">
+                    </div>
+                    <div class="space-y-2">
+                        <label class="text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-widest">Phone Number</label>
+                        <input type="text" name="phno" value="{{ user.phno }}" class="w-full px-4 py-3 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-blue-500 dark:text-white">
+                    </div>
+                    <div class="space-y-2">
+                        <label class="text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-widest">Branch</label>
+                        <select name="branch" class="w-full px-4 py-3 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-blue-500 dark:text-white">
+                            <option value="">Select Branch</option>
+                            <option value="B.Tech CSE" {% if user.branch == "B.Tech CSE" %}selected{% endif %}>B.Tech CSE</option>
+                            <option value="B.Tech ECE" {% if user.branch == "B.Tech ECE" %}selected{% endif %}>B.Tech ECE</option>
+                            <option value="B.Tech EEE" {% if user.branch == "B.Tech EEE" %}selected{% endif %}>B.Tech EEE</option>
+                            <option value="B.Tech MECH" {% if user.branch == "B.Tech MECH" %}selected{% endif %}>B.Tech MECH</option>
+                            <option value="B.Tech CIVIL" {% if user.branch == "B.Tech CIVIL" %}selected{% endif %}>B.Tech CIVIL</option>
+                            <option value="B.Tech IT" {% if user.branch == "B.Tech IT" %}selected{% endif %}>B.Tech IT</option>
+                            <option value="BCA" {% if user.branch == "BCA" %}selected{% endif %}>BCA</option>
+                            <option value="MCA" {% if user.branch == "MCA" %}selected{% endif %}>MCA</option>
+                            <option value="M.Sc Computer Science" {% if user.branch == "M.Sc Computer Science" %}selected{% endif %}>M.Sc Computer Science</option>
+                            <option value="Other" {% if user.branch == "Other" %}selected{% endif %}>Other</option>
+                        </select>
+                    </div>
+                    <div class="space-y-2">
+                        <label class="text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-widest">Year of Passing</label>
+                        <input type="text" name="year_of_passing" value="{{ user.year_of_passing }}" class="w-full px-4 py-3 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-blue-500 dark:text-white">
+                    </div>
+                    <div class="space-y-2">
+                        <label class="text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-widest">CGPA</label>
+                        <input type="text" name="cgpa" value="{{ user.cgpa }}" class="w-full px-4 py-3 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-blue-500 dark:text-white">
+                    </div>
+                </div>
+
+                <!-- Resume Upload Section -->
+                <div class="pt-6 border-t border-gray-200 dark:border-gray-600">
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Resume & Documents</h3>
+                    <div class="space-y-2">
+                        <label class="text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-widest">Upload New Resume (PDF Only)</label>
+                        <input type="file" name="resume" class="w-full px-4 py-3 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-blue-500 dark:text-white">
+                        {% if user.resume %}
+                        <p class="text-xs text-blue-600 dark:text-blue-400 font-medium mt-2">Current Resume: {{ user.resume.name|cut:"/"|last }}</p>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <!-- Submit Buttons -->
+                <div class="flex justify-end space-x-4 pt-8">
+                    <a href="{% url 'users:UserProfile' %}" class="px-6 py-3 rounded-xl border border-gray-200 dark:border-gray-600 text-gray-700 dark:text-gray-200 font-bold hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors text-decoration-none">
+                        Cancel
+                    </a>
+                    <button type="submit" class="px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl shadow-lg shadow-blue-500/30 transition-all active:scale-95">
+                        Save Changes
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    .glow-effect {
+        animation: glow 2s ease-in-out infinite alternate;
+    }
+    @keyframes glow {
+        from { box-shadow: 0 0 10px #3b82f6; }
+        to { box-shadow: 0 0 20px #3b82f6, 0 0 30px #3b82f6; }
+    }
+</style>
+{% endblock %}

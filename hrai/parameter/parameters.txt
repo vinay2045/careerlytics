@@ -1,0 +1,52 @@
+Communication & Expression (30%)
+
+| Parameter    | What AI Measures                           |
+| ------------ | ------------------------------------------ |
+| Clarity      | Are thoughts logically structured?         |
+| Fluency      | Smooth speaking without long pauses        |
+| Vocabulary   | Professional and role-appropriate language |
+| Grammar      | Sentence correctness                       |
+| Articulation | Easy to understand pronunciation           |
+| Conciseness  | Not too long, not too short                |
+
+Confidence & Presence (20%)
+
+| Parameter              | What AI Measures                    |
+| ---------------------- | ----------------------------------- |
+| Confidence             | Hesitation, filler words, certainty |
+| Tone Stability         | Calm vs nervous                     |
+| Eye-contact (if video) | Looking at camera                   |
+| Answer Certainty       | No self-contradiction               |
+| Assertiveness          | Not too passive                     |
+
+Thinking & Problem Solving (25%)
+
+| Parameter         | What AI Measures            |
+| ----------------- | --------------------------- |
+| Logical Flow      | Situation → Action → Result |
+| Critical Thinking | Reasoned answers            |
+| Decision Making   | Clear choices               |
+| Creativity        | Original thinking           |
+| Stress Handling   | Quality under time pressure |
+
+Professional & Role Fit (25%)
+
+| Parameter            | What AI Measures        |
+| -------------------- | ----------------------- |
+| Professionalism      | Formal tone, no slang   |
+| Honesty              | Consistency with resume |
+| Role Motivation      | Why this job            |
+| Culture Fit          | Team, ethics, attitude  |
+| Leadership Potential | Ownership & initiative  |
+
+HR Total Score Formula
+
+HR Score =
+0.30 × Communication
+0.20 × Confidence
+0.25 × Thinking
+0.25 × RoleFit
+
+
+
+

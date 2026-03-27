@@ -1,0 +1,452 @@
+[
+    {
+        "id": "java_001",
+        "category": "java",
+        "difficulty": "easy",
+        "question_text": "Which keyword is used to define a constant in Java?",
+        "options": [
+            "const",
+            "final",
+            "static",
+            "immutable"
+        ],
+        "correct_answer": 1,
+        "explanation": "The 'final' keyword is used in Java to define constants. Once a variable is declared as final, its value cannot be changed.",
+        "tags": ["java", "keyword", "constant"]
+    },
+    {
+        "id": "java_002",
+        "category": "java",
+        "difficulty": "easy",
+        "question_text": "What is the default value of a boolean variable in Java?",
+        "options": [
+            "true",
+            "false",
+            "null",
+            "0"
+        ],
+        "correct_answer": 1,
+        "explanation": "The default value of a boolean variable in Java is 'false'. All instance variables are initialized with default values.",
+        "tags": ["java", "boolean", "default-value"]
+    },
+    {
+        "id": "java_003",
+        "category": "java",
+        "difficulty": "easy",
+        "question_text": "Which method is used to get the length of a string in Java?",
+        "options": [
+            "length()",
+            "size()",
+            "count()",
+            "getLength()"
+        ],
+        "correct_answer": 0,
+        "explanation": "The length() method is used to get the number of characters in a Java String object.",
+        "tags": ["java", "string", "method"]
+    },
+    {
+        "id": "java_004",
+        "category": "java",
+        "difficulty": "medium",
+        "question_text": "What is the purpose of the 'static' keyword?",
+        "options": [
+            "Make method thread-safe",
+            "Define class-level member",
+            "Prevent inheritance",
+            "Create abstract method"
+        ],
+        "correct_answer": 1,
+        "explanation": "The 'static' keyword is used to define class-level members (variables and methods) that belong to the class rather than instances.",
+        "tags": ["java", "static", "class-member"]
+    },
+    {
+        "id": "java_005",
+        "category": "java",
+        "difficulty": "medium",
+        "question_text": "Which interface is used to compare objects for sorting?",
+        "options": [
+            "Comparable",
+            "Comparator",
+            "Sortable",
+            "Orderable"
+        ],
+        "correct_answer": 0,
+        "explanation": "The Comparable interface provides the compareTo() method for natural ordering of objects, used by sorting algorithms.",
+        "tags": ["java", "interface", "sorting", "comparable"]
+    },
+    {
+        "id": "java_006",
+        "category": "java",
+        "difficulty": "easy",
+        "question_text": "What is Java's automatic memory management called?",
+        "options": [
+            "Garbage Collection",
+            "Memory Management",
+            "Auto Cleanup",
+            "Resource Management"
+        ],
+        "correct_answer": 0,
+        "explanation": "Java's automatic memory management is called Garbage Collection, which automatically reclaims memory from objects that are no longer referenced.",
+        "tags": ["java", "memory", "garbage-collection"]
+    },
+    {
+        "id": "java_007",
+        "category": "java",
+        "difficulty": "medium",
+        "question_text": "Which access modifier provides the most restrictive access?",
+        "options": [
+            "public",
+            "protected",
+            "private",
+            "default"
+        ],
+        "correct_answer": 2,
+        "explanation": "The 'private' access modifier provides the most restrictive access, limiting visibility to only within the same class.",
+        "tags": ["java", "access-modifier", "visibility"]
+    },
+    {
+        "id": "java_008",
+        "category": "java",
+        "difficulty": "medium",
+        "question_text": "What is the superclass of all classes in Java?",
+        "options": [
+            "Object",
+            "Class",
+            "Base",
+            "Super"
+        ],
+        "correct_answer": 0,
+        "explanation": "The Object class is the superclass of all classes in Java. Every class implicitly extends Object.",
+        "tags": ["java", "inheritance", "object-class"]
+    },
+    {
+        "id": "java_009",
+        "category": "java",
+        "difficulty": "medium",
+        "question_text": "Which keyword is used to inherit a class in Java?",
+        "options": [
+            "extends",
+            "implements",
+            "inherits",
+            "super"
+        ],
+        "correct_answer": 0,
+        "explanation": "The 'extends' keyword is used to inherit from a parent class in Java, creating a subclass-superclass relationship.",
+        "tags": ["java", "inheritance", "extends"]
+    },
+    {
+        "id": "java_010",
+        "category": "java",
+        "difficulty": "hard",
+        "question_text": "What is method overriding in Java?",
+        "options": [
+            "Redefining a method in subclass",
+            "Creating multiple methods with same name",
+            "Hiding a method in subclass",
+            "Creating abstract method"
+        ],
+        "correct_answer": 0,
+        "explanation": "Method overriding is when a subclass provides a specific implementation for a method that is already defined in its superclass.",
+        "tags": ["java", "polymorphism", "overriding"]
+    },
+    {
+        "id": "java_011",
+        "category": "java",
+        "difficulty": "easy",
+        "question_text": "What is the size of int in Java?",
+        "options": [
+            "16 bits",
+            "32 bits",
+            "64 bits",
+            "8 bits"
+        ],
+        "correct_answer": 1,
+        "explanation": "In Java, int is a 32-bit signed integer that can hold values from -2,147,483,648 to 2,147,483,647.",
+        "tags": ["java", "primitive-types", "int", "data-types"]
+    },
+    {
+        "id": "java_012",
+        "category": "java",
+        "difficulty": "easy",
+        "question_text": "Which method is used to compare strings in Java?",
+        "options": [
+            "==",
+            "equals()",
+            "compare()",
+            "strcmp()"
+        ],
+        "correct_answer": 1,
+        "explanation": "The equals() method is used to compare the content of strings in Java, while == compares object references.",
+        "tags": ["java", "string", "equals", "comparison"]
+    },
+    {
+        "id": "java_013",
+        "category": "java",
+        "difficulty": "easy",
+        "question_text": "What is the entry point of a Java application?",
+        "options": [
+            "public void main()",
+            "public static void main()",
+            "static void main()",
+            "public static main()"
+        ],
+        "correct_answer": 1,
+        "explanation": "The main method with signature 'public static void main(String[] args)' is the entry point of a Java application.",
+        "tags": ["java", "main-method", "entry-point", "methods"]
+    },
+    {
+        "id": "java_014",
+        "category": "java",
+        "difficulty": "easy",
+        "question_text": "Which keyword is used to create an object in Java?",
+        "options": [
+            "new",
+            "create",
+            "object",
+            "make"
+        ],
+        "correct_answer": 0,
+        "explanation": "The 'new' keyword is used to create an instance of a class in Java.",
+        "tags": ["java", "new", "object-creation", "instantiation"]
+    },
+    {
+        "id": "java_015",
+        "category": "java",
+        "difficulty": "medium",
+        "question_text": "What is method overloading in Java?",
+        "options": [
+            "Multiple methods with same name but different parameters",
+            "Redefining a method in subclass",
+            "Creating abstract methods",
+            "Hiding a method"
+        ],
+        "correct_answer": 0,
+        "explanation": "Method overloading allows multiple methods with the same name but different parameter lists in the same class.",
+        "tags": ["java", "overloading", "polymorphism", "methods"]
+    },
+    {
+        "id": "java_016",
+        "category": "java",
+        "difficulty": "medium",
+        "question_text": "Which interface is used to iterate over collections?",
+        "options": [
+            "Iterator",
+            "Iterable",
+            "Enumeration",
+            "Loop"
+        ],
+        "correct_answer": 0,
+        "explanation": "The Iterator interface provides methods to iterate over collections, including hasNext(), next(), and remove().",
+        "tags": ["java", "iterator", "collections", "iteration"]
+    },
+    {
+        "id": "java_017",
+        "category": "java",
+        "difficulty": "medium",
+        "question_text": "What is the purpose of the 'this' keyword?",
+        "options": [
+            "Reference to current object",
+            "Reference to parent class",
+            "Reference to static method",
+            "Reference to constructor"
+        ],
+        "correct_answer": 0,
+        "explanation": "The 'this' keyword refers to the current instance of the class, allowing access to its members and methods.",
+        "tags": ["java", "this", "object-reference", "instance"]
+    },
+    {
+        "id": "java_018",
+        "category": "java",
+        "difficulty": "medium",
+        "question_text": "Which collection class does not allow null values?",
+        "options": [
+            "ArrayList",
+            "LinkedList",
+            "Hashtable",
+            "Vector"
+        ],
+        "correct_answer": 2,
+        "explanation": "Hashtable does not allow null keys or null values, while HashMap allows one null key and multiple null values.",
+        "tags": ["java", "hashtable", "collections", "null-values"]
+    },
+    {
+        "id": "java_019",
+        "category": "java",
+        "difficulty": "medium",
+        "question_text": "What is the default value of a local variable in Java?",
+        "options": [
+            "0",
+            "null",
+            "false",
+            "No default value"
+        ],
+        "correct_answer": 3,
+        "explanation": "Local variables in Java do not have default values and must be explicitly initialized before use.",
+        "tags": ["java", "local-variables", "default-values", "variables"]
+    },
+    {
+        "id": "java_020",
+        "category": "java",
+        "difficulty": "hard",
+        "question_text": "What is the difference between abstract class and interface?",
+        "options": [
+            "Interface can have constructors, abstract class cannot",
+            "Abstract class can have instance variables, interface cannot",
+            "Interface can extend multiple classes, abstract class cannot",
+            "No difference"
+        ],
+        "correct_answer": 1,
+        "explanation": "Abstract classes can have instance variables and constructors, while interfaces (before Java 8) could only have constants and abstract methods.",
+        "tags": ["java", "abstract-class", "interface", "oop"]
+    },
+    {
+        "id": "java_021",
+        "category": "java",
+        "difficulty": "hard",
+        "question_text": "What is the purpose of the 'super' keyword?",
+        "options": [
+            "Call parent class constructor",
+            "Reference to parent class members",
+            "Both of the above",
+            "Create super object"
+        ],
+        "correct_answer": 2,
+        "explanation": "The 'super' keyword can be used to call parent class constructors and to reference parent class members.",
+        "tags": ["java", "super", "inheritance", "parent-class"]
+    },
+    {
+        "id": "java_022",
+        "category": "java",
+        "difficulty": "hard",
+        "question_text": "What is a Java package?",
+        "options": [
+            "Collection of related classes",
+            "Archive file",
+            "Library dependency",
+            "Build tool"
+        ],
+        "correct_answer": 0,
+        "explanation": "A Java package is a namespace that organizes a set of related classes and interfaces.",
+        "tags": ["java", "package", "namespace", "organization"]
+    },
+    {
+        "id": "java_023",
+        "category": "java",
+        "difficulty": "hard",
+        "question_text": "What is the difference between == and equals()?",
+        "options": [
+            "== compares references, equals() compares content",
+            "== compares content, equals() compares references",
+            "Both compare the same thing",
+            "== is for primitives, equals() is for objects"
+        ],
+        "correct_answer": 0,
+        "explanation": "== compares object references (memory addresses), while equals() compares the actual content of objects.",
+        "tags": ["java", "equals", "comparison", "object-reference"]
+    },
+    {
+        "id": "java_024",
+        "category": "java",
+        "difficulty": "hard",
+        "question_text": "What is the purpose of the 'finally' block?",
+        "options": [
+            "Always executed code",
+            "Exception handling only",
+            "Loop control",
+            "Method definition"
+        ],
+        "correct_answer": 0,
+        "explanation": "The finally block is always executed whether an exception is thrown or not, used for cleanup operations.",
+        "tags": ["java", "finally", "exception-handling", "try-catch-finally"]
+    },
+    {
+        "id": "java_025",
+        "category": "java",
+        "difficulty": "medium",
+        "question_text": "Which method is used to get the size of an ArrayList?",
+        "options": [
+            "size()",
+            "length()",
+            "getSize()",
+            "count()"
+        ],
+        "correct_answer": 0,
+        "explanation": "The size() method returns the number of elements in an ArrayList.",
+        "tags": ["java", "arraylist", "size", "collections"]
+    },
+    {
+        "id": "java_026",
+        "category": "java",
+        "difficulty": "medium",
+        "question_text": "What is the purpose of the 'transient' keyword?",
+        "options": [
+            "Skip serialization",
+            "Make variable constant",
+            "Define abstract method",
+            "Create thread-safe code"
+        ],
+        "correct_answer": 0,
+        "explanation": "The 'transient' keyword indicates that a field should not be serialized when the object is converted to a byte stream.",
+        "tags": ["java", "transient", "serialization", "keywords"]
+    },
+    {
+        "id": "java_027",
+        "category": "java",
+        "difficulty": "medium",
+        "question_text": "Which interface is used for sorting custom objects?",
+        "options": [
+            "Comparator",
+            "Comparable",
+            "Sortable",
+            "Orderable"
+        ],
+        "correct_answer": 1,
+        "explanation": "The Comparable interface provides natural ordering for objects through the compareTo() method.",
+        "tags": ["java", "comparable", "sorting", "custom-objects"]
+    },
+    {
+        "id": "java_028",
+        "category": "java",
+        "difficulty": "easy",
+        "question_text": "What is the size of byte in Java?",
+        "options": [
+            "4 bits",
+            "8 bits",
+            "16 bits",
+            "32 bits"
+        ],
+        "correct_answer": 1,
+        "explanation": "In Java, byte is an 8-bit signed integer that can hold values from -128 to 127.",
+        "tags": ["java", "byte", "primitive-types", "data-types"]
+    },
+    {
+        "id": "java_029",
+        "category": "java",
+        "difficulty": "easy",
+        "question_text": "Which keyword is used to prevent method overriding?",
+        "options": [
+            "final",
+            "static",
+            "private",
+            "protected"
+        ],
+        "correct_answer": 0,
+        "explanation": "The 'final' keyword when applied to a method prevents it from being overridden in subclasses.",
+        "tags": ["java", "final", "method-overriding", "inheritance"]
+    },
+    {
+        "id": "java_030",
+        "category": "java",
+        "difficulty": "medium",
+        "question_text": "What is the purpose of the 'volatile' keyword?",
+        "options": [
+            "Thread-safe variable access",
+            "Constant variable",
+            "Abstract method",
+            "Static variable"
+        ],
+        "correct_answer": 0,
+        "explanation": "The 'volatile' keyword ensures that multiple threads handle the variable correctly when it's being modified.",
+        "tags": ["java", "volatile", "threading", "concurrency"]
+    }
+]

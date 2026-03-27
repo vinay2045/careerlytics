@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Readiness Test Result</title>
+  <style>
+    body { font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif; margin: 0; padding: 0; background: #f8fafc; color: #0f172a; }
+    .container { max-width: 800px; margin: 20px auto; background: #fff; border: 1px solid #e2e8f0; border-radius: 16px; box-shadow: 0 10px 30px rgba(2,6,23,0.05); overflow: hidden; width: calc(100% - 32px); }
+    .header { padding: 20px; border-bottom: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center; background: #f1f5f9; flex-wrap: wrap; gap: 12px; }
+    .title { font-size: 18px; font-weight: 700; }
+    .badge { font-size: 10px; padding: 4px 10px; border-radius: 999px; background: #22c55e; color: #064e3b; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; }
+    .content { padding: 20px; }
+    .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+    @media (max-width: 480px) {
+      .grid { grid-template-columns: 1fr; }
+      .header { flex-direction: column; align-items: flex-start; }
+      .title { font-size: 16px; }
+    }
+    .card { border: 1px solid #e2e8f0; border-radius: 12px; padding: 16px; transition: transform 0.2s; }
+    .card:hover { transform: translateY(-2px); border-color: #0ea5e9; }
+    .label { font-size: 10px; color: #475569; text-transform: uppercase; letter-spacing: .06em; font-weight: 700; margin-bottom: 4px; display: block; }
+    .value { font-size: 20px; font-weight: 800; color: #0ea5e9; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <div class="title">Readiness Test Result</div>
+      <span class="badge">Completed</span>
+    </div>
+    <div class="content">
+      <div class="grid">
+        <div class="card">
+          <div class="label">Score (%)</div>
+          <div class="value" id="score">--</div>
+        </div>
+        <div class="card">
+          <div class="label">Classification</div>
+          <div class="value" id="classif">--</div>
+        </div>
+        <div class="card">
+          <div class="label">Aptitude</div>
+          <div class="value" id="apt">--</div>
+        </div>
+        <div class="card">
+          <div class="label">Reasoning</div>
+          <div class="value" id="rea">--</div>
+        </div>
+        <div class="card">
+          <div class="label">English</div>
+          <div class="value" id="eng">--</div>
+        </div>
+        <div class="card">
+          <div class="label">Core</div>
+          <div class="value" id="core">--</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function parseQuery() {
+      const params = new URLSearchParams(window.location.search);
+      return { sid: params.get('sid'), tid: params.get('tid') };
+    }
+    async function loadResult() {
+      const { sid, tid } = parseQuery();
+      if (!sid || !tid) return;
+      const res = await fetch(`/radinesstest/results/${sid}_${tid}.json`);
+      if (!res.ok) return;
+      const data = await res.json();
+      document.getElementById('score').textContent = data.score_percentage + '%';
+      document.getElementById('classif').textContent = data.classification.replace('_', ' ').toUpperCase();
+      document.getElementById('apt').textContent = data.categories.aptitude.percentage + '%';
+      document.getElementById('rea').textContent = data.categories.reasoning.percentage + '%';
+      document.getElementById('eng').textContent = data.categories.english.percentage + '%';
+      document.getElementById('core').textContent = data.categories.core.percentage + '%';
+    }
+    loadResult();
+  </script>
+</body>
+</html>

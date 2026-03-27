@@ -1,0 +1,297 @@
+{% extends "users/user_tailwind_base.html" %}
+{% load static %}
+
+{% block title %}Weekly Test - {{ week_plan.skill_focus }}{% endblock %}
+
+{% block contents %}
+<div class="max-w-4xl mx-auto px-8 py-6">
+    <!-- Test Header -->
+    <div class="bg-gradient-to-r from-purple-600 to-blue-600 rounded-2xl p-6 mb-8 text-white">
+        <div class="text-center">
+            <h1 class="text-3xl font-bold mb-2">Week {{ week_plan.week_number }} Test</h1>
+            <p class="text-xl text-purple-100">{{ week_plan.skill_focus }}</p>
+            <p class="text-purple-200 mt-4">Test your knowledge and unlock the next week!</p>
+        </div>
+    </div>
+
+    <!-- Test Instructions -->
+    <div class="bg-white rounded-2xl p-8 mb-8 shadow-lg border border-gray-200">
+        <div class="mb-6">
+            <h2 class="text-2xl font-bold text-gray-800 mb-4">📝 Test Instructions</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="space-y-3">
+                    <div class="flex items-center">
+                        <span class="text-green-500 text-xl mr-3">📊</span>
+                        <div>
+                            <p class="font-semibold">30 Questions</p>
+                            <p class="text-sm text-gray-600">Comprehensive assessment</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center">
+                        <span class="text-blue-500 text-xl mr-3">⏱️</span>
+                        <div>
+                            <p class="font-semibold">45 Minutes</p>
+                            <p class="text-sm text-gray-600">Time limit</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="space-y-3">
+                    <div class="flex items-center">
+                        <span class="text-purple-500 text-xl mr-3">🎯</span>
+                        <div>
+                            <p class="font-semibold">70% to Pass</p>
+                            <p class="text-sm text-gray-600">Minimum score required</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center">
+                        <span class="text-orange-500 text-xl mr-3">🏆</span>
+                        <div>
+                            <p class="font-semibold">300 XP Reward</p>
+                            <p class="text-sm text-gray-600">For passing</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Test Topics Covered -->
+        <div class="bg-blue-50 rounded-xl p-6 mb-6">
+            <h3 class="text-lg font-bold text-blue-800 mb-4">Topics Covered</h3>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+                {% for topic in week_plan.topics.values %}
+                    <div class="bg-white rounded-lg p-3 text-center border border-blue-200">
+                        <span class="text-2xl">📚</span>
+                        <p class="text-sm font-medium text-gray-700 mt-1">{{ topic }}</p>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- Warning about Extra Days -->
+        {% if week_plan.extra_days_added > 0 %}
+            <div class="bg-yellow-50 border border-yellow-200 rounded-xl p-4 mb-6">
+                <div class="flex items-center">
+                    <span class="text-yellow-600 text-xl mr-3">⚠️</span>
+                    <div>
+                        <p class="font-semibold text-yellow-800">Extra Practice Days Added</p>
+                        <p class="text-sm text-yellow-700">{{ week_plan.extra_days_added }} additional days have been added to focus on weak areas from your previous attempt.</p>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+
+    <!-- Start Test Form -->
+    <form id="testForm" method="post" class="bg-white rounded-2xl p-8 shadow-lg border border-gray-200">
+        {% csrf_token %}
+        <div class="text-center mb-8">
+            <p class="text-lg text-gray-700 mb-6">Ready to test your knowledge?</p>
+            <button type="button" onclick="startTest()" 
+                    class="bg-gradient-to-r from-green-500 to-blue-600 text-white px-12 py-4 rounded-lg text-lg font-semibold hover:from-green-600 hover:to-blue-700 transition-all transform hover:scale-105 shadow-lg">
+                🚀 Start Test
+            </button>
+        </div>
+
+        <!-- Test Container (Hidden Initially) -->
+        <div id="testContainer" class="hidden">
+            <!-- Timer -->
+            <div class="bg-gray-100 rounded-xl p-4 mb-6 text-center">
+                <div class="text-3xl font-bold text-gray-800">
+                    <span id="timer">45:00</span>
+                </div>
+                <p class="text-gray-600">Time Remaining</p>
+            </div>
+
+            <!-- Progress Bar -->
+            <div class="mb-6">
+                <div class="flex justify-between text-sm text-gray-600 mb-2">
+                    <span>Progress</span>
+                    <span id="progressText">Question 1 of 30</span>
+                </div>
+                <div class="bg-gray-200 rounded-full h-3 overflow-hidden">
+                    <div id="progressBar" class="bg-gradient-to-r from-blue-500 to-purple-600 h-full rounded-full transition-all duration-300" style="width: 3.33%"></div>
+                </div>
+            </div>
+
+            <!-- Questions Container -->
+            <div id="questionsContainer" class="space-y-6">
+                <!-- Questions will be loaded here via JavaScript -->
+            </div>
+
+            <!-- Submit Button -->
+            <div class="text-center mt-8">
+                <button type="button" onclick="submitTest()" 
+                        class="bg-green-600 text-white px-8 py-3 rounded-lg text-lg font-semibold hover:bg-green-700 transition-colors">
+                    Submit Test
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<!-- Results Modal -->
+<div id="resultsModal" class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50">
+    <div class="bg-white rounded-2xl p-8 max-w-md mx-4 transform scale-95 transition-transform">
+        <div class="text-center">
+            <div id="resultIcon" class="text-6xl mb-4"></div>
+            <h3 id="resultTitle" class="text-2xl font-bold text-gray-800 mb-2"></h3>
+            <p id="resultMessage" class="text-gray-600 mb-6"></p>
+            <div id="resultScore" class="text-4xl font-bold mb-6"></div>
+            <button onclick="closeResultsModal()" 
+                    class="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors">
+                Continue
+            </button>
+        </div>
+    </div>
+</div>
+
+<script>
+let timer;
+let timeLeft = 45 * 60; // 45 minutes in seconds
+let currentQuestion = 1;
+let totalQuestions = 30;
+let answers = {};
+
+function startTest() {
+    document.getElementById('testContainer').classList.remove('hidden');
+    startTimer();
+    loadQuestions();
+}
+
+function startTimer() {
+    timer = setInterval(() => {
+        timeLeft--;
+        updateTimerDisplay();
+        
+        if (timeLeft <= 0) {
+            clearInterval(timer);
+            submitTest();
+        }
+    }, 1000);
+}
+
+function updateTimerDisplay() {
+    const minutes = Math.floor(timeLeft / 60);
+    const seconds = timeLeft % 60;
+    document.getElementById('timer').textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+}
+
+function loadQuestions() {
+    // TODO: Load actual questions from backend
+    // For now, show placeholder questions
+    const container = document.getElementById('questionsContainer');
+    container.innerHTML = `
+        <div class="bg-gray-50 rounded-xl p-6 border border-gray-200">
+            <h4 class="font-semibold text-lg mb-4">Question 1</h4>
+            <p class="text-gray-700 mb-4">What is the primary purpose of React hooks in modern web development?</p>
+            <div class="space-y-2">
+                <label class="flex items-center p-3 bg-white rounded-lg border border-gray-200 cursor-pointer hover:border-blue-500">
+                    <input type="radio" name="q1" value="a" class="mr-3">
+                    <span>To manage component state and side effects</span>
+                </label>
+                <label class="flex items-center p-3 bg-white rounded-lg border border-gray-200 cursor-pointer hover:border-blue-500">
+                    <input type="radio" name="q1" value="b" class="mr-3">
+                    <span>To improve application performance</span>
+                </label>
+                <label class="flex items-center p-3 bg-white rounded-lg border border-gray-200 cursor-pointer hover:border-blue-500">
+                    <input type="radio" name="q1" value="c" class="mr-3">
+                    <span>To handle routing and navigation</span>
+                </label>
+                <label class="flex items-center p-3 bg-white rounded-lg border border-gray-200 cursor-pointer hover:border-blue-500">
+                    <input type="radio" name="q1" value="d" class="mr-3">
+                    <span>To style components and CSS</span>
+                </label>
+            </div>
+        </div>
+    `;
+}
+
+function nextQuestion() {
+    if (currentQuestion < totalQuestions) {
+        currentQuestion++;
+        updateProgress();
+        loadQuestions(); // Load next question
+    }
+}
+
+function updateProgress() {
+    const progress = (currentQuestion / totalQuestions) * 100;
+    document.getElementById('progressBar').style.width = `${progress}%`;
+    document.getElementById('progressText').textContent = `Question ${currentQuestion} of ${totalQuestions}`;
+}
+
+function submitTest() {
+    clearInterval(timer);
+    
+    // Calculate score (mock calculation for demo)
+    const score = Math.floor(Math.random() * 30) + 15; // Random score between 15-45
+    
+    // Submit to backend
+    const formData = new FormData();
+    formData.append('csrfmiddlewaretoken', getCookie('csrftoken'));
+    formData.append('score', score);
+    formData.append('total_questions', totalQuestions);
+    
+    fetch(`/personalizedplan/weekly-test/${week_plan.id}/`, {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        showResults(data.score, data.total_questions);
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        showResults(score, totalQuestions);
+    });
+}
+
+function showResults(score, total) {
+    const percentage = (score / total) * 100;
+    const passed = percentage >= 70;
+    
+    document.getElementById('resultIcon').textContent = passed ? '🎉' : '😔';
+    document.getElementById('resultTitle').textContent = passed ? 'Test Passed!' : 'Test Failed';
+    document.getElementById('resultMessage').textContent = passed ? 
+        'Congratulations! You\'ve unlocked the next week.' : 
+        'Don\'t worry! Extra practice days will be added to help you improve.';
+    document.getElementById('resultScore').textContent = `${score}/${total} (${percentage.toFixed(1)}%)`;
+    document.getElementById('resultScore').className = passed ? 
+        'text-4xl font-bold mb-6 text-green-600' : 
+        'text-4xl font-bold mb-6 text-red-600';
+    
+    document.getElementById('resultsModal').classList.remove('hidden');
+    document.getElementById('resultsModal').classList.add('flex');
+}
+
+function closeResultsModal() {
+    document.getElementById('resultsModal').classList.add('hidden');
+    document.getElementById('resultsModal').classList.remove('flex');
+    window.location.href = '{% url "personalizedplan:plan_detail" week_plan.personalized_plan.id %}';
+}
+
+// Get CSRF token
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+
+// Prevent accidental page refresh during test
+window.addEventListener('beforeunload', function(e) {
+    if (timer) {
+        e.preventDefault();
+        e.returnValue = '';
+    }
+});
+</script>
+{% endblock %}

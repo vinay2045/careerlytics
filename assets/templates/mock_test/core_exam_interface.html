@@ -1,0 +1,522 @@
+{% extends 'mock_test/base.html' %}
+{% load static %}
+
+{% block title %}{{ assessment_title }} - Mock Test - Careerlytics{% endblock %}
+
+{% block extra_css %}
+<style>
+    .option-card {
+        transition: all 0.2s ease-in-out;
+    }
+    .option-card:hover {
+        transform: translateY(-2px);
+    }
+    .question-palette-btn {
+        width: 36px;
+        height: 36px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 8px;
+        font-weight: 600;
+        font-size: 0.875rem;
+        transition: all 0.2s;
+    }
+    .palette-unanswered { background-color: #f1f5f9; color: #64748b; border: 1px solid #e2e8f0; }
+    .palette-answered { background-color: #22c55e; color: white; border: 1px solid #16a34a; }
+    .palette-flagged { background-color: #f59e0b; color: white; border: 1px solid #d97706; }
+    .palette-current { border: 2px solid #6366f1; color: #6366f1; background-color: #eef2ff; }
+    
+    .status-dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background-color: #e2e8f0;
+        transition: all 0.3s;
+    }
+    .status-dot.active { background-color: #6366f1; transform: scale(1.2); }
+    .status-dot.completed { background-color: #22c55e; }
+
+    @keyframes pulse-soft {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.7; }
+    }
+    .timer-pulse { animation: pulse-soft 2s infinite; }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="min-h-screen bg-slate-50 dark:bg-slate-950 pb-12">
+    <!-- Header -->
+    <header class="sticky top-0 z-50 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
+            <div class="flex items-center gap-4">
+                <a href="{% url 'users:core_assessment_selection' %}" class="p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full transition-colors">
+                    <span class="material-symbols-outlined text-slate-600 dark:text-slate-400">arrow_back</span>
+                </a>
+                <div>
+                    <h1 class="text-lg font-bold text-slate-900 dark:text-white leading-tight">{{ assessment_title }} Assessment</h1>
+                    <div class="flex items-center gap-2 text-xs text-slate-500">
+                        <span class="flex items-center gap-1">
+                            <span class="material-symbols-outlined text-[14px]">description</span>
+                            <span id="question-counter">Question 1 of {{ total_questions }}</span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex items-center gap-6">
+                <!-- Timer -->
+                <div class="flex items-center gap-3 px-4 py-2 bg-slate-100 dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700">
+                    <span class="material-symbols-outlined text-indigo-600 dark:text-indigo-400 timer-pulse">timer</span>
+                    <span id="timer" class="text-xl font-mono font-bold text-slate-700 dark:text-slate-200">00:00</span>
+                </div>
+                
+                <button onclick="confirmSubmit()" class="px-6 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-xl transition-all shadow-lg shadow-indigo-200 dark:shadow-none">
+                    Finish Test
+                </button>
+            </div>
+        </div>
+        
+        <!-- Progress Bar -->
+        <div class="w-full h-1 bg-slate-100 dark:bg-slate-800">
+            <div id="progress-bar" class="h-full bg-indigo-600 transition-all duration-500" style="width: 0%"></div>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-4 py-8">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+            <!-- Left: Question Area -->
+            <div class="lg:col-span-8 space-y-6">
+                <!-- Question Card -->
+                <div class="bg-white dark:bg-slate-900 rounded-3xl shadow-sm border border-slate-200 dark:border-slate-800 p-8 min-h-[400px] flex flex-col">
+                    <div class="flex justify-between items-start mb-6">
+                        <span class="px-3 py-1 bg-indigo-50 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400 text-xs font-bold rounded-full uppercase tracking-wider">
+                            Section: {{ assessment_title }}
+                        </span>
+                        <button onclick="toggleFlag()" id="flag-btn" class="flex items-center gap-2 text-slate-400 hover:text-amber-500 transition-colors">
+                            <span class="material-symbols-outlined" id="flag-icon">flag</span>
+                            <span class="text-sm font-medium">Mark for Review</span>
+                        </button>
+                    </div>
+
+                    <div class="flex-grow">
+                        <h2 id="question-text" class="text-2xl font-semibold text-slate-800 dark:text-slate-100 leading-relaxed mb-8">
+                            Loading question...
+                        </h2>
+
+                        <div id="options-container" class="space-y-4">
+                            <!-- Options will be injected here -->
+                        </div>
+                    </div>
+
+                    <!-- Navigation -->
+                    <div class="flex items-center justify-between mt-12 pt-8 border-t border-slate-100 dark:border-slate-800">
+                        <button id="prev-btn" onclick="prevQuestion()" class="flex items-center gap-2 px-6 py-3 text-slate-600 dark:text-slate-400 font-semibold hover:bg-slate-100 dark:hover:bg-slate-800 rounded-2xl transition-all disabled:opacity-30 disabled:cursor-not-allowed">
+                            <span class="material-symbols-outlined">chevron_left</span>
+                            Previous
+                        </button>
+                        
+                        <div class="flex gap-2" id="status-dots">
+                            <!-- Dots injected here -->
+                        </div>
+
+                        <button id="next-btn" onclick="nextQuestion()" class="flex items-center gap-2 px-8 py-3 bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-bold rounded-2xl hover:bg-slate-800 dark:hover:bg-slate-100 transition-all">
+                            Next Question
+                            <span class="material-symbols-outlined">chevron_right</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right: Palette & Info -->
+            <div class="lg:col-span-4 space-y-6">
+                <!-- Question Palette -->
+                <div class="bg-white dark:bg-slate-900 rounded-3xl shadow-sm border border-slate-200 dark:border-slate-800 p-6">
+                    <h3 class="text-sm font-bold text-slate-900 dark:text-white uppercase tracking-wider mb-6 flex items-center gap-2">
+                        <span class="material-symbols-outlined text-indigo-500">grid_view</span>
+                        Question Navigator
+                    </h3>
+                    
+                    <div class="grid grid-cols-5 gap-3" id="question-palette">
+                        <!-- Palette buttons injected here -->
+                    </div>
+
+                    <div class="mt-8 grid grid-cols-2 gap-4 text-xs">
+                        <div class="flex items-center gap-2 text-slate-500">
+                            <div class="w-3 h-3 rounded bg-slate-100 border border-slate-200"></div>
+                            <span>Unanswered</span>
+                        </div>
+                        <div class="flex items-center gap-2 text-slate-500">
+                            <div class="w-3 h-3 rounded bg-green-500"></div>
+                            <span>Answered</span>
+                        </div>
+                        <div class="flex items-center gap-2 text-slate-500">
+                            <div class="w-3 h-3 rounded bg-amber-500"></div>
+                            <span>Flagged</span>
+                        </div>
+                        <div class="flex items-center gap-2 text-slate-500">
+                            <div class="w-3 h-3 rounded border-2 border-indigo-500"></div>
+                            <span>Current</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Instructions Card -->
+                <div class="bg-indigo-600 rounded-3xl p-6 text-white shadow-xl shadow-indigo-200 dark:shadow-none">
+                    <h3 class="font-bold mb-4 flex items-center gap-2">
+                        <span class="material-symbols-outlined">info</span>
+                        Test Rules
+                    </h3>
+                    <ul class="space-y-3 text-sm text-indigo-100">
+                        <li class="flex items-start gap-2">
+                            <span class="material-symbols-outlined text-[16px] mt-0.5">check_circle</span>
+                            Auto-submits when time expires
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="material-symbols-outlined text-[16px] mt-0.5">check_circle</span>
+                            Do not refresh or exit fullscreen
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="material-symbols-outlined text-[16px] mt-0.5">check_circle</span>
+                            Each question carries 1 mark
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Start Overlay -->
+    <div id="start-overlay" class="fixed inset-0 z-[100] bg-slate-900/90 backdrop-blur-md flex items-center justify-center p-4 transition-opacity duration-500">
+        <div class="max-w-md w-full bg-white dark:bg-slate-900 rounded-3xl shadow-2xl p-8 text-center space-y-6">
+            <div class="w-20 h-20 bg-indigo-100 dark:bg-indigo-900/50 rounded-2xl flex items-center justify-center mx-auto mb-2">
+                <span class="material-symbols-outlined text-4xl text-indigo-600 dark:text-indigo-400">rocket_launch</span>
+            </div>
+            <div>
+                <h2 class="text-2xl font-bold text-slate-900 dark:text-white mb-2">Ready to Start?</h2>
+                <p class="text-slate-500 dark:text-slate-400">This assessment will test your {{ assessment_title }} skills. You have {{ time_limit }} minutes.</p>
+            </div>
+            
+            <div class="p-4 bg-amber-50 dark:bg-amber-900/20 border border-amber-100 dark:border-amber-800 rounded-2xl text-left">
+                <p class="text-xs font-bold text-amber-700 dark:text-amber-400 uppercase tracking-wider mb-1">Important</p>
+                <p class="text-sm text-amber-800 dark:text-amber-300">The test will run in fullscreen mode. Exiting fullscreen will auto-submit your answers.</p>
+            </div>
+
+            <button onclick="startExam()" class="w-full py-4 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-2xl shadow-xl shadow-indigo-200 dark:shadow-none transition-all hover:scale-[1.02] active:scale-95 flex items-center justify-center gap-2">
+                Begin Assessment
+                <span class="material-symbols-outlined">play_arrow</span>
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Questions Data -->
+<script id="questions-data" type="application/json">
+    {{ questions|safe }}
+</script>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // State Management
+    let currentQuestionIdx = 0;
+    let timeRemaining = {{ time_limit }} * 60;
+    let timerInterval = null;
+    let userAnswers = [];
+    let flaggedQuestions = new Set();
+    let examQuestions = [];
+    let isSubmitting = false;
+    let isStarted = false;
+
+    // Initialize
+    document.addEventListener('DOMContentLoaded', () => {
+        try {
+            const dataElement = document.getElementById('questions-data');
+            examQuestions = JSON.parse(dataElement.textContent);
+            userAnswers = new Array(examQuestions.length).fill(null);
+            
+            updateUI();
+            initPalette();
+            initDots();
+        } catch (e) {
+            console.error("Failed to initialize exam:", e);
+            alert("Error loading questions. Please try again.");
+        }
+    });
+
+    function startExam() {
+        // Enter Fullscreen
+        const elem = document.documentElement;
+        if (elem.requestFullscreen) {
+            elem.requestFullscreen();
+        } else if (elem.webkitRequestFullscreen) {
+            elem.webkitRequestFullscreen();
+        } else if (elem.msRequestFullscreen) {
+            elem.msRequestFullscreen();
+        }
+
+        sessionStorage.setItem('mock_was_fullscreen', 'true');
+        isStarted = true;
+        
+        // Hide overlay
+        const overlay = document.getElementById('start-overlay');
+        overlay.classList.add('opacity-0');
+        setTimeout(() => overlay.style.display = 'none', 500);
+
+        // Start timer
+        startTimer();
+    }
+
+    function startTimer() {
+        timerInterval = setInterval(() => {
+            timeRemaining--;
+            updateTimerDisplay();
+            
+            if (timeRemaining <= 0) {
+                clearInterval(timerInterval);
+                submitExam('Time Expired');
+            }
+        }, 1000);
+    }
+
+    function updateTimerDisplay() {
+        const mins = Math.floor(timeRemaining / 60);
+        const secs = timeRemaining % 60;
+        document.getElementById('timer').textContent = 
+            `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+        
+        if (timeRemaining < 300) { // Last 5 mins
+            document.getElementById('timer').classList.add('text-red-600');
+        }
+    }
+
+    function updateUI() {
+        const q = examQuestions[currentQuestionIdx];
+        document.getElementById('question-text').textContent = q.question;
+        document.getElementById('question-counter').textContent = `Question ${currentQuestionIdx + 1} of ${examQuestions.length}`;
+        
+        // Update Options
+        const container = document.getElementById('options-container');
+        container.innerHTML = '';
+        
+        q.options.forEach((opt, idx) => {
+            const isChecked = userAnswers[currentQuestionIdx] === idx;
+            const card = document.createElement('label');
+            card.className = `option-card flex items-center p-5 rounded-2xl border-2 cursor-pointer transition-all ${
+                isChecked 
+                ? 'border-indigo-600 bg-indigo-50 dark:bg-indigo-900/20' 
+                : 'border-slate-100 dark:border-slate-800 hover:border-indigo-200 dark:hover:border-indigo-700'
+            }`;
+            
+            card.innerHTML = `
+                <input type="radio" name="option" class="hidden" ${isChecked ? 'checked' : ''} onchange="selectOption(${idx})">
+                <div class="w-6 h-6 rounded-full border-2 flex items-center justify-center mr-4 ${
+                    isChecked ? 'border-indigo-600' : 'border-slate-300 dark:border-slate-600'
+                }">
+                    <div class="w-3 h-3 rounded-full bg-indigo-600 transition-all ${isChecked ? 'scale-100' : 'scale-0'}"></div>
+                </div>
+                <span class="text-lg font-medium ${isChecked ? 'text-indigo-900 dark:text-indigo-100' : 'text-slate-700 dark:text-slate-300'}">
+                    ${opt}
+                </span>
+            `;
+            container.appendChild(card);
+        });
+
+        // Update Nav Buttons
+        document.getElementById('prev-btn').disabled = currentQuestionIdx === 0;
+        document.getElementById('next-btn').innerHTML = currentQuestionIdx === examQuestions.length - 1 
+            ? 'Review & Submit <span class="material-symbols-outlined">send</span>' 
+            : 'Next Question <span class="material-symbols-outlined">chevron_right</span>';
+
+        // Update Flag
+        const flagIcon = document.getElementById('flag-icon');
+        const flagBtn = document.getElementById('flag-btn');
+        if (flaggedQuestions.has(currentQuestionIdx)) {
+            flagIcon.classList.add('fill-1');
+            flagBtn.classList.add('text-amber-500');
+        } else {
+            flagIcon.classList.remove('fill-1');
+            flagBtn.classList.remove('text-slate-400');
+        }
+
+        // Progress Bar
+        const progress = ((currentQuestionIdx + 1) / examQuestions.length) * 100;
+        document.getElementById('progress-bar').style.width = `${progress}%`;
+
+        updatePalette();
+        updateDots();
+    }
+
+    function selectOption(idx) {
+        userAnswers[currentQuestionIdx] = idx;
+        updateUI();
+    }
+
+    function nextQuestion() {
+        if (currentQuestionIdx < examQuestions.length - 1) {
+            currentQuestionIdx++;
+            updateUI();
+        } else {
+            confirmSubmit();
+        }
+    }
+
+    function prevQuestion() {
+        if (currentQuestionIdx > 0) {
+            currentQuestionIdx--;
+            updateUI();
+        }
+    }
+
+    function toggleFlag() {
+        if (flaggedQuestions.has(currentQuestionIdx)) {
+            flaggedQuestions.delete(currentQuestionIdx);
+        } else {
+            flaggedQuestions.add(currentQuestionIdx);
+        }
+        updateUI();
+    }
+
+    function jumpTo(idx) {
+        currentQuestionIdx = idx;
+        updateUI();
+    }
+
+    function initPalette() {
+        const palette = document.getElementById('question-palette');
+        palette.innerHTML = '';
+        examQuestions.forEach((_, idx) => {
+            const btn = document.createElement('button');
+            btn.className = 'question-palette-btn palette-unanswered';
+            btn.id = `palette-btn-${idx}`;
+            btn.textContent = idx + 1;
+            btn.onclick = () => jumpTo(idx);
+            palette.appendChild(btn);
+        });
+    }
+
+    function updatePalette() {
+        examQuestions.forEach((_, idx) => {
+            const btn = document.getElementById(`palette-btn-${idx}`);
+            btn.className = 'question-palette-btn';
+            
+            if (currentQuestionIdx === idx) btn.classList.add('palette-current');
+            else if (flaggedQuestions.has(idx)) btn.classList.add('palette-flagged');
+            else if (userAnswers[idx] !== null) btn.classList.add('palette-answered');
+            else btn.classList.add('palette-unanswered');
+        });
+    }
+
+    function initDots() {
+        const dots = document.getElementById('status-dots');
+        dots.innerHTML = '';
+        const maxDots = 8;
+        const total = examQuestions.length;
+        const step = Math.max(1, Math.floor(total / maxDots));
+        
+        for (let i = 0; i < total; i += step) {
+            const dot = document.createElement('div');
+            dot.className = 'status-dot';
+            dot.id = `dot-${i}`;
+            dots.appendChild(dot);
+        }
+    }
+
+    function updateDots() {
+        const dots = document.querySelectorAll('.status-dot');
+        dots.forEach(dot => {
+            const idx = parseInt(dot.id.split('-')[1]);
+            dot.classList.remove('active', 'completed');
+            if (idx === currentQuestionIdx) dot.classList.add('active');
+            else if (userAnswers[idx] !== null) dot.classList.add('completed');
+        });
+    }
+
+    function confirmSubmit() {
+        const unanswered = userAnswers.filter(a => a === null).length;
+        const message = unanswered > 0 
+            ? `You have ${unanswered} unanswered questions. Are you sure you want to finish?`
+            : "Are you sure you want to finish the assessment?";
+        
+        if (confirm(message)) {
+            submitExam('Manual Submission');
+        }
+    }
+
+    async function submitExam(reason = 'Manual') {
+        if (isSubmitting) return;
+        isSubmitting = true;
+        clearInterval(timerInterval);
+
+        // Calculate results
+        let correctCount = 0;
+        const processedAnswers = examQuestions.map((q, idx) => {
+            const isCorrect = userAnswers[idx] === q.correct_answer;
+            if (isCorrect) correctCount++;
+            return {
+                question: q.question,
+                selected: userAnswers[idx],
+                correct: q.correct_answer,
+                is_correct: isCorrect,
+                category: q.category || 'General'
+            };
+        });
+
+        const score = Math.round((correctCount / examQuestions.length) * 100);
+        
+        // Save to LocalStorage for the results page
+        const resultData = {
+            assessment_type: '{{ assessment_type }}',
+            assessment_title: '{{ assessment_title }}',
+            score: score,
+            total: examQuestions.length,
+            correct: correctCount,
+            time_taken: ({{ time_limit }} * 60) - timeRemaining,
+            answers: processedAnswers,
+            submitted_at: new Date().toISOString()
+        };
+
+        localStorage.setItem(`mock_result_{{ assessment_type }}`, JSON.stringify(resultData));
+
+        // Exit fullscreen if active
+        if (document.fullscreenElement) {
+            document.exitFullscreen();
+        }
+
+        // Send results to server for persistence
+        try {
+            const response = await fetch('{% url "users:submit_core_assessment" %}', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': '{{ csrf_token }}'
+                },
+                body: JSON.stringify({
+                    assessment_type: '{{ assessment_type }}',
+                    answers: processedAnswers,
+                    time_taken: resultData.time_taken
+                })
+            });
+            const serverData = await response.json();
+            if (serverData.status === 'success') {
+                console.log("Results persisted successfully");
+            }
+        } catch (e) {
+            console.error("Failed to persist results:", e);
+        }
+
+        // Redirect to results
+        window.location.href = `{% url 'users:core_assessment_results' %}?assessment_type={{ assessment_type }}`;
+    }
+
+    // Fullscreen Guard
+    document.addEventListener('fullscreenchange', () => {
+        if (isStarted && !document.fullscreenElement && !isSubmitting) {
+            alert("Fullscreen mode exited. The assessment will be automatically submitted.");
+            submitExam('Fullscreen Exit');
+        }
+    });
+</script>
+{% endblock %}

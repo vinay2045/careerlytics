@@ -1,0 +1,97 @@
+[
+    {
+        "question_text": "If a shirt costs $40 and is on sale for 25% off, what is the final price?",
+        "options": ["$30", "$35", "$25", "$10"],
+        "correct_answer": 0
+    },
+    {
+        "question_text": "What is 15% of 200?",
+        "options": ["20", "30", "25", "35"],
+        "correct_answer": 1
+    },
+    {
+        "question_text": "If a train travels 300 km in 3 hours, what is its average speed?",
+        "options": ["75 km/h", "100 km/h", "150 km/h", "50 km/h"],
+        "correct_answer": 1
+    },
+    {
+        "question_text": "What is the next number in the sequence: 2, 4, 8, 16, ?",
+        "options": ["24", "32", "20", "28"],
+        "correct_answer": 1
+    },
+    {
+        "question_text": "If 5x + 10 = 35, what is the value of x?",
+        "options": ["3", "5", "7", "9"],
+        "correct_answer": 1
+    },
+    {
+        "question_text": "What is 3/4 as a decimal?",
+        "options": ["0.34", "0.75", "0.25", "0.5"],
+        "correct_answer": 1
+    },
+    {
+        "question_text": "If a rectangle has length 8cm and width 6cm, what is its area?",
+        "options": ["14 cm²", "48 cm²", "28 cm²", "36 cm²"],
+        "correct_answer": 1
+    },
+    {
+        "question_text": "What is 20% of 150?",
+        "options": ["25", "30", "35", "40"],
+        "correct_answer": 1
+    },
+    {
+        "question_text": "If the ratio of boys to girls in a class is 3:2 and there are 30 students total, how many boys are there?",
+        "options": ["12", "15", "18", "20"],
+        "correct_answer": 2
+    },
+    {
+        "question_text": "What is the square root of 144?",
+        "options": ["10", "11", "12", "13"],
+        "correct_answer": 2
+    },
+    {
+        "question_text": "If a car uses 8 liters of fuel to travel 120 km, how many liters needed for 300 km?",
+        "options": ["15", "20", "25", "30"],
+        "correct_answer": 1
+    },
+    {
+        "question_text": "What is 25% of 80?",
+        "options": ["15", "20", "25", "30"],
+        "correct_answer": 1
+    },
+    {
+        "question_text": "If the sum of two numbers is 45 and their difference is 15, what are the numbers?",
+        "options": ["20 and 25", "15 and 30", "10 and 35", "25 and 20"],
+        "correct_answer": 0
+    },
+    {
+        "question_text": "What is the next number: 1, 4, 9, 16, 25, ?",
+        "options": ["36", "49", "64", "81"],
+        "correct_answer": 0
+    },
+    {
+        "question_text": "If a circle has radius 7 cm, what is its circumference? (π = 22/7)",
+        "options": ["22 cm", "44 cm", "14 cm", "28 cm"],
+        "correct_answer": 1
+    },
+    {
+        "question_text": "What is 1/8 as a percentage?",
+        "options": ["10%", "12.5%", "15%", "20%"],
+        "correct_answer": 1
+    },
+    {
+        "question_text": "If 3 workers can complete a job in 8 days, how many days for 6 workers?",
+        "options": ["2", "3", "4", "6"],
+        "correct_answer": 2
+    },
+    {
+        "question_text": "What is the average of: 12, 18, 24, 30?",
+        "options": ["18", "20", "21", "24"],
+        "correct_answer": 2
+    },
+    {
+        "question_text": "If 2x - 7 = 13, what is x?",
+        "options": ["8", "10", "12", "15"],
+        "correct_answer": 1
+    }
+]

@@ -1,0 +1,230 @@
+[
+  {
+    "id": "ds_001",
+    "category": "datascience",
+    "difficulty": "easy",
+    "question_text": "What is the primary purpose of pandas in data science?",
+    "options": [
+      "Machine learning algorithms",
+      "Data manipulation and analysis",
+      "Data visualization",
+      "Web scraping"
+    ],
+    "correct_answer": 1,
+    "explanation": "Pandas is primarily used for data manipulation and analysis, providing data structures like DataFrame for handling structured data.",
+    "tags": [
+      "pandas",
+      "data-analysis",
+      "python"
+    ]
+  },
+  {
+    "id": "ds_002",
+    "category": "datascience",
+    "difficulty": "medium",
+    "question_text": "What is overfitting in machine learning?",
+    "options": [
+      "When model performs well on training data but poorly on new data",
+      "When model performs poorly on both training and test data",
+      "When model is too simple",
+      "When model requires too much data"
+    ],
+    "correct_answer": 0,
+    "explanation": "Overfitting occurs when a machine learning model learns the training data too well, including noise, and fails to generalize to new data.",
+    "tags": [
+      "machine-learning",
+      "overfitting",
+      "model-evaluation"
+    ]
+  },
+  {
+    "id": "ds_003",
+    "category": "datascience",
+    "difficulty": "medium",
+    "question_text": "What is the purpose of train-test split in machine learning?",
+    "options": [
+      "To speed up training",
+      "To evaluate model performance on unseen data",
+      "To reduce data size",
+      "To improve accuracy"
+    ],
+    "correct_answer": 1,
+    "explanation": "Train-test split allows evaluation of model performance on data that wasn't used for training, helping assess generalization ability.",
+    "tags": [
+      "machine-learning",
+      "evaluation",
+      "data-splitting"
+    ]
+  },
+  {
+    "id": "ds_004",
+    "category": "datascience",
+    "difficulty": "hard",
+    "question_text": "What is the difference between correlation and causation?",
+    "options": [
+      "They are the same thing",
+      "Correlation implies causation",
+      "Correlation doesn't imply causation",
+      "Causation implies correlation"
+    ],
+    "correct_answer": 2,
+    "explanation": "Correlation doesn't imply causation - two variables can be correlated without one causing the other. Causation requires establishing a causal mechanism.",
+    "tags": [
+      "statistics",
+      "correlation",
+      "causation"
+    ]
+  },
+  {
+    "id": "ds_005",
+    "category": "datascience",
+    "difficulty": "medium",
+    "question_text": "What is the purpose of feature scaling in machine learning?",
+    "options": [
+      "To increase model accuracy",
+      "To normalize features to similar ranges",
+      "To reduce training time",
+      "To add more features"
+    ],
+    "correct_answer": 1,
+    "explanation": "Feature scaling normalizes features to similar ranges, preventing features with larger scales from dominating the model training process.",
+    "tags": [
+      "feature-engineering",
+      "preprocessing",
+      "machine-learning"
+    ]
+  },
+  {
+    "id": "ds_006",
+    "category": "datascience",
+    "difficulty": "easy",
+    "question_text": "What is a DataFrame in pandas?",
+    "options": [
+      "A 1D array",
+      "A 2D labeled data structure",
+      "A database connection",
+      "A visualization tool"
+    ],
+    "correct_answer": 1,
+    "explanation": "A DataFrame is a 2D labeled data structure in pandas, similar to a spreadsheet or SQL table, with rows and columns.",
+    "tags": [
+      "pandas",
+      "dataframe",
+      "data-structures"
+    ]
+  },
+  {
+    "id": "ds_007",
+    "category": "datascience",
+    "difficulty": "medium",
+    "question_text": "What is the purpose of cross-validation?",
+    "options": [
+      "To validate the model on training data",
+      "To assess model generalization performance",
+      "To increase training data",
+      "To reduce overfitting"
+    ],
+    "correct_answer": 1,
+    "explanation": "Cross-validation assesses model generalization performance by training and testing on different subsets of the data.",
+    "tags": [
+      "cross-validation",
+      "model-evaluation",
+      "machine-learning"
+    ]
+  },
+  {
+    "id": "ds_008",
+    "category": "datascience",
+    "difficulty": "hard",
+    "question_text": "What is the curse of dimensionality?",
+    "options": [
+      "Too many features causing computational issues",
+      "Data being too high-dimensional",
+      "Both A and B",
+      "Neither A nor B"
+    ],
+    "correct_answer": 2,
+    "explanation": "The curse of dimensionality refers to various phenomena that arise when analyzing data in high-dimensional spaces, including computational issues and data sparsity.",
+    "tags": [
+      "dimensionality",
+      "machine-learning",
+      "theory"
+    ]
+  },
+  {
+    "id": "ds_009",
+    "category": "datascience",
+    "difficulty": "medium",
+    "question_text": "What is the purpose of regularization in machine learning?",
+    "options": [
+      "To increase model complexity",
+      "To prevent overfitting by adding penalty",
+      "To speed up training",
+      "To add more features"
+    ],
+    "correct_answer": 1,
+    "explanation": "Regularization prevents overfitting by adding a penalty term to the loss function, discouraging overly complex models.",
+    "tags": [
+      "regularization",
+      "overfitting",
+      "machine-learning"
+    ]
+  },
+  {
+    "id": "ds_010",
+    "category": "datascience",
+    "difficulty": "medium",
+    "question_text": "What is the difference between supervised and unsupervised learning?",
+    "options": [
+      "Algorithm complexity",
+      "Presence of labeled training data",
+      "Training time",
+      "Accuracy"
+    ],
+    "correct_answer": 1,
+    "explanation": "Supervised learning uses labeled training data, while unsupervised learning finds patterns in unlabeled data.",
+    "tags": [
+      "machine-learning",
+      "supervised",
+      "unsupervised"
+    ]
+  },
+  {
+    "id": "ds_011",
+    "category": "datascience",
+    "difficulty": "hard",
+    "question_text": "What is the purpose of the p-value in statistical testing?",
+    "options": [
+      "Probability of null hypothesis being true",
+      "Probability of observing data given null hypothesis",
+      "Confidence interval",
+      "Effect size"
+    ],
+    "correct_answer": 1,
+    "explanation": "The p-value represents the probability of observing data as extreme as, or more extreme than, what was observed, assuming the null hypothesis is true.",
+    "tags": [
+      "statistics",
+      "p-value",
+      "hypothesis-testing"
+    ]
+  },
+  {
+    "id": "ds_012",
+    "category": "datascience",
+    "difficulty": "medium",
+    "question_text": "What is the purpose of matplotlib in data science?",
+    "options": [
+      "Data manipulation",
+      "Machine learning",
+      "Data visualization",
+      "Statistical analysis"
+    ],
+    "correct_answer": 2,
+    "explanation": "Matplotlib is a data visualization library used for creating static, animated, and interactive visualizations in Python.",
+    "tags": [
+      "matplotlib",
+      "visualization",
+      "plotting"
+    ]
+  }
+]

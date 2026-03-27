@@ -1,0 +1,625 @@
+{% load static %}
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Careerlytics | User Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+    <style>
+        :root {
+          --sidebar-light: #1e293b;
+          --sidebar-dark: #0f172a;
+          --sidebar-accent: #3730a3;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+        }
+        
+        /* Ensure Material Symbols icons are displayed properly */
+        .material-symbols-outlined {
+            font-family: 'Material Symbols Outlined';
+            font-weight: normal;
+            font-style: normal;
+            font-display: block;
+            line-height: 1;
+            direction: ltr;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 48;
+        }
+
+        .material-symbols-rounded {
+            font-family: 'Material Symbols Rounded';
+            font-weight: normal;
+            font-style: normal;
+            font-display: block;
+            line-height: 1;
+            direction: ltr;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 48;
+        }
+
+        .material-symbols-rounded.fill-current {
+            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 48;
+        }
+        
+        .sidebar-item {
+            position: relative;
+        }
+        .card {
+            background-color: #ffffff;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+        .dark .card {
+            background-color: #1f2937;
+        }
+        .btn-primary {
+            background-color: #2563eb;
+            color: #ffffff;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            font-weight: 500;
+            transition: background-color 0.2s;
+        }
+        .btn-primary:hover {
+            background-color: #1e40af;
+        }
+        .text-blue-dashboard {
+            color: #2563eb;
+        }
+        .dark .text-blue-dashboard {
+            color: #60a5fa;
+        }
+        .text-dark-dashboard {
+            color: #1a202c;
+        }
+        .dark .text-dark-dashboard {
+            color: #e2e8f0;
+        }
+        .border-light {
+            border-color: #e2e8f0;
+        }
+        .dark .border-light {
+            border-color: #475569;
+        }
+        .sidebar-icon {
+            font-size: 28px;
+            color: #a0aec0;
+        }
+        .sidebar-item.active .sidebar-icon,
+        .sidebar-item:hover .sidebar-icon {
+            color: #ffffff;
+        }
+        
+        /* Hide scrollbar for sidebar */
+        #sidebar::-webkit-scrollbar {
+            display: none;
+        }
+        #sidebar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        
+        .pulse-indicator {
+            box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7);
+            animation: pulse-ring 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+        @keyframes pulse-ring {
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7); }
+            70% { transform: scale(1); box-shadow: 0 0 0 8px rgba(34, 197, 94, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); }
+        }
+        .glow-effect {
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+        @keyframes glow {
+            from { box-shadow: 0 0 10px #3b82f6; }
+            to { box-shadow: 0 0 20px #3b82f6, 0 0 30px #3b82f6; }
+        }
+        /* Custom Tooltip Styling - Only on Desktop */
+        @media (min-width: 768px) {
+            .sidebar-item::after {
+                content: attr(title);
+                position: absolute;
+                left: 100%;
+                top: 50%;
+                transform: translateY(-50%);
+                margin-left: 12px;
+                background-color: #1f2937;
+                color: white;
+                padding: 6px 12px;
+                border-radius: 6px;
+                font-size: 12px;
+                font-weight: 500;
+                white-space: nowrap;
+                opacity: 0;
+                visibility: hidden;
+                transition: opacity 0.3s, visibility 0.3s;
+                z-index: 1000;
+                pointer-events: none;
+                box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            }
+            .sidebar-item::before {
+                content: '';
+                position: absolute;
+                left: 100%;
+                top: 50%;
+                transform: translateY(-50%);
+                margin-left: 6px;
+                border: 6px solid transparent;
+                border-right-color: #1f2937;
+                opacity: 0;
+                visibility: hidden;
+                transition: opacity 0.3s, visibility 0.3s;
+                z-index: 1000;
+                pointer-events: none;
+            }
+            .sidebar-item:hover::after {
+                opacity: 1;
+                visibility: visible;
+            }
+            .sidebar-item:hover::before {
+                opacity: 1;
+                visibility: visible;
+            }
+        }
+        
+        /* Glass Day Night Toggle */
+        .toggle-wrapper{
+            width:90px;
+            height:38px;
+            border-radius:21px;
+            background:rgba(255,255,255,0.25);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border:1px solid rgba(255,255,255,0.4);
+            box-shadow:0 6px 15px rgba(0,0,0,0.05);
+            position:relative;
+            overflow:hidden;
+            cursor:pointer;
+            flex-shrink:0;
+        }
+
+        /* Inner sky */
+        .sky{
+            position:absolute;
+            inset:0;
+            border-radius:21px;
+            transition:1s;
+            background:linear-gradient(135deg,#7fc8ff,#cceeff);
+        }
+
+        /* Clouds */
+        .cloud{
+            position:absolute;
+            width:38px;
+            height:14px;
+            background:rgba(255,255,255,0.95);
+            border-radius:14px;
+            top:11px;
+            animation:cloudMove 18s linear infinite;
+            box-shadow:0 1px 4px rgba(0,0,0,0.03);
+        }
+        .cloud::before,
+        .cloud::after{
+            content:'';
+            position:absolute;
+            background:rgba(255,255,255,0.95);
+            width:15px;
+            height:15px;
+            border-radius:50%;
+            top:-8px;
+        }
+        .cloud::before{left:5px;}
+        .cloud::after{left:19px;}
+
+        @keyframes cloudMove{
+            from{left:-45px;}
+            to{left:95px;}
+        }
+
+        /* Stars */
+        .star{
+            position:absolute;
+            width:0.8px;
+            height:0.8px;
+            background:white;
+            border-radius:50%;
+            opacity:0;
+            animation:twinkle 2s infinite alternate;
+        }
+        @keyframes twinkle{
+            from{opacity:.3;}
+            to{opacity:1;}
+        }
+
+        /* Knob */
+        .knob{
+            position:absolute;
+            top:3px;
+            left:3px;
+            width:32px;
+            height:32px;
+            border-radius:50%;
+            background:linear-gradient(135deg,#FFD700,#FF8C00);
+            box-shadow:0 0 8px #FFD700, 0 3px 8px rgba(0,0,0,0.12);
+            transition:0.9s cubic-bezier(0.4,0,0.2,1);
+            z-index:5;
+        }
+
+        /* Moon */
+        .moon{
+            background:linear-gradient(135deg,#eee,#aaa);
+            box-shadow:inset -3px -3px 0 rgba(0,0,0,0.2),
+                       0 0 6px #aaa;
+        }
+
+        /* Moon shadow */
+        .moon-shadow{
+            position:absolute;
+            width:8px;
+            height:8px;
+            background:rgba(0,0,0,0.25);
+            border-radius:50%;
+            top:7px;
+            left:7px;
+        }
+
+        /* Night Mode */
+        .toggle-wrapper.active .knob{
+            transform:translateX(52px) rotate(360deg);
+        }
+        .toggle-wrapper.active .sky{
+            background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+        }
+    </style>
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#2563eb",
+                        secondary: "#1e40af",
+                        background: "#f8fafc",
+                    }
+                },
+            },
+        };
+    </script>
+</head>
+<body class="bg-slate-50 dark:bg-gray-900 min-h-screen flex flex-col md:flex-row">
+    <!-- Mobile Sidebar Overlay -->
+    <div id="sidebar-overlay" class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-40 hidden md:hidden transition-opacity duration-300"></div>
+    <!-- Mobile Navigation Bar -->
+    <div class="md:hidden bg-blue-700 dark:bg-slate-900 text-white p-3 flex justify-between items-center sticky top-0 z-[60] shadow-md">
+        <div class="flex items-center gap-3">
+            <button id="mobile-menu-toggle" class="p-2 -ml-2 hover:bg-white/10 rounded-lg transition-colors">
+                <span class="material-symbols-outlined text-2xl">menu</span>
+            </button>
+            <div class="flex items-center gap-2">
+                <div class="w-10 h-10 flex items-center justify-center">
+                    <img src="{% static 'images/logo.png' %}" alt="Logo" class="w-full h-full object-contain">
+                </div>
+                <h1 class="font-bold text-xs uppercase tracking-widest">Careerlytics</h1>
+            </div>
+        </div>
+
+        <div class="flex items-center gap-2">
+            <!-- Theme Toggle Mobile -->
+            <div class="toggle-wrapper scale-[0.7] origin-right theme-toggle-btn" id="theme-toggle-mobile">
+                <div class="sky">
+                    <div class="cloud" style="animation-delay:0s"></div>
+                    <div class="cloud" style="top:60px;animation-delay:7s"></div>
+                    <div id="stars-mobile"></div>
+                </div>
+                <div class="knob" id="knob-mobile"></div>
+            </div>
+            
+            <!-- Notifications Mobile -->
+            <button class="p-2 text-white/80 hover:text-white transition-colors relative">
+                <span class="material-symbols-outlined text-[22px]">notifications</span>
+                <span class="absolute top-2 right-2 w-2 h-2 bg-red-500 rounded-full border-2 border-blue-700 dark:border-slate-900"></span>
+            </button>
+
+            <!-- Profile Access Mobile -->
+            <a href="{% url 'users:UserProfile' %}" class="flex items-center ml-1">
+                {% if user.pic %}
+                <div class="w-8 h-8 rounded-lg border border-white/20 p-0.5 bg-white shadow-sm overflow-hidden">
+                    <img alt="User" class="w-full h-full object-cover rounded-[6px]" src="{{ user.pic.url }}"/>
+                </div>
+                {% else %}
+                <div class="w-8 h-8 rounded-lg border border-white/20 p-0.5 bg-white/10 flex items-center justify-center">
+                    <span class="material-symbols-outlined text-white/80 text-lg">person</span>
+                </div>
+                {% endif %}
+            </a>
+        </div>
+    </div>
+
+    <!-- Sidebar -->
+    <aside id="sidebar" class="w-full md:w-20 bg-blue-700 dark:bg-gradient-to-b dark:from-[var(--sidebar-dark)] dark:to-[var(--sidebar-accent)] flex flex-col items-center py-6 fixed md:h-full h-[calc(100vh-56px)] top-[56px] md:top-0 left-0 shadow-lg z-50 transform -translate-x-full md:translate-x-0 transition-transform duration-300 ease-in-out overflow-y-auto">
+        <div class="mb-10 hidden md:block">
+            <div class="w-16 h-16 flex items-center justify-center">
+                <img src="{% static 'images/logo.png' %}" alt="Logo" class="w-full h-full object-contain">
+            </div>
+        </div>
+        <nav class="flex flex-col space-y-4 md:space-y-6 w-full px-4 md:px-0">
+            <a href="{% url 'users:UserHome' %}" class="sidebar-item flex md:justify-center items-center gap-4 p-3 rounded-xl {% if request.resolver_match.view_name == 'users:UserHome' %}bg-white/20 active{% else %}hover:bg-white/20 transition-colors{% endif %}" title="Dashboard">
+                <span class="material-symbols-outlined sidebar-icon text-white">apps</span>
+                <span class="md:hidden text-white font-medium">Dashboard</span>
+            </a>
+            <a href="{% url 'upload' %}" class="sidebar-item flex md:justify-center items-center gap-4 p-3 rounded-xl {% if request.resolver_match.view_name == 'upload' %}bg-white/20 active{% else %}hover:bg-white/20 transition-colors{% endif %}" title="Resume Analysis">
+                <span class="material-symbols-outlined sidebar-icon text-white">analytics</span>
+                <span class="md:hidden text-white font-medium">Resume Analysis</span>
+            </a>
+            <a href="{% url 'users:my_resumes' %}" class="sidebar-item flex md:justify-center items-center gap-4 p-3 rounded-xl {% if request.resolver_match.view_name == 'users:my_resumes' %}bg-white/20 active{% else %}hover:bg-white/20 transition-colors{% endif %}" title="My Resume">
+                <span class="material-symbols-outlined sidebar-icon text-white">description</span>
+                <span class="md:hidden text-white font-medium">My Resume</span>
+            </a>
+            <a href="{% url 'mock_test' %}" class="sidebar-item flex md:justify-center items-center gap-4 p-3 rounded-xl {% if request.resolver_match.view_name == 'mock_test' or request.resolver_match.view_name == 'role_test_list' or request.resolver_match.view_name == 'language_test_list' or request.resolver_match.view_name == 'role_selection' or request.resolver_match.view_name == 'language_selection' %}bg-white/20 active{% else %}hover:bg-white/20 transition-colors{% endif %}" title="Mock Test">
+                <span class="material-symbols-outlined sidebar-icon text-white">science</span>
+                <span class="md:hidden text-white font-medium">Mock Test</span>
+            </a>
+            <a href="{% url 'personalizedplan:dashboard' %}" class="sidebar-item flex md:justify-center items-center gap-4 p-3 rounded-xl {% if request.resolver_match.view_name == 'personalizedplan:dashboard' %}bg-white/20 active{% else %}hover:bg-white/20 transition-colors{% endif %}" title="Personalized Plan">
+                <span class="material-symbols-outlined sidebar-icon text-white">school</span>
+                <span class="md:hidden text-white font-medium">Personalized Plan</span>
+            </a>
+            <a href="{% url 'users:ai_interviewer' %}" class="sidebar-item flex md:justify-center items-center gap-4 p-3 rounded-xl {% if request.resolver_match.view_name == 'users:ai_interviewer' %}bg-white/20 active{% else %}hover:bg-white/20 transition-colors{% endif %}" title="AI-Mock Interview">
+                <span class="material-symbols-outlined sidebar-icon text-white">record_voice_over</span>
+                <span class="md:hidden text-white font-medium">AI-Mock Interview</span>
+            </a>
+            
+            <!-- STUDENT-ONLY CAMPUS DRIVES TAB -->
+            {% if user.user_type == 'student' %}
+            <a href="{% url 'users:campus_drives' %}" class="sidebar-item flex md:justify-center items-center gap-4 p-3 rounded-xl {% if request.resolver_match.view_name == 'users:campus_drives' or request.resolver_match.view_name == 'users:my_test_results' or request.resolver_match.view_name == 'users:apply_drive' or request.resolver_match.view_name == 'users:take_readiness_test' or request.resolver_match.view_name == 'users:my_drive_applications' %}bg-white/20 active{% else %}hover:bg-white/20 transition-colors{% endif %}" title="Campus Drives">
+                <span class="material-symbols-outlined sidebar-icon text-white">business_center</span>
+                <span class="md:hidden text-white font-medium">Campus Drives</span>
+            </a>
+            {% endif %}
+        </nav>
+        <div class="mt-auto w-full px-4 md:px-0">
+            <a href="{% url 'users:UserLogout' %}" class="sidebar-item flex md:justify-center items-center gap-4 p-3 rounded-xl hover:bg-red-600 transition-colors" title="Logout">
+                <span class="material-symbols-outlined sidebar-icon text-white">logout</span>
+                <span class="md:hidden text-white font-medium">Logout</span>
+            </a>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="flex-1 md:ml-20 min-w-0">
+        <!-- Header -->
+        <header class="hidden md:flex h-14 border-b border-slate-200 dark:border-slate-700 bg-white dark:bg-gray-800 items-center justify-between px-6 sticky top-0 z-40">
+            <div class="flex items-center gap-6">
+                <h1 class="font-bold text-[11px] uppercase tracking-[0.15em] text-slate-400 dark:text-slate-300">Careerlytics</h1>
+            </div>
+            
+            <div class="flex items-center gap-6">
+                <div class="flex items-center gap-5">
+                    <div class="toggle-wrapper theme-toggle-btn" id="theme-toggle-desktop">
+                        <div class="sky">
+                            <div class="cloud" style="animation-delay:0s"></div>
+                            <div class="cloud" style="top:60px;animation-delay:7s"></div>
+                            <div id="stars-desktop"></div>
+                        </div>
+                        <div class="knob" id="knob-desktop"></div>
+                    </div>
+                    <button class="p-2 text-slate-400 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors relative">
+                        <span class="material-symbols-outlined text-[24px]">notifications</span>
+                        <span class="absolute top-2 right-2 w-2 h-2 bg-red-500 rounded-full border-2 border-white dark:border-gray-900"></span>
+                    </button>
+                    <div class="relative group">
+                        <div class="flex items-center gap-3 border-l border-slate-100 dark:border-slate-700 pl-5 cursor-pointer transition-all hover:bg-blue-50 dark:hover:bg-gray-700 rounded-lg px-2 py-2">
+                            <div class="text-right">
+                                <p class="text-[8px] font-black text-slate-500 uppercase tracking-widest mb-1">PROFILE ACCESS</p>
+                                <p class="text-xs text-slate-900 dark:text-slate-100 font-bold font-mono uppercase tracking-wide truncate max-w-[100px]">{{ user.userid|default:"user" }}</p>
+                            </div>
+                            {% if user.pic %}
+                            <div class="w-9 h-9 rounded-lg border border-slate-200 p-0.5 bg-white shadow-sm overflow-hidden group-hover:border-blue-300 dark:group-hover:border-blue-400 transition-colors">
+                                <img alt="User" class="w-full h-full object-cover rounded-[6px]" src="{{ user.pic.url }}"/>
+                            </div>
+                            {% else %}
+                            <div class="w-9 h-9 rounded-lg border border-slate-200 p-0.5 bg-white shadow-sm overflow-hidden flex items-center justify-center group-hover:border-blue-300 dark:group-hover:border-blue-400 transition-colors">
+                                <span class="material-symbols-outlined text-slate-400 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">person</span>
+                            </div>
+                            {% endif %}
+                        </div>
+                        
+                        <!-- Dropdown Menu -->
+                        <div class="absolute top-full right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-slate-200 dark:border-gray-600 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                            <div class="py-2">
+                                <a href="{% url 'users:UserProfile' %}" class="flex items-center gap-3 px-4 py-3 text-sm text-gray-700 dark:text-gray-200 hover:bg-blue-50 dark:hover:bg-gray-700 transition-colors text-decoration-none">
+                                    <span class="material-symbols-outlined text-[18px] text-blue-600 dark:text-blue-400">edit_square</span>
+                                    <span class="font-medium">Edit Profile</span>
+                                </a>
+                                <div class="border-t border-slate-100 dark:border-gray-700 my-1"></div>
+                                <a href="{% url 'users:UserLogout' %}" class="flex items-center gap-3 px-4 py-3 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors text-decoration-none">
+                                    <span class="material-symbols-outlined text-[18px]">logout</span>
+                                    <span class="font-medium">Logout</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Dashboard Content -->
+        <div class="flex-1 w-full min-h-0">
+            {% block contents %}
+            {% endblock %}
+        </div>
+    </main>
+
+    {% block extra_css %}
+    {% endblock %}
+
+    <div id="maya-widget" class="fixed bottom-6 right-6 z-50">
+        <div id="maya-panel" class="hidden w-[32rem] max-w-[95vw] bg-white dark:bg-gray-800 rounded-2xl shadow-2xl border border-slate-200 dark:border-gray-700 overflow-hidden">
+            <div class="flex items-center gap-3 p-3 border-b border-slate-200 dark:border-gray-700">
+                <img src="{% static 'images/Curious Child in Dreamlike Setting.png' %}" alt="Maya" class="w-10 h-10 rounded-full object-cover">
+                <div>
+                    <div class="text-xs font-black uppercase tracking-widest text-blue-600 dark:text-blue-400">Maya</div>
+                    <div class="text-[11px] text-slate-500 dark:text-slate-400">Curious helper for Careerlytics</div>
+                </div>
+                <button id="maya-close" class="ml-auto text-slate-500 hover:text-slate-900 dark:hover:text-white">
+                    <span class="material-symbols-outlined text-[20px]">close</span>
+                </button>
+            </div>
+            <div id="maya-chatlog" class="p-3 space-y-3 max-h-[70vh] overflow-y-auto">
+                <div class="text-[12px] text-slate-600 dark:text-slate-300">Hi! I’m Maya. Ask me anything about Careerlytics.</div>
+            </div>
+            <div class="p-3 border-t border-slate-200 dark:border-gray-700">
+                <div class="flex items-center gap-2">
+                    <input id="maya-input" type="text" class="flex-1 px-3 py-2 rounded-lg border border-slate-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-slate-900 dark:text-slate-100 text-sm" placeholder="Ask about Careerlytics...">
+                    <button id="maya-send" class="px-3 py-2 rounded-lg bg-blue-600 text-white text-sm font-semibold">Send</button>
+                </div>
+            </div>
+        </div>
+        <button id="maya-toggle" class="w-14 h-14 rounded-full shadow-xl overflow-hidden border border-slate-200 dark:border-gray-700">
+            <img src="{% static 'images/Curious Child in Dreamlike Setting.png' %}" alt="Maya" class="w-full h-full object-cover">
+        </button>
+    </div>
+
+    <script>
+        // Mobile menu toggle functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const menuToggle = document.getElementById('mobile-menu-toggle');
+            const sidebar = document.getElementById('sidebar');
+            
+            if (menuToggle && sidebar) {
+                menuToggle.addEventListener('click', function() {
+                    sidebar.classList.toggle('-translate-x-full');
+                    const icon = menuToggle.querySelector('.material-symbols-outlined');
+                    if (sidebar.classList.contains('-translate-x-full')) {
+                        icon.textContent = 'menu';
+                    } else {
+                        icon.textContent = 'close';
+                    }
+                });
+            }
+        });
+        // Initialize theme on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            const html = document.documentElement;
+            const themeToggles = document.querySelectorAll('.theme-toggle-btn');
+            const knobs = document.querySelectorAll('.knob');
+            const starContainers = [document.getElementById('stars-mobile'), document.getElementById('stars-desktop')];
+            
+            // Create stars for both containers
+            starContainers.forEach(container => {
+                if (container) {
+                    for(let i=0; i<40; i++){
+                        let s=document.createElement("div");
+                        s.className="star";
+                        s.style.left=Math.random()*100+"%";
+                        s.style.top=Math.random()*100+"%";
+                        s.style.animationDelay=Math.random()*2+"s";
+                        container.appendChild(s);
+                    }
+                }
+            });
+            
+            // Set initial theme state
+            let night = savedTheme === 'dark';
+            
+            function updateThemeUI() {
+                if (night) {
+                    html.classList.add('dark');
+                    themeToggles.forEach(t => t.classList.add('active'));
+                    knobs.forEach(k => {
+                        k.classList.add('moon');
+                        k.innerHTML="<div class='moon-shadow'></div>";
+                    });
+                    document.querySelectorAll(".star").forEach(s=>s.style.opacity=1);
+                    document.querySelectorAll(".cloud").forEach(c=>c.style.opacity=0);
+                } else {
+                    html.classList.remove('dark');
+                    themeToggles.forEach(t => t.classList.remove('active'));
+                    knobs.forEach(k => {
+                        k.classList.remove('moon');
+                        k.innerHTML="";
+                    });
+                    document.querySelectorAll(".star").forEach(s=>s.style.opacity=0);
+                    document.querySelectorAll(".cloud").forEach(c=>c.style.opacity=1);
+                }
+            }
+
+            updateThemeUI();
+            
+            // Mobile Menu Toggle
+            const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+            const sidebar = document.getElementById('sidebar');
+            const sidebarOverlay = document.getElementById('sidebar-overlay');
+
+            if (mobileMenuToggle && sidebar && sidebarOverlay) {
+                mobileMenuToggle.addEventListener('click', () => {
+                    sidebar.classList.toggle('-translate-x-full');
+                    sidebarOverlay.classList.toggle('hidden');
+                });
+
+                sidebarOverlay.addEventListener('click', () => {
+                    sidebar.classList.add('-translate-x-full');
+                    sidebarOverlay.classList.add('hidden');
+                });
+            }
+            
+            // Add click event listener to all toggles
+            themeToggles.forEach(toggle => {
+                toggle.addEventListener('click', () => {
+                    night = !night;
+                    localStorage.setItem('theme', night ? 'dark' : 'light');
+                    updateThemeUI();
+                });
+            });
+
+            const panel = document.getElementById('maya-panel');
+            const toggleBtn = document.getElementById('maya-toggle');
+            const closeBtn = document.getElementById('maya-close');
+            const sendBtn = document.getElementById('maya-send');
+            const inputEl = document.getElementById('maya-input');
+            const logEl = document.getElementById('maya-chatlog');
+            function appendBubble(text, who){
+                const d=document.createElement('div');
+                d.className = 'text-[12px] ' + (who==='user' ? 'text-slate-900 dark:text-white' : 'text-slate-600 dark:text-slate-300');
+                d.textContent = text;
+                logEl.appendChild(d);
+                logEl.scrollTop = logEl.scrollHeight;
+            }
+            function openPanel(){panel.classList.remove('hidden')}
+            function closePanel(){panel.classList.add('hidden')}
+            toggleBtn.addEventListener('click', openPanel);
+            closeBtn.addEventListener('click', closePanel);
+            async function mayaSend(){
+                const msg = inputEl.value.trim();
+                if(!msg){return}
+                appendBubble(msg, 'user');
+                inputEl.value='';
+                try{
+                    const r = await fetch('{% url "users:maya_chat" %}',{
+                        method:'POST',
+                        headers:{'Content-Type':'application/json'},
+                        body: JSON.stringify({message: msg})
+                    });
+                    const j = await r.json();
+                    appendBubble(j.reply || 'I can only help with Careerlytics topics.', 'maya');
+                }catch(_){
+                    appendBubble('I can only help with Careerlytics topics.', 'maya');
+                }
+            }
+            sendBtn.addEventListener('click', mayaSend);
+            inputEl.addEventListener('keydown', (e)=>{ if(e.key==='Enter'){ e.preventDefault(); mayaSend(); }});
+        });
+    </script>
+    {% block extra_js %}
+    {% endblock %}
+</body>
+</html>

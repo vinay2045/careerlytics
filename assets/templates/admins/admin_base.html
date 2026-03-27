@@ -1,0 +1,454 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Admin Dashboard{% endblock %} - Careerlytics</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,200..700,0..1,-1..2" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        dark: {
+                            bg: '#0B0E14',
+                            sidebar: '#0F1219',
+                            card: '#151A23',
+                            border: '#1E2532',
+                            text: '#9CA3AF',
+                            textHighlight: '#F3F4F6'
+                        },
+                        brand: {
+                            blue: '#3B82F6',
+                            blueHover: '#2563EB'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .sidebar-item {
+            transition: all 0.2s ease-in-out;
+            border-left: 3px solid transparent;
+        }
+        .sidebar-item:hover, .sidebar-item.active {
+            background-color: rgba(59, 130, 246, 0.1);
+            color: #1F2937;
+        }
+        html.dark .sidebar-item:hover, html.dark .sidebar-item.active {
+            color: #F3F4F6;
+        }
+        .sidebar-item.active {
+            border-left-color: #3B82F6;
+            background: linear-gradient(90deg, rgba(59,130,246,0.1) 0%, rgba(59,130,246,0) 100%);
+        }
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
+        .glass-effect {
+            background: rgba(21, 26, 35, 0.7);
+            backdrop-filter: blur(10px);
+        }
+        
+        /* Glass Day Night Toggle */
+        .toggle-wrapper{
+            width:90px;
+            height:38px;
+            border-radius:21px;
+            background:rgba(255,255,255,0.25);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border:1px solid rgba(255,255,255,0.4);
+            box-shadow:0 6px 15px rgba(0,0,0,0.05);
+            position:relative;
+            overflow:hidden;
+            cursor:pointer;
+            flex-shrink:0;
+            transform: scale(1);
+        }
+
+        /* Inner sky */
+        .sky{
+            position:absolute;
+            inset:0;
+            border-radius:21px;
+            transition:1s;
+            background:linear-gradient(135deg,#7fc8ff,#cceeff);
+        }
+
+        /* Clouds */
+        .cloud{
+            position:absolute;
+            width:38px;
+            height:14px;
+            background:rgba(255,255,255,0.95);
+            border-radius:14px;
+            top:11px;
+            animation:cloudMove 18s linear infinite;
+            box-shadow:0 1px 4px rgba(0,0,0,0.03);
+        }
+        .cloud::before,
+        .cloud::after{
+            content:'';
+            position:absolute;
+            background:rgba(255,255,255,0.95);
+            width:15px;
+            height:15px;
+            border-radius:50%;
+            top:-8px;
+        }
+        .cloud::before{left:5px;}
+        .cloud::after{left:19px;}
+
+        @keyframes cloudMove{
+            from{left:-45px;}
+            to{left:95px;}
+        }
+
+        /* Stars */
+        .star{
+            position:absolute;
+            width:0.8px;
+            height:0.8px;
+            background:white;
+            border-radius:50%;
+            opacity:0;
+            animation:twinkle 2s infinite alternate;
+        }
+        @keyframes twinkle{
+            from{opacity:.3;}
+            to{opacity:1;}
+        }
+
+        /* Knob */
+        .knob{
+            position:absolute;
+            top:3px;
+            left:3px;
+            width:32px;
+            height:32px;
+            border-radius:50%;
+            background:linear-gradient(135deg,#FFD700,#FF8C00);
+            box-shadow:0 0 8px #FFD700, 0 3px 8px rgba(0,0,0,0.12);
+            transition:0.9s cubic-bezier(0.4,0,0.2,1);
+            z-index:5;
+        }
+        
+        /* Moon */
+        .moon{
+            background:linear-gradient(135deg,#eee,#aaa);
+            box-shadow:inset -3px -3px 0 rgba(0,0,0,0.2),
+                       0 0 6px #aaa;
+        }
+
+        /* Moon shadow */
+        .moon-shadow{
+            position:absolute;
+            width:8px;
+            height:8px;
+            background:rgba(0,0,0,0.25);
+            border-radius:50%;
+            top:7px;
+            left:7px;
+        }
+
+        /* Night Mode */
+        .toggle-wrapper.active .knob{
+            transform:translateX(52px) rotate(360deg);
+        }
+        .toggle-wrapper.active .sky{
+            background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+        }
+    </style>
+</head>
+<body class="flex h-screen overflow-hidden bg-gray-50 dark:bg-dark-bg text-gray-900 dark:text-dark-text selection:bg-brand-blue selection:text-white">
+
+    <!-- Sidebar -->
+    <aside id="sidebar" class="fixed lg:static inset-y-0 left-0 w-64 bg-white dark:bg-dark-sidebar border-r border-gray-200 dark:border-dark-border flex flex-col justify-between flex-shrink-0 transition-all duration-300 z-50 transform -translate-x-full lg:translate-x-0">
+        <!-- Logo Area -->
+        <div class="p-6 border-b border-gray-200 dark:border-dark-border/50 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 flex items-center justify-center">
+                    <img src="{% static 'images/logo.png' %}" alt="Logo" class="w-full h-full object-contain">
+                </div>
+                <div>
+                    <h1 class="text-gray-900 dark:text-white font-bold text-lg leading-tight">Careerlytics</h1>
+                    <p class="text-xs text-blue-600 dark:text-blue-400 font-medium tracking-wider">ADMIN PANEL</p>
+                </div>
+            </div>
+            <button onclick="toggleSidebar()" class="lg:hidden p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-white/5 text-gray-500">
+                <span class="material-symbols-outlined">close</span>
+            </button>
+        </div>
+
+        <!-- Navigation -->
+        <nav class="flex-1 overflow-y-auto py-6 px-3 space-y-1 scrollbar-hide">
+            <a href="{% url 'AdminHome' %}" class="sidebar-item flex items-center gap-3 px-3 py-3 rounded-r-lg group {% if request.resolver_match.url_name == 'AdminHome' %}active{% endif %}">
+                <span class="material-symbols-outlined group-hover:text-brand-blue transition-colors">home</span>
+                <span class="text-sm font-medium">Home</span>
+            </a>
+
+            <a href="{% url 'admin_analysis' %}" class="sidebar-item flex items-center gap-3 px-3 py-3 rounded-r-lg group {% if request.resolver_match.url_name == 'admin_analysis' %}active{% endif %}">
+                <span class="material-symbols-outlined group-hover:text-brand-blue transition-colors">analytics</span>
+                <span class="text-sm font-medium">Analysis & Summary</span>
+            </a>
+
+            <a href="{% url 'admin_placement_drives' %}" class="sidebar-item flex items-center gap-3 px-3 py-3 rounded-r-lg group {% if request.resolver_match.url_name == 'admin_placement_drives' %}active{% endif %}">
+                <span class="material-symbols-outlined group-hover:text-brand-blue transition-colors">business_center</span>
+                <span class="text-sm font-medium">Placement Drives</span>
+                <span class="ml-auto w-1.5 h-1.5 rounded-full bg-brand-blue opacity-0 group-[.active]:opacity-100"></span>
+            </a>
+
+            <a href="{% url 'admin_opted_in' %}" class="sidebar-item flex items-center gap-3 px-3 py-3 rounded-r-lg group {% if request.resolver_match.url_name == 'admin_opted_in' %}active{% endif %}">
+                <span class="material-symbols-outlined group-hover:text-brand-blue transition-colors">fact_check</span>
+                <span class="text-sm font-medium">Opted In</span>
+            </a>
+
+            <a href="{% url 'outcome_registry' %}" class="sidebar-item flex items-center gap-3 px-3 py-3 rounded-r-lg group {% if request.resolver_match.url_name == 'outcome_registry' %}active{% endif %}">
+                <span class="material-symbols-outlined group-hover:text-brand-blue transition-colors">verified</span>
+                <span class="text-sm font-medium">Outcome Registry</span>
+            </a>
+
+            <a href="{% url 'readiness_admin:student_classification' %}" class="sidebar-item flex items-center gap-3 px-3 py-3 rounded-r-lg group {% if request.resolver_match.url_name == 'student_classification' %}active{% endif %}">
+                <span class="material-symbols-outlined group-hover:text-brand-blue transition-colors">category</span>
+                <span class="text-sm font-medium">Student Readiness</span>
+            </a>
+
+            <a href="{% url 'admin_all_students' %}" class="sidebar-item flex items-center gap-3 px-3 py-3 rounded-r-lg group {% if request.resolver_match.url_name == 'admin_all_students' %}active{% endif %}">
+                <span class="material-symbols-outlined group-hover:text-brand-blue transition-colors">people</span>
+                <span class="text-sm font-medium">Manage Students</span>
+            </a>
+
+
+        </nav>
+
+        <!-- Bottom Actions -->
+        <div class="p-4 border-t border-gray-200 dark:border-dark-border/50 space-y-2">
+            <a href="#" class="flex items-center gap-3 px-3 py-2 rounded-lg hover:text-gray-900 dark:hover:text-white transition-colors text-sm">
+                <span class="material-symbols-outlined text-lg">settings</span>
+                <span>Settings</span>
+            </a>
+            <a href="{% url 'AdminLogout' %}" class="flex items-center gap-3 px-3 py-2 rounded-lg hover:text-red-500 dark:hover:text-red-400 transition-colors text-sm">
+                <span class="material-symbols-outlined text-lg">logout</span>
+                <span>Sign Out</span>
+            </a>
+
+            <!-- User Profile -->
+            <div class="mt-4 pt-4 border-t border-gray-200 dark:border-dark-border/30 flex items-center gap-3">
+                <div class="w-10 h-10 rounded-full bg-indigo-50 dark:bg-indigo-900/50 flex items-center justify-center text-indigo-600 dark:text-indigo-400 font-bold border border-indigo-200 dark:border-indigo-500/30">
+                    {% if request.user.placement_cell %}
+                        {{ request.user.placement_cell.institution_name|slice:":2"|upper }}
+                    {% else %}
+                        {{ request.user.username|slice:":2"|upper }}
+                    {% endif %}
+                </div>
+                <div>
+                    <h4 class="text-gray-900 dark:text-white text-sm font-semibold">
+                        {% if request.user.placement_cell %}
+                            {{ request.user.placement_cell.institution_name }}
+                        {% else %}
+                            {{ request.user.username }}
+                        {% endif %}
+                    </h4>
+                    <p class="text-xs text-gray-500 dark:text-gray-400">
+                        {% if request.user.placement_cell %}
+                            ID: {{ request.user.placement_cell.placement_cell_id }}
+                        {% else %}
+                            Administrator
+                        {% endif %}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Main Content Wrapper -->
+    <div class="flex-1 flex flex-col h-screen overflow-hidden">
+        <!-- Header -->
+        <header class="h-16 bg-white dark:bg-dark-bg border-b border-gray-200 dark:border-dark-border flex items-center justify-between px-4 sm:px-8 flex-shrink-0 z-20">
+            <div class="flex items-center gap-4">
+                <button onclick="toggleSidebar()" class="lg:hidden p-2 -ml-2 rounded-lg hover:bg-gray-100 dark:hover:bg-white/5 text-gray-500">
+                    <span class="material-symbols-outlined">menu</span>
+                </button>
+                <h2 class="text-gray-900 dark:text-white font-bold text-lg sm:text-xl">{% block header_title %}Dashboard{% endblock %}</h2>
+                <div class="hidden sm:flex h-4 w-px bg-gray-200 dark:bg-dark-border mx-2"></div>
+                <div class="hidden sm:flex items-center gap-2 text-xs text-gray-500 font-mono uppercase tracking-wide">
+                    <span class="text-brand-blue">{% now "M d, Y" %}</span>
+                    <span class="w-1 h-1 rounded-full bg-gray-400 dark:bg-gray-600"></span>
+                    <span>Session 25-26</span>
+                </div>
+            </div>
+
+            <div class="flex items-center gap-2 sm:gap-4">
+                <div class="relative hidden md:block">
+                    <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 text-lg">search</span>
+                    <input type="text" placeholder="Global search..." class="bg-gray-50 dark:bg-dark-card border border-gray-200 dark:border-dark-border rounded-full pl-10 pr-4 py-1.5 text-sm text-gray-700 dark:text-gray-300 focus:outline-none focus:border-brand-blue focus:ring-1 focus:ring-brand-blue w-48 lg:w-64 transition-all">
+                </div>
+
+                <!-- Theme Toggle -->
+                <div class="toggle-wrapper" id="theme-toggle">
+                    <div class="sky">
+                        <div class="cloud" style="animation-delay:0s"></div>
+                        <div class="cloud" style="top:60px;animation-delay:7s"></div>
+                        <div id="stars"></div>
+                    </div>
+                    <div class="knob" id="knob"></div>
+                </div>
+
+                <button class="w-9 h-9 rounded-full bg-white dark:bg-dark-card border border-gray-200 dark:border-dark-border flex items-center justify-center text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:border-gray-400 dark:hover:border-gray-500 transition-all relative">
+                    <span class="material-symbols-outlined text-xl">notifications</span>
+                    <span class="absolute top-2 right-2.5 w-1.5 h-1.5 bg-red-500 rounded-full"></span>
+                </button>
+            </div>
+        </header>
+
+        <!-- Content Area -->
+        <main class="flex-1 overflow-y-auto p-4 sm:p-8 relative">
+            {% block content %}
+            {% endblock %}
+        </main>
+    </div>
+
+    <!-- Sidebar Overlay -->
+    <div id="sidebar-overlay" onclick="toggleSidebar()" class="fixed inset-0 bg-black/50 z-40 hidden lg:hidden transition-opacity duration-300 opacity-0"></div>
+
+    <script>
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebar-overlay');
+            const isHidden = sidebar.classList.contains('-translate-x-full');
+            
+            if (isHidden) {
+                sidebar.classList.remove('-translate-x-full');
+                overlay.classList.remove('hidden');
+                setTimeout(() => overlay.classList.add('opacity-100'), 10);
+                document.body.style.overflow = 'hidden';
+            } else {
+                sidebar.classList.add('-translate-x-full');
+                overlay.classList.remove('opacity-100');
+                setTimeout(() => overlay.classList.add('hidden'), 300);
+                document.body.style.overflow = '';
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const savedTheme = localStorage.getItem('theme') || 'dark';
+            const html = document.documentElement;
+            const themeToggle = document.getElementById('theme-toggle');
+            const knob = document.getElementById('knob');
+            const stars = document.getElementById('stars');
+            
+            // Create stars
+            for(let i=0;i<40;i++){
+                let s=document.createElement("div");
+                s.className="star";
+                s.style.left=Math.random()*100+"%";
+                s.style.top=Math.random()*100+"%";
+                s.style.animationDelay=Math.random()*2+"s";
+                stars.appendChild(s);
+            }
+            
+            function setTheme(isDark) {
+                if (isDark) {
+                    html.classList.add('dark');
+                    themeToggle.classList.add('active');
+                    knob.classList.add('moon');
+                    knob.innerHTML="<div class='moon-shadow'></div>";
+                    document.querySelectorAll(".star").forEach(s=>s.style.opacity=1);
+                    document.querySelectorAll(".cloud").forEach(c=>c.style.opacity=0);
+                } else {
+                    html.classList.remove('dark');
+                    themeToggle.classList.remove('active');
+                    knob.classList.remove('moon');
+                    knob.innerHTML = "";
+                    document.querySelectorAll(".star").forEach(s=>s.style.opacity=0);
+                    document.querySelectorAll(".cloud").forEach(c=>c.style.opacity=1);
+                }
+            }
+
+            // Initial set
+            let night = savedTheme === 'dark';
+            setTheme(night);
+
+            // Toggle event
+            themeToggle.addEventListener('click', () => {
+                night = !night;
+                localStorage.setItem('theme', night ? 'dark' : 'light');
+                setTheme(night);
+            });
+        });
+    </script>
+</body>
+</html>
+<div id="maya-widget" class="fixed bottom-6 right-6 z-50">
+    <div id="maya-panel" class="hidden w-[32rem] max-w-[95vw] bg-white rounded-2xl shadow-2xl border border-gray-200 overflow-hidden">
+        <div class="flex items-center gap-3 p-3 border-b border-gray-200">
+            <img src="{% static 'images/Curious Child in Dreamlike Setting.png' %}" alt="Maya" class="w-10 h-10 rounded-full object-cover">
+            <div>
+                <div class="text-xs font-black uppercase tracking-widest text-blue-600">Maya</div>
+                <div class="text-[11px] text-gray-500">Curious helper for Careerlytics</div>
+            </div>
+            <button id="maya-close" class="ml-auto text-gray-500 hover:text-gray-900">
+                <span class="material-symbols-outlined text-[20px]">close</span>
+            </button>
+        </div>
+        <div id="maya-chatlog" class="p-3 space-y-3 max-h-[70vh] overflow-y-auto">
+            <div class="text-[12px] text-gray-600">Hi! I’m Maya. Ask me anything.</div>
+        </div>
+        <div class="p-3 border-t border-gray-200">
+            <div class="flex items-center gap-2">
+                <input id="maya-input" type="text" class="flex-1 px-3 py-2 rounded-lg border border-gray-200 bg-white text-gray-900 text-sm" placeholder="Ask about Careerlytics...">
+                <button id="maya-send" class="px-3 py-2 rounded-lg bg-blue-600 text-white text-sm font-semibold">Send</button>
+            </div>
+        </div>
+    </div>
+    <button id="maya-toggle" class="w-14 h-14 rounded-full shadow-xl overflow-hidden border border-gray-200">
+        <img src="{% static 'images/Curious Child in Dreamlike Setting.png' %}" alt="Maya" class="w-full h-full object-cover">
+    </button>
+</div>
+<script>
+    const panel = document.getElementById('maya-panel');
+    const toggleBtn = document.getElementById('maya-toggle');
+    const closeBtn = document.getElementById('maya-close');
+    const sendBtn = document.getElementById('maya-send');
+    const inputEl = document.getElementById('maya-input');
+    const logEl = document.getElementById('maya-chatlog');
+    function appendBubble(text, who){
+        const d=document.createElement('div');
+        d.className = 'text-[12px] ' + (who==='user' ? 'text-gray-900' : 'text-gray-600');
+        d.textContent = text;
+        logEl.appendChild(d);
+        logEl.scrollTop = logEl.scrollHeight;
+    }
+    function openPanel(){panel.classList.remove('hidden')}
+    function closePanel(){panel.classList.add('hidden')}
+    if(toggleBtn){toggleBtn.addEventListener('click', openPanel)}
+    if(closeBtn){closeBtn.addEventListener('click', closePanel)}
+    async function mayaSend(){
+        const msg = inputEl.value.trim();
+        if(!msg){return}
+        appendBubble(msg, 'user');
+        inputEl.value='';
+        try{
+            const r = await fetch('{% url "users:maya_chat" %}',{
+                method:'POST',
+                headers:{'Content-Type':'application/json'},
+                body: JSON.stringify({message: msg})
+            });
+            const j = await r.json();
+            appendBubble(j.reply || 'Let\'s think about this together!', 'maya');
+        }catch(_){
+            appendBubble('Let\'s think about this together!', 'maya');
+        }
+    }
+    if(sendBtn){sendBtn.addEventListener('click', mayaSend)}
+    if(inputEl){inputEl.addEventListener('keydown', (e)=>{ if(e.key==='Enter'){ e.preventDefault(); mayaSend(); }})}
+</script>

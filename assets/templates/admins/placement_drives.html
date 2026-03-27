@@ -1,0 +1,302 @@
+{% extends 'admins/admin_base.html' %}
+{% load static %}
+
+{% block title %}Placement Drives{% endblock %}
+{% block header_title %}Drives{% endblock %}
+
+{% block content %}
+<div class="space-y-8">
+    
+    <!-- Header Section -->
+    <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+        <div>
+            <h1 class="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white tracking-tight">Placement Drive Manager</h1>
+            <p class="text-gray-500 dark:text-gray-400 mt-1 text-sm">Manage daily operations and upcoming visits</p>
+        </div>
+        <a href="{% url 'admin_add_placement_drive' %}" class="w-full sm:w-auto bg-brand-blue hover:bg-brand-blueHover text-white px-5 py-2.5 rounded-lg font-medium text-sm flex items-center justify-center gap-2 transition-colors shadow-lg shadow-blue-900/20">
+            <span class="material-symbols-outlined text-lg">add</span>
+            Add New Drive
+        </a>
+    </div>
+
+    <!-- Drives Section -->
+    <div class="space-y-4">
+        <!-- Search and Filter -->
+        <form method="GET" action="{% url 'admin_placement_drives' %}" class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+            <div class="relative flex-1">
+                <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-gray-500">search</span>
+                <input type="text" name="search" value="{{ search_query }}" placeholder="Search company, role, or test title.." class="w-full bg-white dark:bg-dark-card border border-gray-200 dark:border-dark-border rounded-xl pl-11 pr-4 py-3 text-sm text-gray-700 dark:text-gray-300 focus:outline-none focus:ring-2 focus:ring-brand-blue/20 focus:border-brand-blue transition-all">
+            </div>
+            <div class="flex gap-2">
+                <button type="submit" class="flex-1 sm:flex-none bg-brand-blue hover:bg-brand-blueHover text-white px-5 py-3 rounded-xl font-medium text-sm flex items-center justify-center gap-2 transition-colors">
+                    Search
+                </button>
+                {% if search_query %}
+                <a href="{% url 'admin_placement_drives' %}" class="flex-1 sm:flex-none bg-white dark:bg-dark-card border border-gray-200 dark:border-dark-border hover:border-gray-400 dark:hover:border-gray-500 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white px-5 py-3 rounded-xl transition-colors text-center text-sm flex items-center justify-center">
+                    Clear
+                </a>
+                {% endif %}
+            </div>
+        </form>
+
+        <!-- Drives Table -->
+        <div class="bg-white dark:bg-dark-card border border-gray-200 dark:border-dark-border rounded-xl overflow-hidden shadow-sm dark:shadow-xl">
+            <div class="overflow-x-auto scrollbar-hide">
+                <table class="w-full text-left border-collapse min-w-[800px] lg:min-w-full">
+                    <thead>
+                        <tr class="border-b border-gray-200 dark:border-dark-border/50">
+                            <th class="px-4 sm:px-6 py-4 text-[10px] sm:text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Company Name</th>
+                            <th class="px-4 sm:px-6 py-4 text-[10px] sm:text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Role</th>
+                            <th class="px-4 sm:px-6 py-4 text-[10px] sm:text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Drive Date</th>
+                            <th class="px-4 sm:px-6 py-4 text-[10px] sm:text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Applied</th>
+                            <th class="px-4 sm:px-6 py-4 text-[10px] sm:text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Status</th>
+                            <th class="px-4 sm:px-6 py-4 text-[10px] sm:text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider text-right">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-200 dark:divide-dark-border/50">
+                        {% for drive in drives %}
+                        <tr class="group hover:bg-gray-50 dark:hover:bg-white/5 transition-colors">
+                            <td class="px-4 sm:px-6 py-4">
+                                <div class="flex items-center gap-3 sm:gap-4">
+                                    <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-lg bg-indigo-50 dark:bg-indigo-900/30 flex items-center justify-center text-indigo-600 dark:text-indigo-400 font-bold border border-indigo-200 dark:border-indigo-500/20 text-xs sm:text-base">
+                                        {{ drive.company_name|slice:":1" }}
+                                    </div>
+                                    <span class="font-medium text-gray-900 dark:text-white text-sm sm:text-base">{{ drive.company_name }}</span>
+                                </div>
+                            </td>
+                            <td class="px-4 sm:px-6 py-4 text-xs sm:text-sm text-gray-500 dark:text-gray-400 group-hover:text-gray-700 dark:group-hover:text-gray-300">{{ drive.job_role }}</td>
+                            <td class="px-4 sm:px-6 py-4">
+                                <div class="flex items-center gap-2 text-xs sm:text-sm text-gray-500 dark:text-gray-400 group-hover:text-gray-700 dark:group-hover:text-gray-300">
+                                    <span class="material-symbols-outlined text-sm sm:text-base">calendar_today</span>
+                                    {{ drive.application_deadline|date:"M d, Y" }}
+                                </div>
+                            </td>
+                            <td class="px-4 sm:px-6 py-4">
+                                <div class="flex items-center gap-2 text-xs sm:text-sm text-gray-500 dark:text-gray-400 group-hover:text-gray-700 dark:group-hover:text-gray-300">
+                                    <span class="material-symbols-outlined text-sm sm:text-base">group</span>
+                                    {{ drive.current_participants }}
+                                </div>
+                            </td>
+                            <td class="px-4 sm:px-6 py-4">
+                                {% if drive.status == 'ongoing' %}
+                                    <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] sm:text-xs font-medium bg-green-500/10 text-green-400 border border-green-500/20">
+                                        <span class="w-1 sm:w-1.5 h-1 sm:h-1.5 rounded-full bg-green-400"></span>
+                                        ACTIVE
+                                    </span>
+                                {% elif drive.status == 'upcoming' %}
+                                    <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] sm:text-xs font-medium bg-blue-500/10 text-blue-400 border border-blue-500/20">
+                                        <span class="w-1 sm:w-1.5 h-1 sm:h-1.5 rounded-full bg-blue-400"></span>
+                                        UPCOMING
+                                    </span>
+                                {% else %}
+                                    <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] sm:text-xs font-medium bg-gray-500/10 text-gray-400 border border-gray-500/20">
+                                        <span class="w-1 sm:w-1.5 h-1 sm:h-1.5 rounded-full bg-gray-400"></span>
+                                        {{ drive.status|upper|default:"COMPLETED" }}
+                                    </span>
+                                {% endif %}
+                            </td>
+                            <td class="px-4 sm:px-6 py-4 text-right">
+                                <div class="flex items-center justify-end gap-1 sm:gap-2">
+                                    <a href="{% url 'admin_view_activity' drive.id %}" class="p-1.5 sm:p-2 rounded-lg text-gray-400 hover:text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-colors" title="View Details">
+                                        <span class="material-symbols-outlined text-lg sm:text-xl">visibility</span>
+                                    </a>
+                                    <a href="{% url 'admin_edit_activity' drive.id %}" class="p-1.5 sm:p-2 rounded-lg text-gray-400 hover:text-amber-600 hover:bg-amber-50 dark:hover:bg-amber-900/20 transition-colors" title="Edit Drive">
+                                        <span class="material-symbols-outlined text-lg sm:text-xl">edit</span>
+                                    </a>
+                                    <button onclick="confirmDelete('{% url 'admin_delete_activity' drive.id %}', '{{ drive.title|escapejs }}')" class="p-1.5 sm:p-2 rounded-lg text-gray-400 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors" title="Delete Drive">
+                                        <span class="material-symbols-outlined text-lg sm:text-xl">delete</span>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="6" class="px-6 py-12 text-center text-gray-500 dark:text-gray-400">
+                                <div class="flex flex-col items-center gap-3">
+                                    <span class="material-symbols-outlined text-4xl opacity-50">folder_off</span>
+                                    <p>No placement drives found. Click "Add New Drive" to create one.</p>
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Readiness Tests Section -->
+    <div class="space-y-4">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div>
+                <h2 class="text-xl font-bold text-gray-900 dark:text-white tracking-tight">Readiness Tests</h2>
+                <p class="text-gray-500 dark:text-gray-400 text-sm">Assess student readiness for placements</p>
+            </div>
+            <a href="{% url 'admin_add_readiness_test' %}" class="w-full sm:w-auto bg-white dark:bg-dark-card border border-gray-200 dark:border-dark-border hover:border-brand-blue text-gray-700 dark:text-gray-300 px-4 py-2 rounded-lg font-medium text-sm flex items-center justify-center gap-2 transition-all">
+                <span class="material-symbols-outlined text-lg">add</span>
+                New Test
+            </a>
+        </div>
+
+        <div class="bg-white dark:bg-dark-card border border-gray-200 dark:border-dark-border rounded-xl overflow-hidden shadow-sm dark:shadow-xl">
+            <div class="overflow-x-auto scrollbar-hide">
+                <table class="w-full text-left border-collapse min-w-[800px] lg:min-w-full">
+                    <thead>
+                        <tr class="border-b border-gray-200 dark:border-dark-border/50">
+                            <th class="px-4 sm:px-6 py-4 text-[10px] sm:text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Test Title</th>
+                            <th class="px-4 sm:px-6 py-4 text-[10px] sm:text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Date & Time</th>
+                            <th class="px-4 sm:px-6 py-4 text-[10px] sm:text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Status</th>
+                            <th class="px-4 sm:px-6 py-4 text-[10px] sm:text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Thresholds</th>
+                            <th class="px-4 sm:px-6 py-4 text-[10px] sm:text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider text-right">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-200 dark:divide-dark-border/50">
+                        {% for test in tests %}
+                        <tr class="group hover:bg-gray-50 dark:hover:bg-white/5 transition-colors">
+                            <td class="px-4 sm:px-6 py-4">
+                                <div class="flex items-center gap-3 sm:gap-4">
+                                    <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-lg bg-emerald-50 dark:bg-emerald-900/30 flex items-center justify-center text-emerald-600 dark:text-emerald-400 font-bold border border-emerald-200 dark:border-emerald-500/20 text-xs sm:text-base">
+                                        <span class="material-symbols-outlined">quiz</span>
+                                    </div>
+                                    <div>
+                                        <span class="font-medium text-gray-900 dark:text-white block text-sm sm:text-base">{{ test.title }}</span>
+                                        <span class="text-xs text-gray-500 dark:text-gray-400 line-clamp-1">{{ test.description|truncatechars:50 }}</span>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="px-4 sm:px-6 py-4">
+                                <div class="flex flex-col gap-1">
+                                    <div class="flex items-center gap-2 text-xs sm:text-sm text-gray-700 dark:text-gray-300">
+                                        <span class="material-symbols-outlined text-sm sm:text-base">calendar_today</span>
+                                        {{ test.date|date:"M d, Y" }}
+                                    </div>
+                                    <div class="flex items-center gap-2 text-[10px] sm:text-xs text-gray-500">
+                                        <span class="material-symbols-outlined text-xs sm:text-sm">schedule</span>
+                                        {{ test.time|time:"h:i A" }}
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="px-4 sm:px-6 py-4">
+                                {% if test.test_status == 'active' %}
+                                    <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] sm:text-xs font-medium bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                                        <span class="w-1 sm:w-1.5 h-1 sm:h-1.5 rounded-full bg-emerald-400"></span>
+                                        ACTIVE
+                                    </span>
+                                {% elif test.test_status == 'completed' %}
+                                    <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] sm:text-xs font-medium bg-gray-500/10 text-gray-400 border border-gray-500/20">
+                                        <span class="w-1 sm:w-1.5 h-1 sm:h-1.5 rounded-full bg-gray-400"></span>
+                                        COMPLETED
+                                    </span>
+                                {% else %}
+                                    <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] sm:text-xs font-medium bg-amber-500/10 text-amber-400 border border-amber-500/20">
+                                        <span class="w-1 sm:w-1.5 h-1 sm:h-1.5 rounded-full bg-amber-400"></span>
+                                        {{ test.test_status|upper|default:"DRAFT" }}
+                                    </span>
+                                {% endif %}
+                            </td>
+                            <td class="px-4 sm:px-6 py-4">
+                                <div class="flex flex-col gap-1">
+                                    <div class="text-[9px] sm:text-[10px] uppercase font-bold text-gray-400 tracking-wider">Pass Marks</div>
+                                    <div class="flex items-center gap-2">
+                                        <span class="px-1.5 py-0.5 rounded bg-emerald-50 dark:bg-emerald-900/20 text-emerald-600 dark:text-emerald-400 text-[9px] sm:text-[10px] font-bold border border-emerald-200 dark:border-emerald-500/20" title="Ready">R: {{ test.placement_ready_min }}%</span>
+                                        <span class="px-1.5 py-0.5 rounded bg-amber-50 dark:bg-amber-900/20 text-amber-600 dark:text-amber-400 text-[9px] sm:text-[10px] font-bold border border-amber-200 dark:border-amber-500/20" title="Needs Imp.">N: {{ test.needs_improvement_min }}%</span>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="px-4 sm:px-6 py-4 text-right">
+                                <div class="flex items-center justify-end gap-1 sm:gap-2">
+                                    <a href="{% url 'admin_test_results' %}?test_id={{ test.id }}" class="p-1.5 sm:p-2 rounded-lg text-gray-400 hover:text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-colors" title="View Results">
+                                        <span class="material-symbols-outlined text-lg sm:text-xl">analytics</span>
+                                    </a>
+                                    <a href="{% url 'admin_edit_activity' test.id %}" class="p-1.5 sm:p-2 rounded-lg text-gray-400 hover:text-amber-600 hover:bg-amber-50 dark:hover:bg-amber-900/20 transition-colors" title="Edit Test">
+                                        <span class="material-symbols-outlined text-lg sm:text-xl">edit</span>
+                                    </a>
+                                    <button onclick="confirmDelete('{% url 'admin_delete_activity' test.id %}', '{{ test.title|escapejs }}')" class="p-1.5 sm:p-2 rounded-lg text-gray-400 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors" title="Delete Test">
+                                        <span class="material-symbols-outlined text-lg sm:text-xl">delete</span>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="5" class="px-6 py-12 text-center text-gray-500 dark:text-gray-400">
+                                <div class="flex flex-col items-center gap-3">
+                                    <span class="material-symbols-outlined text-4xl opacity-50">quiz</span>
+                                    <p>No readiness tests found. Create one to start assessing students.</p>
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Delete Confirmation Modal -->
+<div id="deleteModal" class="fixed inset-0 z-50 hidden">
+    <!-- Backdrop -->
+    <div class="absolute inset-0 bg-black/50 backdrop-blur-sm transition-opacity opacity-0" id="deleteModalBackdrop"></div>
+    
+    <!-- Modal Content -->
+    <div class="relative min-h-screen flex items-center justify-center p-4">
+        <div class="bg-white dark:bg-dark-card rounded-2xl shadow-2xl w-full max-w-md transform scale-95 opacity-0 transition-all duration-300" id="deleteModalContent">
+            <div class="p-6 text-center">
+                <div class="w-16 h-16 rounded-full bg-red-50 dark:bg-red-900/20 flex items-center justify-center mx-auto mb-4">
+                    <span class="material-symbols-outlined text-3xl text-red-600 dark:text-red-500">warning</span>
+                </div>
+                <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Delete Placement Drive?</h3>
+                <p class="text-gray-500 dark:text-gray-400 mb-6">Are you sure you want to delete <span id="deleteDriveName" class="font-semibold text-gray-900 dark:text-white"></span>? This action cannot be undone.</p>
+                
+                <div class="flex gap-3 justify-center">
+                    <button onclick="closeDeleteModal()" class="px-5 py-2.5 rounded-xl border border-gray-200 dark:border-dark-border text-gray-700 dark:text-gray-300 font-medium hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
+                        Cancel
+                    </button>
+                    <a id="confirmDeleteBtn" href="#" class="px-5 py-2.5 rounded-xl bg-red-600 hover:bg-red-700 text-white font-medium shadow-lg shadow-red-600/20 transition-all">
+                        Yes, Delete It
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function confirmDelete(url, name) {
+        const modal = document.getElementById('deleteModal');
+        const backdrop = document.getElementById('deleteModalBackdrop');
+        const content = document.getElementById('deleteModalContent');
+        const driveName = document.getElementById('deleteDriveName');
+        const confirmBtn = document.getElementById('confirmDeleteBtn');
+        
+        driveName.textContent = name;
+        confirmBtn.href = url;
+        
+        modal.classList.remove('hidden');
+        // Small delay to allow display:block to apply before adding opacity classes for transition
+        setTimeout(() => {
+            backdrop.classList.remove('opacity-0');
+            content.classList.remove('scale-95', 'opacity-0');
+            content.classList.add('scale-100', 'opacity-100');
+        }, 10);
+    }
+
+    function closeDeleteModal() {
+        const modal = document.getElementById('deleteModal');
+        const backdrop = document.getElementById('deleteModalBackdrop');
+        const content = document.getElementById('deleteModalContent');
+        
+        backdrop.classList.add('opacity-0');
+        content.classList.remove('scale-100', 'opacity-100');
+        content.classList.add('scale-95', 'opacity-0');
+        
+        setTimeout(() => {
+            modal.classList.add('hidden');
+        }, 300); // Match transition duration
+    }
+    
+    // Close on backdrop click
+    document.getElementById('deleteModalBackdrop').addEventListener('click', closeDeleteModal);
+</script>
+{% endblock %}

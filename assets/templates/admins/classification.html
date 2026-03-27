@@ -1,0 +1,167 @@
+{% extends 'admins/admin_base.html' %}
+{% load static %}
+
+{% block title %}Add Readiness Test{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto px-4 py-8">
+    <div class="mb-8">
+        <h1 class="text-3xl font-bold text-gray-900">Add Readiness Test</h1>
+        <p class="text-gray-600 mt-2">Create a new readiness test for {{ placement_cell.institution_name }}</p>
+    </div>
+    
+    <div class="bg-white rounded-lg shadow-lg p-6">
+        <form method="post" action="{% url 'admin_add_readiness_test' %}" class="space-y-6">
+            {% csrf_token %}
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Basic Information -->
+                <div>
+                    <h3 class="text-lg font-semibold text-gray-900 mb-4">Basic Information</h3>
+                    
+                    <div class="space-y-4">
+                        <div>
+                            <label for="title" class="block text-sm font-medium text-gray-700">Test Title</label>
+                            <input type="text" id="title" name="title" required 
+                                   class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:border-blue-500 focus:outline-none"
+                                   placeholder="e.g., Technical Skills Assessment 2024">
+                        </div>
+                        
+                        <div>
+                            <label for="description" class="block text-sm font-medium text-gray-700">Description</label>
+                            <textarea id="description" name="description" rows="4" required
+                                      class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:border-blue-500 focus:outline-none"
+                                      placeholder="Describe the test purpose and content"></textarea>
+                        </div>
+                        
+                        <div>
+                            <label for="date" class="block text-sm font-medium text-gray-700">Test Date</label>
+                            <input type="date" id="date" name="date" required 
+                                   class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:border-blue-500 focus:outline-none">
+                        </div>
+                        
+                        <div>
+                            <label for="time" class="block text-sm font-medium text-gray-700">Test Time</label>
+                            <input type="time" id="time" name="time" required 
+                                   class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:border-blue-500 focus:outline-none">
+                        </div>
+                        
+                        <div>
+                            <label for="location" class="block text-sm font-medium text-gray-700">Location</label>
+                            <input type="text" id="location" name="location" required 
+                                   class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:border-blue-500 focus:outline-none"
+                                   placeholder="e.g., Computer Lab, Room 101">
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Test Configuration -->
+                <div>
+                    <h3 class="text-lg font-semibold text-gray-900 mb-4">Test Configuration</h3>
+                    
+                    <div class="space-y-4">
+                        <div>
+                            <label for="exam_duration" class="block text-sm font-medium text-gray-700">Exam Duration (minutes)</label>
+                            <input type="number" id="exam_duration" name="exam_duration" required min="15" max="180"
+                                   class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:border-blue-500 focus:outline-none"
+                                   placeholder="60">
+                        </div>
+                        
+                        <div>
+                            <label for="max_participants" class="block text-sm font-medium text-gray-700">Maximum Participants</label>
+                            <input type="number" id="max_participants" name="max_participants" required min="1" max="500"
+                                   class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:border-blue-500 focus:outline-none"
+                                   placeholder="50">
+                        </div>
+                        
+                        <div>
+                            <label for="target_audience" class="block text-sm font-medium text-gray-700">Target Audience</label>
+                            <input type="text" id="target_audience" name="target_audience" required 
+                                   class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:border-blue-500 focus:outline-none"
+                                   placeholder="e.g., Final Year Students, Engineering Branch">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Eligibility Criteria -->
+            <div class="border-t pt-6">
+                <h3 class="text-lg font-semibold text-gray-900 mb-4">Eligibility Criteria</h3>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div>
+                        <label for="min_cgpa" class="block text-sm font-medium text-gray-700">Minimum CGPA</label>
+                        <input type="number" id="min_cgpa" name="min_cgpa" step="0.01" min="0" max="10"
+                               class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:border-blue-500 focus:outline-none"
+                               placeholder="6.0">
+                    </div>
+                    
+                    <div>
+                        <label for="eligible_departments" class="block text-sm font-medium text-gray-700">Eligible Departments</label>
+                        <select id="eligible_departments" name="eligible_departments" 
+                               class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:border-blue-500 focus:outline-none">
+                            <option value="">Select Branch</option>
+                            <option value="B.Tech CSE">B.Tech CSE</option>
+                            <option value="B.Tech ECE">B.Tech ECE</option>
+                            <option value="B.Tech EEE">B.Tech EEE</option>
+                            <option value="B.Tech MECH">B.Tech MECH</option>
+                            <option value="B.Tech CIVIL">B.Tech CIVIL</option>
+                            <option value="B.Tech IT">B.Tech IT</option>
+                            <option value="BCA">BCA</option>
+                            <option value="MCA">MCA</option>
+                            <option value="M.Sc Computer Science">M.Sc Computer Science</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                    
+                    <div>
+                        <label for="eligible_years" class="block text-sm font-medium text-gray-700">Eligible Years</label>
+                        <input type="text" id="eligible_years" name="eligible_years" 
+                               class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:border-blue-500 focus:outline-none"
+                               placeholder="e.g., 3,4">
+                    </div>
+                </div>
+                
+                <div>
+                    <label for="additional_requirements" class="block text-sm font-medium text-gray-700">Additional Requirements</label>
+                    <textarea id="additional_requirements" name="additional_requirements" rows="3"
+                              class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:border-blue-500 focus:outline-none"
+                              placeholder="Any additional requirements or prerequisites"></textarea>
+                </div>
+            </div>
+            
+            <!-- Submit Button -->
+            <div class="flex justify-end space-x-4 pt-6">
+                <a href="{% url 'admin_placement_drives' %}" 
+                   class="px-6 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50 transition-colors">
+                    Cancel
+                </a>
+                    <div class="mr-auto">
+                        <h3 class="text-lg font-semibold text-gray-900 mb-2">Classification Thresholds</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700">Placement Ready ≥ (%)</label>
+                                <input type="number" name="placement_ready_threshold" min="0" max="100" value="70"
+                                       class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:border-blue-500 focus:outline-none">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700">Needs Improvement ≥ (%)</label>
+                                <input type="number" name="needs_improvement_threshold" min="0" max="100" value="40"
+                                       class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:border-blue-500 focus:outline-none">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700">At Risk ≤ (%)</label>
+                                <input type="number" name="at_risk_threshold" min="0" max="100" value="39"
+                                       class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:border-blue-500 focus:outline-none">
+                            </div>
+                        </div>
+                    </div>
+                <button type="submit" 
+                        class="px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors">
+                    Create Readiness Test
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

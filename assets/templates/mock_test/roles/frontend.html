@@ -1,0 +1,238 @@
+{% extends 'users/user_tailwind_base.html' %}
+{% load static %}
+
+{% block title %}Frontend Developer Tests - Mock Test Center{% endblock %}
+
+{% block page_title %}Frontend Developer Tests{% endblock %}
+
+{% block contents %}
+<div class="space-y-8">
+    <!-- Breadcrumb Navigation -->
+    <div class="flex items-center gap-2 text-sm text-slate-500">
+        <a href="/mock-test/" class="hover:text-slate-700">Mock Test Center</a>
+        <span class="material-symbols-outlined text-base">chevron_right</span>
+        <a href="/mock-test/roles/" class="hover:text-slate-700">Role-Based Tests</a>
+        <span class="material-symbols-outlined text-base">chevron_right</span>
+        <span class="text-slate-800">{{ role.name }}</span>
+    </div>
+
+    <!-- Header -->
+    <div class="enterprise-card rounded-xl p-6">
+        <div class="flex items-center mb-4">
+            <div class="w-16 h-16 bg-gradient-to-br from-{{ role.color }}-500 to-{{ role.color }}-600 rounded-xl flex items-center justify-center mr-4">
+                <span class="material-symbols-outlined text-white text-2xl">{{ role.icon }}</span>
+            </div>
+            <div>
+                <h2 class="text-2xl font-bold text-slate-800">{{ role.name }} Tests</h2>
+                <p class="text-slate-500 mt-1">Choose a test to assess your frontend development skills</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Test Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {% for test in tests %}
+        <div onclick="startTest({{ forloop.counter0 }})" class="enterprise-card rounded-xl p-6 cursor-pointer hover:border-{{ role.color }}-300 group">
+            <div class="flex items-start justify-between mb-4">
+                <div class="flex-1">
+                    <h3 class="text-xl font-bold text-slate-800 mb-2">{{ test.name }}</h3>
+                    <p class="text-slate-600 text-sm mb-4">{{ test.description }}</p>
+                </div>
+                <div class="ml-4">
+                    <span class="px-3 py-1 bg-{{ role.color }}-100 text-{{ role.color }}-700 rounded-full text-xs font-medium">
+                        {{ test.difficulty }}
+                    </span>
+                </div>
+            </div>
+            
+            <div class="grid grid-cols-3 gap-4 mb-4">
+                <div class="text-center p-3 bg-slate-50 rounded-lg">
+                    <div class="flex items-center justify-center mb-1">
+                        <span class="material-symbols-outlined text-{{ role.color }}-600">quiz</span>
+                    </div>
+                    <div class="text-lg font-bold text-slate-800">{{ test.questions }}</div>
+                    <div class="text-xs text-slate-500">Questions</div>
+                </div>
+                <div class="text-center p-3 bg-slate-50 rounded-lg">
+                    <div class="flex items-center justify-center mb-1">
+                        <span class="material-symbols-outlined text-{{ role.color }}-600">timer</span>
+                    </div>
+                    <div class="text-lg font-bold text-slate-800">{{ test.time }}</div>
+                    <div class="text-xs text-slate-500">Minutes</div>
+                </div>
+                <div class="text-center p-3 bg-slate-50 rounded-lg">
+                    <div class="flex items-center justify-center mb-1">
+                        <span class="material-symbols-outlined text-{{ role.color }}-600">trending_up</span>
+                    </div>
+                    <div class="text-lg font-bold text-slate-800">{{ test.difficulty }}</div>
+                    <div class="text-xs text-slate-500">Level</div>
+                </div>
+            </div>
+            
+            <div class="flex items-center justify-between">
+                <div class="flex items-center gap-2">
+                    <div class="w-2 h-2 bg-green-500 rounded-full"></div>
+                    <span class="text-xs text-slate-500">Available Now</span>
+                </div>
+                <button class="px-4 py-2 bg-{{ role.color }}-600 text-white rounded-lg font-medium hover:bg-{{ role.color }}-700 transition-colors flex items-center gap-2">
+                    Start Test
+                    <span class="material-symbols-outlined text-base">arrow_forward</span>
+                </button>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- Skills Covered Section -->
+    <div class="enterprise-card rounded-xl p-6">
+        <h3 class="text-xl font-bold text-slate-800 mb-4">Skills Covered in Frontend Tests</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div class="flex items-center gap-3 p-3 bg-blue-50 rounded-lg">
+                <span class="material-symbols-outlined text-blue-600">html</span>
+                <span class="text-sm font-medium text-slate-700">HTML5 & Semantic Markup</span>
+            </div>
+            <div class="flex items-center gap-3 p-3 bg-blue-50 rounded-lg">
+                <span class="material-symbols-outlined text-blue-600">css</span>
+                <span class="text-sm font-medium text-slate-700">CSS3 & Responsive Design</span>
+            </div>
+            <div class="flex items-center gap-3 p-3 bg-blue-50 rounded-lg">
+                <span class="material-symbols-outlined text-blue-600">javascript</span>
+                <span class="text-sm font-medium text-slate-700">JavaScript ES6+</span>
+            </div>
+            <div class="flex items-center gap-3 p-3 bg-blue-50 rounded-lg">
+                <span class="material-symbols-outlined text-blue-600">framework</span>
+                <span class="text-sm font-medium text-slate-700">React & Vue.js</span>
+            </div>
+            <div class="flex items-center gap-3 p-3 bg-blue-50 rounded-lg">
+                <span class="material-symbols-outlined text-blue-600">devices</span>
+                <span class="text-sm font-medium text-slate-700">Mobile-First Design</span>
+            </div>
+            <div class="flex items-center gap-3 p-3 bg-blue-50 rounded-lg">
+                <span class="material-symbols-outlined text-blue-600">speed</span>
+                <span class="text-sm font-medium text-slate-700">Performance Optimization</span>
+            </div>
+            <div class="flex items-center gap-3 p-3 bg-blue-50 rounded-lg">
+                <span class="material-symbols-outlined text-blue-600">accessibility</span>
+                <span class="text-sm font-medium text-slate-700">Web Accessibility</span>
+            </div>
+            <div class="flex items-center gap-3 p-3 bg-blue-50 rounded-lg">
+                <span class="material-symbols-outlined text-blue-600">build</span>
+                <span class="text-sm font-medium text-slate-700">Build Tools & CI/CD</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Preparation Tips -->
+    <div class="enterprise-card rounded-xl p-6">
+        <h3 class="text-xl font-bold text-slate-800 mb-4">Test Preparation Tips</h3>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div>
+                <h4 class="font-semibold text-slate-700 mb-3 flex items-center gap-2">
+                    <span class="material-symbols-outlined text-blue-600">lightbulb</span>
+                    Before the Test
+                </h4>
+                <ul class="space-y-2 text-sm text-slate-600">
+                    <li>Review HTML5 semantic elements</li>
+                    <li>Practice CSS Flexbox and Grid layouts</li>
+                    <li>Study JavaScript ES6+ features</li>
+                    <li>Understand responsive design principles</li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="font-semibold text-slate-700 mb-3 flex items-center gap-2">
+                    <span class="material-symbols-outlined text-green-600">timer</span>
+                    During the Test
+                </h4>
+                <ul class="space-y-2 text-sm text-slate-600">
+                    <li>Read each question carefully</li>
+                    <li>Manage your time effectively</li>
+                    <li>Mark difficult questions for review</li>
+                    <li>Double-check your answers</li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="font-semibold text-slate-700 mb-3 flex items-center gap-2">
+                    <span class="material-symbols-outlined text-purple-600">insights</span>
+                    After the Test
+                </h4>
+                <ul class="space-y-2 text-sm text-slate-600">
+                    <li>Review your results thoroughly</li>
+                    <li>Focus on weak areas</li>
+                    <li>Practice similar questions</li>
+                    <li>Take advanced level tests</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Back Button -->
+    <div class="text-center">
+        <a href="/mock-test/roles/" class="inline-flex items-center gap-2 px-6 py-3 bg-slate-200 text-slate-600 rounded-lg font-medium hover:bg-slate-300 transition-colors">
+            <span class="material-symbols-outlined">arrow_back</span>
+            Back to Role Selection
+        </a>
+    </div>
+</div>
+
+<script>
+const roleKey = '{{ role_key }}';
+
+function startTest(testIndex) {
+    // Show loading state
+    const button = event.target.closest('button');
+    const originalText = button.innerHTML;
+    button.innerHTML = '<span class="material-symbols-outlined animate-spin">refresh</span> Loading...';
+    button.disabled = true;
+    
+    // Start the test
+    fetch('/mock-test/start/role/' + roleKey + '/' + testIndex + '/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': getCookie('csrftoken')
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.status === 'success') {
+            // Store test data in sessionStorage
+            sessionStorage.setItem('currentTest', JSON.stringify({
+                type: 'role',
+                category: roleKey,
+                testIndex: testIndex,
+                testInfo: data.test_info,
+                questions: data.questions
+            }));
+            
+            // Redirect to exam interface
+            window.location.href = '/mock-test/exam/';
+        } else {
+            alert('Failed to start test: ' + data.message);
+            button.innerHTML = originalText;
+            button.disabled = false;
+        }
+    })
+    .catch(error => {
+        console.error('Error starting test:', error);
+        alert('Failed to start test. Please try again.');
+        button.innerHTML = originalText;
+        button.disabled = false;
+    });
+}
+
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+</script>
+{% endblock %}

@@ -1,0 +1,45 @@
+{%extends 'admins/adminbase.html'%}
+{%load static %}
+
+{%block contents%}
+<section class="hero-banner magic-ball">
+    <div class="container">
+
+        <div class="row align-items-center text-center text-md-left">
+            <div class="col-md-6 col-lg-5 mb-5 mb-md-0">
+                <h1>Admin Add Data</h1>
+                <p>
+                    <form method="POST" action="{%url 'AdminAddingFlightData'%}" class="bg-primary text-dark">
+                {% csrf_token %}
+                <table>
+                    <tr><td>DAY</td><td>{{form.DAY}}</td></tr>
+                    <tr><td>DEPARTURE_TIME</td><td>{{form.DEPARTURE_TIME}}</td></tr>
+                    <tr><td>FLIGHT_NUMBER</td><td>{{form.FLIGHT_NUMBER}}</td></tr>
+                    <tr><td>DESTINATION_AIRPORT</td><td>{{form.DESTINATION_AIRPORT}}</td></tr>
+                    <tr><td>ORIGIN_AIRPORT</td><td>{{form.ORIGIN_AIRPORT}}</td></tr>
+                    <tr><td>DAY_OF_WEEK</td><td>{{form.DAY_OF_WEEK}}</td></tr>
+                    <tr><td>TAXI_OUT</td><td>{{form.TAXI_OUT}}</td></tr>
+
+                    <tr><td><button  class="btn btn-danger my-2 my-sm-0" type="submit" style = "margin-left:20%;">Add Data</button></td></tr>
+
+                        {% if messages %}
+                               {% for message in messages %}
+                                  <font color='RED'> {{ message }}</font>
+                               {% endfor %}
+                           {% endif %}
+
+                </table>
+
+            </form>
+
+                </p>
+                <a class="button button-hero mt-4" href="https://ieeexplore.ieee.org/document/9071159" target="_blank">Get Started</a>
+            </div>
+            <div class="col-md-6 col-lg-7 col-xl-6 offset-xl-1">
+                <img class="img-fluid" src="{%static 'img/home/hero-img.png'%}" alt="">
+            </div>
+        </div>
+    </div>
+</section>
+
+{%endblock%}

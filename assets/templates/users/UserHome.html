@@ -1,0 +1,262 @@
+{% extends 'users/user_tailwind_base.html' %}
+{% load static %}
+
+{% block contents %}
+<div class="p-4 md:p-6 lg:p-8 max-w-7xl mx-auto space-y-8">
+    <!-- Dashboard Content -->
+    <div class="space-y-8">
+        <!-- Placement Message Section -->
+        {% if placement_message %}
+        <div class="px-0 pt-2 pb-0">
+            <div id="placement-message"
+                class="rounded-2xl p-6 text-white font-semibold text-lg shadow-lg transition-all duration-300 bg-green-500 green-pulse">
+                <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                    <div class="flex items-center space-x-3">
+                        <span class="material-symbols-outlined text-2xl">celebration</span>
+                        <span class="text-base md:text-lg">{{ placement_message }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- Dynamic Message Section -->
+        {% if dashboard_message and user.user_type == 'student' %}
+        <div class="px-0 pt-2 pb-0">
+            <div id="dashboard-message" class="rounded-2xl p-6 text-white font-semibold text-lg shadow-lg transition-all duration-300 {{ message_color }}-pulse
+            {% if message_color == 'red' %}bg-red-500
+            {% elif message_color == 'orange' %}bg-orange-500
+            {% elif message_color == 'green' %}bg-green-500
+            {% endif %}">
+                <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                    <div class="flex items-center space-x-3">
+                        <span class="material-symbols-outlined text-2xl">
+                            {% if message_color == 'red' %}warning
+                            {% elif message_color == 'orange' %}priority_high
+                            {% elif message_color == 'green' %}check_circle
+                            {% endif %}
+                        </span>
+                        <span class="text-base md:text-lg">{{ dashboard_message }}</span>
+                    </div>
+                    {% if student_record %}
+                    <div class="flex flex-wrap items-center gap-3 md:gap-6 text-sm">
+                        <div class="flex items-center space-x-2 bg-white/20 px-3 py-2 rounded-lg">
+                            <span class="material-symbols-outlined text-lg">assignment_late</span>
+                            <span class="font-medium whitespace-nowrap">Backlogs: {{ student_record.backlog|default:0 }}</span>
+                        </div>
+                        <div class="flex items-center space-x-2 bg-white/20 px-3 py-2 rounded-lg">
+                            <span class="material-symbols-outlined text-lg">analytics</span>
+                            <span class="font-medium whitespace-nowrap">Marks: {{ student_record.marks_percentage|floatformat:2 }}%</span>
+                        </div>
+                    </div>
+                    {% else %}
+                    <div
+                        class="text-sm text-yellow-300 bg-yellow-900/20 px-3 py-2 rounded-lg flex items-center space-x-2 self-start md:self-auto">
+                        <span class="material-symbols-outlined text-lg">warning</span>
+                        <span class="font-medium">Student data not available</span>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- Grid Layout -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+            <!-- User Profile Card -->
+            <div
+                class="card p-6 rounded-2xl flex flex-col space-y-6 bg-white dark:bg-gray-800 border-slate-200 dark:border-gray-600 md:col-span-2 lg:col-span-1">
+                <div class="flex items-center space-x-4">
+                    <div
+                        class="w-16 h-16 shrink-0 rounded-full overflow-hidden border-2 border-gray-100 dark:border-gray-600 shadow-sm relative">
+                        {% if user.pic %}
+                        <img src="{{ user.pic.url }}" class="w-full h-full object-cover" alt="Profile">
+                        {% else %}
+                        <div
+                            class="w-full h-full bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center text-white font-bold text-xl">
+                            {{ user.userid.0|upper }}
+                        </div>
+                        {% endif %}
+                    </div>
+                    <div class="min-w-0">
+                        <h3 class="font-bold text-gray-900 dark:text-white text-xl truncate">{{ user.userid }}</h3>
+                    </div>
+                </div>
+                <div class="space-y-4 flex-1">
+                    <div
+                        class="p-4 bg-gray-50 dark:bg-gray-700 rounded-xl border border-gray-100 dark:border-gray-600 group hover:border-blue-200 dark:hover:border-blue-400 transition-colors">
+                        <div class="flex items-center space-x-2 mb-1">
+                            <span
+                                class="material-symbols-outlined text-blue-600 dark:text-blue-400 text-sm">alternate_email</span>
+                            <span
+                                class="text-xs font-bold text-gray-400 dark:text-gray-500 uppercase tracking-widest">Email</span>
+                        </div>
+                        <p class="text-sm font-bold text-gray-700 dark:text-gray-200 truncate">{{ user.email }}</p>
+                    </div>
+                    <div
+                        class="p-4 bg-gray-50 dark:bg-gray-700 rounded-xl border border-gray-100 dark:border-gray-600 group hover:border-blue-200 dark:hover:border-blue-400 transition-colors">
+                        <div class="flex items-center space-x-2 mb-1">
+                            <span
+                                class="material-symbols-outlined text-purple-600 dark:text-purple-400 text-sm">badge</span>
+                            <span
+                                class="text-xs font-bold text-gray-400 dark:text-gray-500 uppercase tracking-widest">User
+                                ID</span>
+                        </div>
+                        <p class="text-sm font-bold text-gray-700 dark:text-gray-200 truncate">{{ user.userid }}</p>
+                    </div>
+                </div>
+                <a href="{% url 'users:UserProfile' %}"
+                    class="w-full py-3 px-4 bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 font-bold rounded-xl hover:bg-blue-100 dark:hover:bg-blue-900/40 transition-all flex items-center justify-center space-x-2 text-decoration-none">
+                    <span class="material-symbols-outlined text-lg">manage_accounts</span>
+                    <span>View Full Profile</span>
+                </a>
+            </div>
+
+            <!-- Quick Actions Grid (Now part of the main grid for better responsiveness) -->
+            <!-- Mock Test Card -->
+            <a href="{% url 'mock_test' %}"
+                class="card p-6 rounded-2xl flex flex-col space-y-4 bg-white dark:bg-gray-800 border-slate-200 dark:border-gray-600 hover:border-blue-500 dark:hover:border-blue-500 transition-all group text-decoration-none">
+                <div
+                    class="w-12 h-12 bg-blue-50 dark:bg-blue-900/20 rounded-xl flex items-center justify-center text-blue-600 dark:text-blue-400 group-hover:bg-blue-600 group-hover:text-white transition-all">
+                    <span class="material-symbols-outlined text-2xl">science</span>
+                </div>
+                <div class="space-y-2">
+                    <h4 class="font-bold text-gray-900 dark:text-white text-lg">Mock Test</h4>
+                    <p class="text-sm text-gray-500 dark:text-gray-400">Practice with role-based and language-specific
+                        assessments.</p>
+                </div>
+                <div class="mt-auto pt-4 flex items-center text-blue-600 dark:text-blue-400 font-bold text-sm">
+                    <span>Take a Test</span>
+                    <span
+                        class="material-symbols-outlined text-lg ml-1 group-hover:translate-x-1 transition-transform">chevron_right</span>
+                </div>
+            </a>
+
+            <!-- Personalized Plan Card -->
+            <a href="{% url 'personalizedplan:dashboard' %}"
+                class="card p-6 rounded-2xl flex flex-col space-y-4 bg-white dark:bg-gray-800 border-slate-200 dark:border-gray-600 hover:border-purple-500 dark:hover:border-purple-500 transition-all group text-decoration-none">
+                <div
+                    class="w-12 h-12 bg-purple-50 dark:bg-purple-900/20 rounded-xl flex items-center justify-center text-purple-600 dark:text-purple-400 group-hover:bg-purple-600 group-hover:text-white transition-all">
+                    <span class="material-symbols-outlined text-2xl">school</span>
+                </div>
+                <div class="space-y-2">
+                    <h4 class="font-bold text-gray-900 dark:text-white text-lg">Learning Plan</h4>
+                    <p class="text-sm text-gray-500 dark:text-gray-400">Follow your AI-generated career path and track
+                        progress.</p>
+                </div>
+                <div class="mt-auto pt-4 flex items-center text-purple-600 dark:text-purple-400 font-bold text-sm">
+                    <span>View Plan</span>
+                    <span
+                        class="material-symbols-outlined text-lg ml-1 group-hover:translate-x-1 transition-transform">chevron_right</span>
+                </div>
+            </a>
+
+            <!-- Campus Drives Card -->
+            <a href="{% url 'users:campus_drives' %}"
+                class="card p-6 rounded-2xl flex flex-col space-y-4 bg-white dark:bg-gray-800 border-slate-200 dark:border-gray-600 hover:border-green-500 dark:hover:border-green-500 transition-all group text-decoration-none">
+                <div
+                    class="w-12 h-12 bg-green-50 dark:bg-green-900/20 rounded-xl flex items-center justify-center text-green-600 dark:text-green-400 group-hover:bg-green-600 group-hover:text-white transition-all">
+                    <span class="material-symbols-outlined text-2xl">business_center</span>
+                </div>
+                <div class="space-y-2">
+                    <h4 class="font-bold text-gray-900 dark:text-white text-lg">Campus Drives</h4>
+                    <p class="text-sm text-gray-500 dark:text-gray-400">Apply for ongoing placement drives and track
+                        status.</p>
+                </div>
+                <div class="mt-auto pt-4 flex items-center text-green-600 dark:text-green-400 font-bold text-sm">
+                    <span>View Drives</span>
+                    <span
+                        class="material-symbols-outlined text-lg ml-1 group-hover:translate-x-1 transition-transform">chevron_right</span>
+                </div>
+            </a>
+
+            <!-- Resume Analysis Mini Card -->
+            <a href="{% url 'upload' %}"
+                class="card p-6 rounded-2xl flex flex-col space-y-4 bg-white dark:bg-gray-800 border-slate-200 dark:border-gray-600 hover:border-blue-500 dark:hover:border-blue-500 transition-all group relative overflow-hidden text-decoration-none">
+                <div
+                    class="absolute -right-4 -top-4 w-16 h-16 bg-blue-50 dark:bg-blue-900/20 rounded-full group-hover:scale-150 transition-transform">
+                </div>
+                <div class="relative z-10 flex flex-col h-full">
+                    <h4 class="font-bold text-gray-900 dark:text-white text-lg mb-2">Resume History</h4>
+                    <p class="text-xs text-gray-500 dark:text-gray-400 mb-4 leading-relaxed">Review your previous resume
+                        analyses and track improvement over time.</p>
+                    <div
+                        class="mt-auto pt-2 text-xs font-bold text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 uppercase tracking-wider flex items-center space-x-1">
+                        <span>VIEW HISTORY</span>
+                        <span class="material-symbols-outlined text-lg">chevron_right</span>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    /* Dynamic Message Styles */
+    #dashboard-message {
+        animation: slideInDown 0.5s ease-out;
+    }
+
+    @keyframes slideInDown {
+        from {
+            transform: translateY(-20px);
+            opacity: 0;
+        }
+
+        to {
+            transform: translateY(0);
+            opacity: 1;
+        }
+    }
+
+    .red-pulse {
+        animation: redPulse 2s infinite;
+    }
+
+    .orange-pulse {
+        animation: orangePulse 2s infinite;
+    }
+
+    .green-pulse {
+        animation: greenPulse 2s infinite;
+    }
+
+    @keyframes redPulse {
+        0% {
+            background-color: #ef4444;
+            box-shadow: 0 4px 6px -1px rgba(239, 68, 68, 0.3);
+        }
+
+        50% {
+            background-color: #dc2626;
+            box-shadow: 0 0 20px rgba(239, 68, 68, 0.5);
+        }
+    }
+
+    @keyframes orangePulse {
+        0% {
+            background-color: #f97316;
+            box-shadow: 0 4px 6px -1px rgba(249, 115, 22, 0.3);
+        }
+
+        50% {
+            background-color: #ea580c;
+            box-shadow: 0 0 20px rgba(249, 115, 22, 0.5);
+        }
+    }
+
+    @keyframes greenPulse {
+        0% {
+            background-color: #22c55e;
+            box-shadow: 0 4px 6px -1px rgba(34, 197, 94, 0.3);
+        }
+
+        50% {
+            background-color: #16a34a;
+            box-shadow: 0 0 20px rgba(34, 197, 94, 0.5);
+        }
+    }
+</style>
+{% endblock %}

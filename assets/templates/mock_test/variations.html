@@ -1,0 +1,213 @@
+{% extends 'users/user_tailwind_base.html' %}
+{% load static %}
+
+{% block page_title %}Choose Challenge{% endblock %}
+
+{% block contents %}
+    <style>
+        .quest-card {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .quest-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        .bg-pattern {
+            background-image: radial-gradient(circle at 1px 1px, #e2e8f0 1px, transparent 0);
+            background-size: 24px 24px;
+        }
+    </style>
+
+    <div class="max-w-7xl mx-auto px-6 md:px-8 lg:px-10 py-6 md:py-8 space-y-8 md:space-y-10">
+        
+        <!-- Breadcrumbs -->
+            <nav class="flex items-center text-sm font-medium text-slate-500 dark:text-slate-400">
+                <a href="/UserHome/" class="hover:text-primary transition-colors">Careerlytics Quest</a>
+                <span class="mx-3 text-slate-300 dark:text-slate-600">/</span>
+                <a href="/mock-test/roles/" class="hover:text-primary transition-colors">Skill Path</a>
+                <span class="mx-3 text-slate-300 dark:text-slate-600">/</span>
+                <span class="text-slate-900 dark:text-white font-bold">{{ test.name }}</span>
+            </nav>
+
+            <!-- Hero Card -->
+            <div class="bg-white dark:bg-gray-800 rounded-3xl shadow-sm border border-slate-100 dark:border-slate-700 p-6 md:p-8 lg:p-10 relative overflow-hidden group">
+                <!-- Watermark -->
+                <div class="absolute top-1/2 -translate-y-1/2 right-10 text-[80px] md:text-[120px] font-black text-slate-50 dark:text-slate-900/50 pointer-events-none select-none opacity-50 hidden sm:block">
+                    QUEST 0{{ test_index|add:1 }}
+                </div>
+
+                <div class="relative z-10 flex flex-col md:flex-row gap-6 md:gap-8 items-start">
+                    <!-- Icon Box -->
+                    <div class="w-16 h-16 md:w-20 md:h-20 bg-blue-50 dark:bg-blue-900/20 rounded-2xl flex items-center justify-center flex-shrink-0 border border-blue-100 dark:border-blue-900 shadow-sm">
+                        <span class="material-symbols-outlined text-3xl md:text-4xl text-blue-600 dark:text-blue-400">quiz</span>
+                    </div>
+
+                    <div class="flex-1">
+                        <h1 class="text-2xl md:text-3xl lg:text-4xl font-black text-slate-900 dark:text-white mb-3 md:mb-4 tracking-tight">{{ test.name }}</h1>
+                        <p class="text-slate-500 dark:text-slate-400 text-sm md:text-base lg:text-lg leading-relaxed max-w-2xl mb-6 md:mb-8">
+                            {{ test.description|default:"Master the foundations of the web. Complete these trials to earn high-tier EXP and unlock advanced engineering modules." }}
+                        </p>
+
+                        <div class="flex flex-wrap gap-4 md:gap-6 text-xs md:text-sm font-medium text-slate-500 dark:text-slate-400">
+                            <div class="flex items-center gap-2">
+                                <span class="material-symbols-outlined text-sm md:text-base text-slate-400">schedule</span>
+                                {{ test.time_limit }} Min
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <span class="material-symbols-outlined text-sm md:text-base text-slate-400">list_alt</span>
+                                {{ test.questions_count }} Qs
+                            </div>
+                            <div class="flex items-center gap-2 text-green-600 dark:text-green-400 font-bold">
+                                <span class="material-symbols-outlined text-sm md:text-base">add_circle</span>
+                                +{{ total_xp }} XP
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Variations Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+                
+                {% for variation in variations %}
+                {% if variation.available %}
+                    {% if variation.completed %}
+                    <!-- Mastered Card -->
+                    <div class="quest-card bg-white dark:bg-gray-800 rounded-3xl p-6 md:p-8 shadow-sm border border-green-100 dark:border-green-900/50 relative overflow-hidden flex flex-col h-full">
+                        <div class="absolute top-0 left-0 w-1 h-full bg-green-500"></div>
+                        
+                        <div class="flex justify-between items-start mb-4 md:mb-6">
+                            <div class="w-10 h-10 md:w-12 md:h-12 bg-green-100 dark:bg-green-900/20 rounded-full flex items-center justify-center text-green-600 dark:text-green-400">
+                                <span class="material-symbols-outlined text-xl md:text-2xl">check_circle</span>
+                            </div>
+                            <span class="px-3 py-1 bg-green-50 dark:bg-green-900/20 text-green-600 dark:text-green-400 text-[10px] font-bold uppercase tracking-widest rounded-full border border-green-100 dark:border-green-800">
+                                Completed
+                            </span>
+                        </div>
+                        
+                        <h3 class="text-lg md:text-xl font-bold text-slate-900 dark:text-white mb-2">{{ variation.name }}</h3>
+                        <p class="text-xs md:text-sm text-slate-500 dark:text-slate-400 mb-4 md:mb-6 leading-relaxed flex-grow line-clamp-3">{{ variation.description }}</p>
+                        
+                        <div class="mt-auto space-y-3 md:space-y-4">
+                            <div class="bg-green-50 dark:bg-green-900/20 rounded-xl p-3 flex items-center gap-2 text-[10px] md:text-xs font-bold text-green-700 dark:text-green-400">
+                                <span class="material-symbols-outlined text-sm">add_circle</span>
+                                XP Reward: +{{ variation.xp_reward }}
+                            </div>
+                            
+                            <a href="{% url 'exam_results' %}{% if latest_attempt_id %}?attempt_id={{ latest_attempt_id }}{% endif %}" class="w-full py-2.5 md:py-3 bg-slate-100 dark:bg-gray-700 hover:bg-slate-200 dark:hover:bg-gray-600 text-slate-600 dark:text-slate-300 font-bold rounded-xl transition-colors flex items-center justify-center gap-2 text-sm md:text-base">
+                                Review Results
+                                <span class="material-symbols-outlined text-lg">history</span>
+                            </a>
+                        </div>
+                    </div>
+                    {% else %}
+                    <!-- Active Card -->
+                    <div class="quest-card bg-white dark:bg-gray-800 rounded-3xl p-6 md:p-8 shadow-lg border border-blue-100 dark:border-blue-900 relative overflow-hidden flex flex-col h-full ring-4 ring-blue-50 dark:ring-blue-900/20">
+                        <div class="flex justify-between items-start mb-4 md:mb-6">
+                            <div class="w-10 h-10 md:w-12 md:h-12 bg-blue-100 dark:bg-blue-900/20 rounded-full flex items-center justify-center text-blue-600 dark:text-blue-400 pl-1">
+                                <span class="material-symbols-outlined text-xl md:text-2xl">play_arrow</span>
+                            </div>
+                            <span class="px-3 py-1 bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 text-[10px] font-bold uppercase tracking-widest rounded-full border border-blue-100 dark:border-blue-800">
+                                Ready
+                            </span>
+                        </div>
+                        
+                        <h3 class="text-lg md:text-xl font-bold text-slate-900 dark:text-white mb-2">{{ variation.name }}</h3>
+                        <p class="text-xs md:text-sm text-slate-500 dark:text-slate-400 mb-4 md:mb-6 leading-relaxed flex-grow line-clamp-3">{{ variation.description }}</p>
+                        
+                        <div class="mt-auto space-y-3 md:space-y-4">
+                            <div class="bg-blue-50 dark:bg-blue-900/20 rounded-xl p-3 flex items-center gap-2 text-[10px] md:text-xs font-bold text-blue-700 dark:text-blue-400">
+                                <span class="material-symbols-outlined text-sm">add_circle</span>
+                                XP Reward: +{{ variation.xp_reward }}
+                            </div>
+                            
+                            <div class="flex items-center gap-3">
+                                <!-- User Avatar (Placeholder) -->
+                                <div class="w-8 h-8 md:w-10 md:h-10 rounded-full bg-slate-200 dark:bg-gray-700 border-2 border-white dark:border-gray-600 shadow-sm flex-shrink-0 overflow-hidden">
+                                    <img src="https://api.dicebear.com/7.x/avataaars/svg?seed={{ request.user.username }}" alt="User" class="w-full h-full object-cover">
+                                </div>
+                                <button onclick="startQuest('{% url 'start_exam' test_type category variation.test_index|default:test_index %}')" class="flex-1 py-2.5 md:py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl shadow-lg shadow-blue-200 dark:shadow-none transition-all transform active:scale-95 flex items-center justify-center gap-2 text-sm md:text-base">
+                                    Start Quest
+                                    <span class="material-symbols-outlined text-lg">bolt</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+                {% else %}
+                <!-- Locked Card -->
+                <div class="bg-white dark:bg-gray-800 rounded-3xl p-6 md:p-8 shadow-sm border border-slate-100 dark:border-slate-700 relative overflow-hidden flex flex-col h-full opacity-60">
+                    <div class="absolute inset-0 bg-white/60 dark:bg-gray-900/60 backdrop-blur-[2px] z-10 flex flex-col items-center justify-center text-center p-6">
+                        <div class="w-12 h-12 md:w-16 md:h-16 bg-white dark:bg-gray-800 rounded-2xl shadow-lg flex items-center justify-center mb-4 text-slate-400">
+                            <span class="material-symbols-outlined text-2xl md:text-3xl">lock</span>
+                        </div>
+                        <h4 class="font-bold text-slate-900 dark:text-white uppercase tracking-widest text-[10px] md:text-xs mb-1">Locked</h4>
+                        <p class="text-slate-500 dark:text-slate-400 text-[10px] md:text-xs">Complete previous quest to unlock</p>
+                    </div>
+                    
+                    <div class="filter blur-sm select-none">
+                        <div class="flex justify-between items-start mb-4 md:mb-6">
+                            <div class="w-10 h-10 md:w-12 md:h-12 bg-slate-100 dark:bg-gray-700 rounded-full flex items-center justify-center text-slate-400">
+                                <span class="material-symbols-outlined text-xl md:text-2xl">lock</span>
+                            </div>
+                            <span class="px-3 py-1 bg-slate-100 dark:bg-gray-700 text-slate-400 text-[10px] font-bold uppercase tracking-widest rounded-full">
+                                Locked
+                            </span>
+                        </div>
+                        
+                        <h3 class="text-lg md:text-xl font-bold text-slate-900 dark:text-white mb-2">{{ variation.name }}</h3>
+                        <p class="text-xs md:text-sm text-slate-500 dark:text-slate-400 mb-4 md:mb-6 leading-relaxed line-clamp-3">{{ variation.description }}</p>
+                        
+                        <div class="mt-auto space-y-3 md:space-y-4">
+                            <div class="bg-slate-50 dark:bg-gray-700 rounded-xl p-3 flex items-center gap-2 text-[10px] md:text-xs font-bold text-slate-400">
+                                <span class="material-symbols-outlined text-sm">add_circle</span>
+                                XP Reward: +{{ variation.xp_reward }}
+                            </div>
+                            
+                            <button class="w-full py-2.5 md:py-3 bg-slate-100 dark:bg-gray-700 text-slate-400 font-bold rounded-xl cursor-not-allowed text-sm md:text-base">
+                                Locked
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+                {% endfor %}
+
+                <!-- Coming Soon Placeholder -->
+                <div class="bg-white dark:bg-gray-800 rounded-3xl p-6 md:p-8 shadow-sm border border-slate-100 dark:border-slate-700 flex flex-col items-center justify-center text-center h-full min-h-[250px] md:min-h-[300px] group cursor-default">
+                    <div class="w-12 h-12 md:w-16 md:h-16 bg-slate-50 dark:bg-gray-700 rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
+                        <span class="material-symbols-outlined text-2xl md:text-3xl text-slate-300 dark:text-slate-600">more_horiz</span>
+                    </div>
+                    <h3 class="font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest text-xs md:text-sm">Coming Soon</h3>
+                </div>
+
+            </div>
+        </div>
+
+    <script>
+        async function startQuest(url) {
+            try {
+                // Store test context
+                sessionStorage.setItem('currentQuest', '{{ test.name }}');
+                sessionStorage.setItem('questXP', '{{ total_xp }}');
+                
+                // Fetch test data
+                const response = await fetch(url);
+                const data = await response.json();
+                
+                if (data.status === 'success') {
+                    // Store full test data for the exam interface
+                    sessionStorage.setItem('currentTest', JSON.stringify(data));
+                    
+                    // Navigate to exam interface
+                    window.location.href = '{% url "exam_interface" %}';
+                } else {
+                    alert('Failed to start test: ' + (data.message || 'Unknown error'));
+                }
+            } catch (error) {
+                console.error('Error starting test:', error);
+                alert('An error occurred while starting the test. Please try again.');
+            }
+        }
+    </script>
+{% endblock %}

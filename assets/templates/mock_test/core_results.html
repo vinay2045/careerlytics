@@ -1,0 +1,225 @@
+{% extends 'mock_test/base.html' %}
+{% load static %}
+
+{% block title %}Assessment Results - Mock Test - Careerlytics{% endblock %}
+
+{% block extra_css %}
+<style>
+    .result-card {
+        transition: all 0.3s ease;
+    }
+    .result-card:hover {
+        transform: translateY(-4px);
+    }
+    .circular-progress {
+        --size: 180px;
+        --thickness: 12px;
+        width: var(--size);
+        height: var(--size);
+        border-radius: 50%;
+        display: grid;
+        place-items: center;
+        background: radial-gradient(closest-side, white 80%, transparent 0 99.9%, white 0),
+                    conic-gradient(#6366f1 calc(var(--percentage) * 1%), #f1f5f9 0);
+    }
+    .dark .circular-progress {
+        background: radial-gradient(closest-side, #0f172a 80%, transparent 0 99.9%, #0f172a 0),
+                    conic-gradient(#6366f1 calc(var(--percentage) * 1%), #1e293b 0);
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="min-h-screen bg-slate-50 dark:bg-slate-950 pb-20">
+    <div class="max-w-5xl mx-auto px-4 pt-12">
+        <!-- Header -->
+        <div class="flex items-center justify-between mb-8">
+            <div>
+                <h1 class="text-3xl font-bold text-slate-900 dark:text-white">Assessment Report</h1>
+                <p class="text-slate-500 dark:text-slate-400 mt-1" id="assessment-subtitle">Loading results...</p>
+            </div>
+            <a href="{% url 'users:core_assessment_selection' %}" class="flex items-center gap-2 px-6 py-3 bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-200 font-semibold rounded-2xl shadow-sm border border-slate-200 dark:border-slate-800 hover:bg-slate-50 transition-all">
+                <span class="material-symbols-outlined">home</span>
+                Back to Dashboard
+            </a>
+        </div>
+
+        <!-- Main Stats -->
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-8 mb-12">
+            <!-- Score Overview -->
+            <div class="md:col-span-4 bg-white dark:bg-slate-900 rounded-3xl p-8 shadow-sm border border-slate-200 dark:border-slate-800 flex flex-col items-center text-center">
+                <div id="score-circle" class="circular-progress mb-6" style="--percentage: 0">
+                    <div class="text-center">
+                        <span id="score-value" class="text-4xl font-bold text-slate-900 dark:text-white">0%</span>
+                        <p class="text-xs font-bold text-slate-400 uppercase tracking-widest mt-1">Final Score</p>
+                    </div>
+                </div>
+                <h3 id="performance-label" class="text-xl font-bold text-slate-800 dark:text-slate-100 mb-2">Calculating...</h3>
+                <p id="performance-desc" class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">
+                    Analyzing your performance data to provide feedback.
+                </p>
+            </div>
+
+            <!-- Detail Stats -->
+            <div class="md:col-span-8 grid grid-cols-1 sm:grid-cols-2 gap-6">
+                <div class="bg-white dark:bg-slate-900 rounded-3xl p-6 shadow-sm border border-slate-200 dark:border-slate-800 result-card">
+                    <div class="w-12 h-12 bg-green-100 dark:bg-green-900/30 rounded-2xl flex items-center justify-center mb-4">
+                        <span class="material-symbols-outlined text-green-600 dark:text-green-400">check_circle</span>
+                    </div>
+                    <p class="text-sm font-medium text-slate-500 dark:text-slate-400">Correct Answers</p>
+                    <h4 id="correct-count" class="text-2xl font-bold text-slate-900 dark:text-white">0 / 0</h4>
+                </div>
+
+                <div class="bg-white dark:bg-slate-900 rounded-3xl p-6 shadow-sm border border-slate-200 dark:border-slate-800 result-card">
+                    <div class="w-12 h-12 bg-blue-100 dark:bg-blue-900/30 rounded-2xl flex items-center justify-center mb-4">
+                        <span class="material-symbols-outlined text-blue-600 dark:text-blue-400">timer</span>
+                    </div>
+                    <p class="text-sm font-medium text-slate-500 dark:text-slate-400">Time Taken</p>
+                    <h4 id="time-taken" class="text-2xl font-bold text-slate-900 dark:text-white">0m 0s</h4>
+                </div>
+
+                <div class="bg-white dark:bg-slate-900 rounded-3xl p-6 shadow-sm border border-slate-200 dark:border-slate-800 result-card">
+                    <div class="w-12 h-12 bg-purple-100 dark:bg-purple-900/30 rounded-2xl flex items-center justify-center mb-4">
+                        <span class="material-symbols-outlined text-purple-600 dark:text-purple-400">military_tech</span>
+                    </div>
+                    <p class="text-sm font-medium text-slate-500 dark:text-slate-400">XP Earned</p>
+                    <h4 id="xp-earned" class="text-2xl font-bold text-slate-900 dark:text-white">0 XP</h4>
+                </div>
+
+                <div class="bg-white dark:bg-slate-900 rounded-3xl p-6 shadow-sm border border-slate-200 dark:border-slate-800 result-card">
+                    <div class="w-12 h-12 bg-amber-100 dark:bg-amber-900/30 rounded-2xl flex items-center justify-center mb-4">
+                        <span class="material-symbols-outlined text-amber-600 dark:text-amber-400">trending_up</span>
+                    </div>
+                    <p class="text-sm font-medium text-slate-500 dark:text-slate-400">Accuracy</p>
+                    <h4 id="accuracy-value" class="text-2xl font-bold text-slate-900 dark:text-white">0%</h4>
+                </div>
+            </div>
+        </div>
+
+        <!-- Question Review -->
+        <div class="space-y-6">
+            <h3 class="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                <span class="material-symbols-outlined">analytics</span>
+                Detailed Analysis
+            </h3>
+            
+            <div id="answers-container" class="space-y-4">
+                <!-- Answers will be injected here -->
+            </div>
+        </div>
+
+        <!-- Action Footer -->
+        <div class="mt-16 pt-8 border-t border-slate-200 dark:border-slate-800 flex flex-col sm:flex-row gap-4 items-center justify-center">
+            <button onclick="window.print()" class="px-8 py-3 bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-bold rounded-2xl flex items-center gap-2 transition-all hover:scale-105">
+                <span class="material-symbols-outlined">print</span>
+                Download Report
+            </button>
+            <a href="{% url 'users:start_core_assessment' assessment_type %}" class="px-8 py-3 bg-indigo-600 text-white font-bold rounded-2xl flex items-center gap-2 transition-all hover:scale-105 shadow-lg shadow-indigo-200 dark:shadow-none">
+                <span class="material-symbols-outlined">replay</span>
+                Retake Assessment
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const assessmentType = '{{ assessment_type }}';
+        const dataKey = `mock_result_${assessmentType}`;
+        const data = JSON.parse(localStorage.getItem(dataKey));
+
+        if (!data) {
+            alert("No result data found. Redirecting to selection.");
+            window.location.href = "{% url 'users:core_assessment_selection' %}";
+            return;
+        }
+
+        renderResults(data);
+    });
+
+    function renderResults(data) {
+        // Basic Info
+        document.getElementById('assessment-subtitle').textContent = 
+            `${data.assessment_title} assessment completed on ${new Date(data.submitted_at).toLocaleDateString()}`;
+        
+        // Score Circle
+        const scoreCircle = document.getElementById('score-circle');
+        scoreCircle.style.setProperty('--percentage', data.score);
+        document.getElementById('score-value').textContent = `${data.score}%`;
+
+        // Performance Label
+        const label = document.getElementById('performance-label');
+        const desc = document.getElementById('performance-desc');
+        
+        if (data.score >= 80) {
+            label.textContent = "Excellent Work!";
+            label.classList.add('text-green-600');
+            desc.textContent = "You've demonstrated a strong grasp of these concepts. You're well-prepared for technical interviews.";
+        } else if (data.score >= 60) {
+            label.textContent = "Good Progress";
+            label.classList.add('text-blue-600');
+            desc.textContent = "You have a solid foundation but there's room for improvement in some areas. Keep practicing!";
+        } else {
+            label.textContent = "Needs More Practice";
+            label.classList.add('text-amber-600');
+            desc.textContent = "Focus on the concepts you missed. We recommend reviewing the detailed analysis below.";
+        }
+
+        // Stats
+        document.getElementById('correct-count').textContent = `${data.correct} / ${data.total}`;
+        
+        const mins = Math.floor(data.time_taken / 60);
+        const secs = data.time_taken % 60;
+        document.getElementById('time-taken').textContent = `${mins}m ${secs}s`;
+        
+        document.getElementById('xp-earned').textContent = `${data.correct * 50} XP`;
+        document.getElementById('accuracy-value').textContent = `${data.score}%`;
+
+        // Detailed Answers
+        const container = document.getElementById('answers-container');
+        container.innerHTML = '';
+
+        data.answers.forEach((ans, idx) => {
+            const card = document.createElement('div');
+            card.className = `bg-white dark:bg-slate-900 rounded-2xl p-6 border-l-4 shadow-sm ${
+                ans.is_correct ? 'border-l-green-500' : 'border-l-red-500'
+            }`;
+            
+            const options = ['A', 'B', 'C', 'D'];
+            
+            card.innerHTML = `
+                <div class="flex justify-between items-start mb-4">
+                    <div class="flex items-center gap-3">
+                        <span class="w-8 h-8 rounded-lg flex items-center justify-center font-bold ${
+                            ans.is_correct ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'
+                        }">
+                            ${idx + 1}
+                        </span>
+                        <h4 class="font-semibold text-slate-800 dark:text-slate-200">${ans.question}</h4>
+                    </div>
+                    <span class="material-symbols-outlined ${
+                        ans.is_correct ? 'text-green-500' : 'text-red-500'
+                    }">
+                        ${ans.is_correct ? 'check_circle' : 'cancel'}
+                    </span>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 ml-11">
+                    <div class="p-3 rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-800">
+                        <p class="text-xs font-bold text-slate-400 uppercase mb-1">Your Answer</p>
+                        <p class="font-medium ${ans.is_correct ? 'text-green-600' : 'text-red-600'}">
+                            ${ans.selected !== null ? options[ans.selected] : 'No Answer'}
+                        </p>
+                    </div>
+                    <div class="p-3 rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-800">
+                        <p class="text-xs font-bold text-slate-400 uppercase mb-1">Correct Answer</p>
+                        <p class="font-medium text-green-600">${options[ans.correct]}</p>
+                    </div>
+                </div>
+            `;
+            container.appendChild(card);
+        });
+    }
+</script>
+{% endblock %}

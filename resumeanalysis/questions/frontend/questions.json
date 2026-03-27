@@ -1,0 +1,438 @@
+[
+  {
+    "id": "fe_001",
+    "category": "frontend",
+    "difficulty": "easy",
+    "question_text": "Which CSS property is used to change the text color of an element?",
+    "options": [
+      "text-color",
+      "font-color",
+      "color",
+      "foreground-color"
+    ],
+    "correct_answer": 2,
+    "explanation": "The 'color' property in CSS is used to set the text color of an element.",
+    "tags": [
+      "css",
+      "styling",
+      "basics"
+    ]
+  },
+  {
+    "id": "fe_002",
+    "category": "frontend",
+    "difficulty": "medium",
+    "question_text": "What is the purpose of the React useEffect hook?",
+    "options": [
+      "To manage component state",
+      "To perform side effects in functional components",
+      "To handle user events",
+      "To optimize component rendering"
+    ],
+    "correct_answer": 1,
+    "explanation": "useEffect is used to perform side effects in functional components, such as data fetching, subscriptions, or DOM manipulation.",
+    "tags": [
+      "react",
+      "hooks",
+      "javascript"
+    ]
+  },
+  {
+    "id": "fe_003",
+    "category": "frontend",
+    "difficulty": "medium",
+    "question_text": "Which HTML5 element is best suited for navigation links?",
+    "options": [
+      "<div>",
+      "<span>",
+      "<nav>",
+      "<section>"
+    ],
+    "correct_answer": 2,
+    "explanation": "The <nav> element is semantically correct for containing navigation links.",
+    "tags": [
+      "html5",
+      "semantic-html",
+      "accessibility"
+    ]
+  },
+  {
+    "id": "fe_004",
+    "category": "frontend",
+    "difficulty": "hard",
+    "question_text": "What is the main advantage of using CSS Grid over Flexbox?",
+    "options": [
+      "Better browser support",
+      "Two-dimensional layout control",
+      "Faster performance",
+      "Easier syntax"
+    ],
+    "correct_answer": 1,
+    "explanation": "CSS Grid provides two-dimensional layout control (rows and columns), while Flexbox is primarily one-dimensional.",
+    "tags": [
+      "css",
+      "layout",
+      "grid"
+    ]
+  },
+  {
+    "id": "fe_005",
+    "category": "frontend",
+    "difficulty": "medium",
+    "question_text": "Which JavaScript method is used to add an element to the end of an array?",
+    "options": [
+      "push()",
+      "pop()",
+      "shift()",
+      "unshift()"
+    ],
+    "correct_answer": 0,
+    "explanation": "The push() method adds one or more elements to the end of an array and returns the new length.",
+    "tags": [
+      "javascript",
+      "arrays",
+      "methods"
+    ]
+  },
+  {
+    "id": "fe_006",
+    "category": "frontend",
+    "difficulty": "easy",
+    "question_text": "What does responsive web design ensure?",
+    "options": [
+      "Fast loading times",
+      "Proper display on all devices",
+      "Search engine optimization",
+      "Security compliance"
+    ],
+    "correct_answer": 1,
+    "explanation": "Responsive web design ensures that web pages display properly on various devices and screen sizes.",
+    "tags": [
+      "responsive-design",
+      "css",
+      "mobile"
+    ]
+  },
+  {
+    "id": "fe_007",
+    "category": "frontend",
+    "difficulty": "medium",
+    "question_text": "In Vue.js, what is the purpose of the v-model directive?",
+    "options": [
+      "Conditional rendering",
+      "Event handling",
+      "Two-way data binding",
+      "List rendering"
+    ],
+    "correct_answer": 2,
+    "explanation": "v-model provides two-way data binding between form inputs and component data.",
+    "tags": [
+      "vue",
+      "directives",
+      "data-binding"
+    ]
+  },
+  {
+    "id": "fe_008",
+    "category": "frontend",
+    "difficulty": "hard",
+    "question_text": "What is the purpose of CSS custom properties (variables)?",
+    "options": [
+      "To improve performance",
+      "To enable dynamic styling and code reuse",
+      "To add animations",
+      "To fix browser compatibility"
+    ],
+    "correct_answer": 1,
+    "explanation": "CSS custom properties (variables) enable dynamic styling and code reuse by storing values that can be reused throughout the stylesheet.",
+    "tags": [
+      "css",
+      "variables",
+      "dynamic-styling"
+    ]
+  },
+  {
+    "id": "fe_009",
+    "category": "frontend",
+    "difficulty": "medium",
+    "question_text": "Which JavaScript concept allows handling asynchronous operations?",
+    "options": [
+      "Callbacks",
+      "Promises",
+      "Async/Await",
+      "All of the above"
+    ],
+    "correct_answer": 3,
+    "explanation": "Callbacks, Promises, and Async/Await are all ways to handle asynchronous operations in JavaScript.",
+    "tags": [
+      "javascript",
+      "async",
+      "promises"
+    ]
+  },
+  {
+    "id": "fe_010",
+    "category": "frontend",
+    "difficulty": "medium",
+    "question_text": "What is the purpose of semantic HTML?",
+    "options": [
+      "To make websites look better",
+      "To improve accessibility and SEO",
+      "To increase loading speed",
+      "To reduce file size"
+    ],
+    "correct_answer": 1,
+    "explanation": "Semantic HTML improves accessibility for screen readers and helps search engines understand page structure.",
+    "tags": [
+      "html",
+      "semantic-html",
+      "accessibility",
+      "seo"
+    ]
+  },
+  {
+    "id": "fe_011",
+    "category": "frontend",
+    "difficulty": "hard",
+    "question_text": "What is the virtual DOM in React?",
+    "options": [
+      "A copy of the real DOM",
+      "A JavaScript representation of the DOM",
+      "A browser optimization technique",
+      "A CSS framework"
+    ],
+    "correct_answer": 1,
+    "explanation": "The virtual DOM is a JavaScript representation of the real DOM that React uses to optimize updates.",
+    "tags": [
+      "react",
+      "virtual-dom",
+      "performance"
+    ]
+  },
+  {
+    "id": "fe_012",
+    "category": "frontend",
+    "difficulty": "medium",
+    "question_text": "Which CSS unit is relative to the font size of the parent element?",
+    "options": [
+      "px",
+      "em",
+      "rem",
+      "%"
+    ],
+    "correct_answer": 1,
+    "explanation": "The 'em' unit is relative to the font size of the parent element, while 'rem' is relative to the root font size.",
+    "tags": [
+      "css",
+      "units",
+      "typography"
+    ]
+  },
+  {
+    "id": "frontend_001",
+    "category": "frontend",
+    "difficulty": "easy",
+    "question_text": "What does the HTML5 doctype declaration specify?",
+    "options": [
+      "The character encoding of the document",
+      "The document type and HTML version",
+      "The scripting language used",
+      "The CSS version to be used"
+    ],
+    "correct_answer": 1,
+    "explanation": "The doctype declaration <!DOCTYPE html> specifies that the document is an HTML5 document, which helps browsers render the page correctly.",
+    "tags": [
+      "frontend",
+      "html",
+      "doctype",
+      "html5"
+    ]
+  },
+  {
+    "id": "frontend_002",
+    "category": "frontend",
+    "difficulty": "easy",
+    "question_text": "Which HTML5 element is used to define navigation links?",
+    "options": [
+      "<navigation>",
+      "<nav>",
+      "<menu>",
+      "<links>"
+    ],
+    "correct_answer": 1,
+    "explanation": "The <nav> element in HTML5 is specifically designed to contain navigation links for the website or application.",
+    "tags": [
+      "frontend",
+      "html",
+      "nav",
+      "navigation",
+      "html5"
+    ]
+  },
+  {
+    "id": "frontend_003",
+    "category": "frontend",
+    "difficulty": "easy",
+    "question_text": "What is the purpose of the <header> element in HTML5?",
+    "options": [
+      "To display the website header image",
+      "To define a container for introductory content",
+      "To create a table header",
+      "To define the main heading of the page"
+    ],
+    "correct_answer": 1,
+    "explanation": "The <header> element represents a container for introductory content or navigational links, typically containing headings, logos, or search forms.",
+    "tags": [
+      "frontend",
+      "html",
+      "header",
+      "semantic",
+      "html5"
+    ]
+  },
+  {
+    "id": "frontend_004",
+    "category": "frontend",
+    "difficulty": "easy",
+    "question_text": "Which CSS property is used to change the text color of an element?",
+    "options": [
+      "text-color",
+      "font-color",
+      "color",
+      "text-style"
+    ],
+    "correct_answer": 2,
+    "explanation": "The 'color' property in CSS is used to set the text color of an element.",
+    "tags": [
+      "frontend",
+      "css",
+      "color",
+      "text-styling"
+    ]
+  },
+  {
+    "id": "frontend_005",
+    "category": "frontend",
+    "difficulty": "easy",
+    "question_text": "What does the CSS box model consist of?",
+    "options": [
+      "Margin, Border, Padding, Content",
+      "Width, Height, Display, Position",
+      "Top, Right, Bottom, Left",
+      "Flex, Grid, Block, Inline"
+    ],
+    "correct_answer": 0,
+    "explanation": "The CSS box model consists of content, padding, border, and margin, which determine the space an element occupies.",
+    "tags": [
+      "frontend",
+      "css",
+      "box-model",
+      "layout"
+    ]
+  },
+  {
+    "id": "frontend_006",
+    "category": "frontend",
+    "difficulty": "medium",
+    "question_text": "Which HTML5 element is best suited for marking up a single piece of content that can stand alone?",
+    "options": [
+      "<section>",
+      "<article>",
+      "<div>",
+      "<span>"
+    ],
+    "correct_answer": 1,
+    "explanation": "The <article> element represents a self-contained composition that could be distributed and reused independently.",
+    "tags": [
+      "frontend",
+      "html",
+      "article",
+      "semantic",
+      "html5"
+    ]
+  },
+  {
+    "id": "frontend_007",
+    "category": "frontend",
+    "difficulty": "medium",
+    "question_text": "Which CSS property is used to create space around elements?",
+    "options": [
+      "spacing",
+      "gap",
+      "margin",
+      "padding"
+    ],
+    "correct_answer": 2,
+    "explanation": "The 'margin' property creates space around elements, outside of any defined borders.",
+    "tags": [
+      "frontend",
+      "css",
+      "margin",
+      "spacing",
+      "layout"
+    ]
+  },
+  {
+    "id": "frontend_008",
+    "category": "frontend",
+    "difficulty": "medium",
+    "question_text": "What is the purpose of the <main> element in HTML5?",
+    "options": [
+      "To define the main content area",
+      "To create navigation menu",
+      "To add footer content",
+      "To display sidebar content"
+    ],
+    "correct_answer": 0,
+    "explanation": "The <main> element specifies the main content of a document, and there should only be one <main> element per page.",
+    "tags": [
+      "frontend",
+      "html",
+      "main",
+      "semantic",
+      "html5"
+    ]
+  },
+  {
+    "id": "frontend_009",
+    "category": "frontend",
+    "difficulty": "medium",
+    "question_text": "Which CSS property controls the transparency of an element?",
+    "options": [
+      "transparency",
+      "visible",
+      "opacity",
+      "alpha"
+    ],
+    "correct_answer": 2,
+    "explanation": "The 'opacity' property sets the transparency level of an element, with values from 0 (fully transparent) to 1 (fully opaque).",
+    "tags": [
+      "frontend",
+      "css",
+      "opacity",
+      "transparency"
+    ]
+  },
+  {
+    "id": "frontend_010",
+    "category": "frontend",
+    "difficulty": "hard",
+    "question_text": "What is the difference between <div> and <span>?",
+    "options": [
+      "No difference",
+      "<div> is inline, <span> is block",
+      "<div> is block, <span> is inline",
+      "<span> can contain block elements"
+    ],
+    "correct_answer": 2,
+    "explanation": "<div> is a block-level element that takes up the full width available, while <span> is an inline element that only takes up as much width as necessary.",
+    "tags": [
+      "frontend",
+      "html",
+      "div",
+      "span",
+      "block",
+      "inline"
+    ]
+  }
+]

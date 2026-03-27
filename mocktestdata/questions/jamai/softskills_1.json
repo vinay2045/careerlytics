@@ -1,0 +1,252 @@
+[
+    {
+        "question_text": "What is the most effective way to handle a conflict with a team member?",
+        "options": ["Ignore the issue and hope it goes away", "Discuss the issue privately and professionally", "Complain to other team members", "Wait for the manager to notice"],
+        "correct_answer": 1
+    },
+    {
+        "question_text": "Which of these is a key element of active listening?",
+        "options": ["Interrupting to show you understand", "Thinking about your response while they talk", "Making eye contact and nodding", "Looking at your phone"],
+        "correct_answer": 2
+    },
+    {
+        "question_text": "What does 'Emotional Intelligence' (EQ) primarily refer to?",
+        "options": ["How smart someone is in math", "The ability to recognize and manage emotions", "How many languages someone speaks", "Typing speed"],
+        "correct_answer": 1
+    },
+    {
+        "question_text": "In a professional setting, how should you handle receiving constructive criticism?",
+        "options": ["Get defensive and explain why you're right", "Listen openly and ask for specific examples", "Ignore it if you don't agree", "Stop talking to the person who gave it"],
+        "correct_answer": 1
+    },
+    {
+        "question_text": "What is the benefit of good time management?",
+        "options": ["It allows you to work slower", "It reduces stress and increases productivity", "It means you never have to work", "It makes you look busy"],
+        "correct_answer": 1
+    },
+    {
+        "question_text": "When working in a team, what is the 'Synergy' effect?",
+        "options": ["Everyone doing their own thing", "The group achieving more than individuals alone", "Having the same opinion on everything", "Working at the same time"],
+        "correct_answer": 1
+    },
+    {
+        "question_text": "What is 'Non-verbal communication'?",
+        "options": ["Talking loudly", "Writing emails", "Body language, facial expressions, and tone", "Silence only"],
+        "correct_answer": 2
+    },
+    {
+        "question_text": "How should you start a professional email to someone you don't know well?",
+        "options": ["Hey!", "Yo,", "Dear [Name] or Hello [Name],", "What's up,"],
+        "correct_answer": 2
+    },
+    {
+        "question_text": "What is the 'STAR' method used for in interviews?",
+        "options": ["Starring in a movie", "Structuring answers to behavioral questions", "Evaluating the interviewer", "Scheduling the meeting"],
+        "correct_answer": 1
+    },
+    {
+        "question_text": "What does 'Empathy' mean in a workplace context?",
+        "options": ["Feeling sorry for everyone", "Understanding and sharing the feelings of others", "Agreeing with everyone's mistakes", "Doing other people's work"],
+        "correct_answer": 1
+    },
+    {
+        "question_text": "Which is an example of a 'Growth Mindset'?",
+        "options": ["'I'm either good at this or I'm not'", "'This is too hard, I give up'", "'I can learn from this challenge'", "'I don't need to improve'"],
+        "correct_answer": 2
+    },
+    {
+        "question_text": "What is the primary goal of a presentation?",
+        "options": ["To show off your design skills", "To convey information clearly to an audience", "To talk as long as possible", "To use as many slides as possible"],
+        "correct_answer": 1
+    },
+    {
+        "question_text": "How can you show professionalism in a virtual meeting?",
+        "options": ["Turning off your camera and eating", "Dressing appropriately and staying engaged", "Multitasking on other work", "Joining 15 minutes late"],
+        "correct_answer": 1
+    },
+    {
+        "question_text": "What is 'Adaptability' in the workplace?",
+        "options": ["Always doing things the same way", "The ability to adjust to new conditions", "Refusing to use new software", "Waiting for instructions for everything"],
+        "correct_answer": 1
+    },
+    {
+        "question_text": "Which of these is a barrier to effective communication?",
+        "options": ["Clarity", "Jargon", "Active listening", "Feedback"],
+        "correct_answer": 1
+    },
+    {
+        "question_text": "What is the first step in problem-solving?",
+        "options": ["Implementing a solution", "Brainstorming", "Defining the problem", "Asking for help"],
+        "correct_answer": 2
+    },
+    {
+        "question_text": "Why is networking important for career growth?",
+        "options": ["To get free stuff", "To build mutually beneficial relationships", "To brag about your job", "To avoid doing work"],
+        "correct_answer": 1
+    },
+    {
+        "question_text": "What is 'Public Speaking' anxiety often called?",
+        "options": ["Hydrophobia", "Glossophobia", "Arachnophobia", "Claustrophobia"],
+        "correct_answer": 1
+    },
+    {
+        "question_text": "How should you handle a heavy workload?",
+        "options": ["Panic and do nothing", "Prioritize tasks based on urgency and importance", "Work on everything at once", "Complain loudly to everyone"],
+        "correct_answer": 1
+    },
+    {
+        "question_text": "What is 'Leadership' NOT necessarily about?",
+        "options": ["Inspiring others", "Having a high job title", "Taking responsibility", "Helping others grow"],
+        "correct_answer": 1
+    },
+    {
+        "question_text": "What is the best way to prepare for a meeting?",
+        "options": ["Show up and wing it", "Review the agenda and prepare relevant data", "Bring your lunch", "Check your social media"],
+        "correct_answer": 1
+    },
+    {
+        "question_text": "Which of these is a sign of good work ethic?",
+        "options": ["Leaving early every day", "Consistency and reliability", "Doing the bare minimum", "Taking long breaks"],
+        "correct_answer": 1
+    },
+    {
+        "question_text": "What is 'Cultural Competence'?",
+        "options": ["Knowing everything about one culture", "The ability to interact effectively with people of different cultures", "Traveling to many countries", "Speaking five languages"],
+        "correct_answer": 1
+    },
+    {
+        "question_text": "How do you build trust with colleagues?",
+        "options": ["By keeping secrets", "By being honest and following through on commitments", "By agreeing with everything they say", "By giving them gifts"],
+        "correct_answer": 1
+    },
+    {
+        "question_text": "What is 'Critical Thinking'?",
+        "options": ["Criticizing everyone's ideas", "Objective analysis and evaluation of an issue", "Thinking fast without facts", "Memorizing information"],
+        "correct_answer": 1
+    },
+    {
+        "question_text": "What is the 'Elevator Pitch'?",
+        "options": ["A way to fix an elevator", "A short, persuasive summary of an idea or yourself", "A long presentation", "A technical manual"],
+        "correct_answer": 1
+    },
+    {
+        "question_text": "What is 'Work-Life Balance'?",
+        "options": ["Working 24/7", "The equilibrium between professional and personal life", "Never working", "Only working on weekends"],
+        "correct_answer": 1
+    },
+    {
+        "question_text": "Why is 'Flexibility' valued in modern workplaces?",
+        "options": ["So you can work whenever you want", "Because environments and requirements change rapidly", "To avoid having a schedule", "So you don't have to follow rules"],
+        "correct_answer": 1
+    },
+    {
+        "question_text": "What is 'Assertiveness'?",
+        "options": ["Being aggressive and loud", "Expressing your needs and boundaries respectfully", "Being passive and agreeing with everyone", "Ignoring others' opinions"],
+        "correct_answer": 1
+    },
+    {
+        "question_text": "How should you conclude a professional meeting?",
+        "options": ["Just walk out", "Summarize key takeaways and next steps", "Ask what's for lunch", "Complain about how long it was"],
+        "correct_answer": 1
+    },
+    {
+        "question_text": "What is 'Integrity'?",
+        "options": ["Being very smart", "The quality of being honest and having strong moral principles", "Being famous", "Working very fast"],
+        "correct_answer": 1
+    },
+    {
+        "question_text": "What is the purpose of 'Small Talk' in business?",
+        "options": ["To waste time", "To build rapport and ease into professional topics", "To gossip", "To avoid talking about work"],
+        "correct_answer": 1
+    },
+    {
+        "question_text": "Which is an example of 'Self-Motivation'?",
+        "options": ["Waiting for a boss to tell you to work", "Setting and working towards your own goals", "Working only for a bonus", "Doing work only when watched"],
+        "correct_answer": 1
+    },
+    {
+        "question_text": "What is 'Accountability'?",
+        "options": ["Counting money", "Taking ownership of your actions and their results", "Blaming others for mistakes", "Hiding errors"],
+        "correct_answer": 1
+    },
+    {
+        "question_text": "How can you improve your public speaking?",
+        "options": ["Avoid it at all costs", "Practice, record yourself, and get feedback", "Read your slides word-for-word", "Speak as fast as possible"],
+        "correct_answer": 1
+    },
+    {
+        "question_text": "What is 'Brainstorming'?",
+        "options": ["A type of headache", "Generating a large number of ideas for a solution", "Arguing about who is right", "Critical analysis of one idea"],
+        "correct_answer": 1
+    },
+    {
+        "question_text": "What is 'Delegation'?",
+        "options": ["Doing everything yourself", "Assigning tasks to others while maintaining responsibility", "Telling people what to do without helping", "Ignoring your work"],
+        "correct_answer": 1
+    },
+    {
+        "question_text": "What is the 'Pomodoro Technique'?",
+        "options": ["A cooking method", "A time management method using timed intervals and breaks", "A way to grow tomatoes", "A software development cycle"],
+        "correct_answer": 1
+    },
+    {
+        "question_text": "Why is 'Curiosity' important at work?",
+        "options": ["To poke into others' business", "It drives learning, innovation, and problem-solving", "To ask too many questions", "To avoid following the standard way"],
+        "correct_answer": 1
+    },
+    {
+        "question_text": "What is 'Professionalism'?",
+        "options": ["Only wearing a suit", "The conduct, aims, or qualities that characterize a profession", "Getting paid a lot", "Working in an office"],
+        "correct_answer": 1
+    },
+    {
+        "question_text": "How should you handle an angry customer?",
+        "options": ["Argue back", "Stay calm, listen, and try to find a solution", "Hang up or walk away", "Blame your company"],
+        "correct_answer": 1
+    },
+    {
+        "question_text": "What is 'Collaboration'?",
+        "options": ["Working against someone", "Working together to achieve a common goal", "Doing someone else's work", "Competing for the best idea"],
+        "correct_answer": 1
+    },
+    {
+        "question_text": "What is the 'Halo Effect' in psychology/interviews?",
+        "options": ["Wearing a halo", "One positive trait influencing the overall impression of a person", "Being perfect", "A lighting technique"],
+        "correct_answer": 1
+    },
+    {
+        "question_text": "What is 'Mindfulness'?",
+        "options": ["Being very busy", "The practice of being present and fully engaged in the moment", "Thinking about the future", "Daydreaming"],
+        "correct_answer": 1
+    },
+    {
+        "question_text": "What is 'Strategic Thinking'?",
+        "options": ["Thinking about what to eat next", "The ability to plan for the future and consider long-term goals", "Following a strict list of tasks", "Only thinking about today"],
+        "correct_answer": 1
+    },
+    {
+        "question_text": "How do you show 'Initiative'?",
+        "options": ["Doing only what you are told", "Taking action without being asked to do so", "Complaining about lack of work", "Waiting for a promotion"],
+        "correct_answer": 1
+    },
+    {
+        "question_text": "What is 'Digital Literacy'?",
+        "options": ["Reading books on a Kindle", "The ability to find, evaluate, and communicate information via various digital platforms", "Using a computer for games only", "Typing fast"],
+        "correct_answer": 1
+    },
+    {
+        "question_text": "What is 'Negotiation'?",
+        "options": ["Forcing someone to do what you want", "A discussion aimed at reaching an agreement", "Giving up everything you want", "Arguing until someone cries"],
+        "correct_answer": 1
+    },
+    {
+        "question_text": "What is 'Patience'?",
+        "options": ["Working slowly", "The capacity to accept or tolerate delay, trouble, or suffering without getting angry", "Doing nothing", "Being lazy"],
+        "correct_answer": 1
+    },
+    {
+        "question_text": "Why is 'Reliability' key for team members?",
+        "options": ["So they can do all the work", "Because others depend on them to meet deadlines and quality standards", "To get the most praise", "To avoid being fired"],
+        "correct_answer": 1
+    }
+]
